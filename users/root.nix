@@ -13,6 +13,7 @@
     docker
     docker-compose
     neovim
+    trash-cli
     nginx
     caddy
     neofetch
@@ -70,7 +71,7 @@
     gnutar
     gawk
     gnupg
-
+    poppler-utils
     # nix related
     #
     # it provides the command `nom` works just like `nix`
