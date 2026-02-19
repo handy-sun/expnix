@@ -17,7 +17,9 @@
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
   # Define on which hard drive you want to install Grub.
   # boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
-  
+
+  networking.hostName = "handynixos";
+  networking.networkmanager.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
@@ -25,43 +27,12 @@
     git
     vim
     wget
+    nginx
+    sing-box
   ];
-
-  ############### Add by reinstall.sh ###############
-  boot.loader.grub.device = "/dev/vda";
-  swapDevices = [{ device = "/swapfile"; size = 512; }];
-  boot.kernelParams = [ "console=ttyS0,115200n8" "console=tty0" ];
-  services.openssh.enable = true;
-  services.openssh.ports = [ 23512 ];
-  services.openssh.settings = {
-    PermitRootLogin = "yes";
-    PubkeyAuthentication = "yes";
-    MaxSessions = "20";
-    TCPKeepAlive = "yes";
-  };
-  networking = {
-    hostName = "handynixos";
-    networkmanager.enable = true;
-    usePredictableInterfaceNames = false;
-    interfaces.eth0.ipv4.addresses = [
-      {
-        address = "103.149.93.9";
-        prefixLength = 23;
-      }
-    ];
-    defaultGateway = {
-      address = "103.149.93.1";
-      interface = "eth0";
-    };
-    nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
-      "2606:4700:4700::1111"
-      "2001:4860:4860::8888"
-    ];
-  };
-  ###################################################
-  ## zsh 
+  ################ custom ################
+  system.stateVersion = "25.11"; # Did you read the comment?
+  ## zsh
   programs.zsh.enable = true;
   users.users.root = {
     shell = pkgs.zsh;
@@ -72,16 +43,13 @@
     enable = true;
     setSocketVariable = true;
   };
-  users.users.root.extraGroups = [ "docker" ]; 
-  # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
-
+  users.users.root.extraGroups = [ "docker" ];
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Open ports in the firewall.
-  networking.firewall = { 
+  networking.firewall = {
     # allowedTCPPorts = [ 22000 23512 ];
     # allowedUDPPorts = [ ... ];
     extraCommands = ''
@@ -107,16 +75,37 @@ iptables -A INPUT -p udp -m udp --dport 21116 -j ACCEPT
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.alice = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  #   packages = with pkgs; [
-  #     tree
-  #   ];
-  # };
-
-  system.stateVersion = "25.11"; # Did you read the comment?
+  ############### Add by reinstall.sh ###############
+  boot.loader.grub.device = "/dev/vda";
+  swapDevices = [{ device = "/swapfile"; size = 512; }];
+  boot.kernelParams = [ "console=ttyS0,115200n8" "console=tty0" ];
+  services.openssh.enable = true;
+  services.openssh.ports = [ 23512 ];
+  services.openssh.settings = {
+    PermitRootLogin = "yes";
+    PubkeyAuthentication = "yes";
+    MaxSessions = "20";
+    TCPKeepAlive = "yes";
+  };
+  networking = {
+    usePredictableInterfaceNames = false;
+    interfaces.eth0.ipv4.addresses = [
+      {
+        address = "103.149.93.9";
+        prefixLength = 23;
+      }
+    ];
+    defaultGateway = {
+      address = "103.149.93.1";
+      interface = "eth0";
+    };
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+      "2606:4700:4700::1111"
+      "2001:4860:4860::8888"
+    ];
+  };
+  ###################################################
 }
 

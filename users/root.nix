@@ -14,7 +14,6 @@
     docker-compose
     neovim
     trash-cli
-    nginx
     caddy
     neofetch
     fastfetch
