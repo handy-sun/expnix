@@ -10,19 +10,11 @@
       ./hardware-configuration.nix
     ];
 
-  # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
-  # boot.loader.grub.efiSupport = true;
-  # boot.loader.grub.efiInstallAsRemovable = true;
-  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  # Define on which hard drive you want to install Grub.
-  # boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
-
   networking.hostName = "handynixos";
   networking.networkmanager.enable = true;
+  time.timeZone = "Asia/Shanghai";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  # List packages installed in system profile.
-  # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     git
     vim
@@ -32,6 +24,8 @@
   ];
   ################ custom ################
   system.stateVersion = "25.11"; # Did you read the comment?
+  services.nginx.enable = true;
+  services.sing-box.enable = true;
   ## zsh
   programs.zsh.enable = true;
   users.users.root = {
@@ -44,12 +38,9 @@
     setSocketVariable = true;
   };
   users.users.root.extraGroups = [ "docker" ];
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Open ports in the firewall.
   networking.firewall = {
+    enable = true;
     # allowedTCPPorts = [ 22000 23512 ];
     # allowedUDPPorts = [ ... ];
     extraCommands = ''
