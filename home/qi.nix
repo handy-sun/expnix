@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  # 注意修改这里的用户名与用户目录
-  home.username = "root";
-  home.homeDirectory = "/root";
+  # remember to modify
+  home.username = "qi";
+  home.homeDirectory = "/home/qi";
 
   home.packages = with pkgs;[
     zsh
@@ -18,8 +18,7 @@
     neofetch
     fastfetch
     # nnn # terminal file manager
-
-    # gcc
+    gcc
     # cmake
     python3
     lua
@@ -34,6 +33,7 @@
     # utils
     fzf
     jq # A lightweight and flexible command-line JSON processor
+    # utilities written in Rust
     ripgrep # recursively searches directories for a regex pattern
     yq-go # yaml processor https://github.com/mikefarah/yq
     eza
@@ -62,8 +62,6 @@
     pv
 
     # misc
-    file
-    which
     tree
     multitail
     gnused
@@ -71,6 +69,10 @@
     gawk
     gnupg
     poppler-utils
+    nil # language server for Nix
+    tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
+    nodejs-slim_25
+
     # nix related
     #
     # it provides the command `nom` works just like `nix`
@@ -98,24 +100,12 @@
   ];
 
   programs.git = {
-    enable = true;
-    userName = "sooncheer";
-    userEmail = "handy-sun@foxmail.com";
-  };
-
-  programs.starship = {
     enable = false;
-    settings = {
-      add_newline = false;
-      aws.disabled = true;
-      gcloud.disabled = true;
-      line_break.disabled = true;
-    };
   };
 
   # programs.zsh.enable = true;
   home.file.".zshrc".text = ''
     source $HOME/.config/dotzsh/zshrc
   '';
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 }
