@@ -15,7 +15,7 @@
     nixosConfigurations.expnix = nixpkgs.lib.nixosSystem {
       # system = "aarch64-linux";  # 指定 ARM64 架构（legacy，但兼容）
       modules = [
-        ../configuration.nix
+        ./configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

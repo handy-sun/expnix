@@ -5,7 +5,7 @@
   home.username = "qi";
   home.homeDirectory = "/home/qi";
 
-  home.packages = with pkgs;[
+  home.packages = with pkgs; [
     zsh
     tmux
     zoxide
@@ -18,37 +18,49 @@
     neofetch
     fastfetch
     # nnn # terminal file manager
+
+    # language of coding
     gcc
     # cmake
     python3
     lua
 
-    # archives
-    zip
-    xz
-    unzip
+    # archives, compression and decompression
+    bzip2
+    gzip
     p7zip
-    pigz
+    pigz # Parallel Implementation of GZip
+    #rar # absent on aarch64, and not really needed
+    unzip
+    xz
+    zip
+    zstd
 
     # utils
     fzf
     jq # A lightweight and flexible command-line JSON processor
-    # utilities written in Rust
-    ripgrep # recursively searches directories for a regex pattern
     yq-go # yaml processor https://github.com/mikefarah/yq
-    eza
-    fd
-    bat
-    yazi
-    delta
-    dust
-    duf
-    uv
-    sd
-    stylua
+
+    # utilities written in Rust
+    bandwhich
+    bat # cat
+    bottom
+    broot
+    delta # diff; also used of git
+    dust # du; (`du-dust` name is depracated)
     dua
-    ncdu
+    duf # df
+    eza # ls colorize more info
+    fd # find
     hyperfine
+    ncdu
+    procs # ps
+    ripgrep # recursively searches directories for a regex pattern
+    sd # sed
+    stylua # lua format tool
+    tre-command
+    uv # pip
+    yazi # ranger
 
     # networking tools
     iperf3
@@ -69,15 +81,8 @@
     gawk
     gnupg
     poppler-utils
-    nil # language server for Nix
     tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
     nodejs-slim_25
-
-    # nix related
-    #
-    # it provides the command `nom` works just like `nix`
-    # with more details log output
-    nix-output-monitor
 
     # productivity
     hugo # static site generator
@@ -97,6 +102,12 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    # nix related
+    # it provides the command `nom` works just like `nix`
+    # with more details log output
+    nix-output-monitor
+    nil # language server for Nix
   ];
 
   programs.git = {
