@@ -114,7 +114,6 @@
     enable = false;
   };
 
-  # programs.zsh.enable = true;
   home.file.".zshrc".text = ''
     source $HOME/.config/dotzsh/zshrc
   '';

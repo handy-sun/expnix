@@ -10,6 +10,7 @@
       # Include the OrbStack-specific configuration.
       ./orbstack.nix
       ./syspkg.nix
+      ./root-services.nix
     ];
 
   users.users.qi = {

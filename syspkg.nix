@@ -1,9 +1,29 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux"; 
+  nixpkgs = {
+    hostPlatform = lib.mkDefault "aarch64-linux";
+    config.allowUnfree = true; # allow non-FOSS pkgs
+  };
   networking.hostName = "expnix";
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    gc = {
+      automatic = true;
+      # dates = "weekly";
+      dates = "Sun *-*-* 00:00:00";
+      options = "--delete-older-than 7d";
+    };
+    settings = {
+      trusted-users = [ "root" "qi" ];
+      # Optimise storage
+      # you can also optimise the store manually via:
+      #    nix-store --optimise
+      # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf
+      auto-optimise-store = true;
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     git
     vim
@@ -12,6 +32,7 @@
     glider
     sing-box
   ];
+
   # must enable zsh in order users to use it [[1
   programs.zsh.enable = true;
   users.users.qi = {
