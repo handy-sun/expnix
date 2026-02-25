@@ -39,6 +39,7 @@
     shell = pkgs.zsh;
   };
   # ]]1
+  users.extraGroups.docker.members = [ "qi" ];
 
   time = {
     # timeZone = "Asia/Shanghai";
