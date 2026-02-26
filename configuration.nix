@@ -9,8 +9,10 @@
      # ./incus.nix
       # Include the OrbStack-specific configuration.
       ./orbstack.nix
-      ./syspkg.nix
-      ./root-services.nix
+      # system packages, enviroment, other settings
+      ./nixos/pkgenv.nix
+      # system services, virtualisation
+      ./nixos/root-services.nix
     ];
 
   users.users.qi = {
