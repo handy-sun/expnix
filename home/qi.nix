@@ -6,12 +6,8 @@
   home.homeDirectory = "/home/qi";
 
   home.packages = with pkgs; [
-    zsh
-    tmux
     zoxide
     rsync
-    docker
-    docker-compose
     neovim
     trash-cli
     caddy
@@ -21,9 +17,11 @@
 
     # language of coding
     gcc
+    go
     # cmake
     python3
     lua
+    nodejs-slim_25
 
     # archives, compression and decompression
     bzip2
@@ -32,6 +30,7 @@
     pigz # Parallel Implementation of GZip
     #rar # absent on aarch64, and not really needed
     unzip
+    unrar # non-FOSS(unfree) pkgs !!!
     xz
     zip
     zstd
@@ -47,9 +46,9 @@
     bottom
     broot
     delta # diff; also used of git
-    dust # du; (`du-dust` name is depracated)
     dua
     duf # df
+    dust # du; (`du-dust` name is depracated)
     eza # ls colorize more info
     fd # find
     hyperfine
@@ -82,10 +81,10 @@
     gnupg
     poppler-utils
     tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
-    nodejs-slim_25
 
     # productivity
     hugo # static site generator
+    htop
     glow # markdown previewer in terminal
     btop  # replacement of htop/nmon
     iotop # io monitoring

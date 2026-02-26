@@ -16,7 +16,10 @@
     #     TCPKeepAlive = "yes";
     #   };
     # };
+
+    zerotierone.enable = true;
   };
+
   virtualisation = {
     docker = {
       enable = true;

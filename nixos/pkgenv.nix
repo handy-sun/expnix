@@ -9,8 +9,8 @@
   nix = {
     gc = {
       automatic = true;
-      # dates = "weekly";
-      dates = "Sun *-*-* 00:00:00";
+      dates = "weekly";
+      # dates = "Sun *-*-* 00:00:00";
       options = "--delete-older-than 7d";
     };
     settings = {
@@ -31,6 +31,12 @@
     dae
     glider
     sing-box
+    zsh
+    tmux
+    docker
+    docker-compose
+    ctags
+    zerotierone
   ];
 
   # must enable zsh in order users to use it [[1
