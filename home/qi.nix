@@ -13,15 +13,6 @@
     fastfetch
     # nnn # terminal file manager
 
-    # language of coding
-    gcc
-    go
-    # cmake
-    python3
-    lua
-    nodejs_25
-    # nodejs-slim_25
-
     # archives, compression and decompression
     bzip2
     gzip
@@ -101,12 +92,6 @@
     pciutils # lspci
     usbutils # lsusb
 
-    ## rust related
-    # cargo-bloat # find what takes the most space in the executable
-    # cargo-cache # manage cargo cache (${CARGO_HOME}); print and remove dirs selectively
-    # cargo-zigbuild
-    # rustup # provides rustfmt, cargo-clippy, rustup, cargo, rust-lldb, rust-analyzer, rustc, rust-gdb, cargo-fmt
-
     # nix related
     # it provides the command `nom` works just like `nix`
     # with more details log output
@@ -114,8 +99,12 @@
     nil # language server for Nix
   ];
 
-  programs.git = {
-    enable = false;
+  home.sessionVariables = {
+    TERM = "xterm-256color";
+    PAGER = "less";
+    LESS = "-RX";
+    RUSTUP_DIST_SERVER = "https://rsproxy.cn";
+    RUSTUP_UPDATE_ROOT = "https://rsproxy.cn/rustup";
   };
 
   home.file.".zshrc".text = ''

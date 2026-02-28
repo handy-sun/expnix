@@ -39,11 +39,27 @@
     docker-compose
     ctags
     zerotierone
+
+    ## programming
+    gcc
+    go
+    # cmake
+    python3
+    lua
+    nodejs_25
+    # nodejs-slim_25
+    # perl
+
+    ## rust related
+    # cargo-bloat # find what takes the most space in the executable
+    # cargo-cache # manage cargo cache (${CARGO_HOME}); print and remove dirs selectively
+    # cargo-zigbuild
+    rustup # provides rustfmt, cargo-clippy, rustup, cargo, rust-lldb, rust-analyzer, rustc, rust-gdb, cargo-fmt
   ];
   environment = {
-    homeBinInPath = true;
+    # homeBinInPath = true;
     localBinInPath = true;
-    variables = {
+    sessionVariables = {
       ## for 'sudo -e'
       EDITOR = "nvim";
       VISUAL = "nvim";
@@ -51,8 +67,8 @@
       SYSTEMD_PAGER = "nvim";
       SYSTEMD_EDITOR = "nvim";
       TERM = "xterm-256color";
-      # idk why, but some XDG vars aren't set, the missing ones are now set according to the
-      # spec: (https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+      ## idk why, but some XDG vars aren't set, the missing ones are now set according to the
+      ## spec: (https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
       XDG_DATA_HOME = "$HOME/.local/share";
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_STATE_HOME = "$HOME/.local/state";
