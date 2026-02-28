@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ lib, pkgs, ... }:
 
 {
   nixpkgs = {
@@ -27,7 +27,9 @@
   environment.systemPackages = with pkgs; [
     git
     vim
+    neovim
     wget
+    rsync
     dae
     glider
     sing-box
@@ -38,6 +40,31 @@
     ctags
     zerotierone
   ];
+  environment = {
+    homeBinInPath = true;
+    localBinInPath = true;
+    variables = {
+      ## for 'sudo -e'
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+      ## systemd
+      SYSTEMD_PAGER = "nvim";
+      SYSTEMD_EDITOR = "nvim";
+      TERM = "xterm-256color";
+      # idk why, but some XDG vars aren't set, the missing ones are now set according to the
+      # spec: (https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_STATE_HOME = "$HOME/.local/state";
+      XDG_CACHE_HOME = "$HOME/.cache";
+    };
+  };
+
+  boot = {
+    kernel.sysctl = {
+      "net.ipv4.ip_forward" = 1;
+    };
+  };
 
   # must enable zsh in order users to use it [[1
   programs.zsh.enable = true;

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # remember to modify
@@ -7,8 +7,6 @@
 
   home.packages = with pkgs; [
     zoxide
-    rsync
-    neovim
     trash-cli
     caddy
     neofetch
@@ -21,7 +19,8 @@
     # cmake
     python3
     lua
-    nodejs-slim_25
+    nodejs_25
+    # nodejs-slim_25
 
     # archives, compression and decompression
     bzip2
@@ -101,6 +100,12 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    ## rust related
+    # cargo-bloat # find what takes the most space in the executable
+    # cargo-cache # manage cargo cache (${CARGO_HOME}); print and remove dirs selectively
+    # cargo-zigbuild
+    # rustup # provides rustfmt, cargo-clippy, rustup, cargo, rust-lldb, rust-analyzer, rustc, rust-gdb, cargo-fmt
 
     # nix related
     # it provides the command `nom` works just like `nix`
