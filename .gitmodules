@@ -1,0 +1,3 @@
+[submodule "home/dotfiles"]
+	path = home/dotfiles
+	url = git@github.com:handy-sun/dotfiles.git
