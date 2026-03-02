@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  # remember to modify
+  ## remember to modify
   home.username = "qi";
   home.homeDirectory = "/home/qi";
 
