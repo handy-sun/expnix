@@ -15,17 +15,19 @@
 
     # archives, compression and decompression
     bzip2
+    cpio # Program to create or extract from cpio archives
     gzip
     p7zip
     pigz # Parallel Implementation of GZip
     #rar # absent on aarch64, and not really needed
     unzip
-    unrar # non-FOSS(unfree) pkgs !!!
+    unrar-free
     xz
     zip
     zstd
 
     # utils
+    xclip
     fzf
     jq # A lightweight and flexible command-line JSON processor
     yq-go # yaml processor https://github.com/mikefarah/yq
@@ -33,7 +35,6 @@
     # utilities written in Rust
     bandwhich
     bat # cat
-    bottom
     broot
     delta # diff; also used of git
     dua
@@ -51,26 +52,13 @@
     uv # pip
     yazi # ranger
 
-    # networking tools
-    iperf3
-    dnsutils  # `dig` + `nslookup`
-    ldns # replacement of `dig`, it provide the command `drill`
-    aria2 # A lightweight multi-protocol & multi-source command-line download utility
-    socat # replacement of openbsd-netcat
-    nmap # A utility for network discovery and security auditing
-    ipcalc  # it is a calculator for the IPv4/v6 addresses
-    iproute2
-    pv
-
     # misc
+    doxygen
     tree
     multitail
-    gnused
-    gnutar
-    gawk
-    gnupg
     poppler-utils
     tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
+    nil # language server for Nix
 
     # productivity
     hugo # static site generator
@@ -79,24 +67,6 @@
     btop  # replacement of htop/nmon
     iotop # io monitoring
     iftop # network monitoring
-
-    # system call monitoring
-    strace # system call monitoring
-    ltrace # library call monitoring
-    lsof # list open files
-
-    # system tools
-    sysstat
-    lm_sensors # for `sensors` command
-    ethtool
-    pciutils # lspci
-    usbutils # lsusb
-
-    # nix related
-    # it provides the command `nom` works just like `nix`
-    # with more details log output
-    nix-output-monitor
-    nil # language server for Nix
   ];
 
   home.sessionVariables = {
