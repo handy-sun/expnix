@@ -1,0 +1,6 @@
+[services.mandev]
+type = "sftp"
+host = "mandev"
+user = "qi"
+port = 22
+key_file = '~/.ssh/id_ecdsa'

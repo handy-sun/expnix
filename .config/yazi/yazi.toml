@@ -1,0 +1,47 @@
+[mgr]
+ratio = [1, 4, 5]
+show_hidden = true
+scrolloff = 6
+# linemode = "size"
+
+[preview]
+wrap = "yes"
+tab_size = 4
+
+[opener]
+play = [
+    { run = "mpv %s", orphan = true } ,
+]
+edit = [
+    { run = '$EDITOR "$@"', block = true, for = "unix" },
+    { run = "%EDITOR% %*",  block = true, for = "windows" },
+]
+open = [
+    { run = 'xdg-open "$@"', desc = "Open" },
+]
+
+[open]
+rules = [
+    { mime = "text/*", use = "edit" },
+    { mime = "video/*", use = "play" },
+    { mime = "audio/*", use = "play" },
+#     { name = "*.html", use = [ "open", "edit" ] },
+]
+prepend_rules = [
+    { url = "*.json", use = "edit" },
+    { url = "*.conf", use = "edit" },
+    # Multiple openers for a single rule
+    { url = "*.html", use = [ "open", "edit" ] },
+]
+append_rules = [
+    { url = "*", use = "edit" },
+]
+
+[plugin]
+prepend_fetchers = [
+    { id = "git", url = "*", run = "git" },
+    { id = "git", url = "*/", run = "git" },
+]
+prepend_previewers = [
+    { url = '**/.git/', run = 'preview-git' },
+]
