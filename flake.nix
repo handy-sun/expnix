@@ -11,9 +11,13 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    my-dotfiles = {
+      url = "github:handy-sun/dotfiles/main"; # main branch don't use git submodules
+      flake = false;
+    };
   };
 
-  outputs = inputs @ { nixpkgs, home-manager, rust-overlay, ... }: {
+  outputs = inputs @ { nixpkgs, home-manager, rust-overlay, my-dotfiles, ... }: {
     # expnix: your hostname
     nixosConfigurations.expnix = nixpkgs.lib.nixosSystem {
       # system = "aarch64-linux";  # 指定 ARM64 架构（legacy，但兼容）
