@@ -23,8 +23,13 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.qi = import ./home/qi.nix;
-          home-manager.extraSpecialArgs = inputs;
+          home-manager.users.qi = {
+            imports = [
+              ./home/qi.nix
+              ./home/qi-programs.nix
+            ];
+          };
+          home-manager.extraSpecialArgs = { inherit inputs;}; ## not `inputs` !!!
         }
         ({ pkgs, ... }: { ## Can use 'cargo -V' directly
           nixpkgs.overlays = [ rust-overlay.overlays.default ];
