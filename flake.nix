@@ -24,7 +24,6 @@
   outputs = inputs @ { nixpkgs, home-manager, rust-overlay, my-dotfiles, my-dotzsh, ... }: {
     ## expnix: your hostname
     nixosConfigurations.expnix = nixpkgs.lib.nixosSystem {
-      # specialArgs = { inherit inputs;};
       # system = "aarch64-linux";
       modules = [
         ./configuration.nix
@@ -38,7 +37,7 @@
               ./home/qi-programs.nix
             ];
           };
-          home-manager.extraSpecialArgs = { inherit inputs;}; ## not `inputs` !!!
+          home-manager.extraSpecialArgs = { inherit inputs; };
         }
         ({ pkgs, ... }: { ## Can use 'cargo -V' directly
           nixpkgs.overlays = [ rust-overlay.overlays.default ];

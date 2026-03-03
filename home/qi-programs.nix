@@ -5,15 +5,15 @@ let
   dotconfig = "${dotfiles}/.config";
 in
 {
-  ## If use git config at path: `~/.config/git/config`, to make git use this config file, `~/.gitconfig` should not exist!
-  ## https://git-scm.com/docs/git-config#Documentation/git-config.txt---global
   home.activation = {
+    ## If use git config at path: `~/.config/git/config`, `~/.gitconfig` should not exist!
+    ## https://git-scm.com/docs/git-config#Documentation/git-config.txt---global
     removeExistingGitconfig = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
-      test -e ${config.home.homeDirectory}/.gitconfig && rm -f ${config.home.homeDirectory}/.gitconfig
+      rm -f ${config.home.homeDirectory}/.gitconfig
     '';
 
-    initMyDotzsh = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
-      bash ${inputs.my-dotzsh}/common.sh.in
+    initMyDotzsh = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      PATH="${config.home.profileDirectory}/bin:/run/current-system/sw/bin:\$PATH" bash ${inputs.my-dotzsh}/common.sh.in 1
     '';
   };
 
@@ -37,8 +37,11 @@ in
   };
 
   ## ---------- zsh ----------
-  # home.file.".zshrc".text = "source ${config.xdg.configHome}/zsh/zshrc";
   home.file.".zshrc".text = ''
-    source $HOME/.config/dotzsh/zshrc
+    source ${inputs.my-dotzsh}/zshrc
+
+    if (( $+commands[zoxide] )); then
+        eval "$(zoxide init zsh)"
+    fi
   '';
 }
