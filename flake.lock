@@ -37,6 +37,22 @@
         "type": "github"
       }
     },
+    "my-dotzsh": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772470795,
+        "narHash": "sha256-AJyTBjbNt8FA4thZ9zr9IAyscI7INA37GuBVo69Nb7k=",
+        "owner": "handy-sun",
+        "repo": "dotzsh",
+        "rev": "fefd2426097515df06c21277b547ed24328eaf4e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "handy-sun",
+        "repo": "dotzsh",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1772419343,
@@ -57,6 +73,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "my-dotfiles": "my-dotfiles",
+        "my-dotzsh": "my-dotzsh",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay"
       }

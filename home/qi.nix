@@ -77,8 +77,5 @@
     RUSTUP_UPDATE_ROOT = "https://rsproxy.cn/rustup";
   };
 
-  home.file.".zshrc".text = ''
-    source $HOME/.config/dotzsh/zshrc
-  '';
   home.stateVersion = "26.05";
 }

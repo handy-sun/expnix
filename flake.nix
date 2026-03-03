@@ -15,9 +15,13 @@
       url = "github:handy-sun/dotfiles/main"; # main branch don't use git submodules
       flake = false;
     };
+    my-dotzsh= {
+      url = "github:handy-sun/dotzsh";
+      flake = false;
+    };
   };
 
-  outputs = inputs @ { nixpkgs, home-manager, rust-overlay, my-dotfiles, ... }: {
+  outputs = inputs @ { nixpkgs, home-manager, rust-overlay, my-dotfiles, my-dotzsh, ... }: {
     ## expnix: your hostname
     nixosConfigurations.expnix = nixpkgs.lib.nixosSystem {
       # specialArgs = { inherit inputs;};
