@@ -24,6 +24,12 @@ in
   xdg.configFile."go".source = "${dotconfig}/go";
   xdg.configFile."mpv".source = "${dotconfig}/mpv";
   xdg.configFile."tmux".source = "${dotconfig}/tmux";
+
+  programs.git.ignores = [
+    "__pycache__"
+    ".DS_Store"
+  ];
+
   ## ---------- yazi ----------
   programs.yazi = {
     enable = true;

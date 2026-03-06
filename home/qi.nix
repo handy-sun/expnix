@@ -27,6 +27,7 @@
     zstd
 
     # utils
+    ninja
     xclip
     fzf
     jq # A lightweight and flexible command-line JSON processor
@@ -56,9 +57,10 @@
     doxygen
     tree
     multitail
-    poppler-utils
+    poppler-utils # provides pdftoppm, pdftops, pdftotext, ....
     tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
     nil # language server for Nix
+    resvg # provides resvg usvg
 
     # productivity
     hugo # static site generator

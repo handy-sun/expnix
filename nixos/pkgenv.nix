@@ -5,7 +5,7 @@
     hostPlatform = lib.mkDefault "aarch64-linux";
     config.allowUnfree = true; # allow non-FOSS pkgs
   };
-  networking.hostName = "expnix";
+  networking.hostName = lib.mkForce "expnix";
   nix = {
     gc = {
       automatic = true;
@@ -14,7 +14,7 @@
       options = "--delete-older-than 7d";
     };
     settings = {
-      trusted-users = [ "root" "qi" ];
+      trusted-users = [ "qi" ];
       # Optimise storage
       # you can also optimise the store manually via:
       #    nix-store --optimise
@@ -40,18 +40,20 @@
     docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
     docker-compose
     ctags
+    stun
     zerotierone
     acme-sh
+    lrzsz
 
     ## programming
     clang
     gcc
     go
-    # cmake
+    cmake
     perl
     python3
     lua
-    nodejs_25 # provides node, npm
+    nodejs # provides node, npm
 
     # system call monitoring
     strace # system call monitoring
@@ -64,6 +66,7 @@
     logrotate
     lm_sensors # for `sensors` command
     ethtool
+    openssl
     pciutils # lspci
     usbutils # lsusb
 
@@ -87,12 +90,13 @@
     rustup # provides rustfmt, cargo-clippy, rustup, cargo, rust-lldb, rust-analyzer, rustc, rust-gdb, cargo-fmt
 
     ## nix related
+    nix-tree
     nix-output-monitor # it provides the command `nom` works just like `nix` with more details log output
 
-    # misc
+    # misc (about gnu)
+    gnumake
     gnused
     gnutar
-    # gawk
     gnupg
   ];
   environment = {
@@ -130,7 +134,7 @@
   users.extraGroups.docker.members = [ "qi" ];
 
   time = {
-    # timeZone = "Asia/Shanghai";
+    timeZone = lib.mkForce "Asia/Shanghai";
     hardwareClockInLocalTime = true;
   };
 
