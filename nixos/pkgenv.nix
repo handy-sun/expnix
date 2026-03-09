@@ -27,38 +27,26 @@
   environment.systemPackages = with pkgs; [
     git
     vim
-    neovim
+    curl
     wget
     file
-    rsync
-    dae
-    glider
-    sing-box
+    fish
     zsh
     tmux
     docker
-    docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
-    docker-compose
-    ctags
-    stun
     zerotierone
     acme-sh
-    lrzsz
-
-    ## programming
-    clang
     gcc
-    go
-    cmake
     perl
-    python3
-    lua
-    nodejs # provides node, npm
-
-    # system call monitoring
-    strace # system call monitoring
-    ltrace # library call monitoring
+    zstd
+    zip
+    unzip
+    xz
+    nginx
+    strace # a diagnostic, debugging and instructional userspace utility for Linux.
     lsof # list open files
+    procps
+    fakeroot
 
     # system tools
     fail2ban
@@ -67,31 +55,22 @@
     lm_sensors # for `sensors` command
     ethtool
     openssl
+    openssh
     pciutils # lspci
     usbutils # lsusb
 
     # networking tools
+    dae
+    glider
+    sing-box
     frp
     iperf3
     dnsmasq # Integrated DNS, DHCP and TFTP server for small networks
-    dnsutils  # `dig` + `nslookup`
     ldns # replacement of `dig`, it provide the command `drill`
-    aria2 # A lightweight multi-protocol & multi-source command-line download utility
     socat # replacement of openbsd-netcat
     nmap # A utility for network discovery and security auditing
-    ipcalc  # it is a calculator for the IPv4/v6 addresses
     iproute2
-    pv
-
-    ## rust related
-    # cargo-bloat # find what takes the most space in the executable
-    # cargo-cache # manage cargo cache (${CARGO_HOME}); print and remove dirs selectively
-    # cargo-zigbuild
-    rustup # provides rustfmt, cargo-clippy, rustup, cargo, rust-lldb, rust-analyzer, rustc, rust-gdb, cargo-fmt
-
-    ## nix related
-    nix-tree
-    nix-output-monitor # it provides the command `nom` works just like `nix` with more details log output
+    iptables
 
     # misc (about gnu)
     gnumake

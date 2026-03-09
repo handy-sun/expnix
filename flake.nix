@@ -21,7 +21,15 @@
     };
   };
 
-  outputs = inputs @ { nixpkgs, home-manager, rust-overlay, my-dotfiles, my-dotzsh, ... }: {
+  outputs = inputs @ {
+    nixpkgs,
+    home-manager,
+    rust-overlay,
+    my-dotfiles,
+    my-dotzsh,
+    ...
+  }:
+  {
     ## expnix: your hostname
     nixosConfigurations.expnix = nixpkgs.lib.nixosSystem {
       # system = "aarch64-linux";
@@ -34,7 +42,6 @@
           home-manager.users.qi = {
             imports = [
               ./home/qi.nix
-              ./home/qi-programs.nix
             ];
           };
           home-manager.extraSpecialArgs = { inherit inputs; };

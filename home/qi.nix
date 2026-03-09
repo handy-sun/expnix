@@ -1,17 +1,56 @@
 { pkgs, ... }:
 
 {
-  ## remember to modify
+  # home.stateVersion = "26.05";
+  home.stateVersion = "25.11";
   home.username = "qi";
   home.homeDirectory = "/home/qi";
+
+  imports = [
+    ./qi-programs.nix
+  ];
 
   home.packages = with pkgs; [
     zoxide
     trash-cli
-    caddy
     neofetch
     fastfetch
-    # nnn # terminal file manager
+    neovim
+    docker-compose
+    docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
+    nginx
+    caddy
+    acme-sh
+
+    ## programming
+    # clang gcc confilct ? /nix/store/.../bin/cpp
+    (pkgs.buildEnv {
+      name = "dev-cpp";
+      paths = with pkgs; [
+        gcc
+        clang
+      ];
+      ignoreCollisions = true;
+    })
+    gnumake
+    cmake
+    go
+    perl
+    python3
+    lua
+    nodejs # provides node, npm
+    rustup # provides rustfmt, cargo-clippy, rustup, cargo, rust-lldb, rust-analyzer, rustc, rust-gdb, cargo-fmt
+
+    ## debugging
+    gdb
+    pahole
+    strace # a diagnostic, debugging and instructional userspace utility for Linux.
+    ltrace # library call monitoring
+    lsof # list open files
+
+    ## rust related
+    # cargo-bloat # find what takes the most space in the executable
+    # cargo-cache # manage cargo cache (${CARGO_HOME}); print and remove dirs selectively
 
     # archives, compression and decompression
     bzip2
@@ -19,7 +58,7 @@
     gzip
     p7zip
     pigz # Parallel Implementation of GZip
-    #rar # absent on aarch64, and not really needed
+    # rar # absent on aarch64, and not really needed
     unzip
     unrar-free
     xz
@@ -30,8 +69,19 @@
     ninja
     xclip
     fzf
+    gnupg
+    lrzsz
     jq # A lightweight and flexible command-line JSON processor
     yq-go # yaml processor https://github.com/mikefarah/yq
+    rsync
+    stun
+
+    # networking tools
+    dnsutils  # `dig` + `nslookup`
+    # ldns # replacement of `dig`, it provide the command `drill`
+    ipcalc  # it is a calculator for the IPv4/v6 addresses
+    pv
+    nexttrace
 
     # utilities written in Rust
     bandwhich
@@ -44,23 +94,34 @@
     eza # ls colorize more info
     fd # find
     hyperfine
+    miniserve
     ncdu
     procs # ps
     ripgrep # recursively searches directories for a regex pattern
     sd # sed
     stylua # lua format tool
+    tlrc # A tldr client written in Rust
     tre-command
     uv # pip
     yazi # ranger
 
     # misc
+    aria2 # A lightweight multi-protocol & multi-source command-line download utility
+    axel
+    yt-dlp
     doxygen
     tree
     multitail
-    poppler-utils # provides pdftoppm, pdftops, pdftotext, ....
     tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
+    ctags
+    w3m
+    imagemagick
+
+    ## nix related
+    nh # another nix cli helper
     nil # language server for Nix
-    resvg # provides resvg usvg
+    nix-tree
+    nix-output-monitor # it provides the command `nom` works just like `nix` with more details log output
 
     # productivity
     hugo # static site generator
@@ -79,5 +140,4 @@
     RUSTUP_UPDATE_ROOT = "https://rsproxy.cn/rustup";
   };
 
-  home.stateVersion = "26.05";
 }

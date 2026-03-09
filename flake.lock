@@ -40,11 +40,11 @@
     "my-dotzsh": {
       "flake": false,
       "locked": {
-        "lastModified": 1772594402,
-        "narHash": "sha256-M1p83nUdvuKv4ZRg1xIiBTFVFCREMpO7A/auyG5KZbI=",
+        "lastModified": 1772899412,
+        "narHash": "sha256-N34BHOqk4M0LHUd1r6jGRs6yu+4gLarWjCZpPkr77lk=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "ba13a838ebf85fb4e5e682d64eda8f31ce635cdd",
+        "rev": "63ac80c98077345ff2b1907cec6c0c88edce4ad2",
         "type": "github"
       },
       "original": {
