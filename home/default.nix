@@ -7,7 +7,7 @@
   home.homeDirectory = "/home/qi";
 
   imports = [
-    ./qi-programs.nix
+    ./programs.nix
   ];
 
   home.packages = with pkgs; [

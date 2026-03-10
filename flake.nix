@@ -39,11 +39,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.qi = {
-            imports = [
-              ./home/qi.nix
-            ];
-          };
+          home-manager.users.qi = import ./home;
           home-manager.extraSpecialArgs = { inherit inputs; };
         }
         ({ pkgs, ... }: { ## Can use 'cargo -V' directly

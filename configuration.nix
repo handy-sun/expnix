@@ -1,4 +1,4 @@
-{ modulesPath, ... }:
+{ modulesPath, lib, ... }:
 
 {
   imports =
@@ -12,7 +12,7 @@
       # system packages, enviroment, other settings
       ./nixos/pkgenv.nix
       # system services, virtualisation
-      ./nixos/root-services.nix
+      ./nixos/services.nix
     ];
 
   users.users.qi = {
