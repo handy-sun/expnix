@@ -11,12 +11,11 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    my-dotzsh= {
+      url = "github:handy-sun/dotzsh/dev-flake";
+    };
     my-dotfiles = {
       url = "github:handy-sun/dotfiles/main"; # main branch don't use git submodules
-      flake = false;
-    };
-    my-dotzsh= {
-      url = "github:handy-sun/dotzsh";
       flake = false;
     };
   };
@@ -29,18 +28,23 @@
     my-dotzsh,
     ...
   }:
+  let
+    myvars = import ./lib/vars.nix;
+  in
   {
-    ## expnix: your hostname
     nixosConfigurations.expnix = nixpkgs.lib.nixosSystem {
-      # system = "aarch64-linux";
       modules = [
         ./configuration.nix
+        # system packages, enviroment, other settings
+        ./nixos/pkgenv.nix 
+        # system services, virtualisation
+        ./nixos/services.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.qi = import ./home;
-          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.users.${myvars.user} = import ./home;
+          home-manager.extraSpecialArgs = { inherit inputs myvars; };
         }
         ({ pkgs, ... }: { ## Can use 'cargo -V' directly
           nixpkgs.overlays = [ rust-overlay.overlays.default ];

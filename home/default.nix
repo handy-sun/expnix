@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, myvars, ... }:
 
 {
   # home.stateVersion = "26.05";
   home.stateVersion = "25.11";
-  home.username = "qi";
-  home.homeDirectory = "/home/qi";
+  home.username = "${myvars.user}";
+  home.homeDirectory = "/home/${myvars.user}";
 
   imports = [
     ./programs.nix

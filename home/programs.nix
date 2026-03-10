@@ -12,9 +12,9 @@ in
       rm -f ${config.home.homeDirectory}/.gitconfig
     '';
 
-    initMyDotzsh = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      PATH="${config.home.profileDirectory}/bin:/run/current-system/sw/bin:\$PATH" bash ${inputs.my-dotzsh}/common.sh.in 1
-    '';
+    # initMyDotzsh = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    #   PATH="${config.home.profileDirectory}/bin:/run/current-system/sw/bin:\$PATH" bash ${inputs.my-dotzsh}/common.sh.in 1
+    # '';
   };
 
   xdg.configFile."bat".source = "${dotconfig}/bat";

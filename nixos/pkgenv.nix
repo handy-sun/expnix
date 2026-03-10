@@ -1,5 +1,8 @@
 { lib, pkgs, ... }:
 
+let
+  myvars = import ../lib/vars.nix;
+in
 {
   nixpkgs = {
     hostPlatform = lib.mkDefault "aarch64-linux";
@@ -14,7 +17,7 @@
       options = "--delete-older-than 7d";
     };
     settings = {
-      trusted-users = [ "qi" ];
+      trusted-users = [ "${myvars.user}" ];
       # Optimise storage
       # you can also optimise the store manually via:
       #    nix-store --optimise
@@ -98,19 +101,24 @@
     };
   };
 
-  boot = {
-    kernel.sysctl = {
-      "net.ipv4.ip_forward" = 1;
-    };
-  };
+  users.users.${myvars.user} = {
+    uid = 501;
+    extraGroups = [ "wheel" "orbstack" ];
 
-  # must enable zsh in order users to use it [[1
-  programs.zsh.enable = true;
-  users.users.qi = {
+    # simulate isNormalUser, but with an arbitrary UID
+    isSystemUser = true;
+    group = "users";
+    createHome = true;
+    home = "/home/${myvars.user}";
+    homeMode = "700";
+    # useDefaultShell = true;
     shell = pkgs.zsh;
   };
-  # ]]1
-  users.extraGroups.docker.members = [ "qi" ];
+
+  ## must enable zsh in order users to use it
+  programs.zsh.enable = true;
+ 
+  users.extraGroups.docker.members = [ "${myvars.user}" ];
 
   time = {
     timeZone = lib.mkForce "Asia/Shanghai";
