@@ -13,7 +13,6 @@
   home.packages = with pkgs; [
     zoxide
     trash-cli
-    neofetch
     fastfetch
     neovim
     docker-compose
