@@ -34,7 +34,7 @@
   {
     nixosConfigurations.expnix = nixpkgs.lib.nixosSystem {
       modules = [
-        ./configuration.nix
+        # ./configuration.nix
         # Include the OrbStack-specific configuration.
         ./machines/orb-base.nix
         # system packages, enviroment, other settings

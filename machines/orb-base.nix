@@ -2,17 +2,52 @@
 # This WILL be overwritten in the future. Make a copy and update the include
 # in configuration.nix if you want to keep your changes.
 
-{ lib, config, ... }:
+{ lib, config, modulesPath, ... }:
 
+let
+  myvars = import ../lib/vars.nix;
+in
 {
+  imports = [
+    "${modulesPath}/virtualisation/lxc-container.nix"
+  ];
+
+  system.stateVersion = "26.05"; # Did you read the comment?
+  security.sudo.wheelNeedsPassword = false;
   # Add OrbStack CLI tools to PATH
   environment.shellInit = ''
     . /opt/orbstack-guest/etc/profile-early
-
     # add your customizations here
-
     . /opt/orbstack-guest/etc/profile-late
   '';
+
+  time.timeZone = lib.mkForce "Asia/Shanghai";
+
+  # This being `true` leads to a few nasty bugs, change at your own risk!
+  users.mutableUsers = false;
+  users.users.${myvars.user} = {
+    uid = 501;
+    extraGroups = [ "wheel" "orbstack" ];
+
+    # simulate isNormalUser, but with an arbitrary UID
+    isSystemUser = true;
+    group = "users";
+    createHome = true;
+    home = "/home/${myvars.user}";
+    homeMode = "700";
+    useDefaultShell = true;
+    # shell = pkgs.zsh;
+  };
+  users.groups.orbstack.gid = 67278;
+
+  # indicate builder support for emulated architectures
+  nix.settings = {
+    trusted-users = [ "${myvars.user}" ];
+    extra-platforms = [
+      "x86_64-linux"
+      "i686-linux"
+    ];
+  };
 
   # Enable documentation
   documentation.man.enable = true;
@@ -23,14 +58,37 @@
   services.resolved.enable = false;
   environment.etc."resolv.conf".source = "/opt/orbstack-guest/etc/resolv.conf";
 
+  ## -------- orb network --------
   # Faster DHCP - OrbStack uses SLAAC exclusively
   networking.dhcpcd.extraConfig = ''
     noarp
     noipv6
   '';
 
+  networking = {
+    dhcpcd.enable = false;
+    useDHCP = false;
+    useHostResolvConf = false;
+  };
+
+  systemd.network = {
+    enable = true;
+    networks."50-eth0" = {
+      matchConfig.Name = "eth0";
+      networkConfig = {
+        DHCP = "ipv4";
+        IPv6AcceptRA = true;
+      };
+      linkConfig.RequiredForOnline = "routable";
+    };
+  };
+
   # Disable sshd
-  services.openssh.enable = false;
+  services.openssh.enable = lib.mkForce false;
+  # ssh config
+  programs.ssh.extraConfig = ''
+    Include /opt/orbstack-guest/etc/ssh_config
+  '';
 
   # systemd
   systemd.services."systemd-oomd".serviceConfig.WatchdogSec = 0;
@@ -51,17 +109,4 @@
   systemd.services."systemd-hostnamed".serviceConfig.WatchdogSec = 0;
   systemd.services."systemd-homed".serviceConfig.WatchdogSec = 0;
   systemd.services."systemd-networkd".serviceConfig.WatchdogSec = lib.mkIf config.systemd.network.enable 0;
-
-  # ssh config
-  programs.ssh.extraConfig = ''
-    Include /opt/orbstack-guest/etc/ssh_config
-  '';
-
-  # indicate builder support for emulated architectures
-  nix.settings.extra-platforms = [
-    "x86_64-linux"
-    "i686-linux"
-  ];
-
-  users.groups.orbstack.gid = 67278;
 }

@@ -17,7 +17,7 @@ in
       options = "--delete-older-than 7d";
     };
     settings = {
-      trusted-users = [ "${myvars.user}" ];
+      # trusted-users = [ "${myvars.user}" ];
       # Optimise storage
       # you can also optimise the store manually via:
       #    nix-store --optimise
@@ -26,6 +26,7 @@ in
       experimental-features = [ "nix-command" "flakes" ];
     };
   };
+  users.extraGroups.docker.members = [ "${myvars.user}" ];
 
   environment.systemPackages = with pkgs; [
     git
@@ -101,27 +102,12 @@ in
     };
   };
 
-  users.users.${myvars.user} = {
-    uid = 501;
-    extraGroups = [ "wheel" "orbstack" ];
-
-    # simulate isNormalUser, but with an arbitrary UID
-    isSystemUser = true;
-    group = "users";
-    createHome = true;
-    home = "/home/${myvars.user}";
-    homeMode = "700";
-    # useDefaultShell = true;
-    shell = pkgs.zsh;
-  };
-
   ## must enable zsh in order users to use it
   programs.zsh.enable = true;
- 
-  users.extraGroups.docker.members = [ "${myvars.user}" ];
+  users.users.${myvars.user}.shell = pkgs.zsh;
 
   time = {
-    timeZone = lib.mkForce "Asia/Shanghai";
+    # timeZone =  "Asia/Shanghai";
     hardwareClockInLocalTime = true;
   };
 
