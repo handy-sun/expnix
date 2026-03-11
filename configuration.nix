@@ -5,8 +5,6 @@
     [
       # Include the default lxd configuration.
       "${modulesPath}/virtualisation/lxc-container.nix"
-      # Include the OrbStack-specific configuration.
-      ./orbstack.nix
     ];
 
   security.sudo.wheelNeedsPassword = false;
