@@ -34,12 +34,8 @@
   {
     nixosConfigurations.expnix = nixpkgs.lib.nixosSystem {
       modules = [
-        # ./configuration.nix
-        # Include the OrbStack-specific configuration.
         ./machines/orb-base.nix
-        # system packages, enviroment, other settings
         ./nixos/pkgenv.nix 
-        # system services, virtualisation
         ./nixos/services.nix
         home-manager.nixosModules.home-manager
         {
@@ -48,10 +44,23 @@
           home-manager.users.${myvars.user} = import ./home;
           home-manager.extraSpecialArgs = { inherit inputs myvars; };
         }
-        ({ pkgs, ... }: { ## Can use 'cargo -V' directly
-          nixpkgs.overlays = [ rust-overlay.overlays.default ];
-          environment.systemPackages = [ pkgs.rust-bin.stable.latest.default ];
-        })
+        # ({ pkgs, ... }: {
+        #   nixpkgs.overlays = [ rust-overlay.overlays.default ];
+        #   environment.systemPackages = [ pkgs.rust-bin.stable.latest.default ];
+        # })
+      ];
+    };
+
+    ## home-manager singlealone for x86_64-linux"
+    homeConfigurations."${myvars.user}" = home-manager.lib.homeManagerConfiguration {
+      # inherit pkgs;
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        # overlays = [ rust-overlay.overlays.default ];
+      };
+      extraSpecialArgs = { inherit inputs myvars; };
+      modules = [
+        ./home
       ];
     };
   };

@@ -5,6 +5,8 @@ let
   dotconfig = "${dotfiles}/.config";
 in
 {
+  programs.home-manager.enable = true;
+
   home.activation = {
     ## If use git config at path: `~/.config/git/config`, `~/.gitconfig` should not exist!
     ## https://git-scm.com/docs/git-config#Documentation/git-config.txt---global
