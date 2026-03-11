@@ -2,7 +2,7 @@
 # This WILL be overwritten in the future. Make a copy and update the include
 # in configuration.nix if you want to keep your changes.
 
-{ lib, config, modulesPath, ... }:
+{ lib, config, modulesPath, pkgs, ... }:
 
 let
   myvars = import ../lib/vars.nix;
@@ -11,17 +11,31 @@ in
   imports = [
     "${modulesPath}/virtualisation/lxc-container.nix"
   ];
-
   system.stateVersion = "26.05"; # Did you read the comment?
+  time.timeZone = lib.mkForce "Asia/Shanghai";
   security.sudo.wheelNeedsPassword = false;
+
+  # No bootloader（or shared kernel）
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
+  boot.loader.grub.enable = lib.mkForce false;
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
+
+  ## -------- Orbstack guest --------
   # Add OrbStack CLI tools to PATH
   environment.shellInit = ''
     . /opt/orbstack-guest/etc/profile-early
     # add your customizations here
     . /opt/orbstack-guest/etc/profile-late
   '';
-
-  time.timeZone = lib.mkForce "Asia/Shanghai";
+  # Disable sshd
+  services.openssh.enable = lib.mkForce false;
+  programs.ssh.extraConfig = ''
+    Include /opt/orbstack-guest/etc/ssh_config
+  '';
+  # Disable systemd-resolved
+  services.resolved.enable = false;
+  environment.etc."resolv.conf".source = "/opt/orbstack-guest/etc/resolv.conf";
 
   # This being `true` leads to a few nasty bugs, change at your own risk!
   users.mutableUsers = false;
@@ -29,24 +43,50 @@ in
     uid = 501;
     extraGroups = [ "wheel" "orbstack" ];
 
-    # simulate isNormalUser, but with an arbitrary UID
+    # simulate isNormalUser, but with an arbitrary UID; so isNormalUser = false;
     isSystemUser = true;
     group = "users";
     createHome = true;
     home = "/home/${myvars.user}";
     homeMode = "700";
     useDefaultShell = true;
+    openssh.authorizedKeys.keys = [];
     # shell = pkgs.zsh;
   };
   users.groups.orbstack.gid = 67278;
 
-  # indicate builder support for emulated architectures
   nix.settings = {
     trusted-users = [ "${myvars.user}" ];
+    substituters = [
+      "http://nixos-dev.orb.local:8080/main" # nixos-dev's Attic cache
+      "https://mirror.sjtu.edu.cn/nix-channels/store"
+    ];
+    trusted-public-keys = lib.mkAfter [
+      "main:79VGDHuDHe5ct6x6FhBKpRoUL6ybL9D8XedX+7XfDis="
+    ];
+
+    extra-substituters = [
+      # "http://nixos-dev.orb.local:8080/main"
+      ## status: https://mirrors.ustc.edu.cn/status/
+      # "https://mirrors.ustc.edu.cn/nix-channels/store"
+      ## nix community's cache server
+      "https://nix-community.cachix.org"
+    ];
+    ## will be appended to the system-level trusted-public-keys
+    extra-trusted-public-keys = [
+      ## nix community's cache server public key
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+    # indicate builder support for emulated architectures（Rosetta x86 simulate?）
     extra-platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
+  };
+
+  nixpkgs.config = {
+    allowUnfree = true; # allow non-FOSS pkgs
+    allowUnsupportedSystem = true;
   };
 
   # Enable documentation
@@ -54,19 +94,16 @@ in
   documentation.doc.enable = true;
   documentation.info.enable = true;
 
-  # Disable systemd-resolved
-  services.resolved.enable = false;
-  environment.etc."resolv.conf".source = "/opt/orbstack-guest/etc/resolv.conf";
-
   ## -------- orb network --------
-  # Faster DHCP - OrbStack uses SLAAC exclusively
-  networking.dhcpcd.extraConfig = ''
-    noarp
-    noipv6
-  '';
-
   networking = {
-    dhcpcd.enable = false;
+    dhcpcd = { 
+      enable = false;
+      ## Faster DHCP - OrbStack uses SLAAC exclusively
+      # extraConfig = ''
+      #   noarp
+      #   noipv6
+      # '';
+    };
     useDHCP = false;
     useHostResolvConf = false;
   };
@@ -83,12 +120,8 @@ in
     };
   };
 
-  # Disable sshd
-  services.openssh.enable = lib.mkForce false;
-  # ssh config
-  programs.ssh.extraConfig = ''
-    Include /opt/orbstack-guest/etc/ssh_config
-  '';
+  # Disable all GUI specialisation
+  specialisation = lib.mkForce {};
 
   # systemd
   systemd.services."systemd-oomd".serviceConfig.WatchdogSec = 0;

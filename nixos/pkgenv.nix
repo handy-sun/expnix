@@ -4,11 +4,9 @@ let
   myvars = import ../lib/vars.nix;
 in
 {
-  nixpkgs = {
-    hostPlatform = lib.mkDefault "aarch64-linux";
-    config.allowUnfree = true; # allow non-FOSS pkgs
-  };
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   networking.hostName = lib.mkForce "expnix";
+
   nix = {
     gc = {
       automatic = true;
@@ -107,7 +105,6 @@ in
   users.users.${myvars.user}.shell = pkgs.zsh;
 
   time = {
-    # timeZone =  "Asia/Shanghai";
     hardwareClockInLocalTime = true;
   };
 
