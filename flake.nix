@@ -7,10 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # rust-overlay = {
+    #   url = "github:oxalica/rust-overlay";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     my-dotzsh= {
       url = "github:handy-sun/dotzsh/dev-flake";
     };
@@ -23,7 +23,7 @@
   outputs = inputs @ {
     nixpkgs,
     home-manager,
-    rust-overlay,
+    # rust-overlay,
     my-dotfiles,
     my-dotzsh,
     ...
