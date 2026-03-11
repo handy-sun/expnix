@@ -4,7 +4,7 @@
   # home.stateVersion = "26.05";
   home.stateVersion = "25.11";
   home.username = "${myvars.user}";
-  home.homeDirectory = "/home/${myvars.user}";
+  home.homeDirectory = "${myvars.homeDir}";
 
   imports = [
     ./programs.nix

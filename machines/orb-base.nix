@@ -47,7 +47,7 @@ in
     isSystemUser = true;
     group = "users";
     createHome = true;
-    home = "/home/${myvars.user}";
+    home = "${myvars.homeDir}";
     homeMode = "700";
     useDefaultShell = true;
     openssh.authorizedKeys.keys = [];
