@@ -53,10 +53,9 @@
 
     ## home-manager singlealone for x86_64-linux"
     homeConfigurations."${myvars.user}" = home-manager.lib.homeManagerConfiguration {
-      # inherit pkgs;
       pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        # overlays = [ rust-overlay.overlays.default ];
+        # system = "x86_64-linux";
+        inherit system;
       };
       extraSpecialArgs = { inherit inputs myvars; };
       modules = [

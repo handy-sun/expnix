@@ -1,10 +1,14 @@
-{ pkgs, myvars, ... }:
+{ pkgs, lib, myvars, ... }:
 
+let 
+  isDarwin = pkgs.stdenv.isDarwin;
+  isLinux = pkgs.stdenv.isLinux;
+in 
 {
   # home.stateVersion = "26.05";
   home.stateVersion = "25.11";
   home.username = "${myvars.user}";
-  home.homeDirectory = "${myvars.homeDir}";
+  home.homeDirectory = if isDarwin then "/Users/${myvars.user}" else "${myvars.homeDir}";
 
   imports = [
     ./programs.nix
@@ -18,19 +22,10 @@
     docker-compose
     docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
     nginx
-    caddy
+    # caddy
     acme-sh
 
     ## programming
-    # clang gcc confilct ? /nix/store/.../bin/cpp
-    (pkgs.buildEnv {
-      name = "dev-cpp";
-      paths = with pkgs; [
-        gcc
-        clang
-      ];
-      ignoreCollisions = true;
-    })
     gnumake
     cmake
     go
@@ -40,18 +35,12 @@
     nodejs # provides node, npm
     rustup # provides rustfmt, cargo-clippy, rustup, cargo, rust-lldb, rust-analyzer, rustc, rust-gdb, cargo-fmt
 
-    ## debugging
-    gdb
-    pahole
-    strace # a diagnostic, debugging and instructional userspace utility for Linux.
-    ltrace # library call monitoring
     lsof # list open files
-
     ## rust related
     # cargo-bloat # find what takes the most space in the executable
     # cargo-cache # manage cargo cache (${CARGO_HOME}); print and remove dirs selectively
 
-    # archives, compression and decompression
+    ## archives, compression and decompression
     bzip2
     cpio # Program to create or extract from cpio archives
     gzip
@@ -64,7 +53,7 @@
     zip
     zstd
 
-    # utils
+    ## utils
     ninja
     xclip
     fzf
@@ -73,16 +62,15 @@
     jq # A lightweight and flexible command-line JSON processor
     yq-go # yaml processor https://github.com/mikefarah/yq
     rsync
-    stun
 
-    # networking tools
+    ## networking tools
     dnsutils  # `dig` + `nslookup`
     # ldns # replacement of `dig`, it provide the command `drill`
     ipcalc  # it is a calculator for the IPv4/v6 addresses
     pv
     nexttrace
 
-    # utilities written in Rust
+    ## utilities written in Rust
     bandwhich
     bat # cat
     broot
@@ -93,7 +81,7 @@
     eza # ls colorize more info
     fd # find
     hyperfine
-    miniserve
+    # miniserve
     ncdu
     procs # ps
     ripgrep # recursively searches directories for a regex pattern
@@ -101,10 +89,10 @@
     stylua # lua format tool
     tlrc # A tldr client written in Rust
     tre-command
-    uv # pip
+    # uv # replace for pip
     yazi # ranger
 
-    # misc
+    ## misc
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     axel
     yt-dlp
@@ -127,14 +115,41 @@
     htop
     glow # markdown previewer in terminal
     btop  # replacement of htop/nmon
-    iotop # io monitoring
     iftop # network monitoring
-  ];
+  ] ++ (lib.optionals isLinux [
+    strace # a diagnostic, debugging and instructional userspace utility for Linux.
+    ltrace # library call monitoring
+    pahole
+    iotop # io monitoring
+    stun
+    # gdb ## cannot build at macOS
+
+    # clang gcc confilct ? /nix/store/.../bin/cpp
+    (pkgs.buildEnv {
+      name = "dev-cpp";
+      paths = with pkgs; [
+        gcc
+        clang
+      ];
+      ignoreCollisions = true;
+    })
+  ]) ++ (lib.optionals isDarwin [
+    # cachix # Command-line client for Nix binary cache hosting https://cachix.org
+    # This is automatically setup on Linux
+    gettext
+  ]);
 
   home.sessionVariables = {
+    # LANG = "en_US.UTF-8";
+    ## For darwin?
+    LC_CTYPE = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
     TERM = "xterm-256color";
     PAGER = "less";
-    LESS = "-RX";
+    LESS = "-RX"; # -FirSwX
+    ## for 'sudo -e'
+    EDITOR = "nvim";
+    VISUAL = "nvim";
     RUSTUP_DIST_SERVER = "https://rsproxy.cn";
     RUSTUP_UPDATE_ROOT = "https://rsproxy.cn/rustup";
   };
