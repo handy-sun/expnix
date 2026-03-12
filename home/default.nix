@@ -1,11 +1,10 @@
 { pkgs, lib, myvars, ... }:
 
-let 
+let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
-in 
+in
 {
-  # home.stateVersion = "26.05";
   home.stateVersion = "25.11";
   home.username = "${myvars.user}";
   home.homeDirectory = if isDarwin then "/Users/${myvars.user}" else "${myvars.homeDir}";
@@ -135,13 +134,13 @@ in
     })
   ]) ++ (lib.optionals isDarwin [
     # cachix # Command-line client for Nix binary cache hosting https://cachix.org
-    # This is automatically setup on Linux
+    ## This is automatically setup on Linux
     gettext
   ]);
 
   home.sessionVariables = {
     # LANG = "en_US.UTF-8";
-    ## For darwin?
+    ## For darwin Terminal Fix - perl: warning: Setting locale failed.
     LC_CTYPE = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
     TERM = "xterm-256color";
