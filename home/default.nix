@@ -34,7 +34,6 @@ in
     nodejs # provides node, npm
     rustup # provides rustfmt, cargo-clippy, rustup, cargo, rust-lldb, rust-analyzer, rustc, rust-gdb, cargo-fmt
 
-    lsof # list open files
     ## rust related
     # cargo-bloat # find what takes the most space in the executable
     # cargo-cache # manage cargo cache (${CARGO_HOME}); print and remove dirs selectively
@@ -61,6 +60,11 @@ in
     jq # A lightweight and flexible command-line JSON processor
     yq-go # yaml processor https://github.com/mikefarah/yq
     rsync
+    lsof # list open files
+    direnv
+    just
+    chase
+    cachix # Command-line client for Nix binary cache hosting https://cachix.org
 
     ## networking tools
     dnsutils  # `dig` + `nslookup`
@@ -68,6 +72,7 @@ in
     ipcalc  # it is a calculator for the IPv4/v6 addresses
     pv
     nexttrace
+    frp
 
     ## utilities written in Rust
     bandwhich
@@ -133,7 +138,6 @@ in
       ignoreCollisions = true;
     })
   ]) ++ (lib.optionals isDarwin [
-    # cachix # Command-line client for Nix binary cache hosting https://cachix.org
     ## This is automatically setup on Linux
     gettext
   ]);
