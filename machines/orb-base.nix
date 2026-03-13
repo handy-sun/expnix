@@ -57,26 +57,6 @@ in
 
   nix.settings = {
     trusted-users = [ "${myvars.user}" ];
-    substituters = [
-      "http://nixos-dev.orb.local:8080/main" # nixos-dev's Attic cache
-      "https://mirror.sjtu.edu.cn/nix-channels/store"
-    ];
-    trusted-public-keys = lib.mkAfter [
-      "main:79VGDHuDHe5ct6x6FhBKpRoUL6ybL9D8XedX+7XfDis="
-    ];
-
-    extra-substituters = [
-      # "http://nixos-dev.orb.local:8080/main"
-      ## status: https://mirrors.ustc.edu.cn/status/
-      # "https://mirrors.ustc.edu.cn/nix-channels/store"
-      ## nix community's cache server
-      "https://nix-community.cachix.org"
-    ];
-    ## will be appended to the system-level trusted-public-keys
-    extra-trusted-public-keys = [
-      ## nix community's cache server public key
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
     # indicate builder support for emulated architectures（Rosetta x86 simulate?）
     extra-platforms = [
       "x86_64-linux"

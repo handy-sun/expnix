@@ -50,6 +50,7 @@
   {
     nixosConfigurations.expnix = nixpkgs.lib.nixosSystem {
       modules = [
+        ./machines/nix-core.nix
         ./machines/orb-base.nix
         ./nixos/pkgenv.nix
         ./nixos/services.nix

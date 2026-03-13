@@ -142,19 +142,12 @@ in
     gettext
   ]);
 
+  ## Don's work?
   home.sessionVariables = {
-    # LANG = "en_US.UTF-8";
-    ## For darwin Terminal Fix - perl: warning: Setting locale failed.
-    LC_CTYPE = "en_US.UTF-8";
-    LC_ALL = "en_US.UTF-8";
-    TERM = "xterm-256color";
-    PAGER = "less";
-    LESS = "-RX"; # -FirSwX
     ## for 'sudo -e'
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    RUSTUP_DIST_SERVER = "https://rsproxy.cn";
-    RUSTUP_UPDATE_ROOT = "https://rsproxy.cn/rustup";
+    # EDITOR = "nvim";
+    # VISUAL = "nvim";
+    # RUSTUP_DIST_SERVER = "https://rsproxy.cn";
+    # RUSTUP_UPDATE_ROOT = "https://rsproxy.cn/rustup";
   };
-
 }

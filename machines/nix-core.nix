@@ -24,19 +24,33 @@
 
       # substituers that will be considered before the official ones(https://cache.nixos.org)
       substituters = [
+        "http://nixos-dev.orb.local:8080/main" # nixos-dev's Attic cache
         "https://mirror.sjtu.edu.cn/nix-channels/store"
+      ];
+      trusted-public-keys = lib.mkAfter [
+        "main:79VGDHuDHe5ct6x6FhBKpRoUL6ybL9D8XedX+7XfDis="
+      ];
+
+      extra-substituters = [
         "https://nix-community.cachix.org"
       ];
-      trusted-public-keys = [
+      ## will be appended to the system-level trusted-public-keys
+      extra-trusted-public-keys = [
+        ## nix community's cache server public key
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
+
+      ## https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf
+      auto-optimise-store = true;
+
       builders-use-substitutes = true;
-      # auto-optimise-store = false;
     };
 
     # do garbage collection weekly to keep disk usage low
     gc = {
       automatic = true;
+      #dates = "weekly"; ## no longer has any effect
+      # dates = "Sun *-*-* 00:00:00";
       options = "--delete-older-than 7d";
     };
   };
