@@ -8,15 +8,9 @@ in
   programs.home-manager.enable = true;
 
   home.activation = {
-    ## If use git config at path: `~/.config/git/config`, `~/.gitconfig` should not exist!
-    ## https://git-scm.com/docs/git-config#Documentation/git-config.txt---global
     removeExistingGitconfig = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
       rm -f ${config.home.homeDirectory}/.gitconfig
     '';
-
-    # initMyDotzsh = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    #   PATH="${config.home.profileDirectory}/bin:/run/current-system/sw/bin:\$PATH" bash ${inputs.my-dotzsh}/common.sh.in 1
-    # '';
   };
 
   xdg.configFile."alacritty".source = "${dotconfig}/alacritty";

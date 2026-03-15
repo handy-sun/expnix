@@ -112,6 +112,7 @@ in
     nh # another nix cli helper
     nil # language server for Nix
     nix-tree
+    nixfmt
     nix-output-monitor # it provides the command `nom` works just like `nix` with more details log output
 
     # productivity
