@@ -19,6 +19,7 @@ in
     # '';
   };
 
+  xdg.configFile."alacritty".source = "${dotconfig}/alacritty";
   xdg.configFile."bat".source = "${dotconfig}/bat";
   xdg.configFile."clangd".source = "${dotconfig}/clangd";
   xdg.configFile."eza".source = "${dotconfig}/eza";
@@ -45,7 +46,8 @@ in
   };
 
   ## ---------- zsh ----------
-  home.file.".zshrc".text = ''
+  # home.file.".zshrc".text = ''
+  home.file.".zprofile".text = ''
     source ${inputs.my-dotzsh}/zshrc
 
     if (( $+commands[zoxide] )); then

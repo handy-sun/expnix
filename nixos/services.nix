@@ -17,7 +17,15 @@
     #   };
     # };
 
-    zerotierone.enable = true;
+    # nginx = { 
+    #   enable = true;
+    #   virtualHosts."localhost" = {
+    #     default = true;
+    #     root = "/srv/html";
+    #   };
+    # };
+
+    # zerotierone.enable = true;
   };
 
   virtualisation = {

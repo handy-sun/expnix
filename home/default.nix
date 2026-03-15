@@ -99,7 +99,7 @@ in
     ## misc
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     axel
-    yt-dlp
+    mpv # yt-dlp
     doxygen
     tree
     multitail

@@ -11,7 +11,7 @@
     # DONE: set this to false if you're using Determinate Nix.
     # NOTE: Turning off this option will invalidate all of the following nix configurations, 
     # and you will need to manually modify /etc/nix/nix.custom.conf to add the corresponding parameters.
-    enable = true;
+    enable = lib.mkDefault true;
 
     package = pkgs.nix;
 
@@ -24,11 +24,7 @@
 
       # substituers that will be considered before the official ones(https://cache.nixos.org)
       substituters = [
-        "http://nixos-dev.orb.local:8080/main" # nixos-dev's Attic cache
         "https://mirror.sjtu.edu.cn/nix-channels/store"
-      ];
-      trusted-public-keys = lib.mkAfter [
-        "main:79VGDHuDHe5ct6x6FhBKpRoUL6ybL9D8XedX+7XfDis="
       ];
 
       extra-substituters = [
@@ -41,14 +37,14 @@
       ];
 
       ## https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf
-      auto-optimise-store = true;
+      auto-optimise-store = lib.mkDefault true;
 
       builders-use-substitutes = true;
     };
 
-    # do garbage collection weekly to keep disk usage low
+    # do garbage collection to keep disk usage low
     gc = {
-      automatic = true;
+      automatic = lib.mkDefault true;
       #dates = "weekly"; ## no longer has any effect
       # dates = "Sun *-*-* 00:00:00";
       options = "--delete-older-than 7d";

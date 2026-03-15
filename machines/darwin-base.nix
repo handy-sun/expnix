@@ -37,8 +37,7 @@ in
   environment.variables =
     myvars.commonEnv
     // homebrew_mirror_env
-    // {
-      ## For darwin Terminal Fix - perl: warning: Setting locale failed.
+    // { ## Fix darwin Terminal - perl: warning: Setting locale failed.
       LC_CTYPE = "${myvars.langEnv}";
       LC_ALL = "${myvars.langEnv}";
     };
@@ -57,13 +56,13 @@ in
   programs.zsh.enable = true;
 
   ## Set this to false because i am using Determinate Nix.
-  nix.enable = lib.mkForce false;
-  nix.gc.automatic = lib.mkForce false;
+  nix.enable = false;
+  nix.gc.automatic = false;
 
   # Disable auto-optimise-store because of this issue:
   #   https://github.com/NixOS/nix/issues/7273
   # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"
-  nix.settings.auto-optimise-store = lib.mkForce false;
+  nix.settings.auto-optimise-store = false;
 
   #############################################################
   #
@@ -95,6 +94,12 @@ in
   environment.systemPackages = with pkgs; [
     git
     vim
+    curl
+    wget
+    file
+    fish
+    zsh
+    tmux
   ];
 
   # DONE To make this work, homebrew need to be installed manually, see https://brew.sh
