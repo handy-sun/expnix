@@ -143,12 +143,4 @@ in
     gettext
   ]);
 
-  ## Don's work?
-  home.sessionVariables = {
-    ## for 'sudo -e'
-    # EDITOR = "nvim";
-    # VISUAL = "nvim";
-    # RUSTUP_DIST_SERVER = "https://rsproxy.cn";
-    # RUSTUP_UPDATE_ROOT = "https://rsproxy.cn/rustup";
-  };
 }

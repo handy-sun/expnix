@@ -1,8 +1,8 @@
-{ pkgs, hostname, username, lib, ... }:
+{ pkgs, myvars, hostname, lib, ... }:
 
 let
-  myvars = import ../lib/vars.nix;
-  # Homebrew Mirror
+  username = "${myvars.user}";
+  ## Homebrew Mirror
   homebrew_mirror_env = {
     HOMEBREW_API_DOMAIN = "https://mirrors.ustc.edu.cn/homebrew-bottles/api";
     HOMEBREW_BOTTLE_DOMAIN = "https://mirrors.ustc.edu.cn/homebrew-bottles";

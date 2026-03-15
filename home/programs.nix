@@ -40,8 +40,7 @@ in
   };
 
   ## ---------- zsh ----------
-  # home.file.".zshrc".text = ''
-  home.file.".zprofile".text = ''
+  home.file.".zshrc".text = ''
     source ${inputs.my-dotzsh}/zshrc
 
     if (( $+commands[zoxide] )); then

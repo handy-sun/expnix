@@ -3,15 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
-    nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
-    };
+
     my-dotzsh = {
       url = "github:handy-sun/dotzsh/dev-flake";
     };
@@ -31,29 +33,26 @@
   }:
   let
     myvars = import ./lib/vars.nix;
+
     mkHome = arch: home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${arch};
       extraSpecialArgs = { inherit inputs myvars; };
       modules = [ ./home ];
     };
-    ## DONE: replace with your own username, system and hostname
-    username = "qi";
+
+    ## for MacOS(darwin)
     system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
     hostname = "handyMini";
-
-    specialArgs =
-      inputs
-      // {
-        inherit username hostname;
-      };
+    specialArgs = { inherit myvars hostname; };
   in
   {
-    nixosConfigurations.expnix = nixpkgs.lib.nixosSystem {
+    nixosConfigurations."expnix" = nixpkgs.lib.nixosSystem {
       modules = [
         ./machines/nix-core.nix
         ./machines/orb-base.nix
         ./nixos/pkgenv.nix
         ./nixos/services.nix
+
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -70,6 +69,14 @@
       modules = [
         ./machines/nix-core.nix
         ./machines/darwin-base.nix
+
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.${myvars.user} = import ./home;
+          home-manager.extraSpecialArgs = { inherit inputs; } // specialArgs;
+        }
       ];
     };
     # nix code formatter
@@ -77,7 +84,6 @@
 
     homeConfigurations = {
       "${myvars.user}"           = mkHome "x86_64-linux";
-      "${myvars.user}@handyMini" = mkHome "aarch64-darwin";
     };
   };
 }
