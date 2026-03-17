@@ -1,4 +1,4 @@
-{ pkgs, lib, myvars, ... }:
+{ pkgs, lib, username, myvars, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -6,8 +6,8 @@ let
 in
 {
   home.stateVersion = "25.11";
-  home.username = "${myvars.user}";
-  home.homeDirectory = if isDarwin then "/Users/${myvars.user}" else "${myvars.homeDir}";
+  home.username = username;
+  home.homeDirectory = if isDarwin then "/Users/${username}" else "${myvars.homeDir}";
 
   imports = [
     ./programs.nix
@@ -141,6 +141,7 @@ in
   ]) ++ (lib.optionals isDarwin [
     ## This is automatically setup on Linux
     gettext
+    gnutar
   ]);
 
 }

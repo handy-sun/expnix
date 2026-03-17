@@ -40,16 +40,13 @@
   let
     myvars = import ./lib/vars.nix;
 
+    appleSiliconSystem = "aarch64-darwin";
+
     mkHome = arch: home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${arch};
       extraSpecialArgs = { inherit inputs myvars; };
       modules = [ ./home ];
     };
-
-    ## for MacOS(darwin)
-    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-    hostname = "handyMini";
-    specialArgs = { inherit myvars hostname; };
 
     mkSystem = import ./lib/mksystem.nix {
       inherit nixpkgs inputs myvars;
@@ -62,27 +59,18 @@
       };
     };
 
-    ## nix-darwin
-    darwinConfigurations."${hostname}" = nix-darwin.lib.darwinSystem {
-      inherit system specialArgs;
-      modules = [
-        ./machines/nix-core.nix
-        ./machines/darwin-base.nix
-
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.${myvars.user} = import ./home;
-          home-manager.extraSpecialArgs = { inherit inputs; } // specialArgs;
-        }
-      ];
+    darwinConfigurations = {
+      "handyMini" = mkSystem "handyMini" {
+        system = appleSiliconSystem;
+        isDarwin = true;
+      };
     };
-    # nix code formatter
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
 
     homeConfigurations = {
-      "${myvars.user}"           = mkHome "x86_64-linux";
+      "${myvars.user}" = mkHome "x86_64-linux";
     };
+
+    # nix code formatter
+    formatter.${appleSiliconSystem} = nixpkgs.legacyPackages.${appleSiliconSystem}.alejandra;
   };
 }

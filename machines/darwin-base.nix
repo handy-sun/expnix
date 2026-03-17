@@ -1,7 +1,6 @@
-{ pkgs, myvars, hostname, lib, ... }:
+{ pkgs, lib, username, myvars, ... }:
 
 let
-  username = "${myvars.user}";
   ## Homebrew Mirror
   homebrew_mirror_env = {
     HOMEBREW_API_DOMAIN = "https://mirrors.ustc.edu.cn/homebrew-bottles/api";
@@ -69,12 +68,6 @@ in
   #  Host & Users configuration
   #
   #############################################################
-  ## COMMAND: scutil --get HostName (HostName: not set)
-  networking.hostName = hostname;
-  ## COMMAND: scutil --get ComputerName
-  networking.computerName = hostname;
-  system.defaults.smb.NetBIOSName = hostname;
-
   users.users."${username}"= {
     home = "/Users/${username}";
     description = username;

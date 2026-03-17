@@ -2,11 +2,8 @@
 # This WILL be overwritten in the future. Make a copy and update the include
 # in configuration.nix if you want to keep your changes.
 
-{ lib, config, modulesPath, pkgs, ... }:
+{ lib, config, modulesPath, pkgs, username, myvars, ... }:
 
-let
-  myvars = import ../lib/vars.nix;
-in
 {
   imports = [
     "${modulesPath}/virtualisation/lxc-container.nix"
@@ -39,7 +36,7 @@ in
 
   # This being `true` leads to a few nasty bugs, change at your own risk!
   users.mutableUsers = false;
-  users.users.${myvars.user} = {
+  users.users.${username} = {
     uid = 501;
     extraGroups = [ "wheel" "orbstack" ];
 
@@ -56,7 +53,7 @@ in
   users.groups.orbstack.gid = 67278;
 
   nix.settings = {
-    trusted-users = [ "${myvars.user}" ];
+    trusted-users = [ "${username}" ];
     # indicate builder support for emulated architectures（Rosetta x86 simulate?）
     extra-platforms = [
       "x86_64-linux"
