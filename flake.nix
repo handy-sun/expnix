@@ -9,6 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,8 +30,9 @@
 
   outputs = inputs @ {
     nixpkgs,
-    home-manager,
     nix-darwin,
+    nixos-wsl,
+    home-manager,
     my-dotzsh,
     my-dotfiles,
     ...
@@ -44,23 +50,16 @@
     system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
     hostname = "handyMini";
     specialArgs = { inherit myvars hostname; };
+
+    mkSystem = import ./lib/mksystem.nix {
+      inherit nixpkgs inputs myvars;
+    };
   in
   {
-    nixosConfigurations."expnix" = nixpkgs.lib.nixosSystem {
-      modules = [
-        ./machines/nix-core.nix
-        ./machines/orb-base.nix
-        ./nixos/pkgenv.nix
-        ./nixos/services.nix
-
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.${myvars.user} = import ./home;
-          home-manager.extraSpecialArgs = { inherit inputs myvars; };
-        }
-      ];
+    nixosConfigurations = {
+      "expnix" = mkSystem "expnix" {
+        system = "aarch64-linux";
+      };
     };
 
     ## nix-darwin

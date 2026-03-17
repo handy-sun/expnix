@@ -4,8 +4,8 @@ let
   myvars = import ../lib/vars.nix;
 in
 {
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-  networking.hostName = lib.mkForce "expnix";
+  # nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  # networking.hostName = lib.mkForce "expnix";
 
   users.extraGroups.docker.members = [ "${myvars.user}" ];
 
