@@ -5,13 +5,11 @@ let
   dotconfig = "${dotfiles}/.config";
 in
 {
-  programs.home-manager.enable = true;
+  imports = [
+    inputs.my-dotzsh.homeManagerModules.default
+  ];
 
-  home.activation = {
-    removeExistingGitconfig = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
-      rm -f ${config.home.homeDirectory}/.gitconfig
-    '';
-  };
+  programs.home-manager.enable = true;
 
   xdg.configFile."alacritty".source = "${dotconfig}/alacritty";
   xdg.configFile."bat".source = "${dotconfig}/bat";
@@ -39,12 +37,10 @@ in
     recursive = true;
   };
 
+  programs.dotzsh.enable = true;
+
   ## ---------- zsh ----------
   home.file.".zshrc".text = ''
     source ${inputs.my-dotzsh}/zshrc
-
-    if (( $+commands[zoxide] )); then
-        eval "$(zoxide init zsh)"
-    fi
   '';
 }

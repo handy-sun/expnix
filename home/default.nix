@@ -107,6 +107,7 @@ in
     ctags
     w3m
     imagemagick
+    alacritty
 
     ## nix related
     nh # another nix cli helper
@@ -127,7 +128,6 @@ in
     pahole
     iotop # io monitoring
     stun
-    # gdb ## cannot build at macOS
 
     # clang gcc confilct ? /nix/store/.../bin/cpp
     (pkgs.buildEnv {
