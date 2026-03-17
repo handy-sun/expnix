@@ -102,11 +102,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1773671351,
-        "narHash": "sha256-KppNuDRC7JXq8qVxGwsC9iPYAiQtdSaaABANyAyXNGg=",
+        "lastModified": 1773729248,
+        "narHash": "sha256-tziepT6dLhfbeAOeljABBMFF8PGtMzNAhIYL0rV1Q8U=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "8fd644cde5346905d61a9a9d4eca9df8f346ee1a",
+        "rev": "ac2b1f971d54471fe2581c610e7ba2bf6e76b321",
         "type": "github"
       },
       "original": {

@@ -37,10 +37,9 @@ in
     recursive = true;
   };
 
-  programs.dotzsh.enable = true;
-
-  ## ---------- zsh ----------
-  home.file.".zshrc".text = ''
-    source ${inputs.my-dotzsh}/zshrc
-  '';
+  programs.zsh.enable = true;
+  programs.dotzsh = {
+    enable = true;
+    enableSourceZshrc = true;
+  };
 }

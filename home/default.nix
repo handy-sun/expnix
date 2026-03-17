@@ -21,7 +21,7 @@ in
     docker-compose
     docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
     nginx
-    # caddy
+    caddy
     acme-sh
 
     ## programming
