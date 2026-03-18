@@ -57,6 +57,11 @@
       "expnix" = mkSystem "expnix" {
         system = "aarch64-linux";
       };
+
+      "nixwsl" = mkSystem "nixwsl" {
+        system = "x86_64-linux";
+        isWSL = true;
+      };
     };
 
     darwinConfigurations = {

@@ -2,7 +2,7 @@
 { nixpkgs, inputs, myvars }:
 
 hostName: {
-  system, # architecture
+  system,
   username ? "${myvars.user}",
   isDarwin ? false,
   isWSL ? false
@@ -20,6 +20,8 @@ let
 in systemFunc rec {
   inherit system specialArgs;
   modules = [
+    ## Bring in WSL if this is a WSL build
+    (if isWSL then inputs.nixos-wsl.nixosModules.wsl else {})
     ../machines/nix-core.nix
     ../hosts/${hostName}.nix
     home-manager.home-manager {

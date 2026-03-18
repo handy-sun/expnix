@@ -48,8 +48,7 @@
     # do garbage collection to keep disk usage low
     gc = {
       automatic = lib.mkDefault true;
-      #dates = "weekly"; ## no longer has any effect
-      # dates = "Sun *-*-* 00:00:00";
+      ## The option `nix.gc.dates` can no longer be used since it's been removed. Use `nix.gc.interval` instead.
       options = "--delete-older-than 7d";
     };
   };
