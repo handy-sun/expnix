@@ -144,4 +144,5 @@ in
     gettext
   ]);
 
+  home.sessionVariables = myvars.homeEnv;
 }
