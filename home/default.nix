@@ -107,6 +107,7 @@ in
     ctags
     w3m
     imagemagick
+    ## gui
     alacritty
 
     ## nix related
@@ -141,7 +142,6 @@ in
   ]) ++ (lib.optionals isDarwin [
     ## This is automatically setup on Linux
     gettext
-    gnutar
   ]);
 
 }

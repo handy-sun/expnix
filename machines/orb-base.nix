@@ -53,7 +53,6 @@
   users.groups.orbstack.gid = 67278;
 
   nix.settings = {
-    trusted-users = [ "${username}" ];
     # indicate builder support for emulated architectures（Rosetta x86 simulate?）
     extra-platforms = [
       "x86_64-linux"

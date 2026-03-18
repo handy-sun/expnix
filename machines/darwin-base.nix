@@ -53,15 +53,34 @@ in
   ## Create /etc/zshrc that loads the nix-darwin environment.
   ## this is required if you want to use darwin's default shell - zsh
   programs.zsh.enable = true;
+  environment.shells = with pkgs; [
+    bashInteractive
+    fish
+    zsh
+  ];
 
   ## Set this to false because i am using Determinate Nix.
   nix.enable = false;
   nix.gc.automatic = false;
-
   # Disable auto-optimise-store because of this issue:
   #   https://github.com/NixOS/nix/issues/7273
   # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"
   nix.settings.auto-optimise-store = false;
+
+  # Fonts
+  fonts = {
+    packages = with pkgs; [
+      # icon fonts
+      material-design-icons
+      font-awesome
+      # nerdfonts
+      # https://github.com/NixOS/nixpkgs/blob/nixos-unstable-small/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
+      nerd-fonts.symbols-only # symbols icon only
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.iosevka
+    ];
+  };
 
   #############################################################
   #
@@ -73,8 +92,6 @@ in
     description = username;
   };
   system.primaryUser = username;
-
-  nix.settings.trusted-users = [ username ];
 
   ##########################################################################
   # Install packages from nix's official package repository.
@@ -93,6 +110,11 @@ in
     fish
     zsh
     tmux
+    coreutils
+    gnutar
+    gnused
+    iproute2mac
+    # cachix
   ];
 
   # DONE To make this work, homebrew need to be installed manually, see https://brew.sh

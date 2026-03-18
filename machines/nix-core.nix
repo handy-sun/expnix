@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  username,
   ...
 }:
 {
@@ -16,6 +17,8 @@
     package = pkgs.nix;
 
     settings = {
+      trusted-users = [ username ];
+
       # enable flakes globally
       experimental-features = [
         "nix-command"
