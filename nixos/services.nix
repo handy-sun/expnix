@@ -2,7 +2,7 @@
 
 {
   services = {
-    timesyncd.enable = true; # NTP
+    # timesyncd.enable = true; # NTP
 
     ## orbstack.nix:  Disable sshd, backup settings
     # openssh = {

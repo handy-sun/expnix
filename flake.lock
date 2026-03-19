@@ -96,11 +96,11 @@
     "my-dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1773388634,
-        "narHash": "sha256-yNU7e2EtS9+zUseVcgrbpAy4jfzFmpKodtcYRxNb7JE=",
+        "lastModified": 1773914269,
+        "narHash": "sha256-ia+YgeB/VndzGlMQWkAtZLBjsQAjyGBLfGE5N+1P4QM=",
         "owner": "handy-sun",
         "repo": "dotfiles",
-        "rev": "44abc7a7cb20ca436a5c5cad937adf13779443be",
+        "rev": "b39b76c4034068316a3c3fa83d96f8222356eed7",
         "type": "github"
       },
       "original": {

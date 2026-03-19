@@ -114,6 +114,11 @@ in
     gnutar
     gnused
     iproute2mac
+    procps
+    fakeroot
+    openssl
+    openssh
+    nmap
     # cachix
   ];
 

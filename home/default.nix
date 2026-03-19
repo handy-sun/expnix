@@ -50,6 +50,7 @@ in
     docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
     nginx
     caddy
+    sqlite
     acme-sh
 
     ## programming
