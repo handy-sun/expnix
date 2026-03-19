@@ -5,7 +5,8 @@
 }:
 
 let
-  dotconfig = "${inputs.my-dotfiles}/.config";
+  yaziDir = inputs.my-dotfiles + "/.config/yazi";
+  yaziPluginsDir = yaziDir + "/plugins";
 in
 {
   programs.yazi = {
@@ -13,10 +14,21 @@ in
     shellWrapperName = "y";
     plugins = {
       inherit (pkgs.yaziPlugins) git;
+      ## some local plugins
+      yatline     = yaziPluginsDir + "/yatline.yazi";
+      preview-git = yaziPluginsDir + "/preview-git.yazi";
+      fast-enter  = yaziPluginsDir + "/fast-enter.yazi";
+    };
+    flavors = {
+      catppuccin-mocha = yaziDir + "/flavors/catppuccin-mocha.yazi";
     };
   };
-  xdg.configFile."yazi" = {
-    source = "${dotconfig}/yazi";
-    recursive = true;
+
+  xdg.configFile = {
+    "yazi/yazi.toml".source   = yaziDir + "/yazi.toml";
+    "yazi/init.lua".source    = yaziDir + "/init.lua";
+    "yazi/keymap.toml".source = yaziDir + "/keymap.toml";
+    "yazi/theme.toml".source  = yaziDir + "/theme.toml";
+    "yazi/vfs.toml".source    = yaziDir + "/vfs.toml";
   };
 }

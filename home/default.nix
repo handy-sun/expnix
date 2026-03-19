@@ -10,6 +10,10 @@
 let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
+  rustupServer = "https://mirrors.tuna.tsinghua.edu.cn/rustup";
+  conf = config.xdg.configHome;
+  data = config.xdg.dataHome;
+  cache = config.xdg.cacheHome;
 in
 {
   home.stateVersion = "25.11";
@@ -19,16 +23,19 @@ in
   programs.home-manager.enable = true;
 
   home.sessionVariables = {
-    CARGO_HOME  = "${config.xdg.dataHome}/cargo";
-    RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
-    GOPATH      = "${config.xdg.dataHome}/go";
+    LESSHISTFILE = cache + "/less/history";
+    LESSKEY      = conf + "/less/lesskey";
 
-    RUSTUP_DIST_SERVER = "https://mirrors.tuna.tsinghua.edu.cn/rustup";
-    RUSTUP_UPDATE_ROOT = "https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup";
+    CARGO_HOME  = data + "/cargo";
+    RUSTUP_HOME = data + "/rustup";
+    GOPATH      = data + "/go";
+
+    RUSTUP_DIST_SERVER = rustupServer;
+    RUSTUP_UPDATE_ROOT = rustupServer + "/rustup";
 
     FZF_DEFAULT_COMMAND = "fd --exclude={.git,.idea,.vscode,tags,OrbStack} --type f";
     ## eza can find theme
-    EZA_CONFIG_DIR = "${config.xdg.configHome}/eza";
+    EZA_CONFIG_DIR = conf + "/eza";
   };
 
   home.sessionPath = (lib.optionals isDarwin [
@@ -50,6 +57,7 @@ in
     caddy
     sqlite
     acme-sh
+    gh
 
     ## programming
     gnumake

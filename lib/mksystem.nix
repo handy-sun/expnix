@@ -30,6 +30,7 @@ in systemFunc rec {
       home-manager.useUserPackages = true;
       home-manager.users.${username} = import ../home;
       home-manager.extraSpecialArgs = specialArgs;
+      home-manager.backupFileExtension = "hmbak";
     }
   ];
 }
