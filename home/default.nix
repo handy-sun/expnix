@@ -1,4 +1,4 @@
-{ pkgs, lib, username, myvars, ... }:
+{ pkgs, lib, username, myvars, homeDir, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -7,7 +7,7 @@ in
 {
   home.stateVersion = "25.11";
   home.username = username;
-  home.homeDirectory = if isDarwin then "/Users/${username}" else "${myvars.homeDir}";
+  home.homeDirectory = homeDir;
 
   imports = [
     ./programs.nix

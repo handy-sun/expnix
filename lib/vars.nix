@@ -1,8 +1,6 @@
 rec {
   user = "qi";
 
-  homeDir = if "${user}" == "root" then "/root" else "/home/${user}";
-
   langEnv = "zh_CN.UTF-8";
 
   userLocal = "$HOME/.local/share";

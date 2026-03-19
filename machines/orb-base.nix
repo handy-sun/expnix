@@ -2,7 +2,7 @@
 # This WILL be overwritten in the future. Make a copy and update the include
 # in configuration.nix if you want to keep your changes.
 
-{ lib, config, modulesPath, pkgs, username, myvars, ... }:
+{ lib, config, modulesPath, pkgs, username, myvars, homeDir, ... }:
 
 {
   imports = [
@@ -44,7 +44,7 @@
     isSystemUser = true;
     group = "users";
     createHome = true;
-    home = "${myvars.homeDir}";
+    home = homeDir;
     homeMode = "700";
     useDefaultShell = true;
     openssh.authorizedKeys.keys = [];
