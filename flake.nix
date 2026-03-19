@@ -42,10 +42,8 @@
 
     appleSiliconSystem = "aarch64-darwin";
 
-    mkHome = arch: home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.${arch};
-      extraSpecialArgs = { inherit inputs myvars; };
-      modules = [ ./home ];
+    mkHome = import ./lib/mkhome.nix {
+      inherit nixpkgs inputs myvars;
     };
 
     mkSystem = import ./lib/mksystem.nix {
@@ -72,7 +70,7 @@
     };
 
     homeConfigurations = {
-      "${myvars.user}" = mkHome "x86_64-linux";
+      "${myvars.user}" = mkHome "x86_64-linux" {};
     };
 
     # nix code formatter
