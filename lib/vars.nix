@@ -3,8 +3,6 @@ rec {
 
   langEnv = "zh_CN.UTF-8";
 
-  userLocal = "$HOME/.local/share";
-
   ## common system enviroment
   commonEnv = {
     LANG = "${langEnv}";

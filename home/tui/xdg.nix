@@ -1,16 +1,14 @@
-{ inputs, config, pkgs, lib, ... }:
+{
+  inputs,
+  pkgs,
+  ...
+}:
 
 let
   dotfiles = inputs.my-dotfiles;
   dotconfig = "${dotfiles}/.config";
 in
 {
-  imports = [
-    inputs.my-dotzsh.homeManagerModules.default
-  ];
-
-  programs.home-manager.enable = true;
-
   xdg.configFile."alacritty".source = "${dotconfig}/alacritty";
   xdg.configFile."bat".source = "${dotconfig}/bat";
   xdg.configFile."clangd".source = "${dotconfig}/clangd";
@@ -25,25 +23,4 @@ in
     ".DS_Store"
   ];
 
-  ## ---------- yazi ----------
-  programs.yazi = {
-    enable = true;
-    shellWrapperName = "y";
-    plugins = {
-      inherit (pkgs.yaziPlugins) git;
-    };
-  };
-  xdg.configFile."yazi" = {
-    source = "${dotconfig}/yazi";
-    recursive = true;
-  };
-
-  programs.zsh = {
-    enable = true;
-    dotDir = "${config.xdg.configHome}/zsh";
-  };
-  programs.dotzsh = {
-    enable = true;
-    enableSourceZshrc = true;
-  };
 }

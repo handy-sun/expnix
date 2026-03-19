@@ -16,9 +16,7 @@ in
   home.username = username;
   home.homeDirectory = homeDir;
   xdg.enable = true;
-
-  # export HB="/opt/homebrew"
-  # export PATH="$HB/bin:$PATH"
+  programs.home-manager.enable = true;
 
   home.sessionVariables = {
     CARGO_HOME  = "${config.xdg.dataHome}/cargo";
@@ -38,7 +36,7 @@ in
   ]);
 
   imports = [
-    ./programs.nix
+    ./tui
   ];
 
   home.packages = with pkgs; [
