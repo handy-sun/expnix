@@ -1,4 +1,11 @@
-{ pkgs, lib, username, myvars, homeDir, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  username,
+  homeDir,
+  ...
+}:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -8,6 +15,27 @@ in
   home.stateVersion = "25.11";
   home.username = username;
   home.homeDirectory = homeDir;
+  xdg.enable = true;
+
+  # export HB="/opt/homebrew"
+  # export PATH="$HB/bin:$PATH"
+
+  home.sessionVariables = {
+    CARGO_HOME  = "${config.xdg.dataHome}/cargo";
+    RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
+    GOPATH      = "${config.xdg.dataHome}/go";
+
+    RUSTUP_DIST_SERVER = "https://mirrors.tuna.tsinghua.edu.cn/rustup";
+    RUSTUP_UPDATE_ROOT = "https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup";
+
+    FZF_DEFAULT_COMMAND = "fd --exclude={.git,.idea,.vscode,tags,OrbStack} --type f";
+    ## eza can find theme
+    EZA_CONFIG_DIR = "${config.xdg.configHome}/eza";
+  };
+
+  home.sessionPath = (lib.optionals isDarwin [
+    "/opt/homebrew/bin"
+  ]);
 
   imports = [
     ./programs.nix
@@ -143,6 +171,4 @@ in
     ## This is automatically setup on Linux
     gettext
   ]);
-
-  home.sessionVariables = myvars.homeEnv;
 }

@@ -28,6 +28,7 @@ in
   ## ---------- yazi ----------
   programs.yazi = {
     enable = true;
+    shellWrapperName = "y";
     plugins = {
       inherit (pkgs.yaziPlugins) git;
     };
@@ -37,7 +38,10 @@ in
     recursive = true;
   };
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    dotDir = "${config.xdg.configHome}/zsh";
+  };
   programs.dotzsh = {
     enable = true;
     enableSourceZshrc = true;
