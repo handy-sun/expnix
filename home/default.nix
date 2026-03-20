@@ -4,11 +4,11 @@
   config,
   username,
   homeDir,
+  isDarwin,
   ...
 }:
 
 let
-  isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
   rustupServer = "https://mirrors.tuna.tsinghua.edu.cn/rustup";
   conf = config.xdg.configHome;

@@ -3,6 +3,10 @@
 {
   services = {
     # timesyncd.enable = true; # NTP
+    journald.extraConfig = ''
+      SystemMaxUse=2G
+      RuntimeMaxUse=200M
+    '';
 
     ## orbstack.nix:  Disable sshd, backup settings
     # openssh = {

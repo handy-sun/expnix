@@ -1,3 +1,4 @@
+# { lib }:
 rec {
   user = "qi";
 
@@ -14,4 +15,5 @@ rec {
     VISUAL = "nvim";
   };
 
+  # sshnet = import ./network.nix { inherit lib; };
 }
