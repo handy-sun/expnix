@@ -11,7 +11,7 @@ let
   homeDir = if "${username}" == "root" then "/root" else if isDarwin then "/Users/${username}" else "/home/${username}";
   ## True if Linux, which is a heuristic for not being Darwin.
   isHeLinux = !isDarwin && !isWSL;
-  extraSpecialArgs = { inherit inputs username myvars homeDir isWSL isHeLinux; };
+  extraSpecialArgs = { inherit inputs username myvars homeDir isDarwin isWSL isHeLinux; };
 in inputs.home-manager.lib.homeManagerConfiguration {
   pkgs = nixpkgs.legacyPackages.${system};
   inherit extraSpecialArgs;
