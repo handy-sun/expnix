@@ -19,6 +19,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nvimdots = {
+      url = "github:handy-sun/nvimdots";
+   };
+
     my-dotzsh = {
       url = "github:handy-sun/dotzsh";
     };
@@ -33,6 +37,7 @@
     nix-darwin,
     nixos-wsl,
     home-manager,
+    nvimdots,
     my-dotzsh,
     my-dotfiles,
     ...

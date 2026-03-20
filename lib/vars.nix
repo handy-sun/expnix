@@ -14,6 +14,4 @@ rec {
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
-
-  # sshnet = import ./network.nix { inherit lib; };
 }

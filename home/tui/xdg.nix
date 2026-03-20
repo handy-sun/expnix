@@ -8,6 +8,10 @@ let
   dotconfig = "${dotfiles}/.config";
 in
 {
+  imports = [
+    inputs.nvimdots.homeManagerModules.default
+  ];
+
   xdg.configFile."alacritty".source = "${dotconfig}/alacritty";
   xdg.configFile."bat".source = "${dotconfig}/bat";
   xdg.configFile."clangd".source = "${dotconfig}/clangd";
@@ -26,6 +30,12 @@ in
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
+  };
+
+  programs.neovim.nvimdots = {
+    enable = true;
+    setBuildEnv = true;  # Only needed for NixOS
+    withBuildTools = true; # Only needed for NixOS
   };
 }
 

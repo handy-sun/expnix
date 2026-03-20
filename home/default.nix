@@ -50,7 +50,7 @@ in
     zoxide
     trash-cli
     fastfetch
-    neovim
+    # neovim # conflict with nvimdots
     docker-compose
     docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
     nginx

@@ -4,8 +4,7 @@ let
   myvars = import ../lib/vars.nix;
 in
 {
-  # nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-  # networking.hostName = lib.mkForce "expnix";
+  programs.nix-ld.enable = true;
 
   users.extraGroups.docker.members = [ "${myvars.user}" ];
 
@@ -86,7 +85,6 @@ in
     defaultLocale = "${myvars.langEnv}";
     extraLocaleSettings = {
       LC_ALL = "${myvars.langEnv}";
-    #   LC_CTYPE = "en_US.UTF-8";
     };
   };
 }
