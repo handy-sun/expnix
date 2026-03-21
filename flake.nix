@@ -19,13 +19,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nvimdots = {
-      url = "github:handy-sun/nvimdots";
-   };
+    nvimdots.url = "github:handy-sun/nvimdots";
 
-    my-dotzsh = {
-      url = "github:handy-sun/dotzsh";
-    };
+    my-dotzsh.url = "github:handy-sun/dotzsh";
+
     my-dotfiles = {
       url = "github:handy-sun/dotfiles/main"; # main branch don't use git submodules
       flake = false;
@@ -43,9 +40,9 @@
     ...
   }:
   let
-    myvars = import ./lib/vars.nix;
-
     appleSiliconSystem = "aarch64-darwin";
+
+    myvars = import ./lib/vars.nix;
 
     mkHome = import ./lib/mkhome.nix {
       inherit nixpkgs inputs myvars;

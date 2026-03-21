@@ -32,10 +32,5 @@ in
     clean.extraArgs = "--keep-since 4d --keep 3";
   };
 
-  programs.neovim.nvimdots = {
-    enable = true;
-    setBuildEnv = true;  # Only needed for NixOS
-    withBuildTools = true; # Only needed for NixOS
-  };
 }
 

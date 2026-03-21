@@ -13,6 +13,7 @@ hostName: {
 }:
 
 let
+  isHmSingle = false;
   homeDir = if "${username}" == "root" then "/root" else if isDarwin then "/Users/${username}" else "/home/${username}";
   ## True if Linux, which is a heuristic for not being Darwin.
   isHeLinux = !isDarwin && !isWSL;
@@ -21,7 +22,7 @@ let
   systemFunc = if isDarwin then inputs.nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
   home-manager = if isDarwin then inputs.home-manager.darwinModules else inputs.home-manager.nixosModules;
   ## Expose some extra arguments so that our modules can parameterize better based on these values.
-  specialArgs = { inherit inputs hostName username myvars homeDir isDarwin isWSL isHeLinux; };
+  specialArgs = { inherit inputs hostName username myvars homeDir isDarwin isWSL isHeLinux isHmSingle; };
 in systemFunc rec {
   inherit system specialArgs;
   modules = [
