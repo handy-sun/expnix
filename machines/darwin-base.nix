@@ -119,6 +119,10 @@ in
     openssl
     openssh
     nmap
+    logrotate
+    nginx
+    mihomo
+    smartmontools
     # cachix
   ];
 
@@ -127,28 +131,26 @@ in
   # The apps installed by homebrew are not managed by nix, and not reproducible!
   # But on macOS, homebrew has a much larger selection of apps than nixpkgs, especially for GUI apps!
   homebrew = {
-    enable = false;
+    enable = true;
 
     onActivation = {
       autoUpdate = false;
-      # 'zap': uninstalls all formulae(and related files) not listed here.
-      # cleanup = "zap";
+      ## 'zap': uninstalls all formulae(and related files) not listed here.
+      cleanup = "zap";
     };
 
     taps = [
       "homebrew/services"
     ];
 
-    # `brew install`
-    # DONE Feel free to add your favorite apps here.
+    ## `brew install`
     brews = [
-      # "aria2"  # download tool
+      "lunchy"
     ];
 
-    # `brew install --cask`
-    # DONE Feel free to add your favorite apps here.
+    ## `brew install --cask`
     casks = [
-      # "google-chrome"
+      "ghostty"
     ];
   };
 }
