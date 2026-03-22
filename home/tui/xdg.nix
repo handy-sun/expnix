@@ -8,10 +8,6 @@ let
   dotconfig = "${dotfiles}/.config";
 in
 {
-  imports = [
-    inputs.nvimdots.homeManagerModules.default
-  ];
-
   xdg.configFile."alacritty".source = "${dotconfig}/alacritty";
   xdg.configFile."bat".source = "${dotconfig}/bat";
   xdg.configFile."clangd".source = "${dotconfig}/clangd";

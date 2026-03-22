@@ -75,11 +75,11 @@
         "nixpkgs-lib": "nixpkgs-lib_2"
       },
       "locked": {
-        "lastModified": 1769996383,
-        "narHash": "sha256-AnYjnFWgS49RlqX7LrC4uA+sCCDBj0Ry/WOJ5XWAsa0=",
+        "lastModified": 1772408722,
+        "narHash": "sha256-rHuJtdcOjK7rAHpHphUb1iCvgkU3GpfvicLMwwnfMT0=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "57928607ea566b5db3ad13af0e57e921e6b12381",
+        "rev": "f20dc5d9b8027381c474144ecabc9034d6a839a3",
         "type": "github"
       },
       "original": {
@@ -137,11 +137,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772218752,
-        "narHash": "sha256-G8nArvOTZXU8DRvrzAdz3Elcj6kA/vMtvY9mrGLATtA=",
+        "lastModified": 1773422513,
+        "narHash": "sha256-MPjR48roW7CUMU6lu0+qQGqj92Kuh3paIulMWFZy+NQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "f3a30376bb9eb2f6f61816be7d6ed954b6d2a3b9",
+        "rev": "ef12a9a2b0f77c8fa3dda1e7e494fca668909056",
         "type": "github"
       },
       "original": {
@@ -162,8 +162,23 @@
       },
       "original": {
         "owner": "handy-sun",
-        "ref": "main",
         "repo": "dotfiles",
+        "type": "github"
+      }
+    },
+    "my-dotvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774170910,
+        "narHash": "sha256-muGxEzy7IWs+RSWkb2nRjTKMRddBt4M3MficC2AIpGo=",
+        "owner": "handy-sun",
+        "repo": "dotvim",
+        "rev": "8cbf2fbaf452fe0299f45eccb2f8f3a5d5715e1a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "handy-sun",
+        "repo": "dotvim",
         "type": "github"
       }
     },
@@ -262,11 +277,11 @@
     },
     "nixpkgs-lib_2": {
       "locked": {
-        "lastModified": 1769909678,
-        "narHash": "sha256-cBEymOf4/o3FD5AZnzC3J9hLbiZ+QDT/KDuyHXVJOpM=",
+        "lastModified": 1772328832,
+        "narHash": "sha256-e+/T/pmEkLP6BHhYjx6GmwP5ivonQQn0bJdH9YrRB+Q=",
         "owner": "nix-community",
         "repo": "nixpkgs.lib",
-        "rev": "72716169fe93074c333e8d0173151350670b824c",
+        "rev": "c185c7a5e5dd8f9add5b2f8ebeff00888b070742",
         "type": "github"
       },
       "original": {
@@ -325,11 +340,11 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1772173633,
-        "narHash": "sha256-MOH58F4AIbCkh6qlQcwMycyk5SWvsqnS/TCfnqDlpj4=",
+        "lastModified": 1773476965,
+        "narHash": "sha256-Laaj25PvGeoP5SPhMfMGxvWqM6ZjZ6LdUeEhP6b3czY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c0f3d81a7ddbc2b1332be0d8481a672b4f6004d6",
+        "rev": "f82ce7af0b79ac154b12e27ed800aeb97413723c",
         "type": "github"
       },
       "original": {
@@ -347,11 +362,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1773997339,
-        "narHash": "sha256-Rn2DicXh2ej/hziXNZQIGflHPFoajjyiITTvI7XM7vU=",
+        "lastModified": 1774104512,
+        "narHash": "sha256-l7HmGF0sT17MePnLooTOf//+k9WS0qK948/pAYo4suQ=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "5852c3f8775b92c26f77acf122355b3294a7add3",
+        "rev": "66aea9fb7298f92c5d4d0deb16e532cc6f4cbfa1",
         "type": "github"
       },
       "original": {
@@ -364,6 +379,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "my-dotfiles": "my-dotfiles",
+        "my-dotvim": "my-dotvim",
         "my-dotzsh": "my-dotzsh",
         "nix-darwin": "nix-darwin",
         "nixos-wsl": "nixos-wsl",

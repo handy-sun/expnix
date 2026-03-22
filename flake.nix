@@ -23,8 +23,13 @@
 
     my-dotzsh.url = "github:handy-sun/dotzsh";
 
+    my-dotvim = {
+      url = "github:handy-sun/dotvim";
+      flake = false;
+    };
+
     my-dotfiles = {
-      url = "github:handy-sun/dotfiles/main"; # main branch don't use git submodules
+      url = "github:handy-sun/dotfiles";
       flake = false;
     };
   };
@@ -36,6 +41,7 @@
     home-manager,
     nvimdots,
     my-dotzsh,
+    my-dotvim,
     my-dotfiles,
     ...
   }:

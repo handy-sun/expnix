@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   username,
   homeDir,
   isDarwin,
@@ -44,6 +45,8 @@ in
 
   imports = [
     ./tui
+    inputs.my-dotzsh.homeManagerModules.default
+    inputs.nvimdots.homeManagerModules.default
   ];
 
   home.packages = with pkgs; [
@@ -128,7 +131,7 @@ in
     stylua # lua format tool
     tlrc # A tldr client written in Rust
     tre-command
-    # uv # replace for pip
+    uv # replace for pip
     yazi # ranger
 
     ## misc
