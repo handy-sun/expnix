@@ -20,7 +20,7 @@
     },
     "devshell_2": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1768818222,
@@ -132,7 +132,7 @@
     "home-manager_3": {
       "inputs": {
         "nixpkgs": [
-          "nvimdots",
+          "my-nvimdots",
           "nixpkgs"
         ]
       },
@@ -153,11 +153,11 @@
     "my-dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1774065325,
-        "narHash": "sha256-5L2dYLBzoVo0thrKb/EYxQf/2GQ6bsAAonq+WJs5RQk=",
+        "lastModified": 1774248424,
+        "narHash": "sha256-01sLf8bBKSSLNO9yh2OWQ8wl78yU7OdtdW66bLduBQI=",
         "owner": "handy-sun",
         "repo": "dotfiles",
-        "rev": "8b1fc10cb42c0ebeb5ba6b7e45c38e2c7a29dfd5",
+        "rev": "121d39538dadcb44d00a971ece68cb737ab5a211",
         "type": "github"
       },
       "original": {
@@ -190,16 +190,37 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1774098648,
-        "narHash": "sha256-itA+MTo2Dl0SMQt76nGnhJvc1c5hzGab8iARSL/ojWI=",
+        "lastModified": 1774257287,
+        "narHash": "sha256-QyFzknzptvGFNWaumhxm7+WeliPcJzDps4kdZZx11VM=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "be3c63860cfc0cac7a72cdfb779b25f0742e1f13",
+        "rev": "e27f7246b44fd3b5cea80a66998861f6800b86aa",
         "type": "github"
       },
       "original": {
         "owner": "handy-sun",
         "repo": "dotzsh",
+        "type": "github"
+      }
+    },
+    "my-nvimdots": {
+      "inputs": {
+        "devshell": "devshell_2",
+        "flake-parts": "flake-parts_2",
+        "home-manager": "home-manager_3",
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1774249439,
+        "narHash": "sha256-umEtZIiCeq8Fpih3i/qh5dSlenu7qWwRd9/kCZ0esqY=",
+        "owner": "handy-sun",
+        "repo": "nvimdots",
+        "rev": "d7c87d6bb46d1c0cd4a5739db798e5da2430430f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "handy-sun",
+        "repo": "nvimdots",
         "type": "github"
       }
     },
@@ -308,22 +329,6 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1773840656,
-        "narHash": "sha256-9tpvMGFteZnd3gRQZFlRCohVpqooygFuy9yjuyRL2C0=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "9cf7092bdd603554bd8b63c216e8943cf9b12512",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_4": {
-      "locked": {
         "lastModified": 1762156382,
         "narHash": "sha256-Yg7Ag7ov5+36jEFC1DaZh/12SEXo6OO3/8rqADRxiqs=",
         "owner": "NixOS",
@@ -338,7 +343,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1773476965,
         "narHash": "sha256-Laaj25PvGeoP5SPhMfMGxvWqM6ZjZ6LdUeEhP6b3czY=",
@@ -354,24 +359,19 @@
         "type": "github"
       }
     },
-    "nvimdots": {
-      "inputs": {
-        "devshell": "devshell_2",
-        "flake-parts": "flake-parts_2",
-        "home-manager": "home-manager_3",
-        "nixpkgs": "nixpkgs_5"
-      },
+    "nixpkgs_5": {
       "locked": {
-        "lastModified": 1774104512,
-        "narHash": "sha256-l7HmGF0sT17MePnLooTOf//+k9WS0qK948/pAYo4suQ=",
-        "owner": "handy-sun",
-        "repo": "nvimdots",
-        "rev": "66aea9fb7298f92c5d4d0deb16e532cc6f4cbfa1",
+        "lastModified": 1773840656,
+        "narHash": "sha256-9tpvMGFteZnd3gRQZFlRCohVpqooygFuy9yjuyRL2C0=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "9cf7092bdd603554bd8b63c216e8943cf9b12512",
         "type": "github"
       },
       "original": {
-        "owner": "handy-sun",
-        "repo": "nvimdots",
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -381,10 +381,10 @@
         "my-dotfiles": "my-dotfiles",
         "my-dotvim": "my-dotvim",
         "my-dotzsh": "my-dotzsh",
+        "my-nvimdots": "my-nvimdots",
         "nix-darwin": "nix-darwin",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_3",
-        "nvimdots": "nvimdots"
+        "nixpkgs": "nixpkgs_5"
       }
     }
   },

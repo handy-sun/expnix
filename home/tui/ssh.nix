@@ -6,7 +6,7 @@
 
 {
   programs.ssh = {
-    enable = true;
+    enable = !isDarwin;
     enableDefaultConfig = false;
 
     matchBlocks = {
@@ -28,9 +28,9 @@
       };
     };
 
-    includes = [
-      (lib.mkIf isDarwin "~/.orbstack/ssh/config")
-      (lib.mkIf isDarwin "~/.ssh/lan_config")
-    ];
+    # includes = [
+    #   (lib.mkIf isDarwin "~/.orbstack/ssh/config")
+    #   (lib.mkIf isDarwin "~/.ssh/lan_config")
+    # ];
   };
 }

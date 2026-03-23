@@ -46,7 +46,7 @@ in
   imports = [
     ./tui
     inputs.my-dotzsh.homeManagerModules.default
-    inputs.nvimdots.homeManagerModules.default
+    inputs.my-nvimdots.homeManagerModules.default
   ];
 
   home.packages = with pkgs; [
@@ -147,12 +147,14 @@ in
     imagemagick
     ## gui
     alacritty
+    fishPlugins.tide
 
     ## nix related
     nh # another nix cli helper
     nil # language server for Nix
     nix-tree
     nixfmt
+    nurl
     nix-output-monitor # it provides the command `nom` works just like `nix` with more details log output
 
     # productivity

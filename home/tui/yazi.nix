@@ -11,7 +11,7 @@ in
 {
   programs.yazi = {
     enable = true;
-    shellWrapperName = "y";
+    shellWrapperName = "yy";
     plugins = {
       inherit (pkgs.yaziPlugins) git;
       ## some local plugins

@@ -73,6 +73,7 @@ in
       # icon fonts
       material-design-icons
       font-awesome
+      maple-mono.NF-CN
       # nerdfonts
       # https://github.com/NixOS/nixpkgs/blob/nixos-unstable-small/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
       nerd-fonts.symbols-only # symbols icon only
@@ -124,6 +125,7 @@ in
     mihomo
     smartmontools
     # cachix
+    xquartz
   ];
 
   # DONE To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -145,7 +147,7 @@ in
 
     ## `brew install`
     brews = [
-      "lunchy"
+      "lunchy-go"
     ];
 
     ## `brew install --cask`
