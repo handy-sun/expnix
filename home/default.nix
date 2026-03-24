@@ -53,7 +53,6 @@ in
     zoxide
     trash-cli
     fastfetch
-    # neovim # conflict with nvimdots
     docker-compose
     docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
     nginx
@@ -99,7 +98,7 @@ in
     yq-go # yaml processor https://github.com/mikefarah/yq
     rsync
     lsof # list open files
-    direnv
+    # direnv
     just
     chase
     cachix # Command-line client for Nix binary cache hosting https://cachix.org
@@ -129,10 +128,10 @@ in
     ripgrep # recursively searches directories for a regex pattern
     sd # sed
     stylua # lua format tool
-    tlrc # A tldr client written in Rust
+    # tlrc # A tldr client written in Rust(conflit with programs.tealdeer)
     tre-command
     uv # replace for pip
-    yazi # ranger
+    # yazi # ranger
 
     ## misc
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
@@ -143,14 +142,14 @@ in
     multitail
     tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
     ctags
-    w3m
+    # w3m
     imagemagick
+    fishPlugins.tide
     ## gui
     alacritty
-    fishPlugins.tide
 
     ## nix related
-    nh # another nix cli helper
+    # nh # another nix cli helper
     nil # language server for Nix
     nix-tree
     nixfmt
@@ -169,16 +168,6 @@ in
     pahole
     iotop # io monitoring
     stun
-
-    # clang gcc confilct ? /nix/store/.../bin/cpp
-    (pkgs.buildEnv {
-      name = "dev-cpp";
-      paths = with pkgs; [
-        gcc
-        clang
-      ];
-      ignoreCollisions = true;
-    })
   ]) ++ (lib.optionals isDarwin [
     ## This is automatically setup on Linux
     gettext

@@ -2,10 +2,11 @@
 
 {
   imports = [
+    ../machines/nix-core.nix
     ../machines/wsl-base.nix
     ../nixos/pkgenv.nix
     ../nixos/services.nix
   ];
 
-  networking.hostName = lib.mkForce hostName;
+  # networking.hostName = lib.mkForce hostName;
 }

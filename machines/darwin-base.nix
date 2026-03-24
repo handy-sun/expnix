@@ -1,5 +1,10 @@
-{ pkgs, lib, username, myvars, ... }:
-
+{
+  pkgs,
+  lib,
+  username,
+  myvars,
+  ...
+}:
 let
   ## Homebrew Mirror
   homebrew_mirror_env = {
@@ -53,6 +58,7 @@ in
   ## Create /etc/zshrc that loads the nix-darwin environment.
   ## this is required if you want to use darwin's default shell - zsh
   programs.zsh.enable = true;
+  programs.fish.enable = true;
   environment.shells = with pkgs; [
     bashInteractive
     fish
@@ -88,7 +94,7 @@ in
   #  Host & Users configuration
   #
   #############################################################
-  users.users."${username}"= {
+  users.users."${username}" = {
     home = "/Users/${username}";
     description = username;
   };
@@ -105,6 +111,7 @@ in
   environment.systemPackages = with pkgs; [
     git
     vim
+    neovim
     curl
     wget
     file
@@ -114,6 +121,7 @@ in
     coreutils
     gnutar
     gnused
+    gnugrep
     iproute2mac
     procps
     fakeroot
@@ -122,10 +130,13 @@ in
     nmap
     logrotate
     nginx
+    frp
+    sing-box
     mihomo
     smartmontools
     # cachix
     xquartz
+    wezterm
   ];
 
   # DONE To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -147,12 +158,13 @@ in
 
     ## `brew install`
     brews = [
-      "lunchy-go"
+      "lunchy"
     ];
 
     ## `brew install --cask`
     casks = [
       "ghostty"
+      # "launchcontrol" # Failed to fetch
     ];
   };
 }

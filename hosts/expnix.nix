@@ -7,8 +7,6 @@
     ../nixos/services.nix
   ];
 
-  networking.hostName = lib.mkForce hostName;
-
   ## To use some network tools.
   services.resolved.enable = lib.mkForce true;
   environment.etc."resolv.conf".text = lib.mkForce ''

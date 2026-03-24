@@ -2,6 +2,7 @@
   pkgs,
   lib,
   username,
+  hostName,
   ...
 }:
 {
@@ -52,4 +53,6 @@
       options = "--delete-older-than 7d";
     };
   };
+
+  networking.hostName = hostName;
 }
