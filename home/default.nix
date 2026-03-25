@@ -98,7 +98,7 @@ in
     yq-go # yaml processor https://github.com/mikefarah/yq
     rsync
     lsof # list open files
-    # direnv
+    # direnv ## programs.direnv.enable = true
     just
     chase
     cachix # Command-line client for Nix binary cache hosting https://cachix.org
@@ -115,7 +115,7 @@ in
     bandwhich
     bat # cat
     broot
-    delta # diff; also used of git
+    # delta # diff; also used of git ## programs.delta.enable = true
     dua
     duf # df
     dust # du; (`du-dust` name is depracated)
@@ -128,10 +128,10 @@ in
     ripgrep # recursively searches directories for a regex pattern
     sd # sed
     stylua # lua format tool
-    # tlrc # A tldr client written in Rust(conflit with programs.tealdeer)
+    # tlrc # A tldr client written in Rust(conflit with programs.tealdeer.enable = true)
     tre-command
     uv # replace for pip
-    # yazi # ranger
+    # yazi # ranger ## programs.<name>.enable = true
 
     ## misc
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
@@ -149,7 +149,7 @@ in
     alacritty
 
     ## nix related
-    # nh # another nix cli helper
+    # nh ## programs.nh.enable = true
     nil # language server for Nix
     nix-tree
     nixfmt

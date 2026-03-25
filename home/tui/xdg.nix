@@ -9,18 +9,12 @@ let
 in
 {
   xdg.configFile."alacritty".source = "${dotconfig}/alacritty";
-  xdg.configFile."bat".source = "${dotconfig}/bat";
-  xdg.configFile."clangd".source = "${dotconfig}/clangd";
-  xdg.configFile."eza".source = "${dotconfig}/eza";
-  xdg.configFile."git".source = "${dotconfig}/git";
-  xdg.configFile."go".source = "${dotconfig}/go";
-  xdg.configFile."mpv".source = "${dotconfig}/mpv";
-  xdg.configFile."tmux".source = "${dotconfig}/tmux";
-
-  programs.git.ignores = [
-    "__pycache__"
-    ".DS_Store"
-  ];
+  xdg.configFile."bat".source       = "${dotconfig}/bat";
+  xdg.configFile."clangd".source    = "${dotconfig}/clangd";
+  xdg.configFile."eza".source       = "${dotconfig}/eza";
+  xdg.configFile."go".source        = "${dotconfig}/go";
+  xdg.configFile."mpv".source       = "${dotconfig}/mpv";
+  xdg.configFile."tmux".source      = "${dotconfig}/tmux";
 
 }
 
