@@ -1,8 +1,9 @@
-{ lib, pkgs, ... }:
-
-let
-  myvars = import ../lib/vars.nix;
-in
+{
+  lib,
+  pkgs,
+  myvars,
+  ...
+}:
 {
   programs.nix-ld.enable = true;
 
@@ -33,7 +34,7 @@ in
     procps
     fakeroot
 
-    # system tools
+    ## system tools
     fail2ban
     sysstat
     logrotate
@@ -43,8 +44,9 @@ in
     openssh
     pciutils # lspci
     usbutils # lsusb
+    smartmontools
 
-    # networking tools
+    ## networking tools
     dae
     glider
     sing-box
@@ -57,14 +59,18 @@ in
     iproute2
     iptables
 
-    # misc (about gnu)
+    ## gnu tools
     gnumake
     gnused
     gnutar
     gnupg
+
+    ## misc
+    ## dae required
+    v2ray-geoip
+    v2ray-domain-list-community
   ];
   environment = {
-    # homeBinInPath = true;
     localBinInPath = true;
     sessionVariables =
       myvars.commonEnv
@@ -76,6 +82,7 @@ in
 
   ## must enable zsh in order users to use it
   programs.zsh.enable = true;
+  programs.fish.enable = true;
   users.users.${myvars.user}.shell = pkgs.zsh;
 
   time = {

@@ -144,6 +144,7 @@ in
     ctags
     # w3m
     imagemagick
+    ouch
     fishPlugins.tide
     ## gui
     alacritty

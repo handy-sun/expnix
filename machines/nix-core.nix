@@ -29,8 +29,11 @@
       # substituers that will be considered before the official ones(https://cache.nixos.org)
       substituters = [
         "https://mirror.sjtu.edu.cn/nix-channels/store"
+        "https://cache.garnix.io"
       ];
-
+      trusted-public-keys = [
+        "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+      ];
       extra-substituters = [
         "https://nix-community.cachix.org"
       ];
