@@ -56,8 +56,7 @@ in
     options = {
       navigate = true;
       side-by-side = true;
-
-      diff-so-fancy = true;
+      # diff-so-fancy = true;
       line-numbers = true;
       true-color = "always";
       decorations = {

@@ -13,7 +13,7 @@ in
     enable = true;
     shellWrapperName = "yy";
     plugins = {
-      inherit (pkgs.yaziPlugins) git;
+      inherit (pkgs.yaziPlugins) git ouch sudo;
       ## some local plugins
       yatline     = yaziPluginsDir + "/yatline.yazi";
       preview-git = yaziPluginsDir + "/preview-git.yazi";
@@ -29,6 +29,7 @@ in
     "yazi/init.lua".source    = yaziDir + "/init.lua";
     "yazi/keymap.toml".source = yaziDir + "/keymap.toml";
     "yazi/theme.toml".source  = yaziDir + "/theme.toml";
+    ## optional
     "yazi/vfs.toml".source    = yaziDir + "/vfs.toml";
   };
 }

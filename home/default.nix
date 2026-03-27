@@ -15,6 +15,13 @@ let
   conf = config.xdg.configHome;
   data = config.xdg.dataHome;
   cache = config.xdg.cacheHome;
+  CARGO_HOME = data + "/cargo";
+  GOPATH     = data + "/go";
+  RUSTUP_HOME = data + "/rustup";
+  cargo_bin = CARGO_HOME + "/bin";
+  go_bin = GOPATH + "/bin";
+  ## npm settings in npmrc
+  npm_global_bin = data + "/npm-global/bin";
 in
 {
   home.stateVersion = "25.11";
@@ -27,19 +34,23 @@ in
     LESSHISTFILE = cache + "/less/history";
     LESSKEY      = conf + "/less/lesskey";
 
-    CARGO_HOME  = data + "/cargo";
-    RUSTUP_HOME = data + "/rustup";
-    GOPATH      = data + "/go";
+    inherit GOPATH CARGO_HOME RUSTUP_HOME;
 
     RUSTUP_DIST_SERVER = rustupServer;
     RUSTUP_UPDATE_ROOT = rustupServer + "/rustup";
+
+    NPM_CONFIG_USERCONFIG = conf + "/npmrc";
 
     FZF_DEFAULT_COMMAND = "fd --exclude={.git,.idea,.vscode,tags,OrbStack} --type f";
     ## eza can find theme
     EZA_CONFIG_DIR = conf + "/eza";
   };
 
-  home.sessionPath = (lib.optionals isDarwin [
+  home.sessionPath = [
+    npm_global_bin
+    cargo_bin
+    go_bin
+  ] ++ (lib.optionals isDarwin [
     "/opt/homebrew/bin"
   ]);
 
@@ -138,6 +149,7 @@ in
     axel
     mpv # yt-dlp
     doxygen
+    tokei
     tree
     multitail
     tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
@@ -145,6 +157,7 @@ in
     # w3m
     imagemagick
     ouch
+    beszel
     fishPlugins.tide
     ## gui
     alacritty
@@ -163,6 +176,12 @@ in
     glow # markdown previewer in terminal
     btop  # replacement of htop/nmon
     iftop # network monitoring
+
+    ## gnu tools
+    gnumake
+    gnused
+    gnupg
+    gnutar
   ] ++ (lib.optionals isLinux [
     strace # a diagnostic, debugging and instructional userspace utility for Linux.
     ltrace # library call monitoring

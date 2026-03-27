@@ -119,9 +119,9 @@ in
     zsh
     tmux
     coreutils
-    gnutar
-    gnused
-    gnugrep
+    # gnutar
+    # gnused
+    # gnugrep
     iproute2mac
     procps
     fakeroot

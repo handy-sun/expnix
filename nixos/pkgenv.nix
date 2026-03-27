@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   myvars,
   ...
@@ -58,17 +57,6 @@
     nmap # A utility for network discovery and security auditing
     iproute2
     iptables
-
-    ## gnu tools
-    gnumake
-    gnused
-    gnutar
-    gnupg
-
-    ## misc
-    ## dae required
-    v2ray-geoip
-    v2ray-domain-list-community
   ];
   environment = {
     localBinInPath = true;
