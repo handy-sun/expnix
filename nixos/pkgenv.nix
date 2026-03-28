@@ -32,6 +32,7 @@
     lsof # list open files
     procps
     fakeroot
+    cron
 
     ## system tools
     fail2ban
@@ -71,7 +72,7 @@
   ## must enable zsh in order users to use it
   programs.zsh.enable = true;
   programs.fish.enable = true;
-  users.users.${myvars.user}.shell = pkgs.zsh;
+  users.users.${myvars.user}.shell = pkgs.fish;
 
   time = {
     hardwareClockInLocalTime = true;

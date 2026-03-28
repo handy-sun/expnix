@@ -49,13 +49,14 @@
     appleSiliconSystem = "aarch64-darwin";
 
     myvars = import ./lib/vars.nix;
+    myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
 
     mkHome = import ./lib/mkhome.nix {
       inherit nixpkgs inputs myvars;
     };
 
     mkSystem = import ./lib/mksystem.nix {
-      inherit nixpkgs inputs myvars;
+      inherit nixpkgs inputs myvars myutils;
     };
   in
   {

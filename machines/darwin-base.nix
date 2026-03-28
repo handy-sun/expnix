@@ -2,6 +2,7 @@
   pkgs,
   lib,
   username,
+  hostName,
   myvars,
   ...
 }:
@@ -51,9 +52,9 @@ in
   system.activationScripts.homebrew.text = lib.mkBefore ''
     ${homebrew_env_script}
   '';
-
-  ## Add ability to used TouchID for sudo authentication
-  # security.pam.services.sudo_local.touchIdAuth = true;
+  ## COMMAND: scutil --get ComputerName
+  networking.computerName = hostName;
+  system.defaults.smb.NetBIOSName = hostName;
 
   ## Create /etc/zshrc that loads the nix-darwin environment.
   ## this is required if you want to use darwin's default shell - zsh

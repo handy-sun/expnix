@@ -5,10 +5,10 @@
   isHeLinux,
   ...
 }:
-let 
+let
   daeConfig = "/etc/dae/config.dae"; ## WARN: NOT reproducible
   daeBin = lib.getExe pkgs.dae;
-in 
+in
 {
   services = {
     # timesyncd.enable = true; # NTP
@@ -24,6 +24,10 @@ in
         port = 12345;
       };
       configFile = daeConfig;
+    };
+
+    sing-box = {
+      enable = lib.mkDefault (!isHeLinux);
     };
   };
 

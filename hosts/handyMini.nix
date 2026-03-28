@@ -6,26 +6,27 @@
   ...
 }:
 let
-  singboxDir = "/opt/sing-box";
+  singboxDir = "/opt/sing-box"; ## WARN: NOT reproducible
   singbExePath = lib.getExe pkgs.sing-box;
   frpcExePath = "${lib.getBin pkgs.frp}/bin/frpc";
   nginxExePath = lib.getExe pkgs.nginx;
+  beszelAgentExePath = "${pkgs.beszel}/bin/beszel-agent";
+  beszelAgentEnv = "~/.config/beszel/beszel-agent.env";
 in
 {
   imports = [
     ../machines/darwin-base.nix
   ];
 
-  ## COMMAND: scutil --get ComputerName
-  networking.computerName = hostName;
-
-  system.defaults.smb.NetBIOSName = hostName;
   users.users."${username}" = {
-    ## Not worked, must use `chsh -s ...`
-    shell = pkgs.fish;
+    shell = pkgs.fish; ## Not worked, must use `chsh -s ...`
   };
 
+  #############################################################
+  ##
   ## $HOME/Library/LaunchAgents/$Label.plist
+  ##
+  #############################################################
   launchd.user.agents.singb.serviceConfig = {
     Label = "nixdwn.${username}.singb";
     UserName = username;
@@ -55,7 +56,38 @@ in
     RunAtLoad = true;
   };
 
+  launchd.user.agents.beszel-agent = {
+    script = ''
+      #!/usr/bin/env bash
+      set -a
+      test -f ${beszelAgentEnv} && source ${beszelAgentEnv}
+      set +a
+      exec ${beszelAgentExePath} "$@"
+    '';
+    serviceConfig = {
+      Label = "nixdwn.${username}.beszel-agent";
+      UserName = username;
+      LimitLoadToHosts = [
+        "Aqua"
+        "Background"
+        "LoginWindow"
+        "StandardIO"
+        "System"
+      ];
+      ProcessType = "Background";
+      KeepAlive = true;
+      RunAtLoad = true;
+      ThrottleInterval = 5;
+      StandardErrorPath = "/tmp/beszel-agent.log";
+      StandardOutPath = "/tmp/beszel-agent.log";
+    };
+  };
+
+  #############################################################
+  ##
   ## /Library/LaunchDaemons/$Label.plist
+  ##
+  #############################################################
   launchd.daemons.nginx.serviceConfig = {
     Label = "nixdwn.handy.nginx";
     UserName = "root";
@@ -69,5 +101,4 @@ in
     KeepAlive = true;
     RunAtLoad = true;
   };
-
 }
