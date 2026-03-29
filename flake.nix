@@ -52,7 +52,7 @@
     myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
 
     mkHome = import ./lib/mkhome.nix {
-      inherit nixpkgs inputs myvars;
+      inherit nixpkgs inputs myvars myutils;
     };
 
     mkSystem = import ./lib/mksystem.nix {

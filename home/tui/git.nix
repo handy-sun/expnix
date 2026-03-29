@@ -1,12 +1,14 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 let
   xdgGitConfDir = config.xdg.configHome + "/git";
   homeGitConfig = config.home.homeDirectory + "/.gitconfig";
   backupFileExt = "$(date \"+%m%d-%H%M%S\").bak";
+  nvimPath = lib.getExe pkgs.neovim;
 in
 {
   ## `~/.gitconfig` should not exist!
@@ -30,6 +32,7 @@ in
       core.autocrlf = false;
       core.safecrlf = true;
       core.editor = "nvim";
+      core.quotepath = false;
 
       push.autoSetupRemote = true;
       pull.rebase = true;
@@ -38,13 +41,13 @@ in
 
       diff.colorMoved = "default";
       diff.tool = "nvimdiff";
-      "difftool \"nvimdiff\"".cmd = "nvim -d \"$LOCAL\" \"$REMOTE\"";
+      "difftool \"nvimdiff\"".cmd = "${nvimPath} -d \"$LOCAL\" \"$REMOTE\"";
       difftool.prompt = false;
       difftool.stack = true;
 
       merge.conflictstyle = "diff3";
       merge.tool = "nvimdiff";
-      "mergetool \"nvimdiif\"".cmd = "nvim -d \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\" -c \"wincmd J\"";
+      "mergetool \"nvimdiif\"".cmd = "${nvimPath} -d \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\" -c \"wincmd J\"";
       mergetool.prompt = true;
       mergetool.keepBackup = false;
     };
