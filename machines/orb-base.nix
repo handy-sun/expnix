@@ -9,7 +9,6 @@
     "${modulesPath}/virtualisation/lxc-container.nix"
   ];
   system.stateVersion = "26.05"; # Did you read the comment?
-  time.timeZone = lib.mkForce "Asia/Shanghai";
   security.sudo.wheelNeedsPassword = false;
 
   # No bootloader（or shared kernel）
@@ -58,11 +57,6 @@
       "x86_64-linux"
       "i686-linux"
     ];
-  };
-
-  nixpkgs.config = {
-    allowUnfree = true; # allow non-FOSS pkgs
-    allowUnsupportedSystem = true;
   };
 
   # Enable documentation

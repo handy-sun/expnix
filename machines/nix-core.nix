@@ -57,5 +57,10 @@
     };
   };
 
+  nixpkgs.config = {
+    allowUnfree = true; # allow non-FOSS pkgs
+    allowUnsupportedSystem = true;
+  };
+
   networking.hostName = hostName;
 }

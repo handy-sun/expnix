@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   myvars,
   ...
 }:
@@ -76,6 +77,7 @@
 
   time = {
     hardwareClockInLocalTime = true;
+    timeZone = lib.mkForce "Asia/Shanghai";
   };
 
   i18n = {

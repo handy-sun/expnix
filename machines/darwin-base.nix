@@ -116,13 +116,8 @@ in
     curl
     wget
     file
-    fish
-    zsh
     tmux
     coreutils
-    # gnutar
-    # gnused
-    # gnugrep
     iproute2mac
     procps
     fakeroot

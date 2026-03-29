@@ -1,7 +1,5 @@
 {
-  pkgs,
   username,
-  lib,
   ...
 }:
 {
@@ -14,5 +12,4 @@
   # security.sudo.wheelNeedsPassword = false;
 
   system.stateVersion = "26.05";
-  time.timeZone = lib.mkForce "Asia/Shanghai";
 }
