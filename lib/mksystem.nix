@@ -30,7 +30,7 @@ in systemFunc rec {
     ## Bring in WSL if this is a WSL build
     (if isWSL then inputs.nixos-wsl.nixosModules.wsl else {})
     ../machines/nix-core.nix
-    ../hosts/${hostName}.nix
+    ../hosts/${hostName}
     home-manager.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;

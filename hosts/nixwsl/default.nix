@@ -2,15 +2,15 @@
   lib,
   pkgs,
   config,
+  myutils,
   ...
 }:
 {
-  imports = [
-    ../machines/nix-core.nix
-    ../machines/wsl-base.nix
-    ../nixos/pkgenv.nix
-    ../nixos/services.nix
-  ];
+  imports = (lib.map myutils.relativeToRoot [
+    "machines/wsl-base.nix"
+    "nixos/pkgenv.nix"
+    "nixos/services.nix"
+  ]);
 
   ## warning: not applying GID change of group ‘docker’ (997 -> 131) in /etc/group
   users.groups.docker.gid = lib.mkForce 997;
@@ -22,4 +22,10 @@
     ];
     # StateDirectory = "sing-box";
   } else {};
+
+  services.beszel.agent = {
+    enable = true;
+    environmentFile = "/etc/beszel-agent.env";
+    openFirewall = true;
+  };
 }

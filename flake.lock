@@ -211,11 +211,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1774413868,
-        "narHash": "sha256-Ht4s38Y/caIu+RPhZZVmgac0Krf5C8qLNiDEAJVrSBk=",
+        "lastModified": 1774845468,
+        "narHash": "sha256-hf9owi69ioikFoEL8CvHyNELSXlbUGQFu6NOCSaqlfU=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "23529b563f9fd2eb92206b6c2152e61447da03b0",
+        "rev": "b6f1fd8a9450c13decb667eed4bfeae94503e851",
         "type": "github"
       },
       "original": {

@@ -2,7 +2,7 @@
   pkgs,
   lib,
   username,
-  hostName,
+  myutils,
   ...
 }:
 let
@@ -15,7 +15,7 @@ let
 in
 {
   imports = [
-    ../machines/darwin-base.nix
+    (myutils.relativeToRoot "machines/darwin-base.nix")
   ];
 
   users.users."${username}" = {
