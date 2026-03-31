@@ -31,7 +31,7 @@ in
 
       core.autocrlf = false;
       core.safecrlf = true;
-      core.editor = "nvim";
+      core.editor = nvimPath;
       core.quotepath = false;
 
       push.autoSetupRemote = true;
@@ -50,6 +50,38 @@ in
       "mergetool \"nvimdiif\"".cmd = "${nvimPath} -d \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\" -c \"wincmd J\"";
       mergetool.prompt = true;
       mergetool.keepBackup = false;
+
+      url = {
+        "https://github.com/" = {
+          insteadOf = [
+            "gh:"
+            "ghro:"
+          ];
+        };
+        "https://codeberg.org/" = {
+          insteadOf = [
+            "bg:"
+            "bgro:"
+          ];
+        };
+        # "ssh://git@github.com/" = {
+        #   insteadOf = "ghp:";
+        #   pushInsteadOf = "gh:";
+        # };
+        "ssh://git@github.com/" = {
+          pushInsteadOf = "https://github.com/";
+        };
+        "ssh://git@codeberg.org/" = {
+          insteadOf = "bgp:";
+          pushInsteadOf = "bg:";
+        };
+        "___PUSH_DISABLED___" = {
+          pushInsteadOf = [
+            "ghro:"
+            "bgro:"
+          ];
+        };
+      };
     };
   };
 

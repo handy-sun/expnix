@@ -83,16 +83,13 @@ in
     };
   };
 
-  #############################################################
-  ##
-  ## /Library/LaunchDaemons/$Label.plist
-  ##
-  #############################################################
-  launchd.daemons.nginx.serviceConfig = {
-    Label = "nixdwn.handy.nginx";
-    UserName = "root";
+  launchd.user.agents.nginx.serviceConfig = {
+    Label = "nixdwn.${username}.nginx";
+    UserName = username;
     ProgramArguments = [
       "${nginxExePath}"
+      "-e"
+      "stderr"
       "-c"
       "/etc/nginx/nginx.conf"
       "-g"
@@ -101,4 +98,22 @@ in
     KeepAlive = true;
     RunAtLoad = true;
   };
+  #############################################################
+  ##
+  ## /Library/LaunchDaemons/$Label.plist
+  ##
+  #############################################################
+  # launchd.daemons.nginx.serviceConfig = {
+  #   Label = "nixdwn.handy.nginx";
+  #   UserName = "root";
+  #   ProgramArguments = [
+  #     "${nginxExePath}"
+  #     "-c"
+  #     "/etc/nginx/nginx.conf"
+  #     "-g"
+  #     "daemon off;"
+  #   ];
+  #   KeepAlive = true;
+  #   RunAtLoad = true;
+  # };
 }
