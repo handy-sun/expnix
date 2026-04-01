@@ -71,6 +71,7 @@ in
     sqlite
     acme-sh
     gh
+    tea
 
     ## programming
     gnumake
@@ -113,6 +114,7 @@ in
     just
     chase
     cachix # Command-line client for Nix binary cache hosting https://cachix.org
+    tokei
 
     ## networking tools
     dnsutils  # `dig` + `nslookup`
