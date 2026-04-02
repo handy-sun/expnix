@@ -144,7 +144,6 @@ in
     # tlrc # A tldr client written in Rust(conflit with programs.tealdeer.enable = true)
     tre-command
     uv # replace for pip
-    # yazi # ranger ## programs.<name>.enable = true
 
     ## misc
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
@@ -156,7 +155,6 @@ in
     multitail
     tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
     ctags
-    # w3m
     imagemagick
     ouch
     beszel
@@ -165,7 +163,6 @@ in
     alacritty
 
     ## nix related
-    # nh ## programs.nh.enable = true
     nil # language server for Nix
     nix-tree
     nixfmt
@@ -181,9 +178,8 @@ in
 
     ## gnu tools
     gnumake
-    gnused
     gnupg
-    gnutar
+    # gnutar ## (macos)vscode.remode-ssh bug
   ] ++ (lib.optionals isLinux [
     strace # a diagnostic, debugging and instructional userspace utility for Linux.
     ltrace # library call monitoring
@@ -193,5 +189,6 @@ in
   ]) ++ (lib.optionals isDarwin [
     ## This is automatically setup on Linux
     gettext
+    gnused
   ]);
 }
