@@ -80,7 +80,7 @@ in
       # icon fonts
       material-design-icons
       font-awesome
-      maple-mono.NF-CN
+      # maple-mono.NF-CN
       # nerdfonts
       # https://github.com/NixOS/nixpkgs/blob/nixos-unstable-small/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
       nerd-fonts.symbols-only # symbols icon only

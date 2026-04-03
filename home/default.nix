@@ -70,6 +70,7 @@ in
     caddy
     sqlite
     acme-sh
+    git-filter-repo
     gh
     tea
 
@@ -112,6 +113,7 @@ in
     lsof # list open files
     # direnv ## programs.direnv.enable = true
     just
+    just-lsp
     chase
     cachix # Command-line client for Nix binary cache hosting https://cachix.org
     tokei
@@ -167,7 +169,6 @@ in
     nix-tree
     nixfmt
     nurl
-    nix-output-monitor # it provides the command `nom` works just like `nix` with more details log output
 
     # productivity
     hugo # static site generator

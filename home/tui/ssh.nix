@@ -1,12 +1,10 @@
 {
-  lib,
-  isDarwin,
   ...
 }:
 
 {
   programs.ssh = {
-    enable = !isDarwin;
+    enable = false;
     enableDefaultConfig = false;
 
     matchBlocks = {

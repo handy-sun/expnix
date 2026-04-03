@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   ...
 }:
 
@@ -20,7 +19,7 @@
   };
 
   programs.starship = {
-    enable = true;
+    enable = false;
     enableFishIntegration = true;
     enableZshIntegration = true;
     settings = {
