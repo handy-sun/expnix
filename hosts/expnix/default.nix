@@ -7,8 +7,7 @@
 {
   imports = (lib.map myutils.relativeToRoot [
     "machines/orb-base.nix"
-    "nixos/pkgenv.nix"
-    "nixos/services.nix"
+    "nixos"
   ]);
 
   ## To use some network tools.

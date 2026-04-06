@@ -4,6 +4,7 @@
   config,
   inputs,
   username,
+  myvars,
   homeDir,
   isDarwin,
   ...
@@ -20,6 +21,7 @@ let
   RUSTUP_HOME = data + "/rustup";
   cargo_bin = CARGO_HOME + "/bin";
   go_bin = GOPATH + "/bin";
+  local_bin = config.home.homeDirectory + "/.local/bin";
   ## npm settings in npmrc
   npm_global_bin = data + "/npm-global/bin";
 in
@@ -41,16 +43,16 @@ in
 
     NPM_CONFIG_USERCONFIG = conf + "/npmrc";
 
-    FZF_DEFAULT_COMMAND = "fd --exclude={.git,.idea,.vscode,tags,OrbStack} --type f";
     ## eza can find theme
     EZA_CONFIG_DIR = conf + "/eza";
-  };
+  } // myvars.homeEnv;
 
   home.sessionPath = [
     npm_global_bin
     cargo_bin
     go_bin
   ] ++ (lib.optionals isDarwin [
+    local_bin
     "/opt/homebrew/bin"
   ]);
 

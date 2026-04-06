@@ -7,11 +7,15 @@ rec {
   ## common system enviroment
   commonEnv = {
     LANG = "${langEnv}";
-    TERM = "xterm-256color";
     PAGER = "less";
     LESS = "-RX";
+  };
+
+  homeEnv = {
+    TERM = "xterm-256color";
     ## for 'sudo -e'
     EDITOR = "nvim";
     VISUAL = "nvim";
+    FZF_DEFAULT_COMMAND = "fd --exclude={.git,.idea,.vscode,tags,OrbStack} --type f";
   };
 }

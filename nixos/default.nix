@@ -2,12 +2,13 @@
   pkgs,
   lib,
   myvars,
+  myutils,
   ...
 }:
 {
-  programs.nix-ld.enable = true;
+  imports = myutils.scanPaths ./.;
 
-  users.extraGroups.docker.members = [ "${myvars.user}" ];
+  programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
     git
@@ -60,6 +61,7 @@
     iproute2
     iptables
   ];
+
   environment = {
     localBinInPath = true;
     sessionVariables =
@@ -74,6 +76,8 @@
   programs.zsh.enable = true;
   programs.fish.enable = true;
   users.users.${myvars.user}.shell = pkgs.fish;
+
+  users.extraGroups.docker.members = [ "${myvars.user}" ];
 
   time = {
     hardwareClockInLocalTime = true;

@@ -16,10 +16,19 @@ up-nix:
 up-my:
   nix flake update my-dotzsh my-dotfiles my-dotvim my-nvimdots
 
-# Open a nix shell with the flake
+# Open a nix shell with the current profile
 [group('nix')]
 repl:
+  nix repl .
+
+# Open a nix shell with the flake
+[group('nix')]
+repl-flake:
   nix repl -f flake:nixpkgs
+
+[group('nix')]
+repl-pkgs:
+  nix repl -f '<nixpkgs>'
 
 [group('nix')]
 history:
@@ -32,6 +41,10 @@ preshell:
 [group('nix')]
 show-conf:
   nix config show
+
+[group('nix')]
+build-home:
+  nh home switch .
 
 ## Linux / MacOS
 [linux]

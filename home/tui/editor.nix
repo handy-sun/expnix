@@ -18,7 +18,7 @@ in
 
   programs.neovim.nvimdots = {
     enable = true;
-    bindLazyLock = true;
+    bindLazyLock = false;
     setBuildEnv = isNeedBuildEnv;  # Only needed for NixOS
     withBuildTools = isNeedBuildEnv; # Only needed for NixOS
   };

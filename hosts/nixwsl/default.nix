@@ -8,8 +8,7 @@
 {
   imports = (lib.map myutils.relativeToRoot [
     "machines/wsl-base.nix"
-    "nixos/pkgenv.nix"
-    "nixos/services.nix"
+    "nixos"
   ]);
 
   ## warning: not applying GID change of group ‘docker’ (997 -> 131) in /etc/group
