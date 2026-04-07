@@ -9,7 +9,6 @@
   isDarwin,
   ...
 }:
-
 let
   isLinux = pkgs.stdenv.isLinux;
   rustupServer = "https://mirrors.tuna.tsinghua.edu.cn/rustup";
@@ -17,7 +16,7 @@ let
   data = config.xdg.dataHome;
   cache = config.xdg.cacheHome;
   CARGO_HOME = data + "/cargo";
-  GOPATH     = data + "/go";
+  GOPATH = data + "/go";
   RUSTUP_HOME = data + "/rustup";
   cargo_bin = CARGO_HOME + "/bin";
   go_bin = GOPATH + "/bin";
@@ -34,7 +33,7 @@ in
 
   home.sessionVariables = {
     LESSHISTFILE = cache + "/less/history";
-    LESSKEY      = conf + "/less/lesskey";
+    LESSKEY = conf + "/less/lesskey";
 
     inherit GOPATH CARGO_HOME RUSTUP_HOME;
 
@@ -51,7 +50,8 @@ in
     npm_global_bin
     cargo_bin
     go_bin
-  ] ++ (lib.optionals isDarwin [
+  ]
+  ++ (lib.optionals isDarwin [
     local_bin
     "/opt/homebrew/bin"
   ]);
@@ -81,6 +81,7 @@ in
     cmake
     go
     perl
+    php
     python3
     lua
     nodejs # provides node, npm
@@ -121,9 +122,9 @@ in
     tokei
 
     ## networking tools
-    dnsutils  # `dig` + `nslookup`
+    dnsutils # `dig` + `nslookup`
     # ldns # replacement of `dig`, it provide the command `drill`
-    ipcalc  # it is a calculator for the IPv4/v6 addresses
+    ipcalc # it is a calculator for the IPv4/v6 addresses
     pv
     nexttrace
     frp
@@ -133,7 +134,7 @@ in
     bat # cat
     broot
     # delta # diff; also used of git ## programs.delta.enable = true
-    dua
+    # dua
     duf # df
     dust # du; (`du-dust` name is depracated)
     eza # ls colorize more info
@@ -141,6 +142,7 @@ in
     hyperfine
     # miniserve
     ncdu
+    ouch
     procs # ps
     ripgrep # recursively searches directories for a regex pattern
     sd # sed
@@ -152,7 +154,6 @@ in
     ## misc
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     axel
-    mpv # yt-dlp
     doxygen
     tokei
     tree
@@ -160,38 +161,45 @@ in
     tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
     ctags
     imagemagick
-    ouch
     beszel
+    shellcheck
     fishPlugins.tide
-    ## gui
+    ## has gui at darwin
+    mpv
     alacritty
+    wezterm
 
     ## nix related
     nil # language server for Nix
     nix-tree
     nixfmt
+    alejandra
     nurl
 
     # productivity
     hugo # static site generator
     htop
     glow # markdown previewer in terminal
-    btop  # replacement of htop/nmon
+    btop # replacement of htop/nmon
     iftop # network monitoring
 
     ## gnu tools
     gnumake
     gnupg
     # gnutar ## (macos)vscode.remode-ssh bug
-  ] ++ (lib.optionals isLinux [
+  ]
+  ++ (lib.optionals isLinux [
     strace # a diagnostic, debugging and instructional userspace utility for Linux.
     ltrace # library call monitoring
     pahole
     iotop # io monitoring
     stun
-  ]) ++ (lib.optionals isDarwin [
+  ])
+  ++ (lib.optionals isDarwin [
+    xquartz
     ## This is automatically setup on Linux
     gettext
     gnused
   ]);
 }
+

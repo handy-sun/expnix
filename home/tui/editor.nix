@@ -5,21 +5,19 @@
   isDarwin,
   isHmSingle,
   ...
-}:
-let
-  isNeedBuildEnv = (!isDarwin && !isHmSingle);
-in
-{
+}: let
+  isNeedBuildEnv = !isDarwin && !isHmSingle;
+in {
   ## Use `xdg.configFile."vim/"` instead of programs.vim
   xdg.configFile = {
-    "vim/vimrc".source     = inputs.my-dotvim + "/vimrc";
+    "vim/vimrc".source = inputs.my-dotvim + "/vimrc";
     "vim/user2.vim".source = inputs.my-dotvim + "/user2.vim";
   };
 
   programs.neovim.nvimdots = {
     enable = true;
     bindLazyLock = false;
-    setBuildEnv = isNeedBuildEnv;  # Only needed for NixOS
+    setBuildEnv = isNeedBuildEnv; # Only needed for NixOS
     withBuildTools = isNeedBuildEnv; # Only needed for NixOS
   };
 
@@ -65,8 +63,8 @@ in
         a = ["move_char_right" "insert_mode"];
         p = "paste_clipboard_before";
         y = "yank_main_selection_to_clipboard";
-        "C-j" = ["save_selection"];
-        "C-r" = ":reload";
+        C-j = ["save_selection"];
+        C-r = ":reload";
         space = {
           space = "file_picker";
           q = ":q";
@@ -78,11 +76,13 @@ in
       };
     };
 
-    languages.language = [{
-      name = "nix";
-      auto-format = true;
-      formatter.command = lib.getExe pkgs.nixfmt;
-    }];
+    languages.language = [
+      {
+        name = "nix";
+        auto-format = true;
+        formatter.command = lib.getExe pkgs.nixfmt;
+      }
+    ];
 
     themes = {
       autumn_night_transparent = {

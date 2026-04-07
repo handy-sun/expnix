@@ -5,8 +5,7 @@
   hostName,
   myvars,
   ...
-}:
-let
+}: let
   ## Homebrew Mirror
   homebrew_mirror_env = {
     HOMEBREW_API_DOMAIN = "https://mirrors.ustc.edu.cn/homebrew-bottles/api";
@@ -15,12 +14,13 @@ let
     HOMEBREW_CORE_GIT_REMOTE = "https://mirrors.ustc.edu.cn/homebrew-core.git";
     HOMEBREW_PIP_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple";
   };
-  homebrew_env_script = lib.attrsets.foldlAttrs (
-    acc: name: value:
-    acc + "\nexport ${name}=${value}"
-  ) "" (homebrew_mirror_env);
-in
-{
+  homebrew_env_script =
+    lib.attrsets.foldlAttrs (
+      acc: name: value:
+        acc + "\nexport ${name}=${value}"
+    ) ""
+    homebrew_mirror_env;
+in {
   ###################################################################################
   #
   #  macOS's System configuration
@@ -34,7 +34,7 @@ in
 
     defaults = {
       ## default: null
-      menuExtraClock.Show24Hour = true;  # show 24 hour clock
+      menuExtraClock.Show24Hour = true; # show 24 hour clock
     };
   };
 
@@ -42,7 +42,8 @@ in
   environment.variables =
     myvars.commonEnv
     // homebrew_mirror_env
-    // { ## Fix darwin Terminal - perl: warning: Setting locale failed.
+    // {
+      ## Fix darwin Terminal - perl: warning: Setting locale failed.
       LC_CTYPE = "${myvars.langEnv}";
       LC_ALL = "${myvars.langEnv}";
     };
@@ -131,8 +132,6 @@ in
     mihomo
     smartmontools
     # cachix
-    xquartz
-    wezterm
   ];
 
   # DONE To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -160,6 +159,7 @@ in
     ## `brew install --cask`
     casks = [
       "ghostty"
+      "antigravity"
       # "launchcontrol" # Failed to fetch
     ];
   };
