@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# Get all nix files (Added, Copied, Modified)
+files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.nix$')
+if [ -n "$files" ]; then
+    nixfmt --check $files || {
+        echo "Nix files not formatted. Run 'nixfmt' (or 'just nixfmt') to fix."
+        exit 1
+    }
+else
+    exit 0
+fi
+
+echo "Nixfmt check success, formatting staged .nix files with nixfmt..."
+nixfmt $files

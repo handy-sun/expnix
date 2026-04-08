@@ -34,55 +34,66 @@
     };
   };
 
-  outputs = inputs @ {
-    nixpkgs,
-    nix-darwin,
-    nixos-wsl,
-    home-manager,
-    my-nvimdots,
-    my-dotzsh,
-    my-dotvim,
-    my-dotfiles,
-    ...
-  }:
-  let
-    appleSiliconSystem = "aarch64-darwin";
+  outputs =
+    inputs@{
+      nixpkgs,
+      nix-darwin,
+      nixos-wsl,
+      home-manager,
+      my-nvimdots,
+      my-dotzsh,
+      my-dotvim,
+      my-dotfiles,
+      ...
+    }:
+    let
+      appleSiliconSystem = "aarch64-darwin";
 
-    myvars = import ./lib/vars.nix;
-    myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
+      myvars = import ./lib/vars.nix;
+      myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
 
-    mkHome = import ./lib/mkhome.nix {
-      inherit nixpkgs inputs myvars myutils;
-    };
-
-    mkSystem = import ./lib/mksystem.nix {
-      inherit nixpkgs inputs myvars myutils;
-    };
-  in
-  {
-    nixosConfigurations = {
-      "expnix" = mkSystem "expnix" {
-        system = "aarch64-linux";
+      mkHome = import ./lib/mkhome.nix {
+        inherit
+          nixpkgs
+          inputs
+          myvars
+          myutils
+          ;
       };
 
-      "nixwsl" = mkSystem "nixwsl" {
-        system = "x86_64-linux";
-        isWSL = true;
+      mkSystem = import ./lib/mksystem.nix {
+        inherit
+          nixpkgs
+          inputs
+          myvars
+          myutils
+          ;
       };
-    };
+    in
+    {
+      nixosConfigurations = {
+        "expnix" = mkSystem "expnix" {
+          system = "aarch64-linux";
+        };
 
-    darwinConfigurations = {
-      "handyMini" = mkSystem "handyMini" {
-        system = appleSiliconSystem;
-        isDarwin = true;
+        "nixwsl" = mkSystem "nixwsl" {
+          system = "x86_64-linux";
+          isWSL = true;
+        };
       };
-    };
 
-    homeConfigurations = {
-      "${myvars.user}" = mkHome "x86_64-linux" {};
-    };
+      darwinConfigurations = {
+        "handyMini" = mkSystem "handyMini" {
+          system = appleSiliconSystem;
+          isDarwin = true;
+        };
+      };
 
-    # nix code formatter
-    formatter.${appleSiliconSystem} = nixpkgs.legacyPackages.${appleSiliconSystem}.alejandra;
-  };
+      homeConfigurations = {
+        "${myvars.user}" = mkHome "x86_64-linux" { };
+      };
+
+      # nix code formatter
+      formatter.${appleSiliconSystem} = nixpkgs.legacyPackages.${appleSiliconSystem}.nixfmt;
+    };
 }
