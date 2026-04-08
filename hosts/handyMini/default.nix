@@ -6,7 +6,7 @@
   ...
 }:
 let
-  singboxDir = "/opt/sing-box"; ## WARN: NOT reproducible
+  singboxDir = "/opt/sing-box"; # # WARN: NOT reproducible
   singbExePath = lib.getExe pkgs.sing-box;
   frpcExePath = "${lib.getBin pkgs.frp}/bin/frpc";
   nginxExePath = lib.getExe pkgs.nginx;
@@ -19,7 +19,7 @@ in
   ];
 
   users.users."${username}" = {
-    shell = pkgs.fish; ## Not worked, must use `chsh -s ...`
+    shell = pkgs.fish; # # Not worked, must use `chsh -s ...`
   };
 
   #############################################################

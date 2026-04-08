@@ -47,7 +47,8 @@ in
 
       merge.conflictstyle = "diff3";
       merge.tool = "nvimdiff";
-      "mergetool \"nvimdiif\"".cmd = "${nvimPath} -d \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\" -c \"wincmd J\"";
+      "mergetool \"nvimdiif\"".cmd =
+        "${nvimPath} -d \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\" -c \"wincmd J\"";
       mergetool.prompt = true;
       mergetool.keepBackup = false;
 

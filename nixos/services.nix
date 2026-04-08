@@ -6,7 +6,7 @@
   ...
 }:
 let
-  daeConfig = "/etc/dae/config.dae"; ## WARN: NOT reproducible
+  daeConfig = "/etc/dae/config.dae"; # WARN: NOT reproducible
   daeBin = lib.getExe pkgs.dae;
 in
 {
@@ -31,14 +31,18 @@ in
     };
   };
 
-  systemd.services.dae.serviceConfig = if config.services.dae.enable then {
-    ExecStart = lib.mkForce [
-      ""
-      "${daeBin} run -c ${daeConfig}"
-    ];
-    StandardOutput = "append:/var/log/dae.log";
-    StandardError = "inherit";
-  } else {};
+  systemd.services.dae.serviceConfig =
+    if config.services.dae.enable then
+      {
+        ExecStart = lib.mkForce [
+          ""
+          "${daeBin} run -c ${daeConfig}"
+        ];
+        StandardOutput = "append:/var/log/dae.log";
+        StandardError = "inherit";
+      }
+    else
+      { };
 
   virtualisation.docker = {
     enable = true;

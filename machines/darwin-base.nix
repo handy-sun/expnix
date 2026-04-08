@@ -5,7 +5,8 @@
   hostName,
   myvars,
   ...
-}: let
+}:
+let
   ## Homebrew Mirror
   homebrew_mirror_env = {
     HOMEBREW_API_DOMAIN = "https://mirrors.ustc.edu.cn/homebrew-bottles/api";
@@ -14,13 +15,12 @@
     HOMEBREW_CORE_GIT_REMOTE = "https://mirrors.ustc.edu.cn/homebrew-core.git";
     HOMEBREW_PIP_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple";
   };
-  homebrew_env_script =
-    lib.attrsets.foldlAttrs (
-      acc: name: value:
-        acc + "\nexport ${name}=${value}"
-    ) ""
-    homebrew_mirror_env;
-in {
+  homebrew_env_script = lib.attrsets.foldlAttrs (
+    acc: name: value:
+    acc + "\nexport ${name}=${value}"
+  ) "" homebrew_mirror_env;
+in
+{
   ###################################################################################
   #
   #  macOS's System configuration

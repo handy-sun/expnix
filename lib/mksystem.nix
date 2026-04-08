@@ -3,35 +3,58 @@
   nixpkgs,
   inputs,
   myvars,
-  myutils
+  myutils,
 }:
 
-hostName: {
+hostName:
+{
   system,
   username ? "${myvars.user}",
   isDarwin ? false,
-  isWSL ? false
+  isWSL ? false,
 }:
 
 let
   isHmSingle = false;
-  homeDir = if "${username}" == "root" then "/root" else if isDarwin then "/Users/${username}" else "/home/${username}";
+  homeDir =
+    if "${username}" == "root" then
+      "/root"
+    else if isDarwin then
+      "/Users/${username}"
+    else
+      "/home/${username}";
   ## True if Linux, which is a heuristic for not being Darwin.
   isHeLinux = !isDarwin && !isWSL;
 
   ## NixOS vs nix-darwin functionst
   systemFunc = if isDarwin then inputs.nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
-  home-manager = if isDarwin then inputs.home-manager.darwinModules else inputs.home-manager.nixosModules;
+  home-manager =
+    if isDarwin then inputs.home-manager.darwinModules else inputs.home-manager.nixosModules;
   ## Expose some extra arguments so that our modules can parameterize better based on these values.
-  specialArgs = { inherit inputs hostName username myvars myutils homeDir isDarwin isWSL isHeLinux isHmSingle; };
-in systemFunc rec {
+  specialArgs = {
+    inherit
+      inputs
+      hostName
+      username
+      myvars
+      myutils
+      homeDir
+      isDarwin
+      isWSL
+      isHeLinux
+      isHmSingle
+      ;
+  };
+in
+systemFunc rec {
   inherit system specialArgs;
   modules = [
     ## Bring in WSL if this is a WSL build
-    (if isWSL then inputs.nixos-wsl.nixosModules.wsl else {})
+    (if isWSL then inputs.nixos-wsl.nixosModules.wsl else { })
     ../machines/nix-core.nix
     ../hosts/${hostName}
-    home-manager.home-manager {
+    home-manager.home-manager
+    {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${username} = import ../home;

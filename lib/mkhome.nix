@@ -3,22 +3,42 @@
   nixpkgs,
   inputs,
   myvars,
-  myutils
+  myutils,
 }:
 
-system: {
+system:
+{
   username ? "${myvars.user}",
   isDarwin ? false,
-  isWSL ? false
+  isWSL ? false,
 }:
 
 let
   isHmSingle = true;
-  homeDir = if "${username}" == "root" then "/root" else if isDarwin then "/Users/${username}" else "/home/${username}";
+  homeDir =
+    if "${username}" == "root" then
+      "/root"
+    else if isDarwin then
+      "/Users/${username}"
+    else
+      "/home/${username}";
   ## True if Linux, which is a heuristic for not being Darwin.
   isHeLinux = !isDarwin && !isWSL;
-  extraSpecialArgs = { inherit inputs username myvars myutils homeDir isDarwin isWSL isHeLinux isHmSingle; };
-in inputs.home-manager.lib.homeManagerConfiguration {
+  extraSpecialArgs = {
+    inherit
+      inputs
+      username
+      myvars
+      myutils
+      homeDir
+      isDarwin
+      isWSL
+      isHeLinux
+      isHmSingle
+      ;
+  };
+in
+inputs.home-manager.lib.homeManagerConfiguration {
   pkgs = nixpkgs.legacyPackages.${system};
   inherit extraSpecialArgs;
   modules = [ ../home ];

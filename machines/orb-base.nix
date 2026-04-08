@@ -2,7 +2,15 @@
 # This WILL be overwritten in the future. Make a copy and update the include
 # in configuration.nix if you want to keep your changes.
 
-{ lib, config, modulesPath, pkgs, username, homeDir, ... }:
+{
+  lib,
+  config,
+  modulesPath,
+  pkgs,
+  username,
+  homeDir,
+  ...
+}:
 
 {
   imports = [
@@ -37,7 +45,10 @@
   users.mutableUsers = false;
   users.users.${username} = {
     uid = 501;
-    extraGroups = [ "wheel" "orbstack" ];
+    extraGroups = [
+      "wheel"
+      "orbstack"
+    ];
 
     # simulate isNormalUser, but with an arbitrary UID; so isNormalUser = false;
     isSystemUser = true;
@@ -46,7 +57,7 @@
     home = homeDir;
     homeMode = "700";
     useDefaultShell = true;
-    openssh.authorizedKeys.keys = [];
+    openssh.authorizedKeys.keys = [ ];
     # shell = pkgs.zsh;
   };
   users.groups.orbstack.gid = 67278;
@@ -66,7 +77,7 @@
 
   ## -------- orb network --------
   networking = {
-    dhcpcd = { 
+    dhcpcd = {
       enable = false;
       ## Faster DHCP - OrbStack uses SLAAC exclusively
       # extraConfig = ''
@@ -91,7 +102,7 @@
   };
 
   # Disable all GUI specialisation
-  specialisation = lib.mkForce {};
+  specialisation = lib.mkForce { };
 
   # systemd
   systemd.services."systemd-oomd".serviceConfig.WatchdogSec = 0;
@@ -111,5 +122,6 @@
   systemd.services."systemd-importd".serviceConfig.WatchdogSec = 0;
   systemd.services."systemd-hostnamed".serviceConfig.WatchdogSec = 0;
   systemd.services."systemd-homed".serviceConfig.WatchdogSec = 0;
-  systemd.services."systemd-networkd".serviceConfig.WatchdogSec = lib.mkIf config.systemd.network.enable 0;
+  systemd.services."systemd-networkd".serviceConfig.WatchdogSec =
+    lib.mkIf config.systemd.network.enable 0;
 }

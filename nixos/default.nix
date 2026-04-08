@@ -64,12 +64,11 @@
 
   environment = {
     localBinInPath = true;
-    sessionVariables =
-      myvars.commonEnv
-      // { ## For Linux
-        SYSTEMD_PAGER = "nvim";
-        SYSTEMD_EDITOR = "nvim";
-      };
+    sessionVariables = myvars.commonEnv // {
+      # # For Linux
+      SYSTEMD_PAGER = "nvim";
+      SYSTEMD_EDITOR = "nvim";
+    };
   };
 
   ## must enable zsh in order users to use it

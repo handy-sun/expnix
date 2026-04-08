@@ -5,9 +5,11 @@
   isDarwin,
   isHmSingle,
   ...
-}: let
+}:
+let
   isNeedBuildEnv = !isDarwin && !isHmSingle;
-in {
+in
+{
   ## Use `xdg.configFile."vim/"` instead of programs.vim
   xdg.configFile = {
     "vim/vimrc".source = inputs.my-dotvim + "/vimrc";
@@ -45,9 +47,27 @@ in {
           select = "underline";
         };
         statusline = {
-          left = ["mode" "file-name" "file-modification-indicator" "file-type" "separator" "selections"];
-          center = ["diagnostics" "workspace-diagnostics" "separator" "file-encoding" "spacer" "file-line-ending"];
-          right = ["position" "total-line-numbers" "position-percentage"];
+          left = [
+            "mode"
+            "file-name"
+            "file-modification-indicator"
+            "file-type"
+            "separator"
+            "selections"
+          ];
+          center = [
+            "diagnostics"
+            "workspace-diagnostics"
+            "separator"
+            "file-encoding"
+            "spacer"
+            "file-line-ending"
+          ];
+          right = [
+            "position"
+            "total-line-numbers"
+            "position-percentage"
+          ];
           mode.normal = "NORMAL";
           mode.insert = "INSERT";
           mode.select = "SELECT";
@@ -60,10 +80,13 @@ in {
           "keep_primary_selection"
         ];
         ins = "insert_mode";
-        a = ["move_char_right" "insert_mode"];
+        a = [
+          "move_char_right"
+          "insert_mode"
+        ];
         p = "paste_clipboard_before";
         y = "yank_main_selection_to_clipboard";
-        C-j = ["save_selection"];
+        C-j = [ "save_selection" ];
         C-r = ":reload";
         space = {
           space = "file_picker";

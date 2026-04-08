@@ -5,10 +5,12 @@
 }:
 
 {
-  imports = (lib.map myutils.relativeToRoot [
-    "machines/orb-base.nix"
-    "nixos"
-  ]);
+  imports = (
+    lib.map myutils.relativeToRoot [
+      "machines/orb-base.nix"
+      "nixos"
+    ]
+  );
 
   ## To use some network tools.
   services.resolved.enable = lib.mkForce true;

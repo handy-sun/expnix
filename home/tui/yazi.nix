@@ -15,9 +15,9 @@ in
     plugins = {
       inherit (pkgs.yaziPlugins) git ouch sudo;
       ## some local plugins
-      yatline     = yaziPluginsDir + "/yatline.yazi";
+      yatline = yaziPluginsDir + "/yatline.yazi";
       preview-git = yaziPluginsDir + "/preview-git.yazi";
-      fast-enter  = yaziPluginsDir + "/fast-enter.yazi";
+      fast-enter = yaziPluginsDir + "/fast-enter.yazi";
     };
     flavors = {
       catppuccin-mocha = yaziDir + "/flavors/catppuccin-mocha.yazi";
@@ -25,11 +25,11 @@ in
   };
 
   xdg.configFile = {
-    "yazi/yazi.toml".source   = yaziDir + "/yazi.toml";
-    "yazi/init.lua".source    = yaziDir + "/init.lua";
+    "yazi/yazi.toml".source = yaziDir + "/yazi.toml";
+    "yazi/init.lua".source = yaziDir + "/init.lua";
     "yazi/keymap.toml".source = yaziDir + "/keymap.toml";
-    "yazi/theme.toml".source  = yaziDir + "/theme.toml";
+    "yazi/theme.toml".source = yaziDir + "/theme.toml";
     ## optional
-    "yazi/vfs.toml".source    = yaziDir + "/vfs.toml";
+    "yazi/vfs.toml".source = yaziDir + "/vfs.toml";
   };
 }
