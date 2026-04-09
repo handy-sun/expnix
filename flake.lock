@@ -153,11 +153,11 @@
     "my-dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1775622019,
-        "narHash": "sha256-4Aoa3utO2C3TxdxVWQZuJNe+WsU5OISS4CREhhLybNc=",
+        "lastModified": 1775718837,
+        "narHash": "sha256-bTt4W2DHxtiZLCk8tYlKjLRscexZwQZm0WVTPgudh48=",
         "owner": "handy-sun",
         "repo": "dotfiles",
-        "rev": "d8a3557a41aadc3703d184dd7362f18a0443fbd2",
+        "rev": "81cf5f7c488e79b4f8ccd2fbf8ab1c4f48bf1a04",
         "type": "github"
       },
       "original": {
@@ -211,11 +211,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1775624564,
-        "narHash": "sha256-PtVWpoz9JDsIFSSRcBNdPWy8PoDKvO/GoVXLzaQjMMY=",
+        "lastModified": 1775720356,
+        "narHash": "sha256-h3KtxfeLjoKJ4HEvz1jQ5aLh/0TZsboVwEUVAVD1IR4=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "e53023aadf2b5f273dcafd3b5f9a551b0d26d542",
+        "rev": "6f02dbf747eb68ef9e93aee3d3b98c89d118b7f9",
         "type": "github"
       },
       "original": {
@@ -384,7 +384,24 @@
         "my-nvimdots": "my-nvimdots",
         "nix-darwin": "nix-darwin",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_5",
+        "sbtpl": "sbtpl"
+      }
+    },
+    "sbtpl": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775534221,
+        "narHash": "sha256-EjwNg2L5ZzQxV4jIrE9MmYFtqX8qiFoLiOMWSETQ/98=",
+        "ref": "refs/heads/main",
+        "rev": "3fa86b454e1faa136cb408743141f19afc5d1db0",
+        "revCount": 68,
+        "type": "git",
+        "url": "https://codeberg.org/handy/sbtpl.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/handy/sbtpl.git"
       }
     }
   },

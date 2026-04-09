@@ -32,6 +32,11 @@
       url = "github:handy-sun/dotfiles";
       flake = false;
     };
+
+    sbtpl = {
+      url = "git+https://codeberg.org/handy/sbtpl.git";
+      flake = false;
+    };
   };
 
   outputs =

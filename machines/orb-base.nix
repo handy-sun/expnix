@@ -19,7 +19,7 @@
   system.stateVersion = "26.05"; # Did you read the comment?
   security.sudo.wheelNeedsPassword = false;
 
-  # No bootloader（or shared kernel）
+  # No bootloader (or shared kernel)
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
   boot.loader.grub.enable = lib.mkForce false;
@@ -63,7 +63,7 @@
   users.groups.orbstack.gid = 67278;
 
   nix.settings = {
-    # indicate builder support for emulated architectures（Rosetta x86 simulate?）
+    # indicate builder support for emulated architectures (Rosetta x86 simulate?)
     extra-platforms = [
       "x86_64-linux"
       "i686-linux"

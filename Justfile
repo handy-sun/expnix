@@ -19,7 +19,7 @@ upc-nix:
 # Update the flake inputs starts with 'my-'
 [group('nix')]
 up-my:
-  nix flake update my-dotzsh my-dotfiles my-dotvim my-nvimdots
+  nix flake update my-dotzsh my-dotfiles my-dotvim my-nvimdots sbtpl
 
 # Open a nix repl shell with the current profile
 [group('nix')]
