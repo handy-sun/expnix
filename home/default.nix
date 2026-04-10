@@ -197,6 +197,7 @@ in
       pahole
       iotop # io monitoring
       stun
+      libtree
     ])
     ++ (lib.optionals isDarwin [
       xquartz
