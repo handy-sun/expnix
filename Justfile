@@ -1,7 +1,7 @@
 ## nix shell nixpkgs#just
 set shell := ["bash", "-uc"]
 
-alias b := build
+alias s := switch
 alias f := nixfmt
 
 default:
@@ -49,7 +49,7 @@ show-conf:
   nix config show
 
 [group('nix')]
-build-home:
+switch-home:
   nh home switch .
 
 [group('nix')]
@@ -59,7 +59,7 @@ nixfmt:
 ## Linux / MacOS
 [linux]
 [group('nix')]
-build:
+switch:
   nh os switch .
 
 [linux]
@@ -69,5 +69,5 @@ nixinfo:
 
 [macos]
 [group('nix')]
-build:
+switch:
   nh darwin switch .
