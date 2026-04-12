@@ -41,14 +41,11 @@ in
 
       diff.colorMoved = "default";
       diff.tool = "nvimdiff";
-      "difftool \"nvimdiff\"".cmd = "${nvimPath} -d \"$LOCAL\" \"$REMOTE\"";
       difftool.prompt = false;
       difftool.stack = true;
 
-      merge.conflictstyle = "diff3";
+      # merge.conflictstyle = "diff3";
       merge.tool = "nvimdiff";
-      "mergetool \"nvimdiif\"".cmd =
-        "${nvimPath} -d \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\" -c \"wincmd J\"";
       mergetool.prompt = true;
       mergetool.keepBackup = false;
 

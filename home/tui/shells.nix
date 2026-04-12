@@ -28,19 +28,13 @@
         set -l profile_link (readlink /nix/var/nix/profiles/system)
         set -l cur_ver (string replace -r '.*-(\d+)-link$' '$1' $profile_link)
 
-        set -l profile_info "Unknown Version"
-        if test -n "$cur_ver"
-          set profile_info (nix profile history --profile /nix/var/nix/profiles/system 2>/dev/null | string match -r ".*$cur_ver.*" | grep -Po '(.*)[^:]')
-        end
-
-        ## Optional: Get the current version of the Nix package manager
         set -l nix_ver (nix --version | string replace 'nix ' "")
 
         echo -s (set_color blue) "❄️ Derivation: " \
                 (set_color cyan) "$drv_info" \
                 (set_color normal) " | " \
-                (set_color blue) "Profile: " \
-                (set_color yellow) "$profile_info" \
+                (set_color blue) "Profile-System: " \
+                (set_color yellow) "$cur_ver" \
                 (set_color normal) " | " \
                 (set_color brblack) "$nix_ver" \
                 (set_color normal)

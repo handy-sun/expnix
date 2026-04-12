@@ -3,6 +3,7 @@
   lib,
   username,
   myutils,
+  homeDir,
   ...
 }:
 let
@@ -11,7 +12,7 @@ let
   frpcExePath = "${lib.getBin pkgs.frp}/bin/frpc";
   nginxExePath = lib.getExe pkgs.nginx;
   beszelAgentExePath = "${pkgs.beszel}/bin/beszel-agent";
-  beszelAgentEnv = "~/.config/beszel/beszel-agent.env";
+  beszelAgentEnv = homeDir + "/.config/beszel/beszel-agent.env";
 in
 {
   imports = [
