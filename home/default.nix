@@ -164,7 +164,7 @@ in
       tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
       ctags
       imagemagick
-      beszel
+
       shellcheck
       fishPlugins.tide
       ## has gui at darwin
@@ -198,6 +198,7 @@ in
       iotop # io monitoring
       stun
       libtree
+      beszel # temp
     ])
     ++ (lib.optionals isDarwin [
       xquartz
