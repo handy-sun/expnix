@@ -16,13 +16,13 @@
       function fish_greeting
         set -l drv_info ""
         if test -n "$IN_NIX_SHELL"
-            set drv_info "nix-shell ($name)"
+          set drv_info "nix-shell ($name)"
         else if test -n "$DIRENV_DIR"
-            set drv_info "direnv environment"
+          set drv_info "direnv environment"
         else
             ## Otherwise, read the host's NixOS derivation (strip the /nix/store/ hash prefix)
-            set -l sys_path (readlink -f /run/current-system)
-            set drv_info (string replace -r '^/nix/store/[a-z0-9]+-' "" $sys_path)
+          set -l sys_path (readlink -f /run/current-system)
+          set drv_info (string replace -r '^/nix/store/[a-z0-9]+-' "" $sys_path)
         end
 
         set -l profile_link (readlink /nix/var/nix/profiles/system)
@@ -30,7 +30,7 @@
 
         set -l profile_info "Unknown Version"
         if test -n "$cur_ver"
-            set profile_info (nix profile history --profile /nix/var/nix/profiles/system 2>/dev/null | string match -r ".*$cur_ver.*" | grep -Po '(.*)[^:]')
+          set profile_info (nix profile history --profile /nix/var/nix/profiles/system 2>/dev/null | string match -r ".*$cur_ver.*" | grep -Po '(.*)[^:]')
         end
 
         ## Optional: Get the current version of the Nix package manager

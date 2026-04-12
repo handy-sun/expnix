@@ -10,7 +10,7 @@ If you are on a freshly installed NixOS system, you can use the following steps 
    First, start a temporary shell with `just` installed to run the tasks defined in our `Justfile`.
 
    ```bash
-   nix shell nixpkgs#just
+   nix shell --extra-experimental-features "flakes nix-command" nixpkgs#just
    ```
 
 2. **Prepare dependencies (`preshell`):**
