@@ -169,8 +169,6 @@ in
       fishPlugins.tide
       ## has gui at darwin
       mpv
-      alacritty
-      wezterm
 
       ## nix related
       nil # language server for Nix
@@ -199,6 +197,8 @@ in
       stun
       libtree
       beszel # temp
+      alacritty
+      wezterm
     ])
     ++ (lib.optionals isDarwin [
       xquartz
