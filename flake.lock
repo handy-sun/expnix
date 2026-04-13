@@ -190,11 +190,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1775962280,
-        "narHash": "sha256-CUc3Ca6DsHIxKYA8WFg55oFUu6zXQVTyS2ItZ02kDLc=",
+        "lastModified": 1776099326,
+        "narHash": "sha256-zMbUYHJ3WiO0ToiaI4+341B51GcphkcQfKJX8Kz0Ifc=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "33d25dde88aa7f4be736ca3714250b0c34712ff3",
+        "rev": "870e594ab5cf17c4228cdecfc29037659d6d74c5",
         "type": "github"
       },
       "original": {

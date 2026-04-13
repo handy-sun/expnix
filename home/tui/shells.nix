@@ -11,13 +11,13 @@
 
   programs.fish = {
     enable = true;
-    ## fish startup show: current derivation, profile, and nix version
   };
 
   programs.dotzsh = {
     enable = true;
     enableFishIntegration = true;
-    # enableFishPrompt = false;
+    enableFishPrompt = true;
+    enableFishGreetingforNix = true;
     enableZshIntegration = true;
   };
 
