@@ -44,6 +44,7 @@ in
 
     ## eza can find theme
     EZA_CONFIG_DIR = conf + "/eza";
+    COLORTERM = "truecolor";
   }
   // myvars.homeEnv;
 
@@ -117,9 +118,7 @@ in
       yq-go # yaml processor https://github.com/mikefarah/yq
       rsync
       lsof # list open files
-      # direnv ## programs.direnv.enable = true
       just
-      just-lsp
       chase
       cachix # Command-line client for Nix binary cache hosting https://cachix.org
       tokei
@@ -136,8 +135,6 @@ in
       bandwhich
       bat # cat
       broot
-      # delta # diff; also used of git ## programs.delta.enable = true
-      # dua
       duf # df
       dust # du; (`du-dust` name is depracated)
       eza # ls colorize more info
@@ -157,11 +154,14 @@ in
       ## misc
       aria2 # A lightweight multi-protocol & multi-source command-line download utility
       axel
+      devenv
       doxygen
       tokei
       tree
       multitail
       tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
+      just-lsp
+      lua-language-server
       ctags
       imagemagick
       beszel
@@ -174,6 +174,7 @@ in
 
       ## nix related
       nil # language server for Nix
+      nix-init
       nix-tree
       nixfmt
       alejandra
