@@ -102,6 +102,22 @@ in
     KeepAlive = true;
     RunAtLoad = true;
   };
+
+  launchd.user.agents.php-fpm.serviceConfig = {
+    Label = "nixdwn.${username}.php-fpm";
+    UserName = username;
+    ProgramArguments = [
+      "${pkgs.php}/bin/php-fpm"
+      "-F"
+      "-y"
+      "${homeDir}/.config/php/php-fpm.conf"
+    ];
+    KeepAlive = true;
+    RunAtLoad = true;
+    StandardOutPath = "/tmp/php-fpm.out.log";
+    # StandardErrorPath = "/tmp/php-fpm.err.log";
+  };
+
   #############################################################
   ##
   ## /Library/LaunchDaemons/$Label.plist

@@ -15,6 +15,7 @@ in
     "eza/theme.yml".source = "${dotconfig}/eza/theme.yml";
     "go/env".source = "${dotconfig}/go/env";
     "mpv/mpv.conf".source = "${dotconfig}/mpv/mpv.conf";
+    "php/php-fpm.conf".source = "${dotconfig}/php/php-fpm.conf";
     "pip/pip.conf".source = "${dotconfig}/pip/pip.conf";
     "tmux/tmux.conf".source = "${dotconfig}/tmux/tmux.conf";
   };

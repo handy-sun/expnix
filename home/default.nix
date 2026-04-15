@@ -89,11 +89,8 @@ in
       python3
       lua
       nodejs # provides node, npm
+      php
       rustup # provides rustfmt, cargo-clippy, rustup, cargo, rust-lldb, rust-analyzer, rustc, rust-gdb, cargo-fmt
-
-      ## rust related
-      # cargo-bloat # find what takes the most space in the executable
-      # cargo-cache # manage cargo cache (${CARGO_HOME}); print and remove dirs selectively
 
       ## archives, compression and decompression
       bzip2
@@ -101,7 +98,6 @@ in
       gzip
       p7zip
       pigz # Parallel Implementation of GZip
-      # rar # absent on aarch64, and not really needed
       unzip
       unrar-free
       xz
@@ -140,14 +136,13 @@ in
       eza # ls colorize more info
       fd # find
       hyperfine
-      # miniserve
+      miniserve
       ncdu
       ouch
       procs # ps
       ripgrep # recursively searches directories for a regex pattern
       sd # sed
       stylua # lua format tool
-      # tlrc # A tldr client written in Rust(conflit with programs.tealdeer.enable = true)
       tre-command
       uv # replace for pip
 
@@ -165,6 +160,7 @@ in
       lua-language-server
       ctags
       imagemagick
+      ffmpeg
 
       shellcheck
       fishPlugins.tide
