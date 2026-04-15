@@ -48,7 +48,6 @@ in
       merge.tool = "nvimdiff";
       mergetool.prompt = true;
       mergetool.keepBackup = false;
-      mergetool.layout = "LOCAL,REMOTE / MERGED";
 
       url = {
         "https://github.com/" = {
