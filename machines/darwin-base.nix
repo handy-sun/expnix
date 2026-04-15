@@ -132,6 +132,8 @@ in
     mihomo
     smartmontools
     # cachix
+    alacritty
+    wezterm
   ];
 
   # DONE To make this work, homebrew need to be installed manually, see https://brew.sh

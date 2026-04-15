@@ -16,7 +16,7 @@
   programs.dotzsh = {
     enable = true;
     enableFishIntegration = true;
-    enableFishPrompt = true;
+    # enableFishPrompt = true;
     enableFishGreetingforNix = true;
     enableZshIntegration = true;
   };

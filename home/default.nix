@@ -154,6 +154,7 @@ in
       ## misc
       aria2 # A lightweight multi-protocol & multi-source command-line download utility
       axel
+      beszel
       devenv
       doxygen
       tokei
@@ -164,16 +165,15 @@ in
       lua-language-server
       ctags
       imagemagick
-      beszel
+
       shellcheck
       fishPlugins.tide
       ## has gui at darwin
       mpv
-      alacritty
-      wezterm
 
       ## nix related
       nil # language server for Nix
+      nix-info
       nix-init
       nix-tree
       nixfmt
@@ -199,6 +199,8 @@ in
       iotop # io monitoring
       stun
       libtree
+      alacritty
+      wezterm
     ])
     ++ (lib.optionals isDarwin [
       xquartz

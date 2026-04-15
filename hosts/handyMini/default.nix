@@ -15,9 +15,12 @@ let
   beszelAgentEnv = homeDir + "/.config/beszel/beszel-agent.env";
 in
 {
-  imports = [
-    (myutils.relativeToRoot "machines/darwin-base.nix")
-  ];
+  imports = (
+    lib.map myutils.relativeToRoot [
+      "machines/darwin-base.nix"
+      "overlays/beszel.nix"
+    ]
+  );
 
   users.users."${username}" = {
     shell = pkgs.fish; # # Not worked, must use `chsh -s ...`

@@ -42,7 +42,7 @@ history:
 
 [group('nix')]
 preshell:
-  nix shell 'nixpkgs#nh' 'nixpkgs#git'
+  nix shell --extra-experimental-features "flakes nix-command" 'nixpkgs#nh' 'nixpkgs#git'
 
 [group('nix')]
 show-conf:
@@ -56,6 +56,10 @@ switch-home:
 nixfmt:
   fd -e nix -X nixfmt
 
+[group('nix')]
+nixinfo:
+  nix-info -m
+
 ## Linux / MacOS
 [linux]
 [group('nix')]
@@ -64,10 +68,15 @@ switch:
 
 [linux]
 [group('nix')]
-nixinfo:
-  nix-info -m
+nh-repl:
+  nh os repl .
 
 [macos]
 [group('nix')]
 switch:
   nh darwin switch .
+
+[macos]
+[group('nix')]
+nh-repl:
+  nh darwin repl .
