@@ -154,6 +154,7 @@ in
       ## misc
       aria2 # A lightweight multi-protocol & multi-source command-line download utility
       axel
+      beszel
       devenv
       doxygen
       tokei
@@ -172,6 +173,7 @@ in
 
       ## nix related
       nil # language server for Nix
+      nix-info
       nix-init
       nix-tree
       nixfmt
@@ -197,7 +199,6 @@ in
       iotop # io monitoring
       stun
       libtree
-      beszel # temp
       alacritty
       wezterm
     ])

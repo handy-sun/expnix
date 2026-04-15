@@ -11,13 +11,16 @@ let
   singbExePath = lib.getExe pkgs.sing-box;
   frpcExePath = "${lib.getBin pkgs.frp}/bin/frpc";
   nginxExePath = lib.getExe pkgs.nginx;
-  beszelAgentExePath = homeDir + "/.local/bin/beszel-agent";
+  beszelAgentExePath = "${pkgs.beszel}/bin/beszel-agent";
   beszelAgentEnv = homeDir + "/.config/beszel/beszel-agent.env";
 in
 {
-  imports = [
-    (myutils.relativeToRoot "machines/darwin-base.nix")
-  ];
+  imports = (
+    lib.map myutils.relativeToRoot [
+      "machines/darwin-base.nix"
+      "overlays/beszel.nix"
+    ]
+  );
 
   users.users."${username}" = {
     shell = pkgs.fish; # # Not worked, must use `chsh -s ...`
