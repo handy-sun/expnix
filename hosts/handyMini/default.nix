@@ -7,11 +7,7 @@
   ...
 }:
 let
-  singboxDir = "/opt/sing-box"; # # WARN: NOT reproducible
-  singbExePath = lib.getExe pkgs.sing-box;
-  frpcExePath = "${lib.getBin pkgs.frp}/bin/frpc";
-  nginxExePath = lib.getExe pkgs.nginx;
-  beszelAgentExePath = "${pkgs.beszel}/bin/beszel-agent";
+  singboxWorkDir = homeDir + "/.cache/sing-box"; # WARN: NOT reproducible
   beszelAgentEnv = homeDir + "/.config/beszel/beszel-agent.env";
 in
 {
@@ -26,6 +22,10 @@ in
     shell = pkgs.fish; # # Not worked, must use `chsh -s ...`
   };
 
+  system.activationScripts.users.text = lib.mkBefore ''
+    mkdir -p ${singboxWorkDir} && chown ${username}:staff ${singboxWorkDir}
+  '';
+
   #############################################################
   ##
   ## $HOME/Library/LaunchAgents/$Label.plist
@@ -35,15 +35,15 @@ in
     Label = "nixdwn.${username}.singb";
     UserName = username;
     ProgramArguments = [
-      "${singbExePath}"
+      "${lib.getExe pkgs.sing-box}"
       "run"
       "-c"
-      "${singboxDir}/config.json"
+      "${homeDir}/.config/sing-box/config.json"
       "-D"
-      "${singboxDir}/var"
+      singboxWorkDir
     ];
     ThrottleInterval = 5;
-    WorkingDirectory = "${singboxDir}";
+    WorkingDirectory = singboxWorkDir;
     KeepAlive = true;
     RunAtLoad = true;
   };
@@ -52,7 +52,7 @@ in
     Label = "nixdwn.${username}.frpc";
     UserName = username;
     ProgramArguments = [
-      "${frpcExePath}"
+      "${lib.getBin pkgs.frp}/bin/frpc"
       "-c"
       "/etc/frp/frpc.toml"
     ];
@@ -66,7 +66,7 @@ in
       set -a
       test -f ${beszelAgentEnv} && source ${beszelAgentEnv}
       set +a
-      exec ${beszelAgentExePath} "$@"
+      exec ${pkgs.beszel}/bin/beszel-agent "$@"
     '';
     serviceConfig = {
       Label = "nixdwn.${username}.beszel-agent";
@@ -91,7 +91,7 @@ in
     Label = "nixdwn.${username}.nginx";
     UserName = username;
     ProgramArguments = [
-      "${nginxExePath}"
+      "${lib.getExe pkgs.nginx}"
       "-e"
       "stderr"
       "-c"
@@ -117,23 +117,4 @@ in
     StandardOutPath = "/tmp/php-fpm.out.log";
     # StandardErrorPath = "/tmp/php-fpm.err.log";
   };
-
-  #############################################################
-  ##
-  ## /Library/LaunchDaemons/$Label.plist
-  ##
-  #############################################################
-  # launchd.daemons.nginx.serviceConfig = {
-  #   Label = "nixdwn.handy.nginx";
-  #   UserName = "root";
-  #   ProgramArguments = [
-  #     "${nginxExePath}"
-  #     "-c"
-  #     "/etc/nginx/nginx.conf"
-  #     "-g"
-  #     "daemon off;"
-  #   ];
-  #   KeepAlive = true;
-  #   RunAtLoad = true;
-  # };
 }
