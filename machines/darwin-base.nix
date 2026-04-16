@@ -131,9 +131,6 @@ in
     sing-box
     mihomo
     smartmontools
-    # cachix
-    alacritty
-    wezterm
   ];
 
   # DONE To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -162,7 +159,9 @@ in
     casks = [
       "ghostty"
       "antigravity"
-      # "launchcontrol" # Failed to fetch
+      # "alacritty" # deprecated
+      "wezterm"
+      # "lite-edit" # not found
     ];
   };
 }

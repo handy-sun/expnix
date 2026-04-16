@@ -161,11 +161,8 @@ in
       ctags
       imagemagick
       ffmpeg
-
       shellcheck
       fishPlugins.tide
-      ## has gui at darwin
-      mpv
 
       ## nix related
       nil # language server for Nix
@@ -187,6 +184,10 @@ in
       gnumake
       gnupg
       # gnutar ## (macos)vscode.remode-ssh bug
+
+      ## has gui
+      alacritty
+      mpv
     ]
     ++ (lib.optionals isLinux [
       strace # a diagnostic, debugging and instructional userspace utility for Linux.
@@ -195,8 +196,8 @@ in
       iotop # io monitoring
       stun
       libtree
-      alacritty
       wezterm
+      mpv
     ])
     ++ (lib.optionals isDarwin [
       xquartz
