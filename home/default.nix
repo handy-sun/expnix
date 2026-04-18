@@ -7,6 +7,7 @@
   myvars,
   homeDir,
   isDarwin,
+  isHmSingle,
   ...
 }:
 let
@@ -91,7 +92,6 @@ in
       lua
       nodejs # provides node, npm
       php
-      rustup # provides rustfmt, cargo-clippy, rustup, cargo, rust-lldb, rust-analyzer, rustc, rust-gdb, cargo-fmt
 
       ## archives, compression and decompression
       bzip2
@@ -159,6 +159,7 @@ in
       tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
       just-lsp
       lua-language-server
+      rust-analyzer
       ctags
       imagemagick
       ffmpeg
@@ -189,6 +190,13 @@ in
       ## has gui
       alacritty
       mpv
+    ]
+    ++ lib.optionals isHmSingle [
+      rustc
+      cargo
+    ]
+    ++ lib.optionals (!isHmSingle) [
+      rust-bin.stable.latest.default # like rustup, not contain rust-analyzer
     ]
     ++ (lib.optionals isLinux [
       strace # a diagnostic, debugging and instructional userspace utility for Linux.

@@ -39,7 +39,20 @@ let
   };
 in
 inputs.home-manager.lib.homeManagerConfiguration {
+  # pkgs = import nixpkgs {
+  #   inherit system;
+  #   config = {
+  #     allowUnfree = true;
+  #     allowUnsupportedSystem = true;
+  #   };
+  #   overlays = [ inputs.rust-overlay.overlays.default ];
+  # };
+
+  # pkgs = nixpkgs.legacyPackages.${system}.extend inputs.rust-overlay.overlays.default;
+
   pkgs = nixpkgs.legacyPackages.${system};
   inherit extraSpecialArgs;
-  modules = [ ../home ];
+  modules = [
+    ../home
+  ];
 }

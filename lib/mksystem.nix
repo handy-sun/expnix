@@ -53,6 +53,9 @@ systemFunc rec {
     (if isWSL then inputs.nixos-wsl.nixosModules.wsl else { })
     ../machines/nix-core.nix
     ../hosts/${hostName}
+    ({
+      nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
+    })
     home-manager.home-manager
     {
       home-manager.useGlobalPkgs = true;

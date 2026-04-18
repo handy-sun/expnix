@@ -19,6 +19,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     my-nvimdots.url = "github:handy-sun/nvimdots";
 
     my-dotzsh.url = "github:handy-sun/dotzsh";
@@ -45,6 +50,7 @@
       nix-darwin,
       nixos-wsl,
       home-manager,
+      rust-overlay,
       my-nvimdots,
       my-dotzsh,
       my-dotvim,

@@ -190,14 +190,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1776430383,
-        "narHash": "sha256-LOoxsbsnDlazPfAY1gITbUdwulYwWSVG0OqO9bfo6rQ=",
-        "path": "/home/qi/work/dotzsh",
-        "type": "path"
+        "lastModified": 1776432570,
+        "narHash": "sha256-NuAICF57ILOVFinlPRgfCT2ggZd/tRAkWUmDbKnx5L8=",
+        "owner": "handy-sun",
+        "repo": "dotzsh",
+        "rev": "16942a5567d357f8e9ec51b131aa734a4dfaba69",
+        "type": "github"
       },
       "original": {
-        "path": "/home/qi/work/dotzsh",
-        "type": "path"
+        "owner": "handy-sun",
+        "repo": "dotzsh",
+        "type": "github"
       }
     },
     "my-nvimdots": {
@@ -382,7 +385,28 @@
         "nix-darwin": "nix-darwin",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_5",
+        "rust-overlay": "rust-overlay",
         "sbtpl": "sbtpl"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776395632,
+        "narHash": "sha256-Mi1uF5f2FsdBIvy+v7MtsqxD3Xjhd0ARJdwoqqqPtJo=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "8087ff1f47fff983a1fba70fa88b759f2fd8ae97",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "sbtpl": {
