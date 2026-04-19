@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  config,
   myutils,
   ...
 }:
@@ -12,6 +11,18 @@
       "nixos"
     ]
   );
+
+  nixpkgs.config.cudaSupport = true;
+
+  wsl.useWindowsDriver = true;
+  hardware.graphics.enable = true;
+  # programs.nix-ld.libraries = with pkgs; [
+  #   libglvnd
+  #   egl-wayland
+  #   mesa
+  #   mesa.drivers
+  #   mesa-demos
+  # ];
 
   ## warning: not applying GID change of group ‘docker’ (997 -> 131) in /etc/group
   users.groups.docker.gid = lib.mkForce 997;

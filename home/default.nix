@@ -198,7 +198,7 @@ in
     ++ lib.optionals (!isHmSingle) [
       rust-bin.stable.latest.default # like rustup, not contain rust-analyzer
     ]
-    ++ (lib.optionals isLinux [
+    ++ lib.optionals isLinux [
       strace # a diagnostic, debugging and instructional userspace utility for Linux.
       ltrace # library call monitoring
       pahole
@@ -207,11 +207,11 @@ in
       libtree
       wezterm
       mpv
-    ])
-    ++ (lib.optionals isDarwin [
+    ]
+    ++ lib.optionals isDarwin [
       xquartz
       ## This is automatically setup on Linux
       gettext
       gnused
-    ]);
+    ];
 }

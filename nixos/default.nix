@@ -3,6 +3,7 @@
   lib,
   myvars,
   myutils,
+  isWSL,
   ...
 }:
 {
@@ -64,11 +65,16 @@
 
   environment = {
     localBinInPath = true;
-    sessionVariables = myvars.commonEnv // {
-      # # For Linux
-      SYSTEMD_PAGER = "nvim";
-      SYSTEMD_EDITOR = "nvim";
-    };
+    sessionVariables =
+      myvars.commonEnv
+      // {
+        # # For Linux
+        SYSTEMD_PAGER = "nvim";
+        SYSTEMD_EDITOR = "nvim";
+      }
+      // lib.optionals isWSL {
+        LD_LIBRARY_PATH = "/usr/lib/wsl/lib:\${LD_LIBRARY_PATH}";
+      };
   };
 
   ## must enable zsh in order users to use it
