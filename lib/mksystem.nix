@@ -12,6 +12,10 @@ hostName:
   username ? "${myvars.user}",
   isDarwin ? false,
   isWSL ? false,
+  profileLevel ? {
+    tuiAdvanced = false;
+    gui = false;
+  },
 }:
 
 let

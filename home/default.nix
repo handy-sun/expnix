@@ -6,6 +6,7 @@
   username,
   myvars,
   homeDir,
+  isWSL,
   isDarwin,
   isHmSingle,
   ...
@@ -48,7 +49,10 @@ in
     EZA_CONFIG_DIR = conf + "/eza";
     COLORTERM = "truecolor";
   }
-  // myvars.homeEnv;
+  // myvars.homeEnv
+  // lib.optionals isWSL {
+    LD_LIBRARY_PATH = "/usr/lib/wsl/lib:\${LD_LIBRARY_PATH}";
+  };
 
   home.sessionPath = [
     npm_global_bin

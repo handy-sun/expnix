@@ -45,9 +45,10 @@ in
       difftool.stack = true;
 
       # merge.conflictstyle = "diff3";
-      merge.tool = "nvimdiff";
+      merge.tool = "nvimd-3w";
       mergetool.prompt = true;
       mergetool.keepBackup = false;
+      mergetool."nvimd-3w".cmd = "nvim -d \"$LOCAL\" \"$MERGED\" \"$REMOTE\" -c \"wincmd =\"";
 
       url = {
         "https://github.com/" = {
