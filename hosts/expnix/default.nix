@@ -9,6 +9,7 @@
     lib.map myutils.relativeToRoot [
       "machines/orb-base.nix"
       "nixos"
+      "overlays/deno.nix"
     ]
   );
 

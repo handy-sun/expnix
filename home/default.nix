@@ -168,7 +168,9 @@ in
       imagemagick
       ffmpeg
       shellcheck
+      util-linux
       fishPlugins.tide
+      fishPlugins.sponge
 
       ## nix related
       nil # language server for Nix
