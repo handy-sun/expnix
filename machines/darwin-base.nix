@@ -161,6 +161,7 @@ in
       "antigravity"
       # "alacritty" # deprecated
       "wezterm"
+      "cc-switch"
       # "lite-edit" # not found
     ];
   };

@@ -18,6 +18,10 @@ upc-nix:
 
 # Update the flake inputs starts with 'my-'
 [group('nix')]
+upc-my:
+  nix flake update --commit-lock-file my-dotzsh my-dotfiles my-dotvim my-nvimdots sbtpl
+
+[group('nix')]
 up-my:
   nix flake update my-dotzsh my-dotfiles my-dotvim my-nvimdots sbtpl
 
@@ -60,7 +64,11 @@ nixfmt:
 nixinfo:
   nix-info -m
 
-## Linux / MacOS
+[group('nix')]
+current-sys:
+  readlink /run/current-system
+
+## Linux
 [linux]
 [group('nix')]
 switch:
@@ -68,9 +76,20 @@ switch:
 
 [linux]
 [group('nix')]
-nh-repl:
+repl-nh:
   nh os repl .
 
+[linux]
+[group('nix')]
+query-tree:
+  nix-store --gc --print-roots | rg -v '/proc/' | rg -Po '(?<= -> ).*' | xargs -o nix-tree
+
+[linux]
+[group('nix')]
+query-depends pkgname:
+  which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation .#nixosConfigurations.$(hostname).config.system.build.toplevel 2>/dev/null
+
+## MacOS
 [macos]
 [group('nix')]
 switch:
@@ -78,5 +97,10 @@ switch:
 
 [macos]
 [group('nix')]
-nh-repl:
+repl-nh:
   nh darwin repl .
+
+[macos]
+[group('nix')]
+query-depends pkgname:
+  which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation .#darwinConfigurations.$(hostname).config.system.build.toplevel 2>/dev/null

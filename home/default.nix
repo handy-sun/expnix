@@ -95,6 +95,7 @@ in
       python3
       lua
       nodejs # provides node, npm
+      pnpm
       php
 
       ## archives, compression and decompression
@@ -171,6 +172,7 @@ in
       util-linux
       fishPlugins.tide
       fishPlugins.sponge
+      fishPlugins.autopair
 
       ## nix related
       nil # language server for Nix
@@ -213,6 +215,8 @@ in
       libtree
       wezterm
       mpv
+      fio
+      ioping
     ]
     ++ lib.optionals isDarwin [
       xquartz
