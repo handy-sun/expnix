@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   myutils,
   ...
@@ -21,4 +22,6 @@
     options edns0
     search .
   '';
+
+  # boot.kernelPackages = pkgs.linuxKernel.packages.linux_7_0;
 }

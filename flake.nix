@@ -58,7 +58,12 @@
       ...
     }:
     let
-      appleSiliconSystem = "aarch64-darwin";
+      allSystemNames = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
 
       myvars = import ./lib/vars.nix;
       myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
@@ -80,6 +85,8 @@
           myutils
           ;
       };
+
+      forAllSystems = func: (nixpkgs.lib.genAttrs allSystemNames func);
     in
     {
       nixosConfigurations = {
@@ -95,7 +102,7 @@
 
       darwinConfigurations = {
         "handyMini" = mkSystem "handyMini" {
-          system = appleSiliconSystem;
+          system = "aarch64-darwin";
           isDarwin = true;
         };
       };
@@ -104,7 +111,28 @@
         "${myvars.user}" = mkHome "x86_64-linux" { };
       };
 
-      # nix code formatter
-      formatter.${appleSiliconSystem} = nixpkgs.legacyPackages.${appleSiliconSystem}.nixfmt;
+      ##  Development Shells
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              statix
+              typos
+            ];
+            name = "devsh";
+            shellHook = ''
+              echo "Welcome to expnix devshell"
+              exec fish -il
+            '';
+          };
+        }
+      );
+
+      ## nix code formatter
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
     };
 }

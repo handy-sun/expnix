@@ -162,6 +162,7 @@ in
       # "alacritty" # deprecated
       "wezterm"
       "cc-switch"
+      "nomachine"
       # "lite-edit" # not found
     ];
   };
