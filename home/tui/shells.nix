@@ -1,5 +1,6 @@
 {
   config,
+  isHmSingle,
   ...
 }:
 
@@ -16,7 +17,7 @@
   programs.dotzsh = {
     enable = true;
     enableFishIntegration = true;
-    # enableFishPrompt = true;
+    enableFishPrompt = isHmSingle;
     enableFishGreetingforNix = true;
     enableZshIntegration = true;
   };

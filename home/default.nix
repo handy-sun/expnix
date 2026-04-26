@@ -217,6 +217,7 @@ in
       mpv
       fio
       ioping
+      hdparm
     ]
     ++ lib.optionals isDarwin [
       xquartz
