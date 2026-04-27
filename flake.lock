@@ -190,11 +190,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1777136388,
-        "narHash": "sha256-fWHXmHpDbC98rxX1Red/jXE96/Sjb0qtP7Rtfp7/i6Y=",
+        "lastModified": 1777282447,
+        "narHash": "sha256-cLYuuE1HWLRKV0GSVr5qFHhC7kGHjdijo0XNL6DQ1Ns=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "17ca6f9749de750a0d1f763f5ac1fff58dd55406",
+        "rev": "3aa95569d75a476955422ebc6417d7ce074beb18",
         "type": "github"
       },
       "original": {
@@ -412,11 +412,11 @@
     "sbtpl": {
       "flake": false,
       "locked": {
-        "lastModified": 1776862216,
-        "narHash": "sha256-liqisAnjmQvQWg08vVpAKVEYiWopoeGV5wwAWa+xxIg=",
+        "lastModified": 1777261418,
+        "narHash": "sha256-vGM8NQl1Snwd3BhwCSZlOrokNGsbZ9R8PbBSCKEOkGw=",
         "ref": "refs/heads/main",
-        "rev": "97dbc5567cbd7de140145fc72685863ac2e24556",
-        "revCount": 71,
+        "rev": "d9381ad638e1d9d03bc39913b83b88b688859e2e",
+        "revCount": 73,
         "type": "git",
         "url": "https://codeberg.org/handy/sbtpl.git"
       },
