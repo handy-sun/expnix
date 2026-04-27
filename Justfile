@@ -14,7 +14,7 @@ setup-hook:
 # Update the flake inputs about nix and create commit
 [group('nix')]
 upc-nix:
-  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager
+  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager rust-overlay
 
 # Update the flake inputs starts with 'my-'
 [group('nix')]
@@ -46,7 +46,8 @@ history:
 
 [group('nix')]
 preshell:
-  nix shell --extra-experimental-features "flakes nix-command" 'nixpkgs#nh' 'nixpkgs#git'
+  @grep -q 'experimental-features = nix-command flakes' /etc/nix/nix.conf 2>/dev/null || echo 'experimental-features = nix-command flakes' | sudo tee -a /etc/nix/nix.conf
+  nix shell 'nixpkgs#nh' 'nixpkgs#git'
 
 [group('nix')]
 show-conf:
@@ -88,6 +89,11 @@ query-tree:
 [group('nix')]
 query-depends pkgname:
   which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation .#nixosConfigurations.$(hostname).config.system.build.toplevel 2>/dev/null
+
+[linux]
+[group('nix')]
+query-dep-home pkgname:
+  which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation .#homeConfigurations.$USER.activationPackage 2>/dev/null
 
 ## MacOS
 [macos]

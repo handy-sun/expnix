@@ -73,6 +73,7 @@ in
   home.packages =
     with pkgs;
     [
+      tmux
       zoxide
       trash-cli
       fastfetch
@@ -180,8 +181,8 @@ in
       nix-init
       nix-tree
       nixfmt
-      alejandra
-      nurl
+      # alejandra
+      # nurl
 
       # productivity
       hugo # static site generator

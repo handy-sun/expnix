@@ -19,7 +19,6 @@
     file
     fish
     zsh
-    tmux
     docker
     zerotierone
     acme-sh
