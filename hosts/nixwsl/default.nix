@@ -15,6 +15,17 @@
   nixpkgs.config.cudaSupport = true;
 
   wsl.useWindowsDriver = true;
+
+  wsl.wslConf = {
+    interop.appendWindowsPath = false;
+    automount = {
+      enabled = true;
+      options = "";
+      # options = lib.mkForce "";
+      # mountFsTab = false; # 阻止 WSL 处理 fstab，可能能缓解抢跑冲突
+    };
+  };
+
   hardware.graphics.enable = true;
   # programs.nix-ld.libraries = with pkgs; [
   #   libglvnd
