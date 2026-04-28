@@ -3,6 +3,7 @@ set shell := ["bash", "-uc"]
 
 alias s := switch
 alias f := nixfmt
+alias sh := switch-home
 
 default:
   @just --list
@@ -68,6 +69,10 @@ nixinfo:
 [group('nix')]
 current-sys:
   readlink /run/current-system
+
+[group('nix')]
+query-all pkgname:
+  which {{pkgname}} | xargs realpath | xargs nix why-depends --all /run/current-system
 
 ## Linux
 [linux]

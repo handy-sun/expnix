@@ -174,6 +174,7 @@ in
       fishPlugins.tide
       fishPlugins.sponge
       fishPlugins.autopair
+      # texliveMedium
 
       ## nix related
       nil # language server for Nix

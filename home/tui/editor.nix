@@ -12,16 +12,18 @@ let
   nvimConfDir = config.xdg.configHome + "/nvim";
 in
 {
-  home.activation.rmNotNixStoreLink = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
-    test -L "${nvimConfDir}/lua" && {
-      realpath "${nvimConfDir}/lua" | xargs -I{} bash -c 'if ! [[ {} =~ "/nix/store" ]]; then
-        unlink "${nvimConfDir}/init.lua"
-        unlink "${nvimConfDir}/tutor"
-        unlink "${nvimConfDir}/snips"
-        unlink "${nvimConfDir}/lua"
-      fi'
-    }
-  '';
+  home.activation.rmNotNixStoreLink = lib.mkIf config.programs.neovim.nvimdots.enable (
+    lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+      test -L "${nvimConfDir}/lua" && {
+        realpath "${nvimConfDir}/lua" | xargs -I{} bash -c 'if ! [[ {} =~ "/nix/store" ]]; then
+          unlink "${nvimConfDir}/init.lua"
+          unlink "${nvimConfDir}/tutor"
+          unlink "${nvimConfDir}/snips"
+          unlink "${nvimConfDir}/lua"
+        fi'
+      }
+    ''
+  );
 
   ## Use `xdg.configFile."vim/"` instead of programs.vim
   xdg.configFile = {
