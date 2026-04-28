@@ -80,10 +80,14 @@ in
         in
         {
           ExecStartPre = "${script}";
+          ExecStartPreTimeoutSec = "20s";
           ExecStart = [
             ""
             "${lib.getExe cfg.package} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run"
           ];
+          Restart = "on-failure";
+          RestartSec = "10s";
+          StartLimitBurst = 3;
         }
       );
       requires = [ "network-online.target" ];
