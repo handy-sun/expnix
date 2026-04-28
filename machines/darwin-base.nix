@@ -159,11 +159,13 @@ in
     casks = [
       "ghostty"
       "antigravity"
-      # "alacritty" # deprecated
       "wezterm"
       "cc-switch"
       "nomachine"
+      "mactex-no-gui"
+      ## ------ Failed to install: ------
       # "lite-edit" # not found
+      # "alacritty" # deprecated
     ];
   };
 }

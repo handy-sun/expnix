@@ -7,19 +7,41 @@
 }:
 let
   cfg = config.services.sing-box;
-  capabilities = [
-    "CAP_NET_ADMIN"
-    "CAP_NET_RAW"
-    "CAP_NET_BIND_SERVICE"
-    "CAP_SYS_PTRACE"
-    "CAP_DAC_READ_SEARCH"
-  ];
+  # capabilities = [
+  #   "CAP_NET_ADMIN"
+  #   "CAP_NET_RAW"
+  #   "CAP_NET_BIND_SERVICE"
+  #   "CAP_SYS_PTRACE"
+  #   "CAP_DAC_READ_SEARCH"
+  # ];
 in
 {
   options = {
     services.sing-box = {
       enable = lib.mkEnableOption "sing-box universal proxy platform";
       package = lib.mkPackageOption pkgs "sing-box" { };
+
+      configGeneration = {
+        enable = lib.mkEnableOption "pre-start config generation via sbtpl";
+        sourceUrl = lib.mkOption {
+          type = lib.types.str;
+          description = "Subscription source URL for sbtpl base.js";
+        };
+        policyFilter = lib.mkOption {
+          type = lib.types.str;
+          description = "Policy filter expression passed to base.js -p";
+        };
+        configDir = lib.mkOption {
+          type = lib.types.str;
+          default = "/run/sing-box";
+          description = "Output directory for the generated config.json";
+        };
+        extraArgs = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          description = "Extra arguments passed to base.js";
+        };
+      };
     };
   };
 
@@ -36,10 +58,34 @@ in
         StateDirectoryMode = "0700";
         RuntimeDirectory = "sing-box";
         RuntimeDirectoryMode = "0700";
-        CapabilityBoundingSet = capabilities;
-        AmbientCapabilities = capabilities;
         # WorkingDirectory = "/var/lib/sing-box";
-      };
+        # CapabilityBoundingSet = capabilities;
+        # AmbientCapabilities = capabilities;
+      }
+      // lib.optionalAttrs cfg.configGeneration.enable (
+        let
+          genCfg = cfg.configGeneration;
+          configFile = genCfg.configDir + "/config.json";
+          extraArgsStr = lib.escapeShellArgs genCfg.extraArgs;
+          script = pkgs.writeShellScript "sing-box-pregen" ''
+            test -d ${genCfg.configDir} || mkdir -p ${genCfg.configDir}
+            test -h ${configFile} && rm ${configFile}
+            ${lib.getExe pkgs.nodejs} ${inputs.sbtpl}/node/base.js \
+              -s '${genCfg.sourceUrl}' \
+              -p '${genCfg.policyFilter}' \
+              -o ${configFile} \
+              ${extraArgsStr}
+            chown --reference=${genCfg.configDir} ${configFile}
+          '';
+        in
+        {
+          ExecStartPre = "${script}";
+          ExecStart = [
+            ""
+            "${lib.getExe cfg.package} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run"
+          ];
+        }
+      );
       requires = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
     };
