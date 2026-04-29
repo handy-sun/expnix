@@ -18,7 +18,7 @@
     enable = true;
     enableFishIntegration = true;
     enableFishPrompt = isHmSingle;
-    enableFishGreetingforNix = true;
+    fishGreetingMode = "custom";
     enableZshIntegration = true;
   };
 

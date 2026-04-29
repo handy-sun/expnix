@@ -47,9 +47,22 @@
     bzip2
     zstd
 
+    ## servers / infra
+    nginx
+    caddy
+    sqlite
+    acme-sh
+    frp
+
     ## network basics
     dnsutils
     ipcalc
+
+    ## networking tools
+    pv
+    nexttrace
+    bandwhich
+    webdav
 
     ## git / forge
     git-filter-repo
@@ -80,5 +93,6 @@
     xclip
     chase
     sd # sed
+    ouch
   ];
 }

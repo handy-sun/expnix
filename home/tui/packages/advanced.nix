@@ -31,18 +31,6 @@
       docker-compose
       docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
 
-      ## servers / infra
-      nginx
-      caddy
-      sqlite
-      acme-sh
-      frp
-
-      ## networking tools
-      pv
-      nexttrace
-      bandwhich
-
       ## downloads / transfers
       aria2 # A lightweight multi-protocol & multi-source command-line download utility
       axel
@@ -57,7 +45,6 @@
       ## benchmarking
       hyperfine
       miniserve
-      ouch
 
       ## disk / files
       ncdu
