@@ -1,0 +1,50 @@
+name: CI
+
+on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Stage 1: evaluate all outputs + check formatting + lint
+  # nix flake check evaluates nixosConfigurations, darwinConfigurations,
+  # homeConfigurations across ALL systems — catches eval errors, option
+  # typos, and nixfmt violations in one shot.
+  flake-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - run: nix flake check
+      - run: nix shell nixpkgs#statix -c statix check .
+
+  # Stage 2: dry-run build on native platforms
+  # Validates that each toplevel derivation can be fully evaluated and
+  # all build inputs resolve.
+  build:
+    needs: flake-check
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: expnix (aarch64-linux)
+            os: ubuntu-24.04-arm
+            attr: nixosConfigurations.expnix.config.system.build.toplevel
+          - name: nixwsl (x86_64-linux)
+            os: ubuntu-latest
+            attr: nixosConfigurations.nixwsl.config.system.build.toplevel
+          - name: handyMini (aarch64-darwin)
+            os: macos-14
+            attr: darwinConfigurations.handyMini.config.system.build.toplevel
+          - name: home (x86_64-linux)
+            os: ubuntu-latest
+            attr: homeConfigurations.qi.activationPackage
+    name: build ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - run: nix build .#${{ matrix.attr }} --dry-run
