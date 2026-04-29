@@ -11,6 +11,7 @@ system:
   username ? "${myvars.user}",
   isDarwin ? false,
   isWSL ? false,
+  profileLevel ? myvars.profileLevel,
 }:
 
 let
@@ -35,6 +36,7 @@ let
       isWSL
       isHeLinux
       isHmSingle
+      profileLevel
       ;
   };
 in

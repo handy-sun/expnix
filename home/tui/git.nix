@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  profileLevel,
   ...
 }:
 let
@@ -85,7 +86,7 @@ in
   };
 
   programs.delta = {
-    enable = true;
+    enable = profileLevel.tuiAdvanced;
     enableGitIntegration = true;
     options = {
       navigate = true;
@@ -103,5 +104,5 @@ in
     };
   };
 
-  programs.lazygit.enable = true;
+  programs.lazygit.enable = profileLevel.tuiAdvanced;
 }

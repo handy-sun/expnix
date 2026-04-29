@@ -5,6 +5,7 @@
   inputs,
   isDarwin,
   isHmSingle,
+  profileLevel,
   ...
 }:
 let
@@ -34,7 +35,7 @@ in
   programs.neovim = {
     withRuby = false;
     nvimdots = {
-      enable = true;
+      enable = profileLevel.tuiAdvanced;
       bindLazyLock = false;
       setBuildEnv = isNeedBuildEnv; # Only needed for NixOS
       withBuildTools = isNeedBuildEnv; # Only needed for NixOS

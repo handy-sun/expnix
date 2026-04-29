@@ -18,4 +18,13 @@ rec {
     VISUAL = "nvim";
     FZF_DEFAULT_COMMAND = "fd --exclude={.git,.idea,.vscode,tags,OrbStack} --type f";
   };
+
+  ## Profile level defaults — hosts can override.
+  ## tuibase has no key: always included.
+  profileLevel = {
+    tuiAdvanced = true;
+    tuiOptional = false;
+    guiBase = false;
+    guiHeavy = false;
+  };
 }

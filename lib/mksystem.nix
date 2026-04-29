@@ -12,10 +12,7 @@ hostName:
   username ? "${myvars.user}",
   isDarwin ? false,
   isWSL ? false,
-  profileLevel ? {
-    tuiAdvanced = false;
-    gui = false;
-  },
+  profileLevel ? myvars.profileLevel,
 }:
 
 let
@@ -47,6 +44,7 @@ let
       isWSL
       isHeLinux
       isHmSingle
+      profileLevel
       ;
   };
 in

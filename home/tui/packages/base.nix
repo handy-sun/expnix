@@ -1,0 +1,84 @@
+## ============================================================
+## tuibase — always included: essential terminal tools for SSH
+## ============================================================
+{
+  pkgs,
+  ...
+}:
+
+{
+  home.packages = with pkgs; [
+    ## shell / navigation
+    tmux
+    zoxide
+    trash-cli
+    fastfetch
+    fzf
+    fd
+    ripgrep
+    bat
+    eza
+    broot
+
+    ## JSON / YAML
+    jq
+    yq-go
+
+    ## system monitoring
+    htop
+    procs
+    btop
+    duf
+    dust
+
+    ## file ops
+    rsync
+    lsof
+    tree
+    just
+    gnupg
+    util-linux
+
+    ## archives (basics)
+    gzip
+    unzip
+    xz
+    zip
+    bzip2
+    zstd
+
+    ## network basics
+    dnsutils
+    ipcalc
+
+    ## git / forge
+    git-filter-repo
+    gh
+    tea
+
+    ## core languages
+    go
+    python3
+    nodejs # provides node, npm
+    lua
+    uv # replace for pip
+
+    ## editor tooling
+    ctags
+    shellcheck
+
+    ## nix
+    nil # language server for Nix
+    nixfmt
+
+    ## fish plugins
+    fishPlugins.tide
+    fishPlugins.sponge
+    fishPlugins.autopair
+
+    ## misc
+    xclip
+    chase
+    sd # sed
+  ];
+}
