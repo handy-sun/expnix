@@ -1,6 +1,4 @@
-{
-  ...
-}:
+_:
 
 {
   nixpkgs.overlays = [

@@ -5,12 +5,10 @@
   ...
 }:
 {
-  imports = (
-    lib.map myutils.relativeToRoot [
-      "machines/wsl-base.nix"
-      "nixos"
-    ]
-  );
+  imports = lib.map myutils.relativeToRoot [
+    "machines/wsl-base.nix"
+    "nixos"
+  ];
 
   nixpkgs.config.cudaSupport = true;
 

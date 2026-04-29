@@ -15,13 +15,10 @@ in
     lib.map myutils.relativeToRoot [
       "machines/darwin-base.nix"
       "overlays/beszel.nix"
-      "overlays/caddy-webdav.nix"
       "overlays/direnv.nix"
       "modules/caddy-webdav"
     ]
   );
-
-  services.caddy-webdav.enable = true;
 
   users.users."${username}" = {
     shell = pkgs.fish; # # Not worked, must use `chsh -s ...`

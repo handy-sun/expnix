@@ -9,13 +9,27 @@
 }:
 let
   cfg = config.services.caddy-webdav;
+
+  # Build caddy with webdav plugin directly (no overlay)
+  caddy-webdav-pkg = pkgs.caddy.withPlugins {
+    plugins = [
+      "github.com/mholt/caddy-webdav@v0.0.0-20260127042217-fa2f366b0d75"
+    ];
+    hash = "sha256-itDJ76e3pNZmG4cAX07cuu+Vx2qLfvp9ljfu5ln4WDc=";
+  };
+
   caddyfile = pkgs.writeText "Caddyfile-webdav" ''
     :${builtins.toString cfg.port} {
       root * ${cfg.storagePath}
-      ${if cfg.user != null && cfg.hashedPassword != null then
-        "basicauth {\n        ${cfg.user} ${cfg.hashedPassword}\n      }"
-      else ""}
-      webdav
+      route {
+        ${
+          if cfg.user != null && cfg.hashedPassword != null then
+            "basicauth {\n          ${cfg.user} ${cfg.hashedPassword}\n        }"
+          else
+            ""
+        }
+        webdav
+      }
     }
   '';
 in
@@ -23,12 +37,16 @@ in
   options.services.caddy-webdav = {
     enable = lib.mkEnableOption "Caddy WebDAV server";
 
-    package = lib.mkPackageOption pkgs "caddy-webdav" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = caddy-webdav-pkg;
+      description = "Caddy package with webdav plugin";
+    };
 
     storagePath = lib.mkOption {
-      type = lib.types.str;
-      default = "/var/www/webdav";
-      description = "Directory to serve via WebDAV";
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "Directory to serve via WebDAV (required)";
     };
 
     port = lib.mkOption {
@@ -53,6 +71,12 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       {
+        assertions = [
+          {
+            assertion = cfg.storagePath != null;
+            message = "services.caddy-webdav.storagePath must be set";
+          }
+        ];
         environment.systemPackages = [ cfg.package ];
       }
       # Ensure storage directory exists with correct ownership
@@ -70,6 +94,8 @@ in
           ProgramArguments = [
             "${lib.getExe cfg.package}"
             "run"
+            "--adapter"
+            "caddyfile"
             "--config"
             "${caddyfile}"
           ];
