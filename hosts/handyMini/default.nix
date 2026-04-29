@@ -15,6 +15,7 @@ in
     lib.map myutils.relativeToRoot [
       "machines/darwin-base.nix"
       "overlays/beszel.nix"
+      "overlays/direnv.nix"
     ]
   );
 
