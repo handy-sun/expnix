@@ -5,26 +5,29 @@ on:
     branches: [main, "dev*"]
     paths-ignore:
       - "**.md"
-      - "Justfile"
-      - ".gitignore"
-      - "LICENSE"
+      - Justfile
+      - .gitignore
+      - LICENSE
   pull_request:
     branches: [main, "dev*"]
     paths-ignore:
       - "**.md"
-      - "Justfile"
-      - ".gitignore"
-      - "LICENSE"
+      - Justfile
+      - .gitignore
+      - LICENSE
+  schedule:
+    - cron: "0 3,15 * * *"
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
-  # Stage 1: evaluate all outputs + check formatting + lint
-  # nix flake check evaluates nixosConfigurations, darwinConfigurations,
-  # homeConfigurations across ALL systems — catches eval errors, option
-  # typos, and nixfmt violations in one shot.
   flake-check:
     runs-on: ubuntu-latest
     steps:
@@ -34,9 +37,6 @@ jobs:
       - run: nix flake check
       - run: nix shell nixpkgs#statix -c sh -c 'statix check . 2>&1 | tee /dev/stderr | grep -q "^\[E" && exit 1 || exit 0'
 
-  # Stage 2: dry-run build on native platforms
-  # Validates that each toplevel derivation can be fully evaluated and
-  # all build inputs resolve.
   build:
     needs: flake-check
     strategy:
@@ -61,4 +61,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - run: nix build .#${{ matrix.attr }} --dry-run
+      - run: nix build .#${{ matrix.attr }}
