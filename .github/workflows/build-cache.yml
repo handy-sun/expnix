@@ -14,7 +14,37 @@ permissions:
   id-token: write
 
 jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      should_build: ${{ steps.compare.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Hash current flake.lock
+        run: sha256sum flake.lock > /tmp/flake-lock-hash
+
+      - name: Restore last build hash
+        id: cache
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/last-hash
+          key: build-cache-flake-lock
+
+      - name: Compare hashes
+        id: compare
+        run: |
+          if [ -f /tmp/last-hash ] && diff -q /tmp/flake-lock-hash /tmp/last-hash > /dev/null 2>&1; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "flake.lock unchanged, skipping build"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "flake.lock changed, will rebuild"
+          fi
+
   build:
+    needs: check-changes
+    if: needs.check-changes.outputs.should_build == 'true'
     timeout-minutes: 360
     strategy:
       fail-fast: false
@@ -39,3 +69,15 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - run: nix build .#${{ matrix.attr }}
+
+  save-hash:
+    needs: [check-changes, build]
+    if: needs.check-changes.outputs.should_build == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sha256sum flake.lock > /tmp/flake-lock-hash
+      - uses: actions/cache/save@v4
+        with:
+          path: /tmp/flake-lock-hash
+          key: build-cache-flake-lock

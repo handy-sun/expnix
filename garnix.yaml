@@ -1,10 +1,7 @@
 builds:
   include:
-    # NixOS + darwin + home-manager configurations (all systems)
     - nixosConfigurations.*
-    - darwinConfigurations.*
     - homeConfigurations.*
-    # packages, checks, devShells per system
     - "*.x86_64-linux.*"
     - "*.aarch64-linux.*"
-    - "*.aarch64-darwin.*"
+  branch: main
