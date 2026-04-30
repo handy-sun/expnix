@@ -1,0 +1,41 @@
+name: Build cache
+
+on:
+  schedule:
+    - cron: "0 3,15 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: build-cache
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build:
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: expnix (aarch64-linux)
+            os: ubuntu-24.04-arm
+            attr: nixosConfigurations.expnix.config.system.build.toplevel
+          - name: nixwsl (x86_64-linux)
+            os: ubuntu-latest
+            attr: nixosConfigurations.nixwsl.config.system.build.toplevel
+          - name: handyMini (aarch64-darwin)
+            os: macos-14
+            attr: darwinConfigurations.handyMini.config.system.build.toplevel
+          - name: home (x86_64-linux)
+            os: ubuntu-latest
+            attr: homeConfigurations.qi.activationPackage
+    name: build ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - run: nix build .#${{ matrix.attr }}
