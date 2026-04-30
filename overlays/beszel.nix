@@ -26,6 +26,8 @@
                 "TestNewGPUManagerJetsonIgnoresCollectorConfig"
                 ## Disable environment variable: CHECK_UPDATES
                 "TestApiRoutesAuthentication/GET_/update_-_shouldn't_exist_without_CHECK_UPDATES_env_var"
+                ## Docker test: httptest server panics in darwin sandbox
+                "TestCheckDockerVersion"
                 ## About hub tests
                 "TestConfigSyncWithTokens"
               ];
