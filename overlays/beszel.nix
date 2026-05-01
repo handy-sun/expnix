@@ -30,6 +30,8 @@
                 "TestCheckDockerVersion"
                 ## About hub tests
                 "TestConfigSyncWithTokens"
+                ## CPU percentage: CI runners are multi-core, calculated % can exceed 100
+                "TestServiceUpdateCPUPercent"
               ];
             in
             [ "-skip=^${builtins.concatStringsSep "$|^" skippedTests}$" ];
