@@ -1,7 +1,9 @@
 {
   lib,
   pkgs,
+  myvars,
   myutils,
+  homeDir,
   ...
 }:
 
@@ -10,6 +12,18 @@
     "nixos"
     "modules/niri"
   ];
+
+  users.users.${myvars.user} = {
+    isNormalUser = true;
+    home = homeDir;
+    createHome = true;
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
+  };
+
+  security.sudo.wheelNeedsPassword = false;
 
   hardware.graphics.enable = true;
 
