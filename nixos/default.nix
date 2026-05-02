@@ -2,6 +2,7 @@
   pkgs,
   lib,
   myvars,
+  homeDir,
   myutils,
   ...
 }:
@@ -75,7 +76,11 @@
   ## must enable zsh in order users to use it
   programs.zsh.enable = true;
   programs.fish.enable = true;
-  users.users.${myvars.user}.shell = pkgs.fish;
+  users.users.${myvars.user} = {
+    home = lib.mkDefault homeDir;
+    createHome = lib.mkDefault true;
+    shell = pkgs.fish;
+  };
 
   users.extraGroups.docker.members = [ "${myvars.user}" ];
 

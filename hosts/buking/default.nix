@@ -1,9 +1,7 @@
 {
   lib,
-  pkgs,
   myvars,
   myutils,
-  homeDir,
   ...
 }:
 
@@ -15,8 +13,6 @@
 
   users.users.${myvars.user} = {
     isNormalUser = true;
-    home = homeDir;
-    createHome = true;
     extraGroups = [
       "wheel"
       "networkmanager"
