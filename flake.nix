@@ -38,6 +38,11 @@
       flake = false;
     };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     sbtpl = {
       url = "git+https://codeberg.org/handy/sbtpl.git";
       flake = false;
@@ -108,6 +113,16 @@
             tuiOptional = false;
             guiBase = false;
             guiHeavy = false;
+          };
+        };
+
+        "buking" = mkSystem "buking" {
+          system = "x86_64-linux";
+          profileLevel = {
+            tuiAdvanced = true;
+            tuiOptional = true;
+            guiBase = true;
+            guiHeavy = true;
           };
         };
       };

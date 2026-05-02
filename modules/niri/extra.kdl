@@ -1,0 +1,12 @@
+environment {
+  QT_QPA_PLATFORMTHEME "gtk3"
+}
+
+spawn-at-startup "noctalia-shell"
+spawn-at-startup "@polkit-kde-agent-1@/libexec/polkit-kde-authentication-agent-1"
+
+prefer-no-csd
+
+hotkey-overlay {
+    skip-at-startup
+}
