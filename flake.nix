@@ -115,6 +115,16 @@
             guiHeavy = false;
           };
         };
+
+        "buking" = mkSystem "buking" {
+          system = "x86_64-linux";
+          profileLevel = {
+            tuiAdvanced = true;
+            tuiOptional = true;
+            guiBase = true;
+            guiHeavy = true;
+          };
+        };
       };
 
       darwinConfigurations = {
