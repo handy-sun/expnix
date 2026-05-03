@@ -6,10 +6,14 @@
 }:
 
 {
-  imports = lib.map myutils.relativeToRoot [
-    "nixos"
-    "modules/niri"
-  ];
+  imports =
+    lib.map myutils.relativeToRoot [
+      "nixos"
+      "modules/niri"
+    ]
+    ++ [
+      ./hardware-configuration.nix
+    ];
 
   users.users.${myvars.user} = {
     isNormalUser = true;
@@ -30,12 +34,21 @@
     jack.enable = true;
   };
 
-  networking.networkmanager.enable = true;
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  services = {
+    xserver.enable = true;
+    displayManager.sddm.enable = true;
+    # desktopManager.plasma6.enable = true;
   };
+
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "yes";
+    };
+  };
+  networking.networkmanager.enable = true;
 
   boot.loader.grub.device = "/dev/sda";
 }
