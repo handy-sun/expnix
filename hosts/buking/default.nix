@@ -36,6 +36,12 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub = {
+    enable = false;
+    device = "/dev/sda";
+    efiSupport = true;
+  };
+
   services = {
     xserver.enable = true;
     displayManager.sddm.enable = true;
@@ -44,11 +50,14 @@
 
   services.openssh = {
     enable = true;
-    settings = {
-      PermitRootLogin = "yes";
-    };
+    # settings = {
+    #   PermitRootLogin = "yes";
+    # };
   };
   networking.networkmanager.enable = true;
 
-  boot.loader.grub.device = "/dev/sda";
+  ## ------ other optional services ------
+  services.zerotierone = {
+    enable = true;
+  };
 }
