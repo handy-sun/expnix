@@ -75,7 +75,6 @@ in
   # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"
   nix.settings.auto-optimise-store = false;
 
-  # Fonts (shared via myvars.fonts)
   fonts = myvars.fonts pkgs;
 
   #############################################################
@@ -104,7 +103,6 @@ in
     curl
     wget
     file
-    tmux
     coreutils
     iproute2mac
     procps
@@ -149,7 +147,7 @@ in
       "wezterm"
       "cc-switch"
       "nomachine"
-      "mactex-no-gui"
+      # "mactex-no-gui"
       ## ------ Failed to install: ------
       # "lite-edit" # not found
       # "alacritty" # deprecated

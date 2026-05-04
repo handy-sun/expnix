@@ -107,4 +107,6 @@
       ];
     };
   };
+
+  fonts = lib.mkIf profileLevel.guiBase (myvars.fonts pkgs);
 }

@@ -90,7 +90,7 @@ in
     enableGitIntegration = true;
     options = {
       navigate = true;
-      side-by-side = true;
+      side-by-side = false;
       # diff-so-fancy = true;
       line-numbers = true;
       true-color = "always";

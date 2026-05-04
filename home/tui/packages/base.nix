@@ -3,96 +3,118 @@
 ## ============================================================
 {
   pkgs,
+  isDarwin,
   ...
 }:
 
 {
-  home.packages = with pkgs; [
-    ## shell / navigation
-    tmux
-    zoxide
-    trash-cli
-    fastfetch
-    fzf
-    fd
-    ripgrep
-    bat
-    eza
-    broot
+  home.packages =
+    with pkgs;
+    [
+      ## shell / navigation
+      tmux
+      zoxide
+      trash-cli
+      fastfetch
+      fzf
+      fd
+      ripgrep
+      bat
+      eza
+      broot
 
-    ## JSON / YAML
-    jq
-    yq-go
+      ## JSON / YAML
+      jq
+      yq-go
 
-    ## system monitoring
-    htop
-    procs
-    btop
-    duf
-    dust
+      ## system monitoring
+      htop
+      procs
+      btop
+      duf
+      dust
 
-    ## file ops
-    rsync
-    lsof
-    tree
-    just
-    gnupg
-    util-linux
+      ## file ops
+      rsync
+      lsof
+      tree
+      just
+      gnupg
+      util-linux
 
-    ## archives (basics)
-    gzip
-    unzip
-    xz
-    zip
-    bzip2
-    zstd
+      ## archives (basics)
+      gzip
+      unzip
+      xz
+      zip
+      bzip2
+      zstd
 
-    ## servers / infra
-    nginx
-    caddy
-    sqlite
-    acme-sh
-    frp
+      ## servers / infra
+      nginx
+      caddy
+      sqlite
+      acme-sh
+      frp
 
-    ## network basics
-    dnsutils
-    ipcalc
+      ## network basics
+      dnsutils
+      ipcalc
 
-    ## networking tools
-    pv
-    nexttrace
-    bandwhich
-    webdav
+      ## networking tools
+      pv
+      nexttrace
+      bandwhich
+      webdav
 
-    ## git / forge
-    git-filter-repo
-    gh
-    tea
+      ## git / forge
+      git-filter-repo
+      gh
+      tea
 
-    ## core languages
-    go
-    python3
-    nodejs # provides node, npm
-    lua
-    uv # replace for pip
+      ## core languages
+      go
+      python3
+      nodejs # provides node, npm
+      lua
+      uv # replace for pip
 
-    ## editor tooling
-    ctags
-    shellcheck
+      ## editor tooling
+      ctags
+      shellcheck
 
-    ## nix
-    nil # language server for Nix
-    nixfmt
+      ## nix
+      nil # language server for Nix
+      nixfmt
 
-    ## fish plugins
-    fishPlugins.tide
-    fishPlugins.sponge
-    fishPlugins.autopair
+      ## fish plugins
+      fishPlugins.tide
+      fishPlugins.sponge
+      fishPlugins.autopair
 
-    ## misc
-    xclip
-    chase
-    sd # sed
-    ouch
-  ];
+      ## misc
+      xclip
+      chase
+      sd # sed
+      ouch
+    ]
+    ++ lib.optionals pkgs.stdenv.isLinux [
+      strace # a diagnostic, debugging and instructional userspace utility for Linux.
+      ltrace # library call monitoring
+      pahole
+      iotop # io monitoring
+      stun
+      libtree
+      wezterm
+      mpv
+      fio
+      ioping
+      hdparm
+    ]
+    ++ lib.optionals isDarwin [
+      xquartz
+      ## This is automatically setup on Linux
+      gettext
+      gnused
+    ];
 }

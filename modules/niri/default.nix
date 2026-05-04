@@ -56,6 +56,7 @@ in
   ++ (with pkgs; [
     gnome-themes-extra # Adwaita theme
     glib # gsettings
+    kdePackages.breeze-icons
   ]);
 
   hardware.i2c.enable = true;
@@ -64,9 +65,9 @@ in
   programs.dconf.profiles.user.databases = [
     {
       lockAll = true;
-      settings = {
-        "org/gnome/desktop/wm/preferences".button-layout = "";
-      };
+      # settings = {
+      #   "org/gnome/desktop/wm/preferences".button-layout = "";
+      # };
     }
   ];
 
