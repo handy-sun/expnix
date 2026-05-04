@@ -50,6 +50,9 @@ jobs:
           - name: nixwsl (x86_64-linux)
             os: ubuntu-latest
             attr: nixosConfigurations.nixwsl.config.system.build.toplevel
+          - name: buking (x86_64-linux)
+            os: ubuntu-latest
+            attr: nixosConfigurations.buking.config.system.build.toplevel
           - name: handyMini (aarch64-darwin)
             os: macos-14
             attr: darwinConfigurations.handyMini.config.system.build.toplevel
