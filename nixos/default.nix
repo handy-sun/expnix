@@ -4,6 +4,7 @@
   myvars,
   homeDir,
   myutils,
+  profileLevel,
   ...
 }:
 {
@@ -93,6 +94,17 @@
     defaultLocale = "${myvars.langEnv}";
     extraLocaleSettings = {
       LC_ALL = "${myvars.langEnv}";
+    };
+
+    # Fcitx5 input method for Chinese input on Wayland
+    inputMethod = lib.mkIf profileLevel.guiBase {
+      enable = true;
+      type = "fcitx5";
+      fcitx5.waylandFrontend = true;
+      fcitx5.addons = with pkgs; [
+        fcitx5-chinese-addons # pinyin
+        fcitx5-gtk # GTK support
+      ];
     };
   };
 }
