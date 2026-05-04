@@ -75,21 +75,8 @@ in
   # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"
   nix.settings.auto-optimise-store = false;
 
-  # Fonts
-  fonts = {
-    packages = with pkgs; [
-      # icon fonts
-      material-design-icons
-      font-awesome
-      # maple-mono.NF-CN
-      # nerdfonts
-      # https://github.com/NixOS/nixpkgs/blob/nixos-unstable-small/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
-      nerd-fonts.symbols-only # symbols icon only
-      nerd-fonts.fira-code
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.iosevka
-    ];
-  };
+  # Fonts (shared via myvars.fonts)
+  fonts = myvars.fonts;
 
   #############################################################
   #

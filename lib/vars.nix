@@ -1,4 +1,6 @@
-# { lib }:
+{
+  pkgs,
+}:
 rec {
   user = "qi";
 
@@ -26,5 +28,23 @@ rec {
     tuiOptional = false;
     guiBase = false;
     guiHeavy = false;
+  };
+
+  ## Fonts shared across NixOS and darwin.
+  fonts = {
+    packages = with pkgs; [
+      ## Google Noto
+      noto-fonts
+      # noto-fonts-cjk-sans
+      # noto-fonts-cjk-serif
+      ## icon fonts
+      material-design-icons
+      font-awesome
+      ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable-small/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
+      nerd-fonts.symbols-only # symbols icon only
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+      # nerd-fonts.iosevka
+    ];
   };
 }
