@@ -68,13 +68,12 @@
   environment = {
     localBinInPath = true;
     sessionVariables = myvars.commonEnv // {
-      # # For Linux
+      ## For Linux
       SYSTEMD_PAGER = "nvim";
       SYSTEMD_EDITOR = "nvim";
     };
   };
 
-  ## must enable zsh in order users to use it
   programs.zsh.enable = true;
   programs.fish.enable = true;
   users.users.${myvars.user} = {
@@ -96,14 +95,15 @@
       LC_ALL = "${myvars.langEnv}";
     };
 
-    # Fcitx5 input method for Chinese input on Wayland
+    ## Fcitx5 input method for Chinese input on Wayland
     inputMethod = lib.mkIf profileLevel.guiBase {
       enable = true;
       type = "fcitx5";
       fcitx5.waylandFrontend = true;
       fcitx5.addons = with pkgs; [
-        fcitx5-chinese-addons # pinyin
-        fcitx5-gtk # GTK support
+        ## pinyin
+        qt6Packages.fcitx5-chinese-addons
+        fcitx5-gtk
       ];
     };
   };

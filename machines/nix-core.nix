@@ -69,6 +69,6 @@
 
   networking.hostName = hostName;
 
-  # Fonts (shared via myvars.fonts)
-  fonts = myvars.fonts;
+  ## Fonts (shared via myvars.fonts)
+  fonts = myvars.fonts pkgs;
 }

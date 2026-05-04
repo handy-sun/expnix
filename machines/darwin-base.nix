@@ -76,7 +76,7 @@ in
   nix.settings.auto-optimise-store = false;
 
   # Fonts (shared via myvars.fonts)
-  fonts = myvars.fonts;
+  fonts = myvars.fonts pkgs;
 
   #############################################################
   #

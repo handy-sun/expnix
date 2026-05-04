@@ -1,6 +1,3 @@
-{
-  pkgs,
-}:
 rec {
   user = "qi";
 
@@ -31,12 +28,11 @@ rec {
   };
 
   ## Fonts shared across NixOS and darwin.
-  fonts = {
+  ## Takes pkgs as argument, returns font set.
+  fonts = pkgs: {
     packages = with pkgs; [
       ## Google Noto
       noto-fonts
-      # noto-fonts-cjk-sans
-      # noto-fonts-cjk-serif
       ## icon fonts
       material-design-icons
       font-awesome
@@ -44,7 +40,6 @@ rec {
       nerd-fonts.symbols-only # symbols icon only
       nerd-fonts.fira-code
       nerd-fonts.jetbrains-mono
-      # nerd-fonts.iosevka
     ];
   };
 }

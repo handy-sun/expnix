@@ -20,7 +20,7 @@
       enabled = true;
       options = "";
       # options = lib.mkForce "";
-      # mountFsTab = false; # 阻止 WSL 处理 fstab，可能能缓解抢跑冲突
+      # mountFsTab = false; # Prevent WSL from handling fstab, may help mitigate race condition
     };
   };
 
