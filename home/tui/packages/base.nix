@@ -105,8 +105,6 @@
       iotop # io monitoring
       stun
       libtree
-      wezterm
-      mpv
       fio
       ioping
       hdparm

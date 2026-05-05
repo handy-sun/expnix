@@ -2,41 +2,41 @@
 
 ## Bootstrapping on a Fresh System
 
-If you are on a freshly installed NixOS system, you can use the following steps to start configuring and compiling this system configuration.
+For a freshly installed NixOS or macOS system, follow these steps to build and activate the configuration.
 
-> **Note**: Ensure you are in the root directory of the repository (where the `Justfile` is located) when running these commands.
+> **Note**: Run all commands from the repository root (where the `Justfile` is located).
 
-1. **Get `just` command runner:**
-   First, start a temporary shell with `just` installed to run the tasks defined in our `Justfile`.
-
-   ```bash
-   nix shell --extra-experimental-features "flakes nix-command" nixpkgs#just
-   ```
-
-2. **Prepare dependencies (`preshell`):**
-   Once you have `just`, run the `preshell` target to enter a subshell environment pre-loaded with necessary tools like `nh` (Nix Helper) and `git` which are required for the build.
+1. **Enter the dev shell(Only first time):**
 
    ```bash
-   just preshell
+   export NIX_CONFIG='extra-experimental-features = nix-command flakes'
+   nix develop
    ```
 
-3. **Build and Switch:**
-   Within the `preshell` environment, you can now start the compilation process to switch and activate the new NixOS configuration.
+   This drops you into a shell with `just`, `nh`, and `git` available. The `NIX_CONFIG` line is only needed if your system `nix.conf` does not already enable flakes.
+
+2. **Build and activate:**
 
    ```bash
    just switch
    ```
 
-   *(This command invokes `nh os switch .` under the hood on Linux systems).*
+   On Linux this runs `nh os switch .`, on macOS it runs `nh darwin switch .`.
+
+3. **To switch home-manager only** (without rebuilding the full system):
+
+   ```bash
+   just switch-home
+   ```
 
 ## Useful Commands
 
-You can find more available commands by running:
+List all available commands:
 ```bash
 just
 ```
 
-For development, you might also want to set up git hooks:
+Set up git hooks:
 ```bash
 just setup-hook
 ```

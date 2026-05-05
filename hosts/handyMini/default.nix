@@ -4,11 +4,13 @@
   username,
   myutils,
   homeDir,
+  inputs,
   ...
 }:
 let
   singboxWorkDir = homeDir + "/.cache/sing-box"; # WARN: NOT reproducible
   beszelAgentEnv = homeDir + "/.config/beszel/beszel-agent.env";
+  webdavConf = inputs.my-dotfiles + "/.config/webdav/config.yml";
 in
 {
   imports = (
@@ -35,7 +37,6 @@ in
   #############################################################
   launchd.user.agents.singb.serviceConfig = {
     Label = "nixdwn.${username}.singb";
-    UserName = username;
     ProgramArguments = [
       "${lib.getExe pkgs.sing-box}"
       "run"
@@ -52,7 +53,6 @@ in
 
   launchd.user.agents.frpc.serviceConfig = {
     Label = "nixdwn.${username}.frpc";
-    UserName = username;
     ProgramArguments = [
       "${lib.getBin pkgs.frp}/bin/frpc"
       "-c"
@@ -72,7 +72,6 @@ in
     '';
     serviceConfig = {
       Label = "nixdwn.${username}.beszel-agent";
-      UserName = username;
       LimitLoadToHosts = [
         "Aqua"
         "Background"
@@ -91,7 +90,6 @@ in
 
   launchd.user.agents.nginx.serviceConfig = {
     Label = "nixdwn.${username}.nginx";
-    UserName = username;
     ProgramArguments = [
       "${lib.getExe pkgs.nginx}"
       "-e"
@@ -107,7 +105,6 @@ in
 
   launchd.user.agents.php-fpm.serviceConfig = {
     Label = "nixdwn.${username}.php-fpm";
-    UserName = username;
     ProgramArguments = [
       "${pkgs.php}/bin/php-fpm"
       "-F"
@@ -118,5 +115,16 @@ in
     RunAtLoad = true;
     StandardOutPath = "/tmp/php-fpm.out.log";
     # StandardErrorPath = "/tmp/php-fpm.err.log";
+  };
+
+  launchd.user.agents.webdav.serviceConfig = {
+    Label = "nixdwn.${username}.webdav";
+    ProgramArguments = [
+      "${lib.getExe pkgs.webdav}"
+      "-c"
+      "${webdavConf}"
+    ];
+    KeepAlive = true;
+    RunAtLoad = true;
   };
 }

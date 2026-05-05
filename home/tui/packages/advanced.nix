@@ -38,7 +38,7 @@
 
       ## archives (extras)
       cpio # Program to create or extract from cpio archives
-      p7zip
+      _7zip-zstd
       pigz # Parallel Implementation of GZip
       unrar-free
 

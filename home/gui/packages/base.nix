@@ -13,6 +13,7 @@ lib.mkIf profileLevel.guiBase {
       mpv
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
+      wezterm
       # fuzzel
       thunar
       peazip

@@ -24,6 +24,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ## ------ my configs and scripts ------
     my-nvimdots.url = "github:handy-sun/nvimdots";
 
     my-dotzsh.url = "github:handy-sun/dotzsh";
@@ -38,13 +44,8 @@
       flake = false;
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sbtpl = {
-      url = "git+https://codeberg.org/handy/sbtpl.git";
+      url = "github:handy-sun/sbtpl";
       flake = false;
     };
   };
@@ -153,8 +154,11 @@
         {
           default = pkgs.mkShell {
             packages = with pkgs; [
+              git
+              just
+              nh
+              fish
               statix
-              typos
             ];
             name = "devsh";
             shellHook = ''
