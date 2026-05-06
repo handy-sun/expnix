@@ -52,6 +52,7 @@
 
   outputs =
     inputs@{
+      self,
       nixpkgs,
       nix-darwin,
       nixos-wsl,
@@ -87,6 +88,7 @@
         inherit
           nixpkgs
           inputs
+          self
           myvars
           myutils
           ;

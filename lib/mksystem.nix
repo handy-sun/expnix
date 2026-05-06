@@ -2,6 +2,7 @@
 {
   nixpkgs,
   inputs,
+  self,
   myvars,
   myutils,
 }:
@@ -26,6 +27,8 @@ let
       "/home/${username}";
   ## True if Linux, which is a heuristic for not being Darwin.
   isHeLinux = !isDarwin && !isWSL;
+  ## Config repo short rev: clean tree uses shortRev, dirty tree uses dirtyShortRev.
+  configRepoRev = self.shortRev or self.dirtyShortRev;
 
   ## NixOS vs nix-darwin functionst
   systemFunc = if isDarwin then inputs.nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
@@ -53,6 +56,18 @@ systemFunc rec {
   modules = [
     ## Bring in WSL if this is a WSL build
     (if isWSL then inputs.nixos-wsl.nixosModules.wsl else { })
+    (
+      if !isDarwin then
+        { lib, ... }:
+        {
+          system.nixos.tags = lib.mkOverride 99 [ "gitrev-${configRepoRev}" ];
+        }
+      else
+        { config, ... }:
+        {
+          system.darwinLabel = "${config.system.darwinVersion}.gitrev-${configRepoRev}";
+        }
+    )
     ../machines/nix-core.nix
     ../hosts/${hostName}
     ({
