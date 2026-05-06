@@ -28,17 +28,21 @@ rec {
   };
 
   ## Fonts shared across NixOS and darwin.
-  ## Takes pkgs as argument, returns font set.
-  fonts = pkgs: {
-    packages = with pkgs; [
-      ## icon fonts
-      material-design-icons
-      font-awesome
-      ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable-small/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
-      nerd-fonts.symbols-only
-      nerd-fonts.fira-code
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.noto
-    ];
-  };
+  ## Attribute name strings — resolved to packages at call sites.
+  fontsPkgs = [
+    ## China, JP, Korea
+    "noto-fonts-cjk-sans"
+    "noto-fonts-cjk-serif"
+    ## suitable
+    "fira-code"
+    "jetbrains-mono"
+    ## icon fonts
+    "material-design-icons"
+    "font-awesome"
+    ## https://github.com/NixOS/nixpkgs/blob/nixos-unstable-small/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
+    "nerd-fonts.symbols-only"
+    "nerd-fonts.fira-code"
+    "nerd-fonts.jetbrains-mono"
+    "nerd-fonts.noto"
+  ];
 }

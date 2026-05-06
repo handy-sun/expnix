@@ -23,6 +23,7 @@
     file
     fish
     zsh
+    tmux
     docker
     zerotierone
     acme-sh
@@ -108,5 +109,18 @@
     };
   };
 
-  fonts = lib.mkIf profileLevel.guiBase (myvars.fonts pkgs);
+  fonts = lib.mkIf profileLevel.guiBase {
+    packages = myutils.resolveNames pkgs myvars.fontsPkgs;
+    fontconfig = {
+      defaultFonts = {
+        monospace = [ "Noto Sans Mono CJK SC" ];
+        sansSerif = [ "Noto Sans CJK SC" ];
+      };
+      hinting = {
+        enable = true;
+        style = "slight";
+      };
+      antialias = true;
+    };
+  };
 }

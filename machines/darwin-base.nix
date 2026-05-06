@@ -4,6 +4,7 @@
   username,
   hostName,
   myvars,
+  myutils,
   ...
 }:
 let
@@ -75,7 +76,7 @@ in
   # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"
   nix.settings.auto-optimise-store = false;
 
-  fonts = myvars.fonts pkgs;
+  fonts.packages = myutils.resolveNames pkgs myvars.fontsPkgs;
 
   #############################################################
   #
