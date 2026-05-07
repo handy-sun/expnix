@@ -38,12 +38,15 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub = {
     enable = false;
-    device = "/dev/sda";
+    device = "/dev/disk/by-uuid/C531-DA7E";
     efiSupport = true;
   };
 
   services = {
-    xserver.enable = true;
+    xserver = {
+      enable = true;
+      # videoDrivers = [ "nvidia" ];
+    };
     displayManager.sddm.enable = true;
     # desktopManager.plasma6.enable = true;
   };
@@ -55,6 +58,7 @@
     # };
   };
   networking.networkmanager.enable = true;
+  system.stateVersion = "26.05";
 
   ## ------ other optional services ------
   services.zerotierone = {

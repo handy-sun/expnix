@@ -29,7 +29,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/277923ff-48cf-45ec-818e-d889c8828dee";
+    device = "/dev/disk/by-uuid/9d97bc66-8ad4-4b4c-a539-02d5dc67e5e3";
     fsType = "btrfs";
     options = [
       "subvol=@"
@@ -38,7 +38,7 @@
   };
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/277923ff-48cf-45ec-818e-d889c8828dee";
+    device = "/dev/disk/by-uuid/9d97bc66-8ad4-4b4c-a539-02d5dc67e5e3";
     fsType = "btrfs";
     options = [
       "subvol=@home"
@@ -47,7 +47,7 @@
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/277923ff-48cf-45ec-818e-d889c8828dee";
+    device = "/dev/disk/by-uuid/9d97bc66-8ad4-4b4c-a539-02d5dc67e5e3";
     fsType = "btrfs";
     options = [
       "subvol=@nix"
@@ -57,13 +57,13 @@
   };
 
   fileSystems."/swap" = {
-    device = "/dev/disk/by-uuid/277923ff-48cf-45ec-818e-d889c8828dee";
+    device = "/dev/disk/by-uuid/9d97bc66-8ad4-4b4c-a539-02d5dc67e5e3";
     fsType = "btrfs";
     options = [ "subvol=@swap" ];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/199C-6954";
+    device = "/dev/disk/by-uuid/C531-DA7E";
     fsType = "vfat";
     options = [
       "fmask=0022"

@@ -1,6 +1,7 @@
 {
   config,
-  inputs,
+  pkgs,
+  myvars,
   isDarwin,
   profileLevel,
   ...
@@ -8,9 +9,27 @@
 
 let
   stateHomeDir = config.xdg.stateHome;
+  userConfig = pkgs.writeText "niri-user-${myvars.user}-config.kdl" ''
+    include "${pkgs.niri.src}/resources/default-config.kdl"
+    include "extra.kdl"
+  '';
+  userExtra = pkgs.writeText "niri-user-${myvars.user}-extra.kdl" ''
+    environment {
+      QT_QPA_PLATFORMTHEME "gtk3"
+    }
+    spawn-at-startup "noctalia-shell"
+    prefer-no-csd
+    hotkey-overlay {
+        skip-at-startup
+    }
+  '';
 in
 {
   xdg = {
+    configFile = {
+      "niri/config.kdl".source = userConfig;
+      "niri/extra.kdl".source = userExtra;
+    };
     userDirs = {
       enable = (profileLevel.guiBase && !isDarwin);
       createDirectories = true;
