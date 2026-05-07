@@ -17,6 +17,7 @@
         perl
         php
         pnpm
+        zig
 
         ## LSP / dev tools
         tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
@@ -24,8 +25,12 @@
         lua-language-server
         rust-analyzer
 
-        ## Docker
+        ## containers
+        podman
         docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
+
+        ## cross compilation
+        cargo-cross
 
         ## downloads / transfers
         aria2 # A lightweight multi-protocol & multi-source command-line download utility
@@ -70,7 +75,7 @@
     ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
       claude-code
       opencode
-      hermes-agent
+      # hermes-agent
       cc-switch-cli
     ]);
 }

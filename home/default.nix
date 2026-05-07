@@ -47,6 +47,9 @@ in
     ## eza can find theme
     EZA_CONFIG_DIR = conf + "/eza";
     COLORTERM = "truecolor";
+
+    ## cross-rs: use podman as container engine
+    CROSS_CONTAINER_ENGINE = "podman";
   }
   // myvars.homeEnv
   // lib.optionalAttrs isWSL {

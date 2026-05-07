@@ -15,7 +15,7 @@ setup-hook:
 # Update the flake inputs about nix and create commit
 [group('nix')]
 upc-nix:
-  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager rust-overlay
+  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager rust-overlay noctalia llm-agents
 
 # Update the flake inputs starts with 'my-'
 [group('nix')]
@@ -73,6 +73,13 @@ current-sys:
 [group('nix')]
 query-all pkgname:
   which {{pkgname}} | xargs realpath | xargs nix why-depends --all /run/current-system
+
+[group('nix')]
+gc:
+  ## garbage collect all unused nix store entries(system-wide)
+  sudo nix-collect-garbage --delete-older-than 7d
+  ## ......(for the user - home-manager)
+  nix-collect-garbage --delete-older-than 7d
 
 ## Linux
 [linux]
