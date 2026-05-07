@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   pkgs,
   myvars,
@@ -27,15 +28,17 @@ let
         Mod+Return { spawn-sh "noctalia-shell ipc call launcher toggle"; }
     }
   '';
+  ## Linux Desktop Environments (DEs) typically use XDG Base Directory Specification for configuration and user directories. This setup is not relevant for macOS (Darwin), which has its own conventions. Therefore, we check if the profile level indicates a GUI base and ensure it's not Darwin to determine if we should apply the XDG configuration.
+  isLinuxDe = (profileLevel.guiBase && !isDarwin);
 in
 {
   xdg = {
-    configFile = {
+    configFile = lib.mkIf isLinuxDe {
       "niri/config.kdl".source = userConfig;
       "niri/extra.kdl".source = userExtra;
     };
     userDirs = {
-      enable = (profileLevel.guiBase && !isDarwin);
+      enable = isLinuxDe;
       createDirectories = true;
       setSessionVariables = false; # 26.05 default: false
       desktop = stateHomeDir + "/Desktop";

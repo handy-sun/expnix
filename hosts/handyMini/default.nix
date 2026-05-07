@@ -8,7 +8,6 @@
   ...
 }:
 let
-  singboxWorkDir = homeDir + "/.cache/sing-box"; # WARN: NOT reproducible
   beszelAgentEnv = homeDir + "/.config/beszel/beszel-agent.env";
   webdavConf = inputs.my-dotfiles + "/.config/webdav/config.yml";
 in
@@ -19,6 +18,7 @@ in
       "overlays/beszel.nix"
       "overlays/direnv.nix"
       "modules/caddy-webdav"
+      "modules/sing-box/darwin.nix"
     ]
   );
 
@@ -26,29 +26,18 @@ in
     shell = pkgs.fish; # # Not worked, must use `chsh -s ...`
   };
 
-  system.activationScripts.users.text = lib.mkBefore ''
-    mkdir -p ${singboxWorkDir} && chown ${username}:staff ${singboxWorkDir}
-  '';
-
-  #############################################################
-  ##
-  ## $HOME/Library/LaunchAgents/$Label.plist
-  ##
-  #############################################################
-  launchd.user.agents.singb.serviceConfig = {
-    Label = "nixdwn.${username}.singb";
-    ProgramArguments = [
-      "${lib.getExe pkgs.sing-box}"
-      "run"
-      "-c"
-      "${homeDir}/.config/sing-box/config.json"
-      "-D"
-      singboxWorkDir
-    ];
-    ThrottleInterval = 5;
-    WorkingDirectory = singboxWorkDir;
-    KeepAlive = true;
-    RunAtLoad = true;
+  services.sing-box = {
+    enable = true;
+    configGeneration = {
+      enable = true;
+      sourceUrl = "http://handy:3001/c53248f264d9997/download/collection/main?target=V2Ray";
+      policyFilter = "@🌐Proxy@⚡UrlTest-~^(?!.*(aote|流量|到期|过滤|官网)).*$@💬AI-~^(?!.*(流量|到期|过滤|官网)).*$@🚀LowLatency-~^(?!.*(流量|到期|过滤|官网)).*$";
+      extraArgs = [
+        "--log-file"
+        ""
+        "--icmp"
+      ];
+    };
   };
 
   launchd.user.agents.frpc.serviceConfig = {
