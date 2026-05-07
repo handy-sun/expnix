@@ -7,23 +7,9 @@
 let
   baseConfig = pkgs.writeText "niri-base-config.kdl" ''
     include "${pkgs.niri.src}/resources/default-config.kdl"
-    # include "extra.kdl"
   '';
 
-  noctalia =
-    let
-      pkg = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    in
-    pkg.overrideAttrs (oldAttrs: {
-      nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [
-        pkgs.wrapGAppsHook3
-      ];
-      # https://nixos.org/manual/nixpkgs/stable/#ssec-gnome-common-issues-double-wrapped
-      dontWrapGApps = true;
-      preFixup = (oldAttrs.preFixup or [ ]) + ''
-        qtWrapperArgs+=("''${gappsWrapperArgs[@]}")
-      '';
-    });
+  noctalia = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   # auto-dark = pkgs.writeShellApplication {
   #   # place `auto-dark "$1"` in noctalia shell **Theme changed** hook

@@ -11,6 +11,14 @@
   home.packages =
     with pkgs;
     [
+      ## build tools
+      gnumake
+      cmake
+      ninja
+
+      ## Docker
+      docker-compose
+
       ## shell / navigation
       tmux
       zoxide
@@ -92,9 +100,20 @@
       fishPlugins.sponge
       fishPlugins.autopair
 
+      ## benchmarking
+      hyperfine
+
+      ## monitoring agent
+      beszel
+
+      ## disk / files
+      ncdu
+      tre-command
+
       ## misc
       xclip
       chase
+      multitail
       sd # sed
       ouch
     ]

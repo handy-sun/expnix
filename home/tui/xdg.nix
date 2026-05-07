@@ -21,7 +21,6 @@ in
     "tmux/tmux.conf".source = "${dotconfig}/tmux/tmux.conf";
     "npmrc".text = ''
       prefix=${config.xdg.dataHome}/npm-global
-      min-release-age=7
     '';
   };
 }

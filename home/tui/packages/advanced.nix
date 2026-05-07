@@ -4,79 +4,73 @@
 {
   pkgs,
   lib,
+  inputs,
   profileLevel,
   ...
 }:
 {
   home.packages =
-    with pkgs;
-    lib.optionals profileLevel.tuiAdvanced [
-      ## build tools
-      gnumake
-      cmake
-      ninja
+    (
+      with pkgs;
+      lib.optionals profileLevel.tuiAdvanced [
+        ## languages
+        perl
+        php
+        pnpm
 
-      ## languages
-      perl
-      php
-      pnpm
+        ## LSP / dev tools
+        tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
+        just-lsp
+        lua-language-server
+        rust-analyzer
 
-      ## LSP / dev tools
-      tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
-      just-lsp
-      lua-language-server
-      rust-analyzer
+        ## Docker
+        docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
 
-      ## Docker
-      docker-compose
-      docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
+        ## downloads / transfers
+        aria2 # A lightweight multi-protocol & multi-source command-line download utility
+        axel
+        lrzsz
 
-      ## downloads / transfers
-      aria2 # A lightweight multi-protocol & multi-source command-line download utility
-      axel
-      lrzsz
+        ## archives (extras)
+        cpio # Program to create or extract from cpio archives
+        _7zip-zstd
+        pigz # Parallel Implementation of GZip
+        unrar-free
 
-      ## archives (extras)
-      cpio # Program to create or extract from cpio archives
-      _7zip-zstd
-      pigz # Parallel Implementation of GZip
-      unrar-free
+        ## disk / files
+        miniserve
 
-      ## benchmarking
-      hyperfine
-      miniserve
+        ## monitoring
+        iftop # network monitoring
 
-      ## disk / files
-      ncdu
-      tre-command
+        ## formatting / styling
+        stylua # lua format tool
 
-      ## monitoring
-      iftop # network monitoring
-      multitail
+        ## media
+        ffmpeg
+        imagemagick
 
-      ## formatting / styling
-      stylua # lua format tool
+        ## dev tools
+        devenv
+        tokei
+        doxygen
 
-      ## media
-      ffmpeg
-      imagemagick
+        ## nix extras
+        nix-info
+        nix-init
+        nix-tree
+        cachix # Command-line client for Nix binary cache hosting https://cachix.org
 
-      ## monitoring agent
-      beszel
-
-      ## dev tools
-      devenv
-      tokei
-      doxygen
-
-      ## nix extras
-      nix-info
-      nix-init
-      nix-tree
-      cachix # Command-line client for Nix binary cache hosting https://cachix.org
-
-      ## productivity
-      hugo # static site generator
-      glow # markdown previewer in terminal
-    ];
+        ## productivity
+        hugo # static site generator
+        glow # markdown previewer in terminal
+      ]
+    )
+    ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+      claude-code
+      opencode
+      hermes-agent
+      cc-switch-cli
+    ]);
 }

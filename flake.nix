@@ -29,6 +29,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    llm-agents.url = "github:numtide/llm-agents.nix";
+
     ## ------ my configs and scripts ------
     my-nvimdots.url = "github:handy-sun/nvimdots";
 
@@ -159,13 +161,12 @@
               git
               just
               nh
-              fish
               statix
             ];
             name = "devsh";
             shellHook = ''
               echo "Welcome to expnix devshell"
-              exec fish -il
+              # exec fish -il
             '';
           };
         }
