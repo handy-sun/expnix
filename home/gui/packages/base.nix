@@ -14,12 +14,10 @@ lib.mkIf profileLevel.guiBase {
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       wezterm
-      fuzzel
-      swaylock
-      wl-clipboard
       wayclip
       wlr-layout-ui
       thunar
       peazip
+      appimage-run
     ];
 }

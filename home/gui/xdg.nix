@@ -23,8 +23,8 @@ let
         skip-at-startup
     }
     binds {
-        Mod+Return hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
-        Mod+Space { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
+        Mod+Shift+T hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
+        Mod+Return { spawn-sh "noctalia-shell ipc call launcher toggle"; }
     }
   '';
 in

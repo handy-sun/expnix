@@ -10,7 +10,7 @@
 {
   disabledModules = [ "services/networking/sing-box.nix" ];
 
-  imports = myutils.scanPaths ./. ++ [ ../modules/sing-box ];
+  imports = myutils.scanPaths ./. ++ [ (myutils.relativeToRoot "modules/sing-box") ];
 
   programs.nix-ld.enable = true;
 

@@ -26,7 +26,4 @@ _: {
     nix-direnv.enable = true;
   };
 
-  home.file.".multitailrc".text = ''
-    check_mail:0
-  '';
 }

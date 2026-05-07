@@ -45,10 +45,8 @@
   services = {
     xserver = {
       enable = true;
-      # videoDrivers = [ "nvidia" ];
     };
     displayManager.sddm.enable = true;
-    # desktopManager.plasma6.enable = true;
   };
 
   services.openssh = {
@@ -57,9 +55,14 @@
     #   PermitRootLogin = "yes";
     # };
   };
-  networking.networkmanager.enable = true;
-  system.stateVersion = "26.05";
+  networking = {
+    networkmanager.enable = true;
+    extraHosts = ''
+      192.168.1.27 handy
+    '';
+  };
 
+  system.stateVersion = "26.05";
   ## ------ other optional services ------
   services.zerotierone = {
     enable = true;
