@@ -29,12 +29,10 @@
         podman
         docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
 
-        ## cross compilation
-        cargo-cross
-
         ## downloads / transfers
         aria2 # A lightweight multi-protocol & multi-source command-line download utility
         axel
+        lftp
         lrzsz
 
         ## archives (extras)

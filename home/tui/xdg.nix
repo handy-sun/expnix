@@ -10,7 +10,6 @@ let
 in
 {
   xdg.configFile = {
-    "alacritty/alacritty.toml".source = "${dotconfig}/alacritty/alacritty.toml";
     "bat/config".source = "${dotconfig}/bat/config";
     "clangd/config.yaml".source = "${dotconfig}/clangd/config.yaml";
     "eza/theme.yml".source = "${dotconfig}/eza/theme.yml";

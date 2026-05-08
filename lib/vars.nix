@@ -45,4 +45,6 @@ rec {
     "nerd-fonts.jetbrains-mono"
     "nerd-fonts.noto"
   ];
+
+  fontFamily = "NotoMono Nerd Font Mono";
 }

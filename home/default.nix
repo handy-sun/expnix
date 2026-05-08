@@ -37,7 +37,7 @@ in
 
     inherit GOPATH CARGO_HOME RUSTUP_HOME;
 
-    HERMES_HOME = conf + "/hermes";
+    # HERMES_HOME = conf + "/hermes";
     RUSTUP_DIST_SERVER = rustupServer;
     RUSTUP_UPDATE_ROOT = rustupServer + "/rustup";
     UV_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple/";
