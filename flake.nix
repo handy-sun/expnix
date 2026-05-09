@@ -102,29 +102,19 @@
       nixosConfigurations = {
         "expnix" = mkSystem "expnix" {
           system = "aarch64-linux";
-          profileLevel = {
-            tuiAdvanced = true;
+          profileLevelOver = {
             tuiOptional = true;
-            guiBase = false;
-            guiHeavy = false;
           };
         };
 
         "nixwsl" = mkSystem "nixwsl" {
           system = "x86_64-linux";
           isWSL = true;
-          profileLevel = {
-            tuiAdvanced = true;
-            tuiOptional = false;
-            guiBase = false;
-            guiHeavy = false;
-          };
         };
 
         "buking" = mkSystem "buking" {
           system = "x86_64-linux";
-          profileLevel = {
-            tuiAdvanced = true;
+          profileLevelOver = {
             tuiOptional = true;
             guiBase = true;
             guiHeavy = true;
@@ -136,11 +126,9 @@
         "handyMini" = mkSystem "handyMini" {
           system = "aarch64-darwin";
           isDarwin = true;
-          profileLevel = {
-            tuiAdvanced = true;
+          profileLevelOver = {
             tuiOptional = true;
             guiBase = true;
-            guiHeavy = false;
           };
         };
       };

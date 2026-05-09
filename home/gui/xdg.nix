@@ -26,6 +26,7 @@ let
     binds {
         Mod+Shift+T hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
         Mod+Return { spawn-sh "noctalia-shell ipc call launcher toggle"; }
+        Super+Shift+L hotkey-overlay-title="Lock the Screen: noctalia-shell lock" { spawn-sh "noctalia-shell ipc call lockScreen lock"; }
     }
   '';
   ## Linux Desktop Environments (DEs) typically use XDG Base Directory Specification for configuration and user directories. This setup is not relevant for macOS (Darwin), which has its own conventions. Therefore, we check if the profile level indicates a GUI base and ensure it's not Darwin to determine if we should apply the XDG configuration.

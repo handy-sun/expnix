@@ -1,9 +1,10 @@
 {
+  lib,
   config,
   profileLevel,
   ...
 }:
-{
+lib.mkIf profileLevel.guiBase {
   programs.chromium = {
     enable = false;
   };
