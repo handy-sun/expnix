@@ -107,6 +107,13 @@
           };
         };
 
+        "rosx64a" = mkSystem "rosx64a" {
+          system = "x86_64-linux";
+          profileLevelOver = {
+            tuiOptional = true;
+          };
+        };
+
         "nixwsl" = mkSystem "nixwsl" {
           system = "x86_64-linux";
           isWSL = true;
