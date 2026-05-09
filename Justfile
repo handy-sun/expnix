@@ -77,9 +77,7 @@ query-all pkgname:
 [group('nix')]
 gc:
   ## garbage collect all unused nix store entries(system-wide)
-  sudo nix-collect-garbage --delete-older-than 7d
-  ## ......(for the user - home-manager)
-  nix-collect-garbage --delete-older-than 7d
+  sudo nix-collect-garbage --delete-older-than 4d
 
 ## Linux
 [linux]

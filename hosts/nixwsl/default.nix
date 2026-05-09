@@ -8,9 +8,10 @@
   imports = lib.map myutils.relativeToRoot [
     "machines/wsl-base.nix"
     "nixos"
+    "modules/niri"
   ];
 
-  nixpkgs.config.cudaSupport = true;
+  # nixpkgs.config.cudaSupport = true;
 
   wsl.useWindowsDriver = true;
 
@@ -18,9 +19,7 @@
     interop.appendWindowsPath = false;
     automount = {
       enabled = true;
-      options = "";
-      # options = lib.mkForce "";
-      # mountFsTab = false; # Prevent WSL from handling fstab, may help mitigate race condition
+      options = ""; # for PreRelase WSL2
     };
   };
 
