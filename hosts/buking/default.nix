@@ -26,6 +26,7 @@
   security.sudo.wheelNeedsPassword = false;
 
   hardware.graphics.enable = true;
+  hardware.bluetooth.enable = true;
 
   services.pipewire = {
     enable = true;

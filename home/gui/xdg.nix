@@ -17,6 +17,7 @@ let
   userExtra = pkgs.writeText "niri-user-${myvars.user}-extra.kdl" ''
     environment {
       QT_QPA_PLATFORMTHEME "gtk3"
+      WAYLAND_DISPLAY "wayland-1"
     }
     spawn-at-startup "noctalia-shell"
     prefer-no-csd

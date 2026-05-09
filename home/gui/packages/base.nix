@@ -14,7 +14,7 @@ lib.mkIf profileLevel.guiBase {
     ++ lib.optionals pkgs.stdenv.isLinux [
       wezterm
       wayclip
-      wlr-layout-ui
+      wdisplays
       thunar
       peazip
       appimage-run
