@@ -293,11 +293,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1778233502,
-        "narHash": "sha256-Pfogr15/dWJ/V1acG+vk3Fkoq/16hWYvpKNVnb3RGD4=",
+        "lastModified": 1778407168,
+        "narHash": "sha256-+dNUSmARtwcXYgbqyx1JHBguOQKQwjfRpQ7EGj8elUs=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "55f4b7329969425d89cad9fd153e5c91fa08b293",
+        "rev": "ce130fffdf0a0d5a964bfb3738fdd21665f44210",
         "type": "github"
       },
       "original": {
