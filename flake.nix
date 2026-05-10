@@ -110,7 +110,7 @@
         "reinsvps" = mkSystem "reinsvps" {
           system = "x86_64-linux";
           profileLevelOver = {
-            tuiOptional = true;
+            tuiOptional = false;
           };
         };
 

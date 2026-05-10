@@ -30,6 +30,7 @@ rec {
   ## Fonts shared across NixOS and darwin.
   ## Attribute name strings — resolved to packages at call sites.
   fontsPkgs = [
+    "source-sans"
     ## China, JP, Korea
     "noto-fonts-cjk-sans"
     "noto-fonts-cjk-serif"
