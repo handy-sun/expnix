@@ -88,24 +88,19 @@ in
       }
       # Darwin launchd agent
       (lib.mkIf isDarwin {
-        launchd.user.agents.caddy-webdav.serviceConfig = {
-          Label = "nixdwn.${username}.caddy-webdav";
-          UserName = username;
-          ProgramArguments = [
-            "${lib.getExe cfg.package}"
-            "run"
-            "--adapter"
-            "caddyfile"
-            "--config"
-            "${caddyfile}"
-          ];
-          WorkingDirectory = cfg.storagePath;
-          KeepAlive = true;
-          RunAtLoad = true;
-          StandardOutPath = "/tmp/caddy-webdav.log";
-          StandardErrorPath = "/tmp/caddy-webdav.log";
-          EnvironmentVariables = {
-            XDG_DATA_HOME = "${homeDir}/.local/share";
+        launchd.user.agents.caddy-webdav = {
+          script = "exec ${lib.getExe cfg.package} run --adapter caddyfile --config ${caddyfile}";
+          serviceConfig = {
+            Label = "nixdwn.${username}.caddy-webdav";
+            UserName = username;
+            WorkingDirectory = cfg.storagePath;
+            KeepAlive = true;
+            RunAtLoad = true;
+            StandardOutPath = "/tmp/caddy-webdav.log";
+            StandardErrorPath = "/tmp/caddy-webdav.log";
+            EnvironmentVariables = {
+              XDG_DATA_HOME = "${homeDir}/.local/share";
+            };
           };
         };
       })

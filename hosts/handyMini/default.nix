@@ -40,15 +40,13 @@ in
     };
   };
 
-  launchd.user.agents.frpc.serviceConfig = {
-    Label = "nixdwn.${username}.frpc";
-    ProgramArguments = [
-      "${lib.getBin pkgs.frp}/bin/frpc"
-      "-c"
-      "/etc/frp/frpc.toml"
-    ];
-    KeepAlive = true;
-    RunAtLoad = true;
+  launchd.user.agents.frpc = {
+    script = "exec ${lib.getBin pkgs.frp}/bin/frpc -c /etc/frp/frpc.toml";
+    serviceConfig = {
+      Label = "nixdwn.${username}.frpc";
+      KeepAlive = true;
+      RunAtLoad = true;
+    };
   };
 
   launchd.user.agents.beszel-agent = {
@@ -77,43 +75,31 @@ in
     };
   };
 
-  launchd.user.agents.nginx.serviceConfig = {
-    Label = "nixdwn.${username}.nginx";
-    ProgramArguments = [
-      "${lib.getExe pkgs.nginx}"
-      "-e"
-      "stderr"
-      "-c"
-      "/etc/nginx/nginx.conf"
-      "-g"
-      "daemon off;"
-    ];
-    KeepAlive = true;
-    RunAtLoad = true;
+  launchd.user.agents.nginx = {
+    script = ''exec ${lib.getExe pkgs.nginx} -e stderr -c /etc/nginx/nginx.conf -g "daemon off;"'';
+    serviceConfig = {
+      Label = "nixdwn.${username}.nginx";
+      KeepAlive = true;
+      RunAtLoad = true;
+    };
   };
 
-  launchd.user.agents.php-fpm.serviceConfig = {
-    Label = "nixdwn.${username}.php-fpm";
-    ProgramArguments = [
-      "${pkgs.php}/bin/php-fpm"
-      "-F"
-      "-y"
-      "${homeDir}/.config/php/php-fpm.conf"
-    ];
-    KeepAlive = true;
-    RunAtLoad = true;
-    StandardOutPath = "/tmp/php-fpm.out.log";
-    # StandardErrorPath = "/tmp/php-fpm.err.log";
+  launchd.user.agents.php-fpm = {
+    script = "exec ${pkgs.php}/bin/php-fpm -F -y ${homeDir}/.config/php/php-fpm.conf";
+    serviceConfig = {
+      Label = "nixdwn.${username}.php-fpm";
+      KeepAlive = true;
+      RunAtLoad = true;
+      StandardOutPath = "/tmp/php-fpm.out.log";
+    };
   };
 
-  launchd.user.agents.webdav.serviceConfig = {
-    Label = "nixdwn.${username}.webdav";
-    ProgramArguments = [
-      "${lib.getExe pkgs.webdav}"
-      "-c"
-      "${webdavConf}"
-    ];
-    KeepAlive = true;
-    RunAtLoad = true;
+  launchd.user.agents.webdav = {
+    script = "exec ${lib.getExe pkgs.webdav} -c ${webdavConf}";
+    serviceConfig = {
+      Label = "nixdwn.${username}.webdav";
+      KeepAlive = true;
+      RunAtLoad = true;
+    };
   };
 }

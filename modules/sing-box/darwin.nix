@@ -79,15 +79,17 @@ in
       chown ${username}:staff ${genCfg.configDir}
     '';
 
-    launchd.user.agents.singb.serviceConfig = {
-      Label = "nixdwn.${username}.singb";
-      ProgramArguments = [ "${darwinSingboxScript}" ];
-      WorkingDirectory = genCfg.configDir;
-      KeepAlive = true;
-      RunAtLoad = true;
-      ThrottleInterval = 5;
-      StandardOutPath = "/tmp/sing-box.log";
-      StandardErrorPath = "/tmp/sing-box.log";
+    launchd.user.agents.singb = {
+      command = "${darwinSingboxScript}";
+      serviceConfig = {
+        Label = "nixdwn.${username}.singb";
+        WorkingDirectory = genCfg.configDir;
+        KeepAlive = true;
+        RunAtLoad = true;
+        ThrottleInterval = 5;
+        StandardOutPath = "/tmp/sing-box.log";
+        StandardErrorPath = "/tmp/sing-box.log";
+      };
     };
   };
 }
