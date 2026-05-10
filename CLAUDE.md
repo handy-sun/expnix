@@ -8,7 +8,7 @@ NixOS + nix-darwin + home-manager multi-system configuration. Manages 3 machines
 
 | Host | Type | Arch | Notes |
 |------|------|------|-------|
-| expnix | OrbStack NixOS | aarch64-linux | Primary dev machine; sing-box with auto config generation; custom DNS |
+| orbvmnix | OrbStack NixOS | aarch64-linux | Primary dev machine; sing-box with auto config generation; custom DNS |
 | nixwsl | WSL2 NixOS | x86_64-linux | Windows subsystem; CUDA support; beszel-agent monitoring |
 | buking | NixOS (bare metal) | x86_64-linux | Physical laptop; Intel CPU; btrfs subvolumes; niri WM; SDDM; pipewire; zerotierone; full profile (GUI enabled) |
 | handyMini | nix-darwin | aarch64-darwin | Determinate Nix; homebrew for GUI apps; multiple launchd agents |
@@ -50,7 +50,7 @@ GitHub Actions workflow at `.github/workflows/ci.yml`:
 - **Trigger**: push/PR to `main` or `dev*` branches, ignores `**.md`, `Justfile`, `.gitignore`, `LICENSE`
 - **Stage 1 (flake-check)**: `nix flake check` + `statix check` (only errors fail, warnings are OK)
 - **Stage 2 (build matrix)**: dry-run build on native platforms — needs stage 1 to pass
-  - expnix → `ubuntu-24.04-arm` (aarch64-linux)
+  - orbvmnix → `ubuntu-24.04-arm` (aarch64-linux)
   - nixwsl → `ubuntu-latest` (x86_64-linux)
   - buking → `ubuntu-latest` (x86_64-linux)
   - handyMini → `macos-14` (aarch64-darwin)
@@ -128,7 +128,7 @@ profileLevel = {
 ```
 
 Per-host overrides:
-- **expnix**: tuiAdvanced + tuiOptional (full dev, no GUI)
+- **orbvmnix**: tuiAdvanced + tuiOptional (full dev, no GUI)
 - **nixwsl**: tuiAdvanced only (CUDA dev, minimal)
 - **buking**: tuiAdvanced + tuiOptional + guiBase + guiHeavy (full laptop with GUI)
 - **handyMini**: tuiAdvanced + tuiOptional + guiBase (full macOS desktop)

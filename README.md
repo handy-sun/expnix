@@ -1,4 +1,4 @@
-# expnix - NixOS / homemanager Configuration
+# orbvmnix - NixOS / homemanager Configuration
 
 ## Bootstrapping on a Fresh System
 

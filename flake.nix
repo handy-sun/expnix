@@ -100,7 +100,7 @@
     in
     {
       nixosConfigurations = {
-        "expnix" = mkSystem "expnix" {
+        "orbvmnix" = mkSystem "orbvmnix" {
           system = "aarch64-linux";
           profileLevelOver = {
             tuiOptional = true;
@@ -164,8 +164,7 @@
             ];
             name = "devsh";
             shellHook = ''
-              echo "Welcome to expnix devshell"
-              # exec fish -il
+              echo "Welcome to handy-sun/expnix devshell"
             '';
           };
         }
