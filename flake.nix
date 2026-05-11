@@ -62,12 +62,7 @@
       ...
     }:
     let
-      allSystemNames = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
+      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
 
       myvars = import ./lib/vars.nix;
       myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
@@ -90,8 +85,6 @@
           myutils
           ;
       };
-
-      forAllSystems = func: (nixpkgs.lib.genAttrs allSystemNames func);
     in
     {
       nixosConfigurations = {
@@ -163,6 +156,14 @@
       );
 
       ## nix code formatter
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
+      formatter = forAllSystems (
+        system:
+        inputs.treefmt-nix.lib.mkWrapper nixpkgs.legacyPackages.${system} {
+          programs.nixfmt = {
+            enable = true;
+            package = inputs.nixfmt-rs.packages.${system}.default;
+          };
+        }
+      );
     };
 }

@@ -15,7 +15,11 @@ setup-hook:
 # Update the flake inputs about nix and create commit
 [group('nix')]
 upc-nix:
-  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager rust-overlay noctalia llm-agents
+  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager rust-overlay noctalia treefmt-nix nixfmt-rs
+
+[group('nix')]
+upc-llm:
+  nix flake update --commit-lock-file llm-agents
 
 # Update the flake inputs starts with 'my-'
 [group('nix')]
@@ -58,6 +62,7 @@ show-conf:
 switch-home:
   nh home switch .
 
+## Old method to format nix code, which is now replaced by the new formatter based on treefmt-nix
 [group('nix')]
 nixfmt:
   fd -e nix -X nixfmt
@@ -74,9 +79,9 @@ current-sys:
 query-all pkgname:
   which {{pkgname}} | xargs realpath | xargs nix why-depends --all /run/current-system
 
+## garbage collect all unused nix store entries(system-wide)
 [group('nix')]
 gc:
-  ## garbage collect all unused nix store entries(system-wide)
   sudo nix-collect-garbage --delete-older-than 4d
 
 ## Linux

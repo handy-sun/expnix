@@ -4,14 +4,9 @@
 {
   pkgs,
   lib,
-  inputs,
   profileLevel,
   ...
 }:
-let
-  system = pkgs.stdenv.hostPlatform.system;
-  nixfmt-rs = inputs.nixfmt-rs.packages.${system}.default;
-in
 {
   home.packages = (
     with pkgs;
@@ -52,7 +47,6 @@ in
 
       ## formatting / styling
       stylua # lua format tool
-      nixfmt-rs # Rust implementation of nixfmt, a formatter for Nix code
 
       ## media
       ffmpeg
