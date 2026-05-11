@@ -8,6 +8,10 @@
   profileLevel,
   ...
 }:
+let
+  system = pkgs.stdenv.hostPlatform.system;
+  inherit (inputs.cc-switch-tui.packages.${system}) cc-switch-tui;
+in
 {
   home.packages =
     (
@@ -24,6 +28,7 @@
         just-lsp
         lua-language-server
         rust-analyzer
+        cc-switch-tui
 
         ## containers
         podman
