@@ -12,7 +12,6 @@ lib.mkIf profileLevel.guiBase {
       mpv
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
-      wezterm
       wayclip
       wdisplays
       thunar

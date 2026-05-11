@@ -327,6 +327,23 @@
         "type": "github"
       }
     },
+    "my-wezterm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778495818,
+        "narHash": "sha256-hlNTAtKgGFNiDVE4z8PgL+uE7bvkcpvqv9siyjPwPJ8=",
+        "owner": "handy-sun",
+        "repo": "wezterm-config",
+        "rev": "b8f01bd5c4dd0c6ffac936a14f282f2b8371eb27",
+        "type": "github"
+      },
+      "original": {
+        "owner": "handy-sun",
+        "ref": "nix-hm",
+        "repo": "wezterm-config",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -613,6 +630,7 @@
         "my-dotvim": "my-dotvim",
         "my-dotzsh": "my-dotzsh",
         "my-nvimdots": "my-nvimdots",
+        "my-wezterm": "my-wezterm",
         "nix-darwin": "nix-darwin",
         "nixfmt-rs": "nixfmt-rs",
         "nixos-wsl": "nixos-wsl",

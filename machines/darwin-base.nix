@@ -145,7 +145,7 @@ in
     casks = [
       "ghostty"
       "antigravity"
-      "wezterm"
+      # "wezterm"
       "cc-switch"
       "nomachine"
       # "mactex-no-gui"

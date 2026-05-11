@@ -49,6 +49,11 @@
       flake = false;
     };
 
+    my-wezterm = {
+      url = "github:handy-sun/wezterm-config/nix-hm?shallow=1";
+      flake = false;
+    };
+
     sbtpl = {
       url = "github:handy-sun/sbtpl";
       flake = false;

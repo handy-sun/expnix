@@ -1,10 +1,52 @@
 {
   lib,
+  pkgs,
+  inputs,
   profileLevel,
   myvars,
   ...
 }:
+let
+  wezConfDir = inputs.my-wezterm;
+  qimocha = (builtins.fromTOML (builtins.readFile (wezConfDir + "/colors/qimocha.toml"))).colors;
+in
 lib.mkIf profileLevel.guiBase {
+  ## ------ wezterm ------
+  xdg.configFile = {
+    "wezterm/config".source = wezConfDir + "/config";
+    "wezterm/events".source = wezConfDir + "/events";
+    "wezterm/utils".source = wezConfDir + "/utils";
+    "wezterm/backdrops".source = wezConfDir + "/backdrops";
+  };
+
+  programs.wezterm = {
+    enable = true;
+
+    colorSchemes = { inherit qimocha; };
+
+    settings = {
+      color_scheme = "qimocha";
+
+      font_size = if pkgs.stdenv.isDarwin then 16.0 else 12.0;
+      font = lib.generators.mkLuaInline ''
+        wezterm.font_with_fallback({
+          "NotoMono NFM",
+          "FiraCode Nerd Font Mono",
+          "JetBrains Mono",
+          "DejaVu Sans Mono",
+          "Droid Sans Mono",
+          "Consolas",
+        })
+      '';
+
+      freetype_load_target = "Normal";
+      freetype_render_target = "Normal";
+    };
+
+    extraConfig = builtins.readFile (wezConfDir + "/extra.lua");
+  };
+
+  ## ------ alacritty ------
   programs.alacritty = {
     enable = true;
     settings = {
