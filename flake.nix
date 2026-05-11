@@ -29,6 +29,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    nixfmt-rs.url = "github:Mic92/nixfmt-rs";
+    ## This flake is only built and tested against its pinned nixpkgs-unstable input.
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     ## ------ my configs and scripts ------
@@ -56,14 +59,6 @@
     inputs@{
       self,
       nixpkgs,
-      nix-darwin,
-      nixos-wsl,
-      home-manager,
-      rust-overlay,
-      my-nvimdots,
-      my-dotzsh,
-      my-dotvim,
-      my-dotfiles,
       ...
     }:
     let
@@ -109,9 +104,6 @@
 
         "reinsvps" = mkSystem "reinsvps" {
           system = "x86_64-linux";
-          profileLevelOver = {
-            tuiOptional = false;
-          };
         };
 
         "nixwsl" = mkSystem "nixwsl" {

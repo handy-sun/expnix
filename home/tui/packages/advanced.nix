@@ -8,72 +8,70 @@
   profileLevel,
   ...
 }:
+let
+  system = pkgs.stdenv.hostPlatform.system;
+  nixfmt-rs = inputs.nixfmt-rs.packages.${system}.default;
+in
 {
-  home.packages =
-    (
-      with pkgs;
-      lib.optionals profileLevel.tuiAdvanced [
-        ## languages
-        perl
-        php
-        pnpm
-        zig
+  home.packages = (
+    with pkgs;
+    lib.optionals profileLevel.tuiAdvanced [
+      ## languages
+      perl
+      php
+      pnpm
+      zig
 
-        ## LSP / dev tools
-        tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
-        just-lsp
-        lua-language-server
-        rust-analyzer
+      ## LSP / dev tools
+      tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
+      just-lsp
+      lua-language-server
+      rust-analyzer
 
-        ## containers
-        podman
-        docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
+      ## containers
+      podman
+      docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
 
-        ## downloads / transfers
-        aria2 # A lightweight multi-protocol & multi-source command-line download utility
-        axel
-        lftp
-        lrzsz
+      ## downloads / transfers
+      aria2 # A lightweight multi-protocol & multi-source command-line download utility
+      axel
+      lftp
+      lrzsz
 
-        ## archives (extras)
-        cpio # Program to create or extract from cpio archives
-        _7zip-zstd
-        pigz # Parallel Implementation of GZip
-        unrar-free
+      ## archives (extras)
+      cpio # Program to create or extract from cpio archives
+      _7zip-zstd
+      pigz # Parallel Implementation of GZip
+      unrar-free
 
-        ## disk / files
-        miniserve
+      ## disk / files
+      miniserve
 
-        ## monitoring
-        iftop # network monitoring
+      ## monitoring
+      iftop # network monitoring
 
-        ## formatting / styling
-        stylua # lua format tool
+      ## formatting / styling
+      stylua # lua format tool
+      nixfmt-rs # Rust implementation of nixfmt, a formatter for Nix code
 
-        ## media
-        ffmpeg
-        imagemagick
+      ## media
+      ffmpeg
+      imagemagick
 
-        ## dev tools
-        devenv
-        tokei
-        doxygen
+      ## dev tools
+      devenv
+      tokei
+      doxygen
 
-        ## nix extras
-        nix-info
-        nix-init
-        nix-tree
-        cachix # Command-line client for Nix binary cache hosting https://cachix.org
+      ## nix extras
+      nix-info
+      nix-init
+      nix-tree
+      cachix # Command-line client for Nix binary cache hosting https://cachix.org
 
-        ## productivity
-        hugo # static site generator
-        glow # markdown previewer in terminal
-      ]
-    )
-    ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
-      claude-code
-      opencode
-      # hermes-agent
-      cc-switch-cli
-    ]);
+      ## productivity
+      hugo # static site generator
+      glow # markdown previewer in terminal
+    ]
+  );
 }
