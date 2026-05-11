@@ -11,10 +11,11 @@ system:
   username ? "${myvars.user}",
   isDarwin ? false,
   isWSL ? false,
-  profileLevel ? myvars.profileLevel,
+  profileLevelOver ? { },
 }:
 
 let
+  profileLevel = myvars.profileLevel // profileLevelOver;
   isHmSingle = true;
   homeDir =
     if "${username}" == "root" then
