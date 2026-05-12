@@ -1,6 +1,6 @@
 # expnix
 
-`expnix` 是 handy-sun 的 Nix flake 配置仓库，用来统一管理 NixOS、nix-darwin 和 standalone Home Manager 环境。仓库的目标是把系统配置、Home Manager 配置、常用开发工具、图形/终端 profile、私有 dotfiles 输入和 CI 校验放在同一套 flake 工作流里。
+个人 Nix flake 配置仓库，用来统一管理 NixOS、nix-darwin 和 standalone Home Manager 环境。仓库的目标是把系统配置、Home Manager 配置、常用开发工具、图形/终端 profile、私有 dotfiles 输入和 CI 校验放在同一套 flake 工作流里。
 
 ## 管理的机器
 

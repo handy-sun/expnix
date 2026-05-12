@@ -135,7 +135,11 @@
       };
 
       homeConfigurations = {
-        "${myvars.user}" = mkHome "x86_64-linux" { };
+        "${myvars.user}" = mkHome "x86_64-linux" {
+          profileLevelOver = {
+            tuiAdvanced = false;
+          };
+        };
       };
 
       ##  Development Shells

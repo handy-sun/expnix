@@ -145,10 +145,8 @@ in
     casks = [
       "ghostty"
       "antigravity"
-      # "wezterm"
       "cc-switch"
       "nomachine"
-      # "mactex-no-gui"
       ## ------ Failed to install: ------
       # "lite-edit" # not found
       # "alacritty" # deprecated

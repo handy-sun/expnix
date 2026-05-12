@@ -10,6 +10,7 @@ lib.mkIf profileLevel.guiBase {
     with pkgs;
     [
       mpv
+      neovide
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       wayclip
