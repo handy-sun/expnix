@@ -8,6 +8,7 @@
 let
   daeConfig = "/etc/dae/config.dae"; # WARN: NOT reproducible
   daeBin = lib.getExe pkgs.dae;
+  inherit (lib) mkDefault mkForce;
 in
 {
   services = {
@@ -18,7 +19,7 @@ in
     '';
 
     dae = {
-      enable = lib.mkDefault isHeLinux;
+      enable = mkDefault isHeLinux;
       openFirewall = {
         enable = true;
         port = 12345;
@@ -27,12 +28,12 @@ in
     };
 
     sing-box = {
-      enable = lib.mkDefault true;
+      enable = mkDefault true;
       configGeneration = {
-        enable = true;
-        sourceUrl = "http://handy:3001/c53248f264d9997/download/collection/main?target=V2Ray";
-        policyFilter = "@🌐Proxy@⚡UrlTest-~^(?!.*(aote|流量|到期|过滤|官网)).*$@💬AI-~^(?!.*(流量|到期|过滤|官网)).*$@🚀LowLatency-~^(?!.*(流量|到期|过滤|官网)).*$";
-        extraArgs = [
+        enable = mkDefault true;
+        sourceUrl = mkDefault "http://handy:3001/c53248f264d9997/download/collection/main?target=V2Ray";
+        policyFilter = mkDefault "@🌐Proxy@⚡UrlTest-~^(?!.*(aote|流量|到期|过滤|官网)).*$@💬AI-~^(?!.*(流量|到期|过滤|官网)).*$@🚀LowLatency-~^(?!.*(流量|到期|过滤|官网)).*$";
+        extraArgs = mkDefault [
           "--log-file"
           ""
           "--icmp"
@@ -44,7 +45,7 @@ in
   systemd.services.dae.serviceConfig =
     if config.services.dae.enable then
       {
-        ExecStart = lib.mkForce [
+        ExecStart = mkForce [
           ""
           "${daeBin} run -c ${daeConfig}"
         ];
