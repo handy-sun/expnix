@@ -21,25 +21,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Hash current flake.lock
-        run: sha256sum flake.lock > /tmp/flake-lock-hash
-
-      - name: Restore last build hash
+      - name: Restore successful build marker
         id: cache
         uses: actions/cache/restore@v4
         with:
-          path: /tmp/last-hash
-          key: build-cache-flake-lock
+          path: /tmp/flake-lock-hash
+          key: build-cache-flake-lock-${{ hashFiles('flake.lock') }}
+          lookup-only: true
 
-      - name: Compare hashes
+      - name: Check cache status
         id: compare
         run: |
-          if [ -f /tmp/last-hash ] && diff -q /tmp/flake-lock-hash /tmp/last-hash > /dev/null 2>&1; then
+          if [ "${{ steps.cache.outputs.cache-hit }}" = "true" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "flake.lock unchanged, skipping build"
+            echo "flake.lock already has a successful cache build, skipping build"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "flake.lock changed, will rebuild"
+            echo "flake.lock has no successful cache build marker, will rebuild"
           fi
 
   build:
@@ -82,4 +80,4 @@ jobs:
       - uses: actions/cache/save@v4
         with:
           path: /tmp/flake-lock-hash
-          key: build-cache-flake-lock
+          key: build-cache-flake-lock-${{ hashFiles('flake.lock') }}

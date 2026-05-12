@@ -91,6 +91,10 @@ key: build-cache-flake-lock-${{ hashFiles('flake.lock') }}
 
 然后用 cache hit/miss 判断是否需要构建。
 
+**Resolution:** 已改为按 `hashFiles('flake.lock')` 生成成功构建 marker 的 cache key。
+`check-changes` 只查找当前 lock hash 是否已有成功 marker；只有 build 全部成功后，
+`save-hash` 才保存该 lock hash 的 marker。这样不会再依赖固定 key 的覆盖语义。
+
 ### Important: update-deps 直接 push 到当前分支
 
 **File:** `.github/workflows/update-deps.yml:19-26`
@@ -100,6 +104,10 @@ key: build-cache-flake-lock-${{ hashFiles('flake.lock') }}
 
 **Fix:** 至少在 push 前跑 `nix flake check --no-build`；更稳妥的做法是创建 PR，让
 正常 CI/review 流程处理。
+
+**Resolution:** 已改为 `nix flake update` 后先检测 `flake.lock` 是否变化；有变化时先跑
+`nix flake check --no-build --print-build-logs`，验证通过后推送到固定分支
+`automation/update-flake-inputs` 并创建/更新 PR，不再直接 push 到默认分支。
 
 ### FYI: CI build 只做 dry-run
 
