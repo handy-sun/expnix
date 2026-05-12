@@ -104,6 +104,9 @@
   # Disable all GUI specialisation
   specialisation = lib.mkForce { };
 
+  # Mask mounts not available in isolated OrbStack containers
+  systemd.units."sys-kernel-debug.mount".enable = false;
+
   # systemd
   systemd.services."systemd-oomd".serviceConfig.WatchdogSec = 0;
   systemd.services."systemd-userdbd".serviceConfig.WatchdogSec = 0;

@@ -29,6 +29,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    nixfmt-rs.url = "github:Mic92/nixfmt-rs";
+    ## This flake is only built and tested against its pinned nixpkgs-unstable input.
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     ## ------ my applications, configs and scripts ------
@@ -51,6 +54,11 @@
       flake = false;
     };
 
+    my-wezterm = {
+      url = "github:handy-sun/wezterm-config/nix-hm?shallow=1";
+      flake = false;
+    };
+
     sbtpl = {
       url = "github:handy-sun/sbtpl";
       flake = false;
@@ -61,23 +69,10 @@
     inputs@{
       self,
       nixpkgs,
-      nix-darwin,
-      nixos-wsl,
-      home-manager,
-      rust-overlay,
-      my-nvimdots,
-      my-dotzsh,
-      my-dotvim,
-      my-dotfiles,
       ...
     }:
     let
-      allSystemNames = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
+      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
 
       myvars = import ./lib/vars.nix;
       myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
@@ -100,12 +95,10 @@
           myutils
           ;
       };
-
-      forAllSystems = func: (nixpkgs.lib.genAttrs allSystemNames func);
     in
     {
       nixosConfigurations = {
-        "expnix" = mkSystem "expnix" {
+        "orbvmnix" = mkSystem "orbvmnix" {
           system = "aarch64-linux";
           profileLevelOver = {
             tuiOptional = true;
@@ -114,9 +107,6 @@
 
         "reinsvps" = mkSystem "reinsvps" {
           system = "x86_64-linux";
-          profileLevelOver = {
-            tuiOptional = false;
-          };
         };
 
         "nixwsl" = mkSystem "nixwsl" {
@@ -150,7 +140,11 @@
       };
 
       homeConfigurations = {
-        "${myvars.user}" = mkHome "x86_64-linux" { };
+        "${myvars.user}" = mkHome "x86_64-linux" {
+          profileLevelOver = {
+            tuiAdvanced = false;
+          };
+        };
       };
 
       ##  Development Shells
@@ -169,14 +163,28 @@
             ];
             name = "devsh";
             shellHook = ''
-              echo "Welcome to expnix devshell"
-              # exec fish -il
+              _bash_prompt_cmd() {
+                local lastStatus=$?
+                local promFg
+                [[ $lastStatus -eq 0 ]] && promFg="92" || promFg="91"
+                PS1="\[\e[0m\]\[\033[0;32m\]\A ($name) \[\e[0;36m\]\w \[\e[0;''${promFg}m\]\\$\[\e[0m\] "
+              }
+              export PROMPT_COMMAND=_bash_prompt_cmd
+              echo "Welcome to handy-sun/expnix devshell"
             '';
           };
         }
       );
 
       ## nix code formatter
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
+      formatter = forAllSystems (
+        system:
+        inputs.treefmt-nix.lib.mkWrapper nixpkgs.legacyPackages.${system} {
+          programs.nixfmt = {
+            enable = true;
+            package = inputs.nixfmt-rs.packages.${system}.default;
+          };
+        }
+      );
     };
 }

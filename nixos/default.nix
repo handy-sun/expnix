@@ -16,7 +16,7 @@
 
   environment.systemPackages = with pkgs; [
     git
-    vim
+    vim-full
     neovim
     curl
     wget
