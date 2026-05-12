@@ -47,5 +47,5 @@ rec {
     "nerd-fonts.noto"
   ];
 
-  fontFamily = "NotoMono Nerd Font Mono";
+  fontFamily = "NotoMono NFM";
 }

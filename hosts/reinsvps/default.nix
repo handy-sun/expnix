@@ -11,6 +11,7 @@
     ])
     ++ [
       ./hardware-configuration.nix
+      ./services.nix
     ];
 
   boot.loader.grub.enable = true;
@@ -61,6 +62,30 @@
       19302
       21116
     ];
+    extraCommands = ''
+      iptables -A INPUT -i lo -j ACCEPT
+      iptables -A INPUT -s 127.0.0.0/8 -j ACCEPT
+      iptables -A INPUT -s 10.0.0.0/8 -j ACCEPT
+      iptables -A INPUT -s 172.16.0.0/12 -j ACCEPT
+      iptables -A INPUT -s 192.168.0.0/16 -j ACCEPT
+      iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+      iptables -A INPUT -p icmp -m icmp --icmp-type 8 -m limit --limit 1/sec -j ACCEPT
+      iptables -A INPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT
+      iptables -A INPUT -p icmp -m icmp --icmp-type 3 -j ACCEPT
+      iptables -A INPUT -p icmp -m icmp --icmp-type 11 -j ACCEPT
+      iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 1/sec --limit-burst 3 -j ACCEPT
+      iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -j DROP
+      iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK RST -m limit --limit 1/sec -j ACCEPT
+      iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -m limit --limit 3/min -j LOG --log-prefix "Null scan: "
+      iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,SYN,RST,PSH,ACK,URG -m limit --limit 3/min -j LOG --log-prefix "XMAS scan: "
+      iptables -A INPUT -p tcp -m state --state NEW -m recent --set --name CONNECTIONS --mask 255.255.255.255 --rsource
+      iptables -A INPUT -p tcp -m state --state NEW -m recent --update --seconds 60 --hitcount 10 --name CONNECTIONS --mask 255.255.255.255 --rsource -j DROP
+
+      ip6tables -A INPUT -i lo -j ACCEPT
+      ip6tables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+      ip6tables -A INPUT -p icmp -j ACCEPT
+      ip6tables -A INPUT -j REJECT --reject-with icmp6-port-unreachable
+    '';
   };
 
   ############### Add by reinstall.sh ###############

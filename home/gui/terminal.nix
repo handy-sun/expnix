@@ -30,7 +30,7 @@ lib.mkIf profileLevel.guiBase {
       font_size = if pkgs.stdenv.isDarwin then 16.0 else 12.0;
       font = lib.generators.mkLuaInline ''
         wezterm.font_with_fallback({
-          "NotoMono NFM",
+          "${myvars.fontFamily}",
           "FiraCode Nerd Font Mono",
           "JetBrains Mono",
           "DejaVu Sans Mono",
@@ -105,7 +105,7 @@ lib.mkIf profileLevel.guiBase {
         decorations = "None";
         dynamic_padding = true;
         dynamic_title = true;
-        opacity = 0.96;
+        opacity = 0.98;
         startup_mode = "Maximized";
         dimensions = {
           columns = 0;
