@@ -3,7 +3,7 @@ rec {
 
   langEnv = "zh_CN.UTF-8";
 
-  ## common system enviroment
+  ## common system environment
   commonEnv = {
     LANG = "${langEnv}";
     PAGER = "less";

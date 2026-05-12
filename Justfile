@@ -54,11 +54,6 @@ list-generations:
   sudo nix-env -p /nix/var/nix/profiles/system --list-generations
 
 [group('nix')]
-preshell:
-  # @grep -q 'experimental-features = nix-command flakes' /etc/nix/nix.conf 2>/dev/null || echo 'experimental-features = nix-command flakes' | sudo tee -a /etc/nix/nix.conf
-  nix shell 'experimental-features = nix-command flakes' 'nixpkgs#nh' 'nixpkgs#git'
-
-[group('nix')]
 show-conf:
   nix config show
 

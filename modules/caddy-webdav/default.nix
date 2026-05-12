@@ -1,14 +1,16 @@
 {
   config,
   lib,
+  options,
   pkgs,
   username,
   homeDir,
-  isDarwin,
   ...
 }:
 let
   cfg = config.services.caddy-webdav;
+  hasLaunchd = builtins.hasAttr "launchd" options;
+  hasSystemd = builtins.hasAttr "systemd" options;
 
   # Build caddy with webdav plugin directly (no overlay)
   caddy-webdav-pkg = pkgs.caddy.withPlugins {
@@ -24,7 +26,11 @@ let
       route {
         ${
           if cfg.user != null && cfg.hashedPassword != null then
-            "basicauth {\n          ${cfg.user} ${cfg.hashedPassword}\n        }"
+            ''
+              basicauth {
+                ${cfg.user} ${cfg.hashedPassword}
+              }
+            ''
           else
             ""
         }
@@ -69,46 +75,77 @@ in
   };
 
   config = lib.mkIf cfg.enable (
-    lib.mkMerge [
+    lib.mkMerge ([
       {
         assertions = [
           {
             assertion = cfg.storagePath != null;
             message = "services.caddy-webdav.storagePath must be set";
           }
+          {
+            assertion = hasLaunchd || hasSystemd;
+            message = "services.caddy-webdav requires either launchd or systemd support";
+          }
         ];
         environment.systemPackages = [ cfg.package ];
       }
-      # Ensure storage directory exists with correct ownership
-      {
-        system.activationScripts.caddy-webdav.text = ''
-          mkdir -p ${cfg.storagePath}
-          chown ${username}:staff ${cfg.storagePath}
-        '';
-      }
-      # Darwin launchd agent
-      (lib.mkIf isDarwin {
-        launchd.user.agents.caddy-webdav.serviceConfig = {
-          Label = "nixdwn.${username}.caddy-webdav";
-          UserName = username;
-          ProgramArguments = [
-            "${lib.getExe cfg.package}"
-            "run"
-            "--adapter"
-            "caddyfile"
-            "--config"
-            "${caddyfile}"
-          ];
-          WorkingDirectory = cfg.storagePath;
-          KeepAlive = true;
-          RunAtLoad = true;
-          StandardOutPath = "/tmp/caddy-webdav.log";
-          StandardErrorPath = "/tmp/caddy-webdav.log";
-          EnvironmentVariables = {
-            XDG_DATA_HOME = "${homeDir}/.local/share";
-          };
-        };
-      })
-    ]
+      (
+        if hasLaunchd then
+          {
+            # Darwin uses 'staff' group.
+            system.activationScripts.caddy-webdav.text = ''
+              mkdir -p ${cfg.storagePath}
+              chown ${username}:staff ${cfg.storagePath}
+            '';
+            launchd.user.agents.caddy-webdav.serviceConfig = {
+              Label = "nixdwn.${username}.caddy-webdav";
+              UserName = username;
+              ProgramArguments = [
+                "${lib.getExe cfg.package}"
+                "run"
+                "--adapter"
+                "caddyfile"
+                "--config"
+                "${caddyfile}"
+              ];
+              WorkingDirectory = cfg.storagePath;
+              KeepAlive = true;
+              RunAtLoad = true;
+              StandardOutPath = "/tmp/caddy-webdav.log";
+              StandardErrorPath = "/tmp/caddy-webdav.log";
+              EnvironmentVariables = {
+                XDG_DATA_HOME = "${homeDir}/.local/share";
+              };
+            };
+          }
+        else if hasSystemd then
+          {
+            # NixOS mirrors the configured user's home ownership.
+            system.activationScripts.caddy-webdav = {
+              deps = [ "users" ];
+              text = ''
+                mkdir -p "${cfg.storagePath}"
+                chown --reference="${homeDir}" "${cfg.storagePath}"
+              '';
+            };
+            systemd.services.caddy-webdav = {
+              description = "Caddy WebDAV server";
+              wantedBy = [ "multi-user.target" ];
+              after = [ "network.target" ];
+              environment = {
+                XDG_DATA_HOME = "${homeDir}/.local/share";
+              };
+              serviceConfig = {
+                User = username;
+                WorkingDirectory = cfg.storagePath;
+                ExecStart = "${lib.getExe cfg.package} run --adapter caddyfile --config ${caddyfile}";
+                Restart = "on-failure";
+              };
+            };
+          }
+        else
+          { }
+      )
+    ])
   );
 }
