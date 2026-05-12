@@ -2,6 +2,7 @@
 ## tuiAdvanced — larger / more complex terminal programs
 ## ============================================================
 {
+  inputs,
   pkgs,
   lib,
   profileLevel,
