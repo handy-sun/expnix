@@ -9,6 +9,10 @@
 let
   wezConfDir = inputs.my-wezterm;
   qimocha = (builtins.fromTOML (builtins.readFile (wezConfDir + "/colors/qimocha.toml"))).colors;
+  font_size = if pkgs.stdenv.isDarwin then 16 else 12;
+  fish = lib.getExe pkgs.fish;
+  zsh = lib.getExe pkgs.zsh;
+  bash = lib.getExe pkgs.bash;
 in
 lib.mkIf profileLevel.guiBase {
   ## ------ wezterm ------
@@ -26,8 +30,43 @@ lib.mkIf profileLevel.guiBase {
 
     settings = {
       color_scheme = "qimocha";
+      default_prog = [
+        fish
+        "-il"
+      ];
+      launch_menu = [
+        {
+          label = "Fish";
+          args = [
+            fish
+            "-il"
+          ];
+        }
+        {
+          label = "Fish (Private)";
+          args = [
+            fish
+            "-il"
+            "-P"
+          ];
+        }
+        {
+          label = "Zsh";
+          args = [
+            zsh
+            "-il"
+          ];
+        }
+        {
+          label = "Bash";
+          args = [
+            bash
+            "-l"
+          ];
+        }
+      ];
 
-      font_size = if pkgs.stdenv.isDarwin then 16.0 else 12.0;
+      inherit font_size;
       font = lib.generators.mkLuaInline ''
         wezterm.font_with_fallback({
           "${myvars.fontFamily}",
@@ -85,7 +124,7 @@ lib.mkIf profileLevel.guiBase {
         vi_mode_style = "None";
       };
       font = {
-        size = 16;
+        size = font_size;
         bold = {
           family = myvars.fontFamily;
         };
