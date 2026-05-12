@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  profileLevel,
   ...
 }:
 
@@ -11,7 +10,7 @@ let
 in
 {
   programs.yazi = {
-    enable = profileLevel.tuiAdvanced;
+    enable = true;
     shellWrapperName = "yy";
     plugins = {
       inherit (pkgs.yaziPlugins) git ouch sudo;

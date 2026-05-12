@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  profileLevel,
   ...
 }:
 let
@@ -86,7 +85,7 @@ in
   };
 
   programs.delta = {
-    enable = profileLevel.tuiAdvanced;
+    enable = true;
     enableGitIntegration = true;
     options = {
       navigate = true;
@@ -94,6 +93,10 @@ in
       # diff-so-fancy = true;
       line-numbers = true;
       true-color = "always";
+      minus-style = "syntax #3a1f24";
+      minus-emph-style = "syntax #5a2a32";
+      plus-style = "syntax #1f3a28";
+      plus-emph-style = "syntax #2a5a38";
       decorations = {
         commit-decoration-style = "bold yellow box ul";
         file-decoration-style = "none";
@@ -104,5 +107,5 @@ in
     };
   };
 
-  programs.lazygit.enable = profileLevel.tuiAdvanced;
+  programs.lazygit.enable = true;
 }
