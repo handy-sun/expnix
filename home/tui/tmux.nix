@@ -68,10 +68,10 @@ in
           set -g @mode_indicator_copy_prompt ' COPY '
           set -g @mode_indicator_sync_prompt ' SYNC '
           set -g @mode_indicator_empty_prompt ' TMUX '
-          set -g @mode_indicator_prefix_mode_style 'bg=#9ece6a,fg=#1a1b26'
-          set -g @mode_indicator_copy_mode_style 'bg=#ff9e64,fg=#1a1b26'
-          set -g @mode_indicator_sync_mode_style 'bg=#f7768e,fg=#1a1b26'
-          set -g @mode_indicator_empty_mode_style 'bg=#444b6a,fg=#a9b1d6'
+          set -g @mode_indicator_prefix_mode_style 'bg=#83a598,fg=#1d2021'
+          set -g @mode_indicator_copy_mode_style 'bg=#ffa500,fg=#1d2021'
+          set -g @mode_indicator_sync_mode_style 'bg=#b8bb26,fg=#1d2021'
+          set -g @mode_indicator_empty_mode_style 'bg=#3f3c36,fg=#b1b1b1'
         '';
       }
     ];
@@ -103,21 +103,21 @@ in
       bind M set -g mouse \; display "Mouse #{?mouse,ON,OFF}!"
 
       set -g status on
-      set -g status-style 'bg=#1a1b26,fg=#a9b1d6'
+      set -g status-style 'bg=#1d2021,fg=#b1b1b1'
       set -g status-interval 5
       set -g status-left-length 40
       set -g status-right-length 80
       set -g status-justify left
-      set -g status-left "#[bg=#7aa2f7,fg=#1a1b26,bold] #S "
-      set -g status-right "#[bg=#32344a,fg=#acb0d0] #{user}@#H %H:%M #[bg=#1a1b26]#{tmux_mode_indicator}"
-      set -g message-style 'bg=#e0af68,fg=#1a1b26'
-      set -g message-command-style 'bg=#7aa2f7,fg=#1a1b26'
-      set -g mode-style 'bg=#ff9e64,fg=#1a1b26'
+      set -g status-left "#[bg=#83a598,fg=#1d2021,bold] #S "
+      set -g status-right "#[bg=#3f3c36,fg=#b1b1b1] #{user}@#H #[bg=#ffa500,fg=#1d2021] %H:%M #[bg=#1d2021]#{tmux_mode_indicator}"
+      set -g message-style 'bg=#ffa500,fg=#1d2021'
+      set -g message-command-style 'bg=#83a598,fg=#1d2021'
+      set -g mode-style 'bg=#ffa500,fg=#1d2021'
 
       setw -g pane-border-status top
       setw -g pane-border-format '#{pane_index} #{pane_current_command} #{b:pane_current_path}'
-      setw -g pane-border-style 'fg=#787c99'
-      setw -g pane-active-border-style 'fg=#7aa2f7'
+      setw -g pane-border-style 'fg=#3f3c36'
+      setw -g pane-active-border-style 'fg=#83a598'
 
       set -g set-titles on
       set -g set-titles-string '#(whoami)@#h :: [#S]'
@@ -126,10 +126,10 @@ in
       setw -g automatic-rename-format '#{pane_current_command}:#{b:pane_current_path}'
 
       setw -g window-status-separator ' '
-      setw -g window-status-format '#[bg=#1a1b26,fg=#787c99]#{window_index} #[fg=#787c99]#W'
-      setw -g window-status-current-format '#[bg=#444b6a,fg=#acb0d0,bold]#{window_index} #[fg=#7aa2f7]#W'
-      setw -g window-status-activity-style 'fg=#ff9e64,bg=#1a1b26'
-      setw -g window-status-bell-style 'fg=#ad8ee6,bg=#1a1b26'
+      setw -g window-status-format '#[bg=#1d2021,fg=#928374]#{window_index} #[fg=#928374]#W'
+      setw -g window-status-current-format '#[bg=#3f3c36,fg=#b1b1b1,bold]#{window_index} #[fg=#83a598]#W'
+      setw -g window-status-activity-style 'fg=#ffa500,bg=#1d2021'
+      setw -g window-status-bell-style 'fg=#ffa500,bg=#1d2021'
 
       set -g update-environment "SSH_AUTH_SOCK"
       set -ga terminal-overrides ",xterm-256color:Tc"
