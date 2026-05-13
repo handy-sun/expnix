@@ -11,7 +11,7 @@ in
 {
   programs.tmux = {
     enable = true;
-    prefix = "C-s";
+    prefix = "C-a";
     keyMode = "vi";
     terminal = "xterm-256color";
     baseIndex = 1;
@@ -32,20 +32,12 @@ in
       {
         plugin = copycat;
         extraConfig = ''
-          set -g @copycat_search 'C-/'
-          set -g @copycat_file_search 'C-f'
-          set -g @copycat_url_search 'C-u'
-          set -g @copycat_digit_search 'C-d'
-          set -g @copycat_git_special 'C-g'
-          set -g @copycat_hash_search 'M-h'
-          set -g @copycat_ip_search 'M-i'
+          set -g @copycat_search '/'
         '';
       }
       {
         plugin = resurrect;
         extraConfig = ''
-          set -g @resurrect-save 'S'
-          set -g @resurrect-restore 'R'
           set -g @resurrect-dir '${config.xdg.dataHome}/tmux/resurrect'
           set -g @resurrect-capture-pane-contents 'on'
           set -g @resurrect-strategy-nvim 'session'
@@ -85,6 +77,9 @@ in
     ];
 
     extraConfig = ''
+      set -g prefix2 C-t
+      bind-key C-t send-prefix -2
+
       setw -g xterm-keys on
 
       bind-key j select-pane -D
@@ -101,8 +96,11 @@ in
 
       bind r source-file ${tmuxConfig}
 
-      bind m setw -g mouse off \; display "Mouse OFF!"
-      bind M setw -g mouse on \; display "Mouse ON!"
+      bind s split-window -v -c "#{pane_current_path}"
+      bind v split-window -h -c "#{pane_current_path}"
+
+      bind m command-prompt -p "join pane to window:" "join-pane -t ':%%'"
+      bind M set -g mouse \; display "Mouse #{?mouse,ON,OFF}!"
 
       set -g status-bg colour237
       set -g status-fg colour103
@@ -127,7 +125,6 @@ in
       set -g allow-passthrough on
 
       bind-key Space show-wk-menu-root
-      bind-key / split-window -v -l 15
     '';
   };
 }
