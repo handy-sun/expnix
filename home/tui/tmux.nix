@@ -22,19 +22,19 @@ in
     sensibleOnTop = true;
 
     plugins = with pkgs.tmuxPlugins; [
-      {
-        plugin = yank;
-        extraConfig = ''
-          set -g @yank_action 'copy-pipe'
-          set -g @yank_with_mouse on
-        '';
-      }
-      {
-        plugin = copycat;
-        extraConfig = ''
-          set -g @copycat_search '/'
-        '';
-      }
+      # {
+      #   plugin = yank;
+      #   extraConfig = ''
+      #     set -g @yank_action 'copy-pipe'
+      #     set -g @yank_with_mouse on
+      #   '';
+      # }
+      # {
+      #   plugin = copycat;
+      #   extraConfig = ''
+      #     set -g @copycat_search '/'
+      #   '';
+      # }
       {
         plugin = resurrect;
         extraConfig = ''

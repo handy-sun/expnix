@@ -94,6 +94,7 @@
       ## nix
       nil # language server for Nix
       nixfmt
+      nix-output-monitor
 
       ## fish plugins
       fishPlugins.tide
