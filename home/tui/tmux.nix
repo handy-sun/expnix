@@ -103,13 +103,13 @@ in
       bind M set -g mouse \; display "Mouse #{?mouse,ON,OFF}!"
 
       set -g status on
-      set -g status-style 'bg=#1d2021,fg=#b1b1b1'
+      set -g status-style 'bg=colour237,fg=colour103'
       set -g status-interval 5
       set -g status-left-length 40
       set -g status-right-length 80
       set -g status-justify left
-      set -g status-left "#[bg=#83a598,fg=#1d2021,bold] #S "
-      set -g status-right "#[bg=#3f3c36,fg=#b1b1b1] #{user}@#H #[bg=#ffa500,fg=#1d2021] %H:%M #[bg=#1d2021]#{tmux_mode_indicator}"
+      set -g status-left "#[bg=#a4a998,fg=#1d2021][#S] #{?pane_in_mode,#[fg=white#,dim],#[fg=colour33#,dim]}#D "
+      set -g status-right "#[bg=#cf9508,fg=#1d2021] #{user}@#H #[bg=#3f3c36,fg=#b1b1b1] %H:%M #[default]#{tmux_mode_indicator}"
       set -g message-style 'bg=#ffa500,fg=#1d2021'
       set -g message-command-style 'bg=#83a598,fg=#1d2021'
       set -g mode-style 'bg=#ffa500,fg=#1d2021'
@@ -125,9 +125,9 @@ in
       setw -g automatic-rename on
       setw -g automatic-rename-format '#{pane_current_command}:#{b:pane_current_path}'
 
-      setw -g window-status-separator ' '
-      setw -g window-status-format '#[bg=#1d2021,fg=#928374]#{window_index} #[fg=#928374]#W'
-      setw -g window-status-current-format '#[bg=#3f3c36,fg=#b1b1b1,bold]#{window_index} #[fg=#83a598]#W'
+      setw -g window-status-separator ""
+      setw -g window-status-format '#[bg=#3a3a3a,fg=#b1b1b1] #{window_index} #W '
+      setw -g window-status-current-format '#[bg=#84a598,fg=#3f3c36,bold] #{window_index} #W '
       setw -g window-status-activity-style 'fg=#ffa500,bg=#1d2021'
       setw -g window-status-bell-style 'fg=#ffa500,bg=#1d2021'
 
