@@ -38,6 +38,7 @@ in
       pull.rebase = true;
       rebase.autostash = true;
       init.defaultBranch = "main";
+      fetch.prune = true;
 
       diff.colorMoved = "default";
       diff.tool = "nvimdiff";

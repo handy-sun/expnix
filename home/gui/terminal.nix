@@ -85,6 +85,39 @@ lib.mkIf profileLevel.guiBase {
     extraConfig = builtins.readFile (wezConfDir + "/extra.lua");
   };
 
+  ## ------ neovide ------
+  programs.neovide = {
+    enable = true;
+    package = pkgs.neovide;
+    settings = {
+      frame = if pkgs.stdenv.isDarwin then "transparent" else "none";
+      maximized = true;
+      tabs = false;
+      title-hidden = pkgs.stdenv.isDarwin;
+      vsync = true;
+
+      font = {
+        size = font_size;
+        normal = [
+          myvars.fontFamily
+          "FiraCode Nerd Font Mono"
+          "JetBrains Mono"
+          "DejaVu Sans Mono"
+        ];
+        hinting = "full";
+        edging = "antialias";
+      };
+
+      box-drawing = {
+        mode = "native";
+        sizes.default = [
+          2
+          4
+        ];
+      };
+    };
+  };
+
   ## ------ alacritty ------
   programs.alacritty = {
     enable = true;
