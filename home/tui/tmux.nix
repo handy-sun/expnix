@@ -74,6 +74,30 @@ in
           set -g @mode_indicator_empty_mode_style 'bg=#3f3c36,fg=#b1b1b1'
         '';
       }
+      {
+        plugin = catppuccin;
+        extraConfig = ''
+          set -g @catppuccin_flavor "mocha"
+          set -g @catppuccin_window_status_style "basic"
+          set -g @catppuccin_status_connect_separator "yes"
+          set -g @catppuccin_cpu_icon "CPU "
+          set -g @catppuccin_ram_icon "RAM "
+          set -g @catppuccin_date_time_text " %H:%M"
+        '';
+      }
+      {
+        plugin = cpu;
+        extraConfig = ''
+          set -g status-left-length 100
+          set -g status-right-length 120
+          set -g status-left "#{E:@catppuccin_status_session}"
+          set -g status-right "#{E:@catppuccin_status_user}"
+          set -ag status-right "#{E:@catppuccin_status_host}"
+          set -agF status-right "#{E:@catppuccin_status_cpu}"
+          set -agF status-right "#[fg=#{@thm_yellow}]#{@catppuccin_status_left_separator}#[fg=#{@thm_crust},bg=#{@thm_yellow}]RAM #[fg=#{@thm_fg},bg=#{@catppuccin_status_module_text_bg}] ##{ram_percentage}#[fg=#{@catppuccin_status_module_text_bg}]#{@catppuccin_status_right_separator}"
+          set -ag status-right "#{E:@catppuccin_status_date_time}"
+        '';
+      }
     ];
 
     extraConfig = ''
@@ -103,33 +127,17 @@ in
       bind M set -g mouse \; display "Mouse #{?mouse,ON,OFF}!"
 
       set -g status on
-      set -g status-style 'bg=colour237,fg=colour103'
       set -g status-interval 5
-      set -g status-left-length 40
-      set -g status-right-length 80
       set -g status-justify left
-      set -g status-left "#[bg=#a4a998,fg=#1d2021][#S] #{?pane_in_mode,#[fg=white#,dim],#[fg=colour33#,dim]}#D "
-      set -g status-right "#[bg=#cf9508,fg=#1d2021] #{user}@#H #[bg=#3f3c36,fg=#b1b1b1] %H:%M #[default]#{tmux_mode_indicator}"
-      set -g message-style 'bg=#ffa500,fg=#1d2021'
-      set -g message-command-style 'bg=#83a598,fg=#1d2021'
-      set -g mode-style 'bg=#ffa500,fg=#1d2021'
 
       setw -g pane-border-status top
       setw -g pane-border-format '#{pane_index} #{pane_current_command} #{b:pane_current_path}'
-      setw -g pane-border-style 'fg=#3f3c36'
-      setw -g pane-active-border-style 'fg=#83a598'
 
       set -g set-titles on
       set -g set-titles-string '#(whoami)@#h :: [#S]'
 
       setw -g automatic-rename on
       setw -g automatic-rename-format '#{pane_current_command}:#{b:pane_current_path}'
-
-      setw -g window-status-separator ""
-      setw -g window-status-format '#[bg=#3a3a3a,fg=#b1b1b1] #{window_index} #W '
-      setw -g window-status-current-format '#[bg=#84a598,fg=#3f3c36,bold] #{window_index} #W '
-      setw -g window-status-activity-style 'fg=#ffa500,bg=#1d2021'
-      setw -g window-status-bell-style 'fg=#ffa500,bg=#1d2021'
 
       set -g update-environment "SSH_AUTH_SOCK"
       set -ga terminal-overrides ",xterm-256color:Tc"
