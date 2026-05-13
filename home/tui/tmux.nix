@@ -29,6 +29,36 @@ in
           set -g @yank_with_mouse on
         '';
       }
+      {
+        plugin = copycat;
+        extraConfig = ''
+          set -g @copycat_search 'C-/'
+          set -g @copycat_file_search 'C-f'
+          set -g @copycat_url_search 'C-u'
+          set -g @copycat_digit_search 'C-d'
+          set -g @copycat_git_special 'C-g'
+          set -g @copycat_hash_search 'M-h'
+          set -g @copycat_ip_search 'M-i'
+        '';
+      }
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          set -g @resurrect-save 'S'
+          set -g @resurrect-restore 'R'
+          set -g @resurrect-dir '${config.xdg.dataHome}/tmux/resurrect'
+          set -g @resurrect-capture-pane-contents 'on'
+          set -g @resurrect-strategy-nvim 'session'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-save-interval '15'
+          set -g @continuum-restore 'off'
+          set -g @continuum-boot 'off'
+        '';
+      }
       open
       {
         plugin = tmux-which-key;
