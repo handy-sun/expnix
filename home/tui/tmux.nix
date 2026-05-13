@@ -102,14 +102,22 @@ in
       bind m command-prompt -p "join pane to window:" "join-pane -t ':%%'"
       bind M set -g mouse \; display "Mouse #{?mouse,ON,OFF}!"
 
-      set -g status-bg colour237
-      set -g status-fg colour103
+      set -g status on
+      set -g status-style 'bg=#1a1b26,fg=#a9b1d6'
       set -g status-interval 5
-      set -g status-left-length 90
+      set -g status-left-length 40
       set -g status-right-length 80
-      set -g status-left "#[fg=colour3][#S] #[fg=blue]#{pane_tty} #{?pane_in_mode,#[fg=white#,dim],#[fg=colour80#,dim]}#D #[fg=white,bold]| "
       set -g status-justify left
-      set -g status-right '#[fg=colour249]#{user}@#H #[fg=blue]%R #[default]#{tmux_mode_indicator}'
+      set -g status-left "#[bg=#7aa2f7,fg=#1a1b26,bold] #S "
+      set -g status-right "#[bg=#32344a,fg=#acb0d0] #{user}@#H %H:%M #[bg=#1a1b26]#{tmux_mode_indicator}"
+      set -g message-style 'bg=#e0af68,fg=#1a1b26'
+      set -g message-command-style 'bg=#7aa2f7,fg=#1a1b26'
+      set -g mode-style 'bg=#ff9e64,fg=#1a1b26'
+
+      setw -g pane-border-status top
+      setw -g pane-border-format '#{pane_index} #{pane_current_command} #{b:pane_current_path}'
+      setw -g pane-border-style 'fg=#787c99'
+      setw -g pane-active-border-style 'fg=#7aa2f7'
 
       set -g set-titles on
       set -g set-titles-string '#(whoami)@#h :: [#S]'
@@ -117,8 +125,11 @@ in
       setw -g automatic-rename on
       setw -g automatic-rename-format '#{pane_current_command}:#{b:pane_current_path}'
 
-      setw -g window-status-format '#[fg=colour250,dim]#{window_index}:#{window_name}'
-      setw -g window-status-current-format '#[fg=colour11,bold]#{window_index}:#{window_name}'
+      setw -g window-status-separator ' '
+      setw -g window-status-format '#[bg=#1a1b26,fg=#787c99]#{window_index} #[fg=#787c99]#W'
+      setw -g window-status-current-format '#[bg=#444b6a,fg=#acb0d0,bold]#{window_index} #[fg=#7aa2f7]#W'
+      setw -g window-status-activity-style 'fg=#ff9e64,bg=#1a1b26'
+      setw -g window-status-bell-style 'fg=#ad8ee6,bg=#1a1b26'
 
       set -g update-environment "SSH_AUTH_SOCK"
       set -ga terminal-overrides ",xterm-256color:Tc"
