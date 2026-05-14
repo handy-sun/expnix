@@ -35,10 +35,6 @@
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     nixfmt-rs.url = "github:Mic92/nixfmt-rs";
-    zjstatus = {
-      url = "github:dj95/zjstatus";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     ## This flake is only built and tested against its pinned nixpkgs-unstable input.
     llm-agents.url = "github:numtide/llm-agents.nix";
 
