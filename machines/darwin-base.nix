@@ -71,9 +71,8 @@ in
   ## Set this to false because i am using Determinate Nix.
   nix.enable = false;
   nix.gc.automatic = false;
-  # Determinate Nix reads additional daemon settings from nix.custom.conf.
+  ## Determinate Nix reads additional daemon settings from nix.custom.conf, and accept-flake-config in nix.settings(darwin) is not working, so set it here.
   environment.etc."nix/nix.custom.conf".text = ''
-    experimental-features = nix-command flakes
     accept-flake-config = true
   '';
   # Disable auto-optimise-store because of this issue:

@@ -3,7 +3,6 @@
   lib,
   username,
   hostName,
-  myvars,
   ...
 }:
 {
@@ -49,9 +48,7 @@
 
       ## https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf
       auto-optimise-store = lib.mkDefault true;
-
       builders-use-substitutes = true;
-
       accept-flake-config = true;
     };
 

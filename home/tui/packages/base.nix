@@ -130,7 +130,7 @@
       hdparm
     ]
     ++ lib.optionals isDarwin [
-      xquartz
+      # xquartz
       ## This is automatically setup on Linux
       gettext
       gnused

@@ -24,6 +24,7 @@ _: {
       copy_on_select = true;
 
       theme = "catppuccin-mocha";
+      show_startup_tips = false;
       show_release_notes = false;
       on_force_close = "detach";
     };
