@@ -1,4 +1,20 @@
-_: {
+{ config, ... }:
+
+let
+  ## Rename zellij tab to current directory basename on every directory change.
+  ## Uses zellij's stable CLI API — no WASM plugin needed.
+  zellijTabRenameFish = ''
+    function __zellij_tab_rename --on-variable PWD
+      zellij action rename-tab (basename "$PWD") 2>/dev/null
+    end
+  '';
+
+  zellijTabRenameZsh = ''
+    __zellij_tab_rename() { zellij action rename-tab "$(basename "$PWD")" 2>/dev/null; }
+    chpwd_functions+=(__zellij_tab_rename)
+  '';
+in
+{
   programs.zellij = {
     enable = true;
 
@@ -292,4 +308,18 @@ _: {
       }
     '';
   };
+
+  ## Register tab-rename hooks for fish and zsh.
+  ## Only active when running inside zellij (detected via ZELLIJ env var).
+  programs.fish.shellInitLast = ''
+    if set -q ZELLIJ
+      ${zellijTabRenameFish}
+    end
+  '';
+
+  programs.zsh.initContent = ''
+    if [ -n "$ZELLIJ" ]; then
+      ${zellijTabRenameZsh}
+    fi
+  '';
 }
