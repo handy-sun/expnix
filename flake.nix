@@ -34,7 +34,6 @@
     };
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    nixfmt-rs.url = "github:Mic92/nixfmt-rs";
     ## This flake is only built and tested against its pinned nixpkgs-unstable input.
     llm-agents.url = "github:numtide/llm-agents.nix";
 
@@ -177,10 +176,7 @@
       formatter = forAllSystems (
         system:
         inputs.treefmt-nix.lib.mkWrapper nixpkgs.legacyPackages.${system} {
-          programs.nixfmt = {
-            enable = true;
-            package = inputs.nixfmt-rs.packages.${system}.default;
-          };
+          programs.nixfmt.enable = true;
         }
       );
     };
