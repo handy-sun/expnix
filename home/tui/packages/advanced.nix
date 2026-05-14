@@ -2,11 +2,16 @@
 ## tuiAdvanced — larger / more complex terminal programs
 ## ============================================================
 {
+  inputs,
   pkgs,
   lib,
   profileLevel,
   ...
 }:
+let
+  system = pkgs.stdenv.hostPlatform.system;
+  inherit (inputs.cc-switch-tui.packages.${system}) cc-switch-tui;
+in
 {
   home.packages = (
     with pkgs;
@@ -22,6 +27,7 @@
       just-lsp
       lua-language-server
       rust-analyzer
+      cc-switch-tui
 
       ## downloads / transfers
       aria2 # A lightweight multi-protocol & multi-source command-line download utility

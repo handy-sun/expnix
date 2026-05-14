@@ -59,6 +59,26 @@
         "type": "github"
       }
     },
+    "cc-switch-tui": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778413693,
+        "narHash": "sha256-3PPQ86GmzrnDJqfxATNB1+EdVh6rz2Em3I5q2rRtx8k=",
+        "owner": "handy-sun",
+        "repo": "cc-switch-tui",
+        "rev": "6e7f91cf6d31f63828c7090bc31bf60940e6839c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "handy-sun",
+        "repo": "cc-switch-tui",
+        "type": "github"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -624,6 +644,7 @@
     },
     "root": {
       "inputs": {
+        "cc-switch-tui": "cc-switch-tui",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
         "my-dotfiles": "my-dotfiles",
