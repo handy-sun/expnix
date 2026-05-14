@@ -37,6 +37,7 @@ rec {
     ## suitable
     "fira-code"
     "jetbrains-mono"
+    "maple-mono.NF-CN"
     ## icon fonts
     "material-design-icons"
     "font-awesome"

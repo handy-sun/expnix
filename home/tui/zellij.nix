@@ -1,4 +1,12 @@
-_: {
+{
+  inputs,
+  pkgs,
+  ...
+}:
+let
+  zjstatus = inputs.zjstatus.packages.${pkgs.stdenv.hostPlatform.system}.default;
+in
+{
   programs.zellij = {
     enable = true;
 
@@ -24,9 +32,146 @@ _: {
       copy_on_select = true;
 
       theme = "catppuccin-mocha";
+      show_startup_tips = false;
       show_release_notes = false;
       on_force_close = "detach";
     };
+
+    layouts.default = ''
+      layout {
+          tab_template name="ui" {
+              children
+
+              pane size=1 borderless=true {
+                  plugin location="file:${zjstatus}/bin/zjstatus.wasm" {
+                      format_left   "#[fg=#89b4fa,bold]{session} #[fg=#6c7086]| #[fg=#f5c2e7]{mode}"
+                      format_center "{tabs}"
+                      format_right  "{command_git_branch}#[fg=#6c7086]| #[fg=#fab387]{datetime}"
+
+                      format_space "#[bg=#1e1e2e] "
+                      border_enabled "false"
+                      hide_frame_for_single_pane "true"
+
+                      mode_normal        "#[fg=#1e1e2e,bg=#a6e3a1,bold] NORMAL "
+                      mode_tmux          "#[fg=#1e1e2e,bg=#89b4fa,bold] PREFIX "
+                      mode_pane          "#[fg=#1e1e2e,bg=#f9e2af,bold] PANE "
+                      mode_tab           "#[fg=#1e1e2e,bg=#cba6f7,bold] TAB "
+                      mode_resize        "#[fg=#1e1e2e,bg=#fab387,bold] RESIZE "
+                      mode_scroll        "#[fg=#1e1e2e,bg=#f5c2e7,bold] COPY "
+                      mode_search        "#[fg=#1e1e2e,bg=#f5c2e7,bold] SEARCH "
+                      mode_session       "#[fg=#1e1e2e,bg=#74c7ec,bold] SESSION "
+                      mode_move          "#[fg=#1e1e2e,bg=#b4befe,bold] MOVE "
+                      mode_locked        "#[fg=#1e1e2e,bg=#f38ba8,bold] LOCKED "
+
+                      tab_normal   "#[fg=#6c7086] {index}:{name} "
+                      tab_active   "#[fg=#1e1e2e,bg=#89b4fa,bold] {index}:{name} "
+                      tab_separator "#[fg=#313244] "
+
+                      datetime        "#[fg=#fab387]%H:%M"
+                      datetime_format "%H:%M"
+
+                      command_git_branch_command "git rev-parse --abbrev-ref HEAD"
+                      command_git_branch_format  "#[fg=#a6e3a1]git:{stdout} "
+                      command_git_branch_interval "10"
+                      command_git_branch_rendermode "static"
+                  }
+              }
+          }
+
+          ui
+
+          swap_tiled_layout name="vertical" {
+              ui max_panes=5 {
+                  pane split_direction="vertical" {
+                      pane
+                      pane { children; }
+                  }
+              }
+              ui max_panes=8 {
+                  pane split_direction="vertical" {
+                      pane { children; }
+                      pane { pane; pane; pane; pane; }
+                  }
+              }
+              ui max_panes=12 {
+                  pane split_direction="vertical" {
+                      pane { children; }
+                      pane { pane; pane; pane; pane; }
+                      pane { pane; pane; pane; pane; }
+                  }
+              }
+          }
+
+          swap_tiled_layout name="horizontal" {
+              ui max_panes=4 {
+                  pane
+                  pane
+              }
+              ui max_panes=8 {
+                  pane {
+                      pane split_direction="vertical" { children; }
+                      pane split_direction="vertical" { pane; pane; pane; pane; }
+                  }
+              }
+              ui max_panes=12 {
+                  pane {
+                      pane split_direction="vertical" { children; }
+                      pane split_direction="vertical" { pane; pane; pane; pane; }
+                      pane split_direction="vertical" { pane; pane; pane; pane; }
+                  }
+              }
+          }
+
+          swap_tiled_layout name="stacked" {
+              ui min_panes=5 {
+                  pane split_direction="vertical" {
+                      pane
+                      pane stacked=true { children; }
+                  }
+              }
+          }
+
+          swap_floating_layout name="staggered" {
+              floating_panes
+          }
+
+          swap_floating_layout name="enlarged" {
+              floating_panes max_panes=10 {
+                  pane { x "5%"; y 1; width "90%"; height "90%"; }
+                  pane { x "5%"; y 2; width "90%"; height "90%"; }
+                  pane { x "5%"; y 3; width "90%"; height "90%"; }
+                  pane { x "5%"; y 4; width "90%"; height "90%"; }
+                  pane { x "5%"; y 5; width "90%"; height "90%"; }
+                  pane { x "5%"; y 6; width "90%"; height "90%"; }
+                  pane { x "5%"; y 7; width "90%"; height "90%"; }
+                  pane { x "5%"; y 8; width "90%"; height "90%"; }
+                  pane { x "5%"; y 9; width "90%"; height "90%"; }
+                  pane { x 10; y 10; width "90%"; height "90%"; }
+              }
+          }
+
+          swap_floating_layout name="spread" {
+              floating_panes max_panes=1 {
+                  pane {y "50%"; x "50%"; }
+              }
+              floating_panes max_panes=2 {
+                  pane { x "1%"; y "25%"; width "45%"; }
+                  pane { x "50%"; y "25%"; width "45%"; }
+              }
+              floating_panes max_panes=3 {
+                  pane { y "55%"; width "45%"; height "45%"; }
+                  pane { x "1%"; y "1%"; width "45%"; }
+                  pane { x "50%"; y "1%"; width "45%"; }
+              }
+              floating_panes max_panes=4 {
+                  pane { x "1%"; y "55%"; width "45%"; height "45%"; }
+                  pane { x "50%"; y "55%"; width "45%"; height "45%"; }
+                  pane { x "1%"; y "1%"; width "45%"; height "45%"; }
+                  pane { x "50%"; y "1%"; width "45%"; height "45%"; }
+              }
+          }
+      }
+    '';
 
     extraConfig = ''
       themes {
