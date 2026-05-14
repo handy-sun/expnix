@@ -17,12 +17,13 @@
 
 所有命令默认在仓库根目录执行。
 
-如果当前机器还没有在 `nix.conf` 里启用 `nix-command` 和 `flakes`，先临时启用实验特性并进入开发 shell：
+首次进入开发 shell：
 
 ```bash
-export NIX_CONFIG='extra-experimental-features = nix-command flakes'
 nix develop
 ```
+
+仓库在 `flake.nix` 顶层声明了 `nixConfig.bash-prompt`，进入 `nix develop` 后会直接使用项目定义的 bash prompt。系统侧配置里也默认开启了 `accept-flake-config = true`，因此会自动接受该 flake 暴露的 Nix 配置。
 
 开发 shell 会提供 `git`、`just`、`nh`、`statix` 等仓库维护需要的工具。进入后建议先安装本仓库的 git hook：
 

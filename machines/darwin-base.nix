@@ -71,6 +71,11 @@ in
   ## Set this to false because i am using Determinate Nix.
   nix.enable = false;
   nix.gc.automatic = false;
+  # Determinate Nix reads additional daemon settings from nix.custom.conf.
+  environment.etc."nix/nix.custom.conf".text = ''
+    experimental-features = nix-command flakes
+    accept-flake-config = true
+  '';
   # Disable auto-optimise-store because of this issue:
   #   https://github.com/NixOS/nix/issues/7273
   # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"

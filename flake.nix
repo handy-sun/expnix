@@ -1,6 +1,10 @@
 {
   description = "handy-sun NixOS flake configuration";
 
+  nixConfig = {
+    bash-prompt = "\\[\\e[0m\\]\\[\\033[0;32m\\]\\A (devsh) \\[\\e[0;36m\\]\\w \\[\\e[0m\\]\\\\$\\[\\e[0m\\] ";
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
@@ -163,13 +167,6 @@
             ];
             name = "devsh";
             shellHook = ''
-              _bash_prompt_cmd() {
-                local lastStatus=$?
-                local promFg
-                [[ $lastStatus -eq 0 ]] && promFg="92" || promFg="91"
-                PS1="\[\e[0m\]\[\033[0;32m\]\A ($name) \[\e[0;36m\]\w \[\e[0;''${promFg}m\]\\$\[\e[0m\] "
-              }
-              export PROMPT_COMMAND=_bash_prompt_cmd
               echo "Welcome to handy-sun/expnix devshell"
             '';
           };
