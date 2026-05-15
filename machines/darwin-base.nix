@@ -90,6 +90,7 @@ in
   users.users."${username}" = {
     home = "/Users/${username}";
     description = username;
+    shell = pkgs.fish;
   };
   system.primaryUser = username;
 

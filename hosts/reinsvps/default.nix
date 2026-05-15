@@ -17,10 +17,9 @@
   boot.loader.grub.enable = true;
   networking.networkmanager.enable = true;
 
-  users.users.${myvars.user} = {
-    isSystemUser = true;
-    group = "users";
-  };
+  # users.users.${myvars.user} = {
+  #   isSystemUser = true;
+  # };
 
   ################ custom ################
   networking.firewall = {

@@ -1,4 +1,4 @@
-## nix shell nixpkgs#just
+
 set shell := ["bash", "-uc"]
 
 alias s := switch
@@ -61,7 +61,7 @@ show-conf:
 switch-home:
   nh home switch .
 
-## Old method to format nix code, which is now replaced by the new formatter based on treefmt-nix
+# Old method to format nix code, which is now replaced by the new formatter based on treefmt-nix
 [group('nix')]
 nixfmt:
   fd -e nix -X nixfmt
@@ -78,12 +78,12 @@ current-sys:
 query-all pkgname:
   which {{pkgname}} | xargs realpath | xargs nix why-depends --all /run/current-system
 
-## garbage collect all unused nix store entries(system-wide)
+# garbage collect all unused nix store entries(system-wide)
 [group('nix')]
 gc:
   sudo nix-collect-garbage --delete-older-than 4d
 
-## Linux
+# Linux
 [linux]
 [group('nix')]
 switch:
@@ -109,7 +109,7 @@ query-depends pkgname:
 query-dep-home pkgname:
   which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation .#homeConfigurations.$USER.activationPackage 2>/dev/null
 
-## MacOS
+# MacOS
 [macos]
 [group('nix')]
 switch:

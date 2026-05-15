@@ -16,7 +16,6 @@
     ];
 
   users.users.${myvars.user} = {
-    isNormalUser = true;
     extraGroups = [
       "wheel"
       "networkmanager"

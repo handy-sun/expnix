@@ -7,6 +7,9 @@
   profileLevel,
   ...
 }:
+let
+  inherit (lib) mkDefault;
+in
 {
   disabledModules = [ "services/networking/sing-box.nix" ];
 
@@ -77,10 +80,17 @@
 
   programs.zsh.enable = true;
   programs.fish.enable = true;
+  users.defaultUserShell = pkgs.fish;
+  users.mutableUsers = false;
   users.users.${myvars.user} = {
-    home = lib.mkDefault homeDir;
-    createHome = lib.mkDefault true;
-    shell = pkgs.fish;
+    home = homeDir;
+    createHome = true;
+    group = mkDefault "users";
+    hashedPassword = "$6$rgT4Zw3CMO04LwFY$6L5MfeKp9/wsVXHNSylpN3H8xUgEpZmQNM6QIvPk2kSDR2VGxqCUwga8IpaWxYhuuVRY.4uJPlLpWl7hrsjtw0";
+    isNormalUser = mkDefault true;
+    extraGroups = mkDefault [
+      "wheel"
+    ];
   };
 
   users.extraGroups.docker.members = [ "${myvars.user}" ];

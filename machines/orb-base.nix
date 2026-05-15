@@ -41,8 +41,10 @@
   services.resolved.enable = false;
   environment.etc."resolv.conf".source = "/opt/orbstack-guest/etc/resolv.conf";
 
-  # This being `true` leads to a few nasty bugs, change at your own risk!
-  users.mutableUsers = false;
+  ## This being `true` leads to a few nasty bugs, change at your own risk!
+  ## Define of the NixOS default settings, so note it.
+  # users.mutableUsers = false;
+
   users.users.${username} = {
     uid = 501;
     extraGroups = [
@@ -51,10 +53,9 @@
     ];
 
     # simulate isNormalUser, but with an arbitrary UID; so isNormalUser = false;
+    isNormalUser = lib.mkForce false;
     isSystemUser = true;
-    group = "users";
-    createHome = true;
-    home = homeDir;
+
     homeMode = "700";
     useDefaultShell = true;
     openssh.authorizedKeys.keys = [ ];

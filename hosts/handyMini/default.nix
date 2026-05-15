@@ -22,10 +22,6 @@ in
     ]
   );
 
-  users.users."${username}" = {
-    shell = pkgs.fish; # # Not worked, must use `chsh -s ...`
-  };
-
   services.sing-box = {
     enable = true;
     configGeneration = {
