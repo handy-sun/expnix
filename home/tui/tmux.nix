@@ -79,6 +79,8 @@ in
         extraConfig = ''
           set -g @catppuccin_flavor "mocha"
           set -g @catppuccin_window_status_style "basic"
+          set -g @catppuccin_window_text " #{pane_current_command}:#{b:pane_current_path}"
+          set -g @catppuccin_window_current_text " #{pane_current_command}:#{b:pane_current_path}"
           set -g @catppuccin_status_connect_separator "yes"
           set -g @catppuccin_cpu_icon "CPU "
           set -g @catppuccin_ram_icon "RAM "
