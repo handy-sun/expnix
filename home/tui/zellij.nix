@@ -53,7 +53,7 @@ _: {
           }
 
           resize {
-              bind "Ctrl n" { SwitchToMode "Normal"; }
+              bind "Enter" "Esc" { SwitchToMode "Normal"; }
               bind "h" "Left" { Resize "Increase Left"; }
               bind "j" "Down" { Resize "Increase Down"; }
               bind "k" "Up" { Resize "Increase Up"; }
@@ -250,8 +250,8 @@ _: {
               bind "Alt n" { NewPane; }
               bind "Alt i" { MoveTab "Left"; }
               bind "Alt o" { MoveTab "Right"; }
-              bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
-              bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
+              bind "Alt h" { MoveFocusOrTab "Left"; }
+              bind "Alt l" { MoveFocusOrTab "Right"; }
               bind "Alt j" "Alt Down" { MoveFocus "Down"; }
               bind "Alt k" "Alt Up" { MoveFocus "Up"; }
               bind "Alt =" "Alt +" { Resize "Increase"; }
@@ -271,7 +271,7 @@ _: {
           }
 
           shared_except "resize" "locked" {
-              bind "Ctrl n" { SwitchToMode "Resize"; }
+              bind "Alt r" { SwitchToMode "Resize"; }
           }
 
           shared_except "scroll" "locked" {
