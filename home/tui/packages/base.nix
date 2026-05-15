@@ -128,6 +128,7 @@
       fio
       ioping
       hdparm
+      rldd
     ]
     ++ lib.optionals isDarwin [
       # xquartz

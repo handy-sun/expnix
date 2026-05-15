@@ -70,6 +70,7 @@ systemFunc rec {
         }
     )
     ../machines/nix-core.nix
+    ../overlays/rldd.nix
     ../hosts/${hostName}
     ({
       nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
