@@ -1,18 +1,14 @@
-{ config, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 
 let
-  ## Rename zellij tab to current directory basename on every directory change.
-  ## Uses zellij's stable CLI API — no WASM plugin needed.
-  zellijTabRenameFish = ''
-    function __zellij_tab_rename --on-variable PWD
-      zellij action rename-tab (basename "$PWD") 2>/dev/null
-    end
-  '';
-
-  zellijTabRenameZsh = ''
-    __zellij_tab_rename() { zellij action rename-tab "$(basename "$PWD")" 2>/dev/null; }
-    chpwd_functions+=(__zellij_tab_rename)
-  '';
+  ## Resolve zjstatus WASM binary from the flake input.
+  zjstatus-pkg = inputs.zjstatus.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  zjstatus-wasm = "${zjstatus-pkg}/bin/zjstatus.wasm";
 in
 {
   programs.zellij = {
@@ -307,19 +303,46 @@ in
           }
       }
     '';
+
+    ## Override the default layout to include zjstatus as the statusbar.
+    layouts = {
+      default = ''
+        layout {
+            default_tab_template {
+                children
+                pane size=1 borderless=true {
+                    plugin location="${zjstatus-wasm}" {
+                        format_left   "{mode} #[fg=#89B4FA,bold]{session}"
+                        format_center "{tabs}"
+                        format_right  "{command_git_branch} {datetime}"
+                        format_space  ""
+
+                        border_enabled  "false"
+                        border_char     "─"
+                        border_format   "#[fg=#6C7086]{char}"
+                        border_position "top"
+
+                        hide_frame_for_single_pane "true"
+
+                        mode_normal  "#[bg=#89B4FA] "
+                        mode_tmux    "#[bg=#ffc387] "
+
+                        tab_normal   "#[fg=#6C7086] {index}: {name} "
+                        tab_active   "#[fg=#CDD6F4,bold,italic] {index}: {name} "
+
+                        command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
+                        command_git_branch_format      "#[fg=#89B4FA] {stdout} "
+                        command_git_branch_interval    "10"
+                        command_git_branch_rendermode  "static"
+
+                        datetime        "#[fg=#6C7086,bold] {format} "
+                        datetime_format "%H:%M"
+                        datetime_timezone "Asia/Shanghai"
+                    }
+                }
+            }
+        }
+      '';
+    };
   };
-
-  ## Register tab-rename hooks for fish and zsh.
-  ## Only active when running inside zellij (detected via ZELLIJ env var).
-  programs.fish.shellInitLast = ''
-    if set -q ZELLIJ
-      ${zellijTabRenameFish}
-    end
-  '';
-
-  programs.zsh.initContent = ''
-    if [ -n "$ZELLIJ" ]; then
-      ${zellijTabRenameZsh}
-    fi
-  '';
 }
