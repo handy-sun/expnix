@@ -81,7 +81,7 @@ CI 里也有每周自动更新依赖的 workflow，会执行完整的 `nix flake
 nix fmt
 ```
 
-`flake.nix` 通过 `treefmt-nix` 暴露 formatter，并使用 pinned `nixfmt-rs` 包作为实际 Nix formatter。`.githooks/pre-commit` 会对 staged 的 `.nix` 文件运行：
+`flake.nix` 通过 `treefmt-nix` 暴露 formatter，并把 `Mic92/nixfmt-rs` 的预编译 release 二进制作为项目格式化器使用；不会引入 `nixfmt-rs` flake input，也不会因为 input 更新反复源码构建。`.githooks/pre-commit` 会对 staged 的 `.nix` 文件运行：
 
 ```bash
 nix fmt -- --fail-on-change <staged-nix-files>
@@ -89,7 +89,7 @@ nix fmt -- --fail-on-change <staged-nix-files>
 
 如果 hook 失败，先运行 `nix fmt`，重新 `git add` 格式化后的文件，再提交。
 
-`home/tui/packages/base.nix` 仍然安装 `pkgs.nixfmt`，主要是为了编辑器和旧命令兼容；项目级格式化以 `nix fmt` 为准。
+系统包列表和编辑器配置里的 `pkgs.nixfmt` 仍保持官方实现；项目级格式化以 `nix fmt` 为准，实际调用预编译的 `nixfmt-rs`。
 
 ## 项目结构
 
