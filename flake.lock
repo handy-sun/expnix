@@ -680,7 +680,6 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_8",
         "noctalia": "noctalia",
-        "rust-overlay": "rust-overlay_2",
         "sbtpl": "sbtpl",
         "treefmt-nix": "treefmt-nix_4"
       }
@@ -698,26 +697,6 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "rev": "20fd44bc663daa53a2575e01293e24e681d62244",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "rust-overlay_2": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1778815121,
-        "narHash": "sha256-xlhD+1NVJbhrUUM2usRHW6iKWTXP2uw2Fo6sWJmLg8g=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "017351829a9356423afd2cca0dde9b63346c8ab3",
         "type": "github"
       },
       "original": {

@@ -24,7 +24,6 @@ in
     (
       if profileLevel.tuiOptional then
         [
-          rust-bin.stable.latest.default
           ## containers
           podman
           docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
