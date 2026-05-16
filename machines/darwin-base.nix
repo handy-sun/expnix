@@ -36,8 +36,46 @@ in
     defaults = {
       ## default: null
       menuExtraClock.Show24Hour = true; # show 24 hour clock
+
+      finder = {
+        _FXShowPosixPathInTitle = true;
+        AppleShowAllExtensions = true;
+        FXDefaultSearchScope = "SCcf";
+        FXEnableExtensionChangeWarning = false;
+        ShowPathbar = true;
+        ShowStatusBar = true;
+      };
+
+      NSGlobalDomain = {
+        AppleKeyboardUIMode = 3;
+        InitialKeyRepeat = 15;
+        KeyRepeat = 3;
+        NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
+        NSNavPanelExpandedStateForSaveMode = true;
+        NSNavPanelExpandedStateForSaveMode2 = true;
+      };
+
+      CustomUserPreferences = {
+        "com.apple.AdLib" = {
+          allowApplePersonalizedAdvertising = false;
+        };
+        "com.apple.desktopservices" = {
+          DSDontWriteNetworkStores = true;
+          DSDontWriteUSBStores = true;
+        };
+        "com.apple.screensaver" = {
+          askForPassword = 1;
+          askForPasswordDelay = 0;
+        };
+      };
     };
   };
+
+  time.timeZone = "Asia/Shanghai";
 
   ## Set variables for you to manually install homebrew packages.
   environment.variables =
