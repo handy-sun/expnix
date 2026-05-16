@@ -188,6 +188,28 @@
         "type": "github"
       }
     },
+    "helix-dev": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1778126182,
+        "narHash": "sha256-G3lV4JhR9Ks6Ljp/QB1S0P99RgIX0X1bY8MCvXfHJ1c=",
+        "owner": "erasin",
+        "repo": "helix",
+        "rev": "811af5c7cd3f11d527e03538d13e31f9287c29d7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "erasin",
+        "ref": "local-dev",
+        "repo": "helix",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -645,6 +667,7 @@
     "root": {
       "inputs": {
         "cc-switch-tui": "cc-switch-tui",
+        "helix-dev": "helix-dev",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
         "my-dotfiles": "my-dotfiles",
@@ -657,12 +680,33 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_8",
         "noctalia": "noctalia",
-        "rust-overlay": "rust-overlay",
+        "rust-overlay": "rust-overlay_2",
         "sbtpl": "sbtpl",
         "treefmt-nix": "treefmt-nix_4"
       }
     },
     "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "helix-dev",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775358767,
+        "narHash": "sha256-f2eC+WIfhjevCPQILuV08i/kmKZzYZpUvkom/33VxCA=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "20fd44bc663daa53a2575e01293e24e681d62244",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"

@@ -38,6 +38,11 @@
     ## This flake is only built and tested against its pinned nixpkgs-unstable input.
     llm-agents.url = "github:numtide/llm-agents.nix";
 
+    helix-dev = {
+      url = "github:erasin/helix/local-dev";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ## ------ my applications, configs and scripts ------
     cc-switch-tui = {
       url = "github:handy-sun/cc-switch-tui";

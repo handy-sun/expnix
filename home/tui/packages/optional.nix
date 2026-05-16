@@ -8,13 +8,15 @@
   ...
 }:
 let
-  llmAgents = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+  system = pkgs.stdenv.hostPlatform.system;
+  llmAgents = with inputs.llm-agents.packages.${system}; [
     claude-code
     codex
     opencode
     oh-my-opencode
     # gemini-cli
   ];
+  helixDev = inputs.helix-dev.packages.${system}.helix;
 in
 {
   home.packages =
@@ -26,6 +28,8 @@ in
           ## containers
           podman
           docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
+          ## https://github.com/erasin/helix more features more than official helix package
+          helixDev
         ]
         ++ llmAgents
       else
