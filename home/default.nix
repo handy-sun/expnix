@@ -42,6 +42,8 @@ in
     UV_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple/";
 
     NPM_CONFIG_USERCONFIG = conf + "/npmrc";
+    CODEX_HOME = conf + "/codex";
+    CLAUDE_CONFIG_DIR = conf + "/claude";
     CC_SWITCH_TUI_CONFIG_DIR = conf + "/cc-switch-tui";
     ## eza can find theme
     EZA_CONFIG_DIR = conf + "/eza";
