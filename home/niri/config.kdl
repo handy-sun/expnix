@@ -51,6 +51,10 @@ layout {
     }
 }
 
+environment {
+    WAYLAND_DISPLAY "wayland-1"
+}
+
 spawn-at-startup "noctalia-shell"
 
 hotkey-overlay {
@@ -147,8 +151,9 @@ window-rule {
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+Return hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+Shift+T hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
+    Mod+Return{ spawn-sh "noctalia-shell ipc call launcher toggle"; }
     Super+Shift+L hotkey-overlay-title="Lock the Screen: noctalia-shell lock" { spawn-sh "noctalia-shell ipc call lockScreen lock"; }
 
     // Noctalia controls
