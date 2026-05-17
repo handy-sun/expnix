@@ -15,7 +15,7 @@ setup-hook:
 # Update the flake inputs about nix and create commit
 [group('nix')]
 upc-nix:
-  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager rust-overlay noctalia treefmt-nix
+  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager rust-overlay noctalia
 
 [group('nix')]
 upc-llm:
@@ -61,7 +61,7 @@ show-conf:
 switch-home:
   nh home switch .
 
-# Old method to format nix code, which is now replaced by the new formatter based on treefmt-nix
+# Format nix code using nixfmt
 [group('nix')]
 nixfmt:
   fd -e nix -X nixfmt

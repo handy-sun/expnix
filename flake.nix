@@ -33,7 +33,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    treefmt-nix.url = "github:numtide/treefmt-nix";
     ## This flake is only built and tested against its pinned nixpkgs-unstable input.
     llm-agents.url = "github:numtide/llm-agents.nix";
 
@@ -85,13 +84,6 @@
         "x86_64-linux"
       ];
       forFormatterSystems = lib.genAttrs formatterSystems;
-
-      nixfmtRsBin =
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        pkgs.callPackage ./pkgs/nixfmt-rs-bin.nix { };
 
       myvars = import ./lib/vars.nix;
       myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
@@ -188,19 +180,7 @@
         }
       );
 
-      packages = forFormatterSystems (system: {
-        nixfmt-rs-bin = nixfmtRsBin system;
-      });
-
       ## nix code formatter
-      formatter = forFormatterSystems (
-        system:
-        inputs.treefmt-nix.lib.mkWrapper nixpkgs.legacyPackages.${system} {
-          programs.nixfmt = {
-            enable = true;
-            package = nixfmtRsBin system;
-          };
-        }
-      );
+      formatter = forFormatterSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rs);
     };
 }
