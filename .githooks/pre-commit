@@ -6,8 +6,8 @@ if [ -z "$files" ]; then
     exit 0
 fi
 
-echo "Checking staged .nix files with nix fmt..."
-nix fmt -- --fail-on-change $files || {
-    echo "Nix files are not formatted. Run 'nix fmt' and stage the changes before committing."
+echo "Checking staged .nix files with nixfmt..."
+nixfmt --check $files || {
+    echo "Nix files are not formatted. Run 'nixfmt' (or 'just nixfmt'), then stage the changes before committing."
     exit 1
 }

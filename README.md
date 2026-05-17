@@ -53,8 +53,8 @@ just switch-home
 | `just setup-hook` | 设置 `.githooks` 为当前仓库的 git hooks 目录 |
 | `just switch` | 激活当前机器的 NixOS 或 nix-darwin 配置 |
 | `just switch-home` | 只激活 Home Manager 配置 |
-| `nix fmt` | 推荐的 Nix 格式化入口，使用 flake 暴露的 treefmt wrapper |
-| `just nixfmt` | 旧格式化入口，直接对 `.nix` 文件运行 `nixfmt`，保留作兼容用途 |
+| `nix fmt -- <files>` | 对指定 Nix 文件调用 flake 暴露的 formatter |
+| `just nixfmt` | 扫描仓库中的 `.nix` 文件并运行 `nixfmt` |
 | `just repl` | 打开当前 flake 的 `nix repl` |
 | `just repl-nh` | 打开当前系统的 `nh os repl` 或 `nh darwin repl` |
 | `just history` | 查看系统 profile 历史 |
@@ -75,21 +75,20 @@ CI 里也有每周自动更新依赖的 workflow，会执行完整的 `nix flake
 
 ## 格式化和提交检查
 
-当前项目标准格式化入口是：
+当前项目常用的两个格式化入口是：
 
 ```bash
-nix fmt
+just nixfmt
+nix fmt -- <files>
 ```
 
-`flake.nix` 通过 `treefmt-nix` 暴露 formatter，并使用 pinned `nixfmt-rs` 包作为实际 Nix formatter。`.githooks/pre-commit` 会对 staged 的 `.nix` 文件运行：
+`flake.nix` 暴露的 formatter 仍然是 `nixfmt-rs`；批量格式化建议直接运行 `just nixfmt`。`.githooks/pre-commit` 会对 staged 的 `.nix` 文件运行：
 
 ```bash
-nix fmt -- --fail-on-change <staged-nix-files>
+nixfmt --check <staged-nix-files>
 ```
 
-如果 hook 失败，先运行 `nix fmt`，重新 `git add` 格式化后的文件，再提交。
-
-`home/tui/packages/base.nix` 仍然安装 `pkgs.nixfmt`，主要是为了编辑器和旧命令兼容；项目级格式化以 `nix fmt` 为准。
+如果 hook 失败，先运行 `nixfmt <staged-nix-files>` 或 `just nixfmt`，重新 `git add` 格式化后的文件，再提交。
 
 ## 项目结构
 
