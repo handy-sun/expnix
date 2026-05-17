@@ -48,10 +48,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
       allowUnfree = true;
       allowUnsupportedSystem = true;
     };
-    overlays = [
-      inputs.rust-overlay.overlays.default
-    ]
-    ++ (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays;
+    overlays = (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays;
   };
   inherit extraSpecialArgs;
   modules = [

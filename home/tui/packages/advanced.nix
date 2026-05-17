@@ -26,7 +26,6 @@ in
       tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
       just-lsp
       lua-language-server
-      rust-analyzer
       cc-switch-tui
 
       ## downloads / transfers
