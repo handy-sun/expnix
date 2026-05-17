@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   myvars,
   myutils,
   ...
@@ -42,11 +43,18 @@
     efiSupport = true;
   };
 
-  services = {
-    xserver = {
-      enable = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --cmd niri-session";
+        user = "greeter";
+      };
+      initial_session = {
+        command = "niri-session";
+        user = "qi";
+      };
     };
-    displayManager.sddm.enable = true;
   };
 
   services.openssh = {
