@@ -158,7 +158,7 @@
         };
       };
 
-      ##  Development Shells
+      ## Development Shells
       devShells = forAllSystems (
         system:
         let

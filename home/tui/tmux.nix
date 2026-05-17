@@ -16,7 +16,7 @@ in
     terminal = "xterm-256color";
     baseIndex = 1;
     escapeTime = 50;
-    historyLimit = 2000;
+    historyLimit = 5000;
     mouse = true;
     focusEvents = true;
     sensibleOnTop = true;

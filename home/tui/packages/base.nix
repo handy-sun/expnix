@@ -93,7 +93,7 @@
 
       ## nix
       nil # language server for Nix
-      nixfmt
+      nixfmt-rs
       nix-output-monitor
 
       ## fish plugins
