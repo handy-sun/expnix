@@ -43,18 +43,8 @@
     efiSupport = true;
   };
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --cmd niri-session";
-        user = "greeter";
-      };
-      initial_session = {
-        command = "niri-session";
-        user = "qi";
-      };
-    };
+  services = {
+    xserver.enable = true;
   };
 
   services.openssh = {
@@ -74,5 +64,19 @@
   ## ------ other optional services ------
   services.zerotierone = {
     enable = true;
+  };
+  ## replace sddm
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --cmd niri-session";
+        user = "greeter";
+      };
+      initial_session = {
+        command = "niri-session";
+        user = "${myvars.user}";
+      };
+    };
   };
 }
