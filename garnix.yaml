@@ -1,7 +1,8 @@
 builds:
-  include:
-    - nixosConfigurations.*
-    - homeConfigurations.*
-    - "*.x86_64-linux.*"
-    - "*.aarch64-linux.*"
-  branch: main
+  - include:
+      - nixosConfigurations.*
+      - homeConfigurations.*
+      - "*.x86_64-linux.*"
+      - "*.aarch64-linux.*"
+    branch: main
+
