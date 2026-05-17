@@ -111,10 +111,10 @@ in
       bind-key h select-pane -L
       bind-key l select-pane -R
 
-      bind -n C-M-h select-pane -L
-      bind -n C-M-j select-pane -D
-      bind -n C-M-k select-pane -U
-      bind -n C-M-l select-pane -R
+      bind -n M-h select-pane -L
+      bind -n M-j select-pane -D
+      bind -n M-k select-pane -U
+      bind -n M-l select-pane -R
       bind -n C-M-n next-window
       bind -n C-M-p previous-window
 
