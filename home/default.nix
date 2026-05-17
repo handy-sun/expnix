@@ -10,7 +10,7 @@
   ...
 }:
 let
-  rustupServer = "https://mirrors.tuna.tsinghua.edu.cn/rustup";
+  # rustupServer = "https://mirrors.tuna.tsinghua.edu.cn/rustup";
   conf = config.xdg.configHome;
   data = config.xdg.dataHome;
   cache = config.xdg.cacheHome;
@@ -37,8 +37,8 @@ in
     inherit GOPATH CARGO_HOME RUSTUP_HOME;
 
     # HERMES_HOME = conf + "/hermes";
-    RUSTUP_DIST_SERVER = rustupServer;
-    RUSTUP_UPDATE_ROOT = rustupServer + "/rustup";
+    # RUSTUP_DIST_SERVER = rustupServer;
+    # RUSTUP_UPDATE_ROOT = rustupServer + "/rustup";
     UV_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple/";
 
     NPM_CONFIG_USERCONFIG = conf + "/npmrc";
