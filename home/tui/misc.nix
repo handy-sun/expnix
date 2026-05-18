@@ -1,4 +1,5 @@
-_: {
+{ lib, ... }:
+{
   programs = {
     nh = {
       enable = true;
@@ -27,6 +28,7 @@ _: {
       nix-direnv.enable = true;
     };
 
-    man.generateCaches = false;
+    # Keep man cache generation off even if upstream modules enable it by default.
+    man.generateCaches = lib.mkForce false;
   };
 }
