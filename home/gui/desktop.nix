@@ -14,24 +14,11 @@ let
   niriCfgDir = inputs.my-dotfiles + "/.config/niri";
 in
 lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
-  # gtk = {
-  #   iconTheme = {
-  #     name = "Papirus";
-  #     package = pkgs.papirus-icon-theme;
-  #   };
-  #   gtk3.extraConfig = {
-  #     "gtk-application-prefer-dark-theme" = true;
-  #   };
-  #   gtk4.extraConfig = {
-  #     "gtk-application-prefer-dark-theme" = true;
-  #   };
+  # qt = {
+  #   enable = true;
+  #   platformTheme.name = "qtct";
+  #   style.name = "Fusion";
   # };
-
-  qt = {
-    enable = true;
-    platformTheme.name = "qtct";
-    style.name = "Fusion";
-  };
 
   home.pointerCursor = {
     name = "BreezeX-RosePine-Linux";
@@ -48,9 +35,6 @@ lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
   };
 
   xdg.configFile = {
-    # "gtk-3.0/settings.ini".force = true;
-    # "gtk-4.0/settings.ini".force = true;
-    # "gtk-4.0/gtk.css".force = true;
     "niri/config.kdl".source = niriUserConfig;
     "niri/extra.kdl".source = niriCfgDir + "/extra.kdl";
     "niri/noctalia.kdl".source = niriCfgDir + "/noctalia.kdl";

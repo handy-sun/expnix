@@ -1,14 +1,11 @@
 {
-  inputs,
   pkgs,
-  lib,
   ...
 }:
 let
   baseConfig = pkgs.writeText "niri-base-config.kdl" ''
     include "${pkgs.niri.src}/resources/default-config.kdl"
   '';
-  noctalia = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
   programs.niri.enable = true;
@@ -16,12 +13,9 @@ in
   environment.etc = {
     "niri/config.kdl".source = baseConfig;
   };
-  qt.enable = true;
 
-  environment.systemPackages = [
-    noctalia
-  ]
-  ++ (with pkgs; [
+  environment.systemPackages = with pkgs; [
+    noctalia-shell
     gnome-themes-extra # Adwaita theme
     glib # gsettings
     kdePackages.breeze-icons
@@ -37,7 +31,7 @@ in
     nemo
     libsForQt5.qt5ct
     mpvpaper
-  ]);
+  ];
 
   hardware.i2c.enable = true;
 

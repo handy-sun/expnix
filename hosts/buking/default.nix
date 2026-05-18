@@ -73,10 +73,11 @@
         command = "${pkgs.tuigreet}/bin/tuigreet --cmd niri-session";
         user = "greeter";
       };
-      initial_session = {
-        command = "niri-session";
-        user = "${myvars.user}";
-      };
+      ## Auto login
+      # initial_session = {
+      #   command = "niri-session";
+      #   user = "${myvars.user}";
+      # };
     };
   };
 }
