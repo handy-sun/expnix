@@ -1,7 +1,11 @@
 
 set shell := ["bash", "-uc"]
 
+selectorOptions := '-- --option substituters "http://127.0.0.1:5496"'
+
 alias s := switch
+alias ss := switch-by-slct
+alias bb := build-by-slct
 alias f := nixfmt
 alias sh := switch-home
 
@@ -91,6 +95,16 @@ switch:
 
 [linux]
 [group('nix')]
+switch-by-slct:
+  nh os switch . {{selectorOptions}}
+
+[linux]
+[group('nix')]
+build-by-slct:
+  nh os build . {{selectorOptions}}
+
+[linux]
+[group('nix')]
 repl-nh:
   nh os repl .
 
@@ -114,6 +128,16 @@ query-dep-home pkgname:
 [group('nix')]
 switch:
   nh darwin switch .
+
+[macos]
+[group('nix')]
+switch-by-slct:
+  nh darwin switch . {{selectorOptions}}
+
+[macos]
+[group('nix')]
+build-by-slct:
+  nh darwin build . {{selectorOptions}}
 
 [macos]
 [group('nix')]

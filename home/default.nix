@@ -70,7 +70,9 @@ in
   imports = [
     ./tui
     ./gui
+    ./services.nix
     inputs.my-dotzsh.homeManagerModules.default
     inputs.my-nvimdots.homeManagerModules.default
+    inputs.selector4nix.homeManagerModules.selector4nix
   ];
 }

@@ -25,6 +25,7 @@
 
     ## This flake is only built and tested against its pinned nixpkgs-unstable input.
     llm-agents.url = "github:numtide/llm-agents.nix";
+    selector4nix.url = "github:StarryReverie/selector4nix";
 
     helix-dev = {
       url = "github:erasin/helix/local-dev";
