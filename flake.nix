@@ -23,6 +23,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ## This flake is only built and tested against its pinned nixpkgs-unstable input.
     llm-agents.url = "github:numtide/llm-agents.nix";
 
@@ -106,6 +111,15 @@
           myutils
           ;
       };
+
+      mkSysMgr = import ./lib/mksysmgr.nix {
+        inherit
+          nixpkgs
+          inputs
+          myvars
+          myutils
+          ;
+      };
     in
     {
       nixosConfigurations = {
@@ -157,6 +171,8 @@
           };
         };
       };
+
+      systemConfigs = { };
 
       ## Development Shells
       devShells = forAllSystems (
