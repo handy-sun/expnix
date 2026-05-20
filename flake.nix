@@ -172,7 +172,20 @@
         };
       };
 
-      systemConfigs = { };
+      systemConfigs = {
+        "sysmgr-smoke" = mkSysMgr "sysmgr-smoke" {
+          system = "x86_64-linux";
+          profileLevelOver = {
+            tuiAdvanced = false;
+            tuiOptional = false;
+            guiBase = false;
+            guiHeavy = false;
+          };
+          extraModules = [
+            ./hosts/sysmgr-smoke/system-manager.nix
+          ];
+        };
+      };
 
       ## Development Shells
       devShells = forAllSystems (
