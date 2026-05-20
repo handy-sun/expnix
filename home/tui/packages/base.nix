@@ -84,7 +84,7 @@
       go
       python3
       nodejs # provides node, npm
-      lua
+      lua5_4
       uv # replace for pip
 
       ## editor tooling
