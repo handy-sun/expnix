@@ -29,6 +29,7 @@ in
           docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
           ## https://github.com/erasin/helix more features more than official helix package
           helixDev
+          llvmPackages.clang-unwrapped
         ]
         ++ llmAgents
       else

@@ -348,6 +348,22 @@
         "type": "github"
       }
     },
+    "my-helix-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779124474,
+        "narHash": "sha256-00yrTKw4jVer8c8bcxrktaY7MkT9s7hAV6AP8mi+A7U=",
+        "owner": "handy-sun",
+        "repo": "helix-config",
+        "rev": "04b29af027a85006a55c01f0287a1729ed11fcd7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "handy-sun",
+        "repo": "helix-config",
+        "type": "github"
+      }
+    },
     "my-nvimdots": {
       "inputs": {
         "devshell": "devshell_2",
@@ -562,6 +578,7 @@
         "my-dotfiles": "my-dotfiles",
         "my-dotvim": "my-dotvim",
         "my-dotzsh": "my-dotzsh",
+        "my-helix-config": "my-helix-config",
         "my-nvimdots": "my-nvimdots",
         "my-wezterm": "my-wezterm",
         "nix-darwin": "nix-darwin",

@@ -56,6 +56,11 @@
       flake = false;
     };
 
+    my-helix-config = {
+      url = "github:handy-sun/helix-config";
+      flake = false;
+    };
+
     sbtpl = {
       url = "github:handy-sun/sbtpl";
       flake = false;
