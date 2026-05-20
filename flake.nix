@@ -182,6 +182,7 @@
             guiHeavy = false;
           };
           extraModules = [
+            ./modules/beszel-agent-system-manager
             ./hosts/sysmgr-smoke/system-manager.nix
           ];
         };
