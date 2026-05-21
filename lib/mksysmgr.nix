@@ -60,7 +60,7 @@ inputs.system-manager.lib.makeSystemConfig {
         users.groups.${username} = { };
         users.users.${username} = {
           isNormalUser = true;
-          group = username;
+          group = "users";
           home = homeDir;
           createHome = true;
           shell = pkgs.fish;

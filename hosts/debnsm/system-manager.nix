@@ -10,8 +10,22 @@
   };
 
   environment.systemPackages = with pkgs; [
-    btop
-    ripgrep
+    curl
+    wget
+    file
+    fish
+    zsh
+    docker
+    zerotierone
+    zstd
+    zip
+    unzip
+    xz
+    nginx
+    strace
+    lsof
+    procps
+    fakeroot
+    cron
   ];
-
 }
