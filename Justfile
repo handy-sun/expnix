@@ -109,6 +109,11 @@ query-depends pkgname:
 query-dep-home pkgname:
   which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation .#homeConfigurations.$USER.activationPackage 2>/dev/null
 
+[linux]
+[group('nix')]
+sysmgr:
+  system-manager switch --flake .#$(hostname) --sudo
+
 # MacOS
 [macos]
 [group('nix')]
