@@ -13,7 +13,6 @@ hostName:
   isWSL ? false,
   profileLevelOver ? { },
   allowAnyDistro ? false,
-  extraModules ? [ ],
 }:
 
 let
@@ -45,33 +44,41 @@ inputs.system-manager.lib.makeSystemConfig {
 
   modules = [
     inputs.home-manager.nixosModules.home-manager
-    {
-      nixpkgs.hostPlatform = system;
-      nixpkgs.config = {
-        allowUnfree = true;
-        allowUnsupportedSystem = true;
-      };
+    (
+      { pkgs, ... }:
+      {
+        nixpkgs.hostPlatform = system;
+        nixpkgs.config = {
+          allowUnfree = true;
+          allowUnsupportedSystem = true;
+        };
 
-      system-manager.allowAnyDistro = allowAnyDistro;
+        system-manager = { inherit allowAnyDistro; };
+        nix.enable = true;
+        services.userborn.enable = true;
 
-      nix.enable = true;
-      services.userborn.enable = true;
+        users.groups.${username} = { };
+        users.users.${username} = {
+          isNormalUser = true;
+          group = username;
+          home = homeDir;
+          createHome = true;
+          shell = pkgs.fish;
+          # system-manager does not provide NixOS's programs.fish module.
+          ignoreShellProgramCheck = true;
+        };
 
-      users.groups.${username} = { };
-      users.users.${username} = {
-        isNormalUser = true;
-        group = username;
-        home = homeDir;
-        createHome = true;
-      };
-
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        users.${username} = import ../home;
-        extraSpecialArgs = specialArgs;
-      };
-    }
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          users.${username} = import ../home;
+          extraSpecialArgs = specialArgs;
+        };
+      }
+    )
   ]
-  ++ extraModules;
+  ++ builtins.map myutils.relativeToRoot [
+    "modules/beszel-agent-system-manager"
+    "hosts/${hostName}/system-manager.nix"
+  ];
 }

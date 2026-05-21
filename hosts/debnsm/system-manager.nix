@@ -1,7 +1,5 @@
 {
-  hostName,
   pkgs,
-  username,
   ...
 }:
 
@@ -16,9 +14,4 @@
     ripgrep
   ];
 
-  environment.etc."expnix/system-manager-smoke".text = ''
-    host = ${hostName}
-    user = ${username}
-    managed-by = expnix system-manager
-  '';
 }

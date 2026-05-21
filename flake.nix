@@ -2,7 +2,7 @@
   description = "handy-sun NixOS flake configuration";
 
   nixConfig = {
-    bash-prompt = "\\[\\e[0m\\]\\[\\033[0;32m\\]\\A (devsh) \\[\\e[0;36m\\]\\w \\[\\e[0m\\]\\\\$\\[\\e[0m\\] ";
+    bash-prompt = "\\[\\e[0m\\]\\[\\033[0;32m\\]\\A (develop) \\[\\e[0;36m\\]\\w \\[\\e[0m\\]\\\\$\\[\\e[0m\\] ";
   };
 
   inputs = {
@@ -173,18 +173,14 @@
       };
 
       systemConfigs = {
-        "sysmgr-smoke" = mkSysMgr "sysmgr-smoke" {
+        "debnsm" = mkSysMgr "debnsm" {
           system = "x86_64-linux";
           profileLevelOver = {
-            tuiAdvanced = false;
+            tuiAdvanced = true;
             tuiOptional = false;
             guiBase = false;
             guiHeavy = false;
           };
-          extraModules = [
-            ./modules/beszel-agent-system-manager
-            ./hosts/sysmgr-smoke/system-manager.nix
-          ];
         };
       };
 
@@ -205,6 +201,17 @@
             name = "devsh";
             shellHook = ''
               echo "Welcome to handy-sun/expnix devshell"
+            '';
+          };
+          sysmgr = pkgs.mkShell {
+            packages = with pkgs; [
+              just
+              nix-output-monitor
+              system-manager
+            ];
+            name = "dev-sysmgr";
+            shellHook = ''
+              echo "Welcome to handy-sun/expnix sysmgr"
             '';
           };
         }
