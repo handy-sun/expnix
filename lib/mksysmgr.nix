@@ -78,7 +78,7 @@ inputs.system-manager.lib.makeSystemConfig {
     )
   ]
   ++ builtins.map myutils.relativeToRoot [
-    "modules/beszel-agent-system-manager"
+    "modules/_system-manager"
     "hosts/${hostName}/system-manager.nix"
   ];
 }
