@@ -50,6 +50,7 @@ rec {
   ## Fonts shared across NixOS and darwin.
   ## Attribute name strings — resolved to packages at call sites.
   fontsPkgs = [
+    "maple-mono.NF-CN"
     "source-sans"
     ## China, JP, Korea
     "noto-fonts-cjk-sans"
@@ -67,5 +68,5 @@ rec {
     "nerd-fonts.noto"
   ];
 
-  fontFamily = "NotoMono NFM";
+  fontFamily = "Maple Mono NF CN";
 }
