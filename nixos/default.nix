@@ -9,6 +9,7 @@
 }:
 let
   inherit (lib) mkDefault;
+  commonSystemPackages = myutils.resolveNames pkgs myvars.systemCommonPkgs;
 in
 {
   disabledModules = [ "services/networking/sing-box.nix" ];
@@ -17,57 +18,44 @@ in
 
   programs.nix-ld.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    git
-    vim-full
-    neovim
-    curl
-    wget
-    file
-    fish
-    zsh
-    tmux
-    docker
-    zerotierone
-    acme-sh
-    gcc
-    perl
-    zstd
-    zip
-    unzip
-    xz
-    nginx
-    strace # a diagnostic, debugging and instructional userspace utility for Linux.
-    lsof # list open files
-    procps
-    fakeroot
-    cron
+  environment.systemPackages =
+    commonSystemPackages
+    ++ (with pkgs; [
+      vim-full
+      fish
+      zsh
+      tmux
+      docker
+      zerotierone
+      acme-sh
+      gcc
+      perl
+      zstd
+      zip
+      unzip
+      xz
+      strace # a diagnostic, debugging and instructional userspace utility for Linux.
+      lsof # list open files
+      cron
 
-    ## system tools
-    fail2ban
-    sysstat
-    logrotate
-    lm_sensors # for `sensors` command
-    ethtool
-    openssl
-    openssh
-    pciutils # lspci
-    usbutils # lsusb
-    smartmontools
+      ## system tools
+      fail2ban
+      sysstat
+      lm_sensors # for `sensors` command
+      ethtool
+      pciutils # lspci
+      usbutils # lsusb
 
-    ## networking tools
-    dae
-    glider
-    sing-box
-    frp
-    iperf3
-    dnsmasq # Integrated DNS, DHCP and TFTP server for small networks
-    ldns # replacement of `dig`, it provide the command `drill`
-    socat # replacement of openbsd-netcat
-    nmap # A utility for network discovery and security auditing
-    iproute2
-    iptables
-  ];
+      ## networking tools
+      dae
+      glider
+      iperf3
+      dnsmasq # Integrated DNS, DHCP and TFTP server for small networks
+      ldns # replacement of `dig`, it provide the command `drill`
+      socat # replacement of openbsd-netcat
+      iproute2
+      iptables
+    ]);
 
   environment = {
     localBinInPath = true;

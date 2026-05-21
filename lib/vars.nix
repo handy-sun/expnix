@@ -18,6 +18,26 @@ rec {
     FZF_DEFAULT_COMMAND = "fd --exclude={.git,.idea,.vscode,tags,OrbStack} --type f";
   };
 
+  ## System packages shared across NixOS and darwin.
+  ## Attribute name strings — resolved to packages at call sites.
+  systemCommonPkgs = [
+    "git"
+    "neovim"
+    "curl"
+    "wget"
+    "file"
+    "procps"
+    "fakeroot"
+    "openssl"
+    "openssh"
+    "nmap"
+    "logrotate"
+    "nginx"
+    "frp"
+    "sing-box"
+    "smartmontools"
+  ];
+
   ## Profile level defaults — hosts can override.
   ## tuibase has no key: always included.
   profileLevel = {
