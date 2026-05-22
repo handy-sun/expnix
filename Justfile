@@ -17,18 +17,14 @@ setup-hook:
 upc-nix:
   nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager system-manager helix-dev
 
-[group('nix')]
-upc-llm:
-  nix flake update --commit-lock-file llm-agents cc-switch-tui
-
 # Update the flake inputs starts with 'my-'
 [group('nix')]
 upc-my:
-  nix flake update --commit-lock-file my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config sbtpl
+  nix flake update --commit-lock-file cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config sbtpl
 
 [group('nix')]
 up-my:
-  nix flake update my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config sbtpl
+  nix flake update cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config sbtpl
 
 # Open a nix repl shell with the current profile
 [group('nix')]

@@ -10,13 +10,6 @@
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
-  llmAgents = with inputs.llm-agents.packages.${system}; [
-    claude-code
-    codex
-    opencode
-    oh-my-opencode
-    # gemini-cli
-  ];
   helixDev = inputs.helix-dev.packages.${system}.helix;
   inherit (inputs.cc-switch-tui.packages.${system}) cc-switch-tui;
 in
@@ -32,7 +25,6 @@ lib.mkIf profileLevel.tuiOptional {
       llvmPackages.clang-unwrapped
       cc-switch-tui
     ]
-    ++ llmAgents
     ++ lib.optionals pkgs.stdenv.isLinux [
       btrfs-progs
       rldd

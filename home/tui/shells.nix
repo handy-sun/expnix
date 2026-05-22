@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   isHmSingle,
   ...
@@ -32,12 +33,26 @@ in
         /run/current-system/sw/bin \
         /run/system-manager/sw/bin
     '';
+    plugins = [
+      {
+        name = "tide";
+        src = pkgs.fishPlugins.tide.src;
+      }
+      {
+        name = "sponge";
+        src = pkgs.fishPlugins.sponge.src;
+      }
+      {
+        name = "autopair";
+        src = pkgs.fishPlugins.autopair.src;
+      }
+    ];
   };
 
   programs.dotzsh = {
     enable = true;
     enableFishIntegration = true;
-    enableFishPrompt = isHmSingle;
+    enableFishPrompt = false;
     fishGreetingMode = "custom";
     enableZshIntegration = true;
   };
