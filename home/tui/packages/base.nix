@@ -44,7 +44,6 @@
 
       ## file ops
       rsync
-      lsof
       tree
       just
       gnupg
@@ -53,10 +52,8 @@
       ## archives (basics)
       gzip
       unzip
-      xz
       zip
       bzip2
-      zstd
 
       ## servers / infra
       nginx

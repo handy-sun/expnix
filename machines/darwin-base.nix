@@ -144,7 +144,6 @@ in
   environment.systemPackages =
     commonSystemPackages
     ++ (with pkgs; [
-      vim
       coreutils
       iproute2mac
       mihomo

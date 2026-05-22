@@ -7,6 +7,7 @@
   homeDir,
   isWSL,
   isDarwin,
+  isHmSingle,
   ...
 }:
 let
@@ -50,7 +51,7 @@ in
     COLORTERM = "truecolor";
 
     ## cross-rs: use podman as container engine
-    CROSS_CONTAINER_ENGINE = "podman";
+    # CROSS_CONTAINER_ENGINE = "podman";
   }
   // myvars.homeEnv
   // lib.optionalAttrs isWSL {
@@ -65,6 +66,13 @@ in
   ++ (lib.optionals isDarwin [
     local_bin
     "/opt/homebrew/bin"
+  ])
+  ++ (lib.optionals isHmSingle [
+    "/nix/var/nix/profiles/default/bin"
+    "/run/current-system/sw/bin"
+    "/run/system-manager/sw/bin"
+    "/etc/profiles/per-user/${username}/bin"
+    "/run/wrappers/bin"
   ]);
 
   imports = [

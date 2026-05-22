@@ -15,11 +15,11 @@ setup-hook:
 # Update the flake inputs about nix and create commit
 [group('nix')]
 upc-nix:
-  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager rust-overlay noctalia
+  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager system-manager helix-dev
 
 [group('nix')]
 upc-llm:
-  nix flake update --commit-lock-file llm-agents
+  nix flake update --commit-lock-file llm-agents cc-switch-tui
 
 # Update the flake inputs starts with 'my-'
 [group('nix')]

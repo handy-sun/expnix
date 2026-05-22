@@ -21,11 +21,18 @@ rec {
   ## System packages shared across NixOS and darwin.
   ## Attribute name strings — resolved to packages at call sites.
   systemCommonPkgs = [
+    "vim"
     "git"
     "neovim"
     "curl"
+    "cron"
     "wget"
+    "fail2ban"
     "file"
+    "lsof"
+    "perl"
+    "xz"
+    "zstd"
     "procps"
     "fakeroot"
     "openssl"
@@ -33,9 +40,14 @@ rec {
     "nmap"
     "logrotate"
     "nginx"
-    "frp"
     "sing-box"
     "smartmontools"
+    "pciutils"
+    "usbutils"
+    "iperf3"
+    "dnsmasq"
+    "ldns"
+    "socat"
   ];
 
   ## Profile level defaults — hosts can override.
