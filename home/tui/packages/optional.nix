@@ -32,5 +32,9 @@ lib.mkIf profileLevel.tuiOptional {
       llvmPackages.clang-unwrapped
       cc-switch-tui
     ]
-    ++ llmAgents;
+    ++ llmAgents
+    ++ lib.optionals pkgs.stdenv.isLinux [
+      btrfs-progs
+      rldd
+    ];
 }

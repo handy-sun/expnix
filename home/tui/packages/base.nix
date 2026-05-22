@@ -11,6 +11,7 @@
   home.packages =
     with pkgs;
     [
+      less
       ## build tools
       gnumake
       cmake
@@ -126,7 +127,6 @@
       fio
       ioping
       hdparm
-      rldd
     ]
     ++ lib.optionals isDarwin [
       # xquartz

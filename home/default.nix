@@ -7,7 +7,6 @@
   homeDir,
   isWSL,
   isDarwin,
-  isHmSingle,
   ...
 }:
 let
@@ -66,13 +65,6 @@ in
   ++ (lib.optionals isDarwin [
     local_bin
     "/opt/homebrew/bin"
-  ])
-  ++ (lib.optionals isHmSingle [
-    "/nix/var/nix/profiles/default/bin"
-    "/run/current-system/sw/bin"
-    "/run/system-manager/sw/bin"
-    "/etc/profiles/per-user/${username}/bin"
-    "/run/wrappers/bin"
   ]);
 
   imports = [

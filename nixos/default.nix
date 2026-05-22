@@ -21,9 +21,6 @@ in
   environment.systemPackages =
     commonSystemPackages
     ++ (with pkgs; [
-      fish
-      zsh
-      tmux
       docker
       zerotierone
       acme-sh
