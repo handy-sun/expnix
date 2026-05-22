@@ -374,11 +374,11 @@
     "my-dotvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1778950485,
-        "narHash": "sha256-60kwGjT/VOFU2L3X7D4rwHJ6JbVLI1uPKCRoz/KMEe8=",
+        "lastModified": 1779427077,
+        "narHash": "sha256-CHAFLKILOzlAcrbK2/8fhq7B7hc9z5alxYkgZ7cZlkQ=",
         "owner": "handy-sun",
         "repo": "dotvim",
-        "rev": "e94b4f41e8d888c0525aaac3a10ed75e74470eba",
+        "rev": "535134bab1b4146741b879851d46e6855663b84d",
         "type": "github"
       },
       "original": {
@@ -395,11 +395,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1779336433,
-        "narHash": "sha256-lGF/2M/05pIOCgzP9dJsekvGh0imf3vmXnTwn9lg+VQ=",
+        "lastModified": 1779383183,
+        "narHash": "sha256-XFNorloqhycgiS2PD0RtUBm1TBArWtTMcEkS0XQ2ca8=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "bece6ae152791cdc2bc8c1d1dcf3f418bf9d3517",
+        "rev": "8387255c9bd7aaed7b3afed96a98a872dbb16541",
         "type": "github"
       },
       "original": {
@@ -432,11 +432,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1779337336,
-        "narHash": "sha256-j46fq1HsoYmX0sFJX+AadBfIf0FeZT3LxGIu0aF3B7s=",
+        "lastModified": 1779427051,
+        "narHash": "sha256-pghpLB7xqk9UfmvV1peGB8Rcny6MAMql9H0uCUA+mG0=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "44502204bc9347d2a3b1f3ecbae9d01e93546f63",
+        "rev": "505cab0cf4e0ec36c273b2167d0cab82cd882faa",
         "type": "github"
       },
       "original": {
