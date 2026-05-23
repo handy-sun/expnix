@@ -9,7 +9,7 @@
 let
   dotfiles = inputs.my-dotfiles;
   dotconfig = "${dotfiles}/.config";
-  helixConfig = "${dotconfig}/helix";
+  helixConfig = inputs.my-helix-config;
 in
 {
   xdg.configFile = lib.mkMerge [

@@ -95,11 +95,6 @@
       nix-output-monitor
       system-manager
 
-      ## fish plugins
-      fishPlugins.tide
-      fishPlugins.sponge
-      fishPlugins.autopair
-
       ## benchmarking
       hyperfine
 
