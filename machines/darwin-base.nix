@@ -20,6 +20,7 @@ let
     acc: name: value:
     acc + "\nexport ${name}=${value}"
   ) "" homebrew_mirror_env;
+  commonSystemPackages = myutils.resolveNames pkgs myvars.systemCommonPkgs;
 in
 {
   ###################################################################################
@@ -140,27 +141,13 @@ in
   #
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   ##########################################################################
-  environment.systemPackages = with pkgs; [
-    git
-    vim
-    neovim
-    curl
-    wget
-    file
-    coreutils
-    iproute2mac
-    procps
-    fakeroot
-    openssl
-    openssh
-    nmap
-    logrotate
-    nginx
-    frp
-    sing-box
-    mihomo
-    smartmontools
-  ];
+  environment.systemPackages =
+    commonSystemPackages
+    ++ (with pkgs; [
+      coreutils
+      iproute2mac
+      mihomo
+    ]);
 
   # DONE To make this work, homebrew need to be installed manually, see https://brew.sh
   #

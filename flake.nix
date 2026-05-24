@@ -2,7 +2,7 @@
   description = "handy-sun NixOS flake configuration";
 
   nixConfig = {
-    bash-prompt = "\\[\\e[0m\\]\\[\\033[0;32m\\]\\A (devsh) \\[\\e[0;36m\\]\\w \\[\\e[0m\\]\\\\$\\[\\e[0m\\] ";
+    bash-prompt = "\\[\\e[0m\\]\\[\\033[0;32m\\]\\A (develop) \\[\\e[0;36m\\]\\w \\[\\e[0m\\]\\\\$\\[\\e[0m\\] ";
   };
 
   inputs = {
@@ -23,9 +23,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ## This flake is only built and tested against its pinned nixpkgs-unstable input.
-    llm-agents.url = "github:numtide/llm-agents.nix";
     selector4nix.url = "github:StarryReverie/selector4nix";
+
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     helix-dev = {
       url = "github:erasin/helix/local-dev";
@@ -54,6 +57,11 @@
 
     my-wezterm = {
       url = "github:handy-sun/wezterm-config/nix-hm?shallow=1";
+      flake = false;
+    };
+
+    my-helix-config = {
+      url = "github:handy-sun/helix-config";
       flake = false;
     };
 
@@ -98,6 +106,15 @@
           nixpkgs
           inputs
           self
+          myvars
+          myutils
+          ;
+      };
+
+      mkSysMgr = import ./lib/mksysmgr.nix {
+        inherit
+          nixpkgs
+          inputs
           myvars
           myutils
           ;
@@ -154,6 +171,18 @@
         };
       };
 
+      systemConfigs = {
+        "debnsm" = mkSysMgr "debnsm" {
+          system = "x86_64-linux";
+          profileLevelOver = {
+            tuiAdvanced = true;
+            tuiOptional = false;
+            guiBase = false;
+            guiHeavy = false;
+          };
+        };
+      };
+
       ## Development Shells
       devShells = forAllSystems (
         system:
@@ -171,6 +200,17 @@
             name = "devsh";
             shellHook = ''
               echo "Welcome to handy-sun/expnix devshell"
+            '';
+          };
+          sysmgr = pkgs.mkShell {
+            packages = with pkgs; [
+              just
+              nix-output-monitor
+              system-manager
+            ];
+            name = "dev-sysmgr";
+            shellHook = ''
+              echo "Welcome to handy-sun/expnix sysmgr"
             '';
           };
         }

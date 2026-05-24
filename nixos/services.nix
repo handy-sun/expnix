@@ -19,41 +19,23 @@ in
     '';
 
     dae = {
-      enable = mkDefault isHeLinux;
+      enable = mkDefault false;
       openFirewall = {
         enable = true;
         port = 12345;
       };
       configFile = daeConfig;
     };
-
-    sing-box = {
-      enable = mkDefault true;
-      configGeneration = {
-        enable = mkDefault true;
-        sourceUrl = mkDefault "http://handy:3001/c53248f264d9997/download/collection/main?target=V2Ray";
-        policyFilter = mkDefault "@🌐Proxy@⚡UrlTest-~^(?!.*(aote|流量|到期|过滤|官网)).*$@💬AI-~^(?!.*(流量|到期|过滤|官网)).*$@🚀LowLatency-~^(?!.*(流量|到期|过滤|官网)).*$";
-        extraArgs = mkDefault [
-          "--log-file"
-          ""
-          "--icmp"
-        ];
-      };
-    };
   };
 
-  systemd.services.dae.serviceConfig =
-    if config.services.dae.enable then
-      {
-        ExecStart = mkForce [
-          ""
-          "${daeBin} run -c ${daeConfig}"
-        ];
-        StandardOutput = "append:/var/log/dae.log";
-        StandardError = "inherit";
-      }
-    else
-      { };
+  systemd.services.dae.serviceConfig = lib.mkIf config.services.dae.enable {
+    ExecStart = mkForce [
+      ""
+      "${daeBin} run -c ${daeConfig}"
+    ];
+    StandardOutput = "append:/var/log/dae.log";
+    StandardError = "inherit";
+  };
 
   virtualisation.docker = {
     enable = true;

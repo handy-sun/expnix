@@ -15,8 +15,6 @@ in
   imports = (
     lib.map myutils.relativeToRoot [
       "machines/darwin-base.nix"
-      "overlays/beszel.nix"
-      "overlays/direnv.nix"
       "modules/caddy-webdav"
       "modules/sing-box/darwin.nix"
     ]

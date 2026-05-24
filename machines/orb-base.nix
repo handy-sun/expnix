@@ -17,7 +17,6 @@
     "${modulesPath}/virtualisation/lxc-container.nix"
   ];
   system.stateVersion = "26.05"; # Did you read the comment?
-  security.sudo.wheelNeedsPassword = false;
 
   # No bootloader (or shared kernel)
   boot.loader.systemd-boot.enable = lib.mkForce false;

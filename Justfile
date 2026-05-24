@@ -19,20 +19,16 @@ setup-hook:
 # Update the flake inputs about nix and create commit
 [group('nix')]
 upc-nix:
-  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager rust-overlay noctalia
-
-[group('nix')]
-upc-llm:
-  nix flake update --commit-lock-file llm-agents
+  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager system-manager helix-dev
 
 # Update the flake inputs starts with 'my-'
 [group('nix')]
 upc-my:
-  nix flake update --commit-lock-file my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm sbtpl
+  nix flake update --commit-lock-file cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config sbtpl
 
 [group('nix')]
 up-my:
-  nix flake update my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm sbtpl
+  nix flake update cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config sbtpl
 
 # Open a nix repl shell with the current profile
 [group('nix')]
@@ -122,6 +118,11 @@ query-depends pkgname:
 [group('nix')]
 query-dep-home pkgname:
   which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation .#homeConfigurations.$USER.activationPackage 2>/dev/null
+
+[linux]
+[group('nix')]
+sysmgr:
+  system-manager switch --flake .#$(hostname) --sudo
 
 # MacOS
 [macos]

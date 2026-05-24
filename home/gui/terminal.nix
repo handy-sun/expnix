@@ -70,6 +70,7 @@ lib.mkIf profileLevel.guiBase {
       font = lib.generators.mkLuaInline ''
         wezterm.font_with_fallback({
           "${myvars.fontFamily}",
+          "NotoMono NFM",
           "FiraCode Nerd Font Mono",
           "JetBrains Mono",
           "DejaVu Sans Mono",
@@ -100,6 +101,7 @@ lib.mkIf profileLevel.guiBase {
         size = font_size;
         normal = [
           myvars.fontFamily
+          "NotoMono NFM"
           "FiraCode Nerd Font Mono"
           "JetBrains Mono"
           "DejaVu Sans Mono"

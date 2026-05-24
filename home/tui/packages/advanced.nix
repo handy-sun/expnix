@@ -8,10 +8,6 @@
   profileLevel,
   ...
 }:
-let
-  system = pkgs.stdenv.hostPlatform.system;
-  inherit (inputs.cc-switch-tui.packages.${system}) cc-switch-tui;
-in
 {
   home.packages = (
     with pkgs;
@@ -26,7 +22,6 @@ in
       tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
       just-lsp
       lua-language-server
-      cc-switch-tui
 
       ## downloads / transfers
       aria2 # A lightweight multi-protocol & multi-source command-line download utility

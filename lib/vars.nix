@@ -18,6 +18,38 @@ rec {
     FZF_DEFAULT_COMMAND = "fd --exclude={.git,.idea,.vscode,tags,OrbStack} --type f";
   };
 
+  ## System packages shared across NixOS and darwin.
+  ## Attribute name strings — resolved to packages at call sites.
+  systemCommonPkgs = [
+    "vim"
+    "git"
+    "neovim"
+    "curl"
+    "cron"
+    "wget"
+    "fail2ban"
+    "file"
+    "lsof"
+    "perl"
+    "xz"
+    "zstd"
+    "procps"
+    "fakeroot"
+    "openssl"
+    "openssh"
+    "nmap"
+    "logrotate"
+    "nginx"
+    "sing-box"
+    "smartmontools"
+    "pciutils"
+    "usbutils"
+    "iperf3"
+    "dnsmasq"
+    "ldns"
+    "socat"
+  ];
+
   ## Profile level defaults — hosts can override.
   ## tuibase has no key: always included.
   profileLevel = {
@@ -30,6 +62,7 @@ rec {
   ## Fonts shared across NixOS and darwin.
   ## Attribute name strings — resolved to packages at call sites.
   fontsPkgs = [
+    "maple-mono.NF-CN"
     "source-sans"
     ## China, JP, Korea
     "noto-fonts-cjk-sans"
@@ -47,5 +80,5 @@ rec {
     "nerd-fonts.noto"
   ];
 
-  fontFamily = "NotoMono NFM";
+  fontFamily = "Maple Mono NF CN";
 }

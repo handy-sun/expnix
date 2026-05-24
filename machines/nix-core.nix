@@ -7,30 +7,19 @@
 }:
 {
   nix = {
-    # Determinate uses its own daemon to manage the Nix installation that
-    # conflicts with nix-darwin's native Nix management.
-    #
-    # DONE: set this to false if you're using Determinate Nix.
-    # NOTE: Turning off this option will invalidate all of the following nix configurations,
-    # and you will need to manually modify /etc/nix/nix.custom.conf to add the corresponding parameters.
-    enable = lib.mkDefault true;
-
+    enable = lib.mkDefault true; # NOTE: if you're using Determinate Nix ,turning off this option
     package = pkgs.nix;
-
     settings = {
       trusted-users = [ username ];
-
-      # enable flakes globally
       experimental-features = [
         "nix-command"
         "flakes"
       ];
-
-      # substituers that will be considered before the official ones(https://cache.nixos.org)
       substituters = [
-        "https://mirrors.ustc.edu.cn/nix-channels/store"
-        "https://mirror.sjtu.edu.cn/nix-channels/store"
         "https://cache.garnix.io"
+        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store/"
+        "https://mirrors.ustc.edu.cn/nix-channels/store"
+        # "https://mirror.sjtu.edu.cn/nix-channels/store"
       ];
       trusted-public-keys = [
         "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
@@ -39,29 +28,22 @@
         "https://cache.numtide.com"
         "https://nix-community.cachix.org"
       ];
-      ## will be appended to the system-level trusted-public-keys
       extra-trusted-public-keys = [
         "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
-        ## nix community's cache server public key
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
-
-      ## https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf
       auto-optimise-store = lib.mkDefault true;
       builders-use-substitutes = true;
       accept-flake-config = true;
     };
-
-    # do garbage collection to keep disk usage low
     gc = {
       automatic = lib.mkDefault true;
-      ## The option `nix.gc.dates` can no longer be used since it's been removed. Use `nix.gc.interval` instead.
       options = "--delete-older-than 7d";
     };
   };
 
   nixpkgs.config = {
-    allowUnfree = true; # allow non-FOSS pkgs
+    allowUnfree = true;
     allowUnsupportedSystem = true;
   };
 

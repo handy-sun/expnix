@@ -1,7 +1,7 @@
 {
   lib,
+  pkgs,
   myutils,
-  myvars,
   ...
 }:
 {
@@ -9,18 +9,12 @@
     (lib.map myutils.relativeToRoot [
       "nixos"
     ])
-    ++ [
-      ./hardware-configuration.nix
-      ./services.nix
-    ];
+    ++ (myutils.scanPaths ./.);
 
   boot.loader.grub.enable = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   networking.networkmanager.enable = true;
-
-  # users.users.${myvars.user} = {
-  #   isSystemUser = true;
-  # };
-
+  system.stateVersion = "26.05";
   ################ custom ################
   networking.firewall = {
     enable = true;

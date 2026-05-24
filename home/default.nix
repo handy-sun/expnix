@@ -50,7 +50,7 @@ in
     COLORTERM = "truecolor";
 
     ## cross-rs: use podman as container engine
-    CROSS_CONTAINER_ENGINE = "podman";
+    # CROSS_CONTAINER_ENGINE = "podman";
   }
   // myvars.homeEnv
   // lib.optionalAttrs isWSL {

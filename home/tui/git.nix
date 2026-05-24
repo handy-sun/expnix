@@ -7,6 +7,7 @@
 let
   xdgGitConfDir = config.xdg.configHome + "/git";
   homeGitConfig = config.home.homeDirectory + "/.gitconfig";
+  lazygitConfigToml = lib.escapeShellArg (config.xdg.configHome + "/lazygit/config.toml");
   backupFileExt = "$(date \"+%m%d-%H%M%S\").bak";
   nvimPath = lib.getExe pkgs.neovim;
 in
@@ -16,6 +17,12 @@ in
   home.activation.backUpExistingGitConfLink = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
     test -f ${homeGitConfig} && mv ${homeGitConfig}{,_${backupFileExt}}
     test -L ${xdgGitConfDir} && mv ${xdgGitConfDir}{,_${backupFileExt}}
+  '';
+
+  home.activation.removeEmptyLazygitToml = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+    if [ -f ${lazygitConfigToml} ] && [ ! -L ${lazygitConfigToml} ] && [ ! -s ${lazygitConfigToml} ]; then
+      rm -f ${lazygitConfigToml}
+    fi
   '';
 
   programs.git = {
@@ -108,5 +115,10 @@ in
     };
   };
 
-  programs.lazygit.enable = true;
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      os.editPreset = "nvim";
+    };
+  };
 }

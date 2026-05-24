@@ -11,6 +11,7 @@
   home.packages =
     with pkgs;
     [
+      less
       ## build tools
       gnumake
       cmake
@@ -44,7 +45,6 @@
 
       ## file ops
       rsync
-      lsof
       tree
       just
       gnupg
@@ -53,10 +53,8 @@
       ## archives (basics)
       gzip
       unzip
-      xz
       zip
       bzip2
-      zstd
 
       ## servers / infra
       nginx
@@ -84,7 +82,7 @@
       go
       python3
       nodejs # provides node, npm
-      lua
+      lua5_4
       uv # replace for pip
 
       ## editor tooling
@@ -95,11 +93,7 @@
       nil # language server for Nix
       nixfmt-rs
       nix-output-monitor
-
-      ## fish plugins
-      fishPlugins.tide
-      fishPlugins.sponge
-      fishPlugins.autopair
+      system-manager
 
       ## benchmarking
       hyperfine
@@ -128,7 +122,6 @@
       fio
       ioping
       hdparm
-      rldd
     ]
     ++ lib.optionals isDarwin [
       # xquartz
