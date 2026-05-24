@@ -238,7 +238,7 @@ _: {
 
           shared_except "locked" {
               bind "Ctrl g" { SwitchToMode "Locked"; }
-              bind "Ctrl q" { Quit; }
+              bind "Alt Shift q" { Quit; }
               bind "Ctrl a" "Ctrl t" { SwitchToMode "Tmux"; }
               bind "Ctrl Alt h" { MoveFocusOrTab "Left"; }
               bind "Ctrl Alt l" { MoveFocusOrTab "Right"; }
