@@ -48,7 +48,7 @@ _: {
 
       keybinds clear-defaults=true {
           locked {
-              bind "Ctrl g" { SwitchToMode "Normal"; }
+              bind "Alt g" { SwitchToMode "Normal"; }
               bind "Ctrl a" "Ctrl t" { SwitchToMode "Tmux"; }
           }
 
@@ -67,7 +67,6 @@ _: {
           }
 
           pane {
-              bind "Ctrl p" { SwitchToMode "Normal"; }
               bind "h" "Left" { MoveFocus "Left"; }
               bind "j" "Down" { MoveFocus "Down"; }
               bind "k" "Up" { MoveFocus "Up"; }
@@ -85,7 +84,7 @@ _: {
           }
 
           move {
-              bind "Ctrl h" { SwitchToMode "Normal"; }
+              bind "Alt m" { SwitchToMode "Normal"; }
               bind "n" "Tab" { MovePane; }
               bind "p" { MovePaneBackwards; }
               bind "h" "Left" { MovePane "Left"; }
@@ -118,7 +117,7 @@ _: {
           }
 
           scroll {
-              bind "Ctrl s" { SwitchToMode "Normal"; }
+              bind "Alt s" { SwitchToMode "Normal"; }
               bind "e" { EditScrollback; SwitchToMode "Normal"; }
               bind "s" "/" { SwitchToMode "EnterSearch"; SearchInput 0; }
               bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
@@ -131,7 +130,7 @@ _: {
           }
 
           search {
-              bind "Ctrl s" { SwitchToMode "Normal"; }
+              bind "Alt s" { SwitchToMode "Normal"; }
               bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
               bind "j" "Down" { ScrollDown; }
               bind "k" "Up" { ScrollUp; }
@@ -162,8 +161,7 @@ _: {
           }
 
           session {
-              bind "Ctrl o" { SwitchToMode "Normal"; }
-              bind "Ctrl s" { SwitchToMode "Scroll"; }
+              bind "Alt s" { SwitchToMode "Scroll"; }
               bind "d" { Detach; }
               bind "w" {
                   LaunchOrFocusPlugin "session-manager" {
@@ -197,6 +195,7 @@ _: {
 
           tmux {
               bind "[" { SwitchToMode "Scroll"; }
+              bind "/" { SwitchToMode "EnterSearch"; SearchInput 0; }
               bind "Ctrl a" { Write 1; SwitchToMode "Normal"; }
               bind "Ctrl t" { Write 20; SwitchToMode "Normal"; }
               bind "\"" "s" { NewPane "Down"; SwitchToMode "Normal"; }
@@ -205,6 +204,7 @@ _: {
               bind "c" { NewTab; SwitchToMode "Normal"; }
               bind "," { SwitchToMode "RenameTab"; TabNameInput 0; }
               bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
+              bind "P" { SwitchToMode "Pane"; }
               bind "n" { GoToNextTab; SwitchToMode "Normal"; }
               bind "1" { GoToTab 1; SwitchToMode "Normal"; }
               bind "2" { GoToTab 2; SwitchToMode "Normal"; }
@@ -237,7 +237,7 @@ _: {
           }
 
           shared_except "locked" {
-              bind "Ctrl g" { SwitchToMode "Locked"; }
+              bind "Alt g" { SwitchToMode "Locked"; }
               bind "Alt Shift q" { Quit; }
               bind "Ctrl a" "Ctrl t" { SwitchToMode "Tmux"; }
               bind "Ctrl Alt h" { MoveFocusOrTab "Left"; }
@@ -266,24 +266,16 @@ _: {
               bind "Enter" "Esc" { SwitchToMode "Normal"; }
           }
 
-          shared_except "pane" "locked" {
-              bind "Ctrl p" { SwitchToMode "Pane"; }
-          }
-
           shared_except "resize" "locked" {
               bind "Alt r" { SwitchToMode "Resize"; }
           }
 
           shared_except "scroll" "locked" {
-              bind "Ctrl s" { SwitchToMode "Scroll"; }
-          }
-
-          shared_except "session" "locked" {
-              bind "Ctrl o" { SwitchToMode "Session"; }
+              bind "Alt s" { SwitchToMode "Scroll"; }
           }
 
           shared_except "move" "locked" {
-              bind "Ctrl h" { SwitchToMode "Move"; }
+              bind "Alt m" { SwitchToMode "Move"; }
           }
 
           shared_except "tmux" "locked" {
