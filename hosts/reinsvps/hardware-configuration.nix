@@ -19,18 +19,16 @@
     "virtio_scsi"
     "sr_mod"
     "virtio_blk"
+    "ahci"
+    "xen_blkfront"
+    "vmw_pvscsi"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/6f3640b9-d6c9-48ec-ad5b-959c31ec5888";
-    fsType = "ext4";
-  };
-
-  fileSystems."/data" = {
-    device = "/dev/disk/by-uuid/67045b44-0591-4235-9922-68b9855c4248";
+    device = "/dev/disk/by-uuid/0aea0268-5247-4123-9560-5fcc16c8bec2";
     fsType = "ext4";
   };
 

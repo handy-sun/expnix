@@ -1,7 +1,7 @@
 _: {
   services = {
     rustdesk-server = {
-      enable = true;
+      enable = false;
       ## auto open (TCP 21115-21119, UDP 21116)
       openFirewall = true;
 
