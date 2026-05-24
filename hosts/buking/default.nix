@@ -12,9 +12,7 @@
       "nixos"
       "modules/niri"
     ]
-    ++ [
-      ./hardware-configuration.nix
-    ];
+    ++ (myutils.scanPaths ./.);
 
   users.users.${myvars.user} = {
     extraGroups = [
@@ -22,8 +20,6 @@
       "networkmanager"
     ];
   };
-
-  security.sudo.wheelNeedsPassword = false;
 
   hardware.graphics.enable = true;
   hardware.bluetooth.enable = true;
@@ -39,7 +35,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub = {
     enable = false;
-    device = "/dev/disk/by-uuid/C531-DA7E";
     efiSupport = true;
   };
 
@@ -62,6 +57,7 @@
 
   system.stateVersion = "26.05";
   ## ------ other optional services ------
+  services.dae.enable = true;
   services.zerotierone = {
     enable = true;
   };

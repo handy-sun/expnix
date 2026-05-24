@@ -19,7 +19,7 @@
     interop.appendWindowsPath = false;
     automount = {
       enabled = true;
-      options = ""; # for PreRelase WSL2
+      # options = ""; # for PreRelase WSL2
     };
   };
 
@@ -34,8 +34,6 @@
 
   ## warning: not applying GID change of group ‘docker’ (997 -> 131) in /etc/group
   users.groups.docker.gid = lib.mkForce 997;
-
-  services.sing-box.enable = lib.mkForce false;
 
   services.beszel.agent = {
     enable = true;

@@ -12,9 +12,7 @@ let
   commonSystemPackages = myutils.resolveNames pkgs myvars.systemCommonPkgs;
 in
 {
-  disabledModules = [ "services/networking/sing-box.nix" ];
-
-  imports = myutils.scanPaths ./. ++ [ (myutils.relativeToRoot "modules/sing-box") ];
+  imports = myutils.scanPaths ./.;
 
   programs.nix-ld.enable = true;
 
@@ -64,6 +62,8 @@ in
   };
 
   users.extraGroups.docker.members = [ "${myvars.user}" ];
+
+  security.sudo.wheelNeedsPassword = false;
 
   time = {
     hardwareClockInLocalTime = true;

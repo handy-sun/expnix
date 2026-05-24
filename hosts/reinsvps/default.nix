@@ -9,10 +9,7 @@
     (lib.map myutils.relativeToRoot [
       "nixos"
     ])
-    ++ [
-      ./hardware-configuration.nix
-      ./services.nix
-    ];
+    ++ (myutils.scanPaths ./.);
 
   boot.loader.grub.enable = true;
   networking.networkmanager.enable = true;
