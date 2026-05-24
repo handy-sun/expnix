@@ -256,11 +256,11 @@
     "my-dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1779259382,
-        "narHash": "sha256-cKKmFnhY9enMeByULWQtTyj/gTFnzZl8LoMkNXVpMfM=",
+        "lastModified": 1779606849,
+        "narHash": "sha256-xfdQ2XHbdvTh/UD3vTLK/3ssz9Q4aiD2ypnkzG/iPdo=",
         "owner": "handy-sun",
         "repo": "dotfiles",
-        "rev": "096aefb6af18ee33946d6dd1acb7ec468debe26b",
+        "rev": "bd2f45a067c2629e58f5818ac4332caa90c65b08",
         "type": "github"
       },
       "original": {
@@ -293,11 +293,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1779517962,
-        "narHash": "sha256-s76uy/aiWYoJX4/lPgr/df8pS1FgDTcqzEv+gFfTQw0=",
+        "lastModified": 1779608744,
+        "narHash": "sha256-ofsemGcNs2d+TkkaE6Bj1j70B+ihxUmMFUrKbsk1xxE=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "547fb28f75b69486984dc0f8fee0b8ef41c35649",
+        "rev": "1a5dd3ac8d15be7a218f513b750b49876832212c",
         "type": "github"
       },
       "original": {
@@ -309,11 +309,11 @@
     "my-helix-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1779124474,
-        "narHash": "sha256-00yrTKw4jVer8c8bcxrktaY7MkT9s7hAV6AP8mi+A7U=",
+        "lastModified": 1779608779,
+        "narHash": "sha256-G6yvr65LhYs+w6iWGgqmzEEL1Bch+n9pL1w5oPQUaL8=",
         "owner": "handy-sun",
         "repo": "helix-config",
-        "rev": "04b29af027a85006a55c01f0287a1729ed11fcd7",
+        "rev": "d2b2b31b4fc3ad95b945a6ed9338f1e706ee86b2",
         "type": "github"
       },
       "original": {
