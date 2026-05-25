@@ -1,8 +1,10 @@
-{ myutils, ... }:
+{ pkgs, myutils, ... }:
 {
   imports = [
     (myutils.relativeToRoot "modules/mtg")
   ];
+
+  environment.systemPackages = [ pkgs.mtg ];
 
   services = {
     mtg = {
