@@ -20,7 +20,6 @@ lib.mkIf profileLevel.guiBase {
     "wezterm/config".source = wezConfDir + "/config";
     "wezterm/events".source = wezConfDir + "/events";
     "wezterm/utils".source = wezConfDir + "/utils";
-    "wezterm/backdrops".source = wezConfDir + "/backdrops";
   };
 
   programs.wezterm = {

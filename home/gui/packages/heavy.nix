@@ -8,5 +8,6 @@
 lib.mkIf profileLevel.guiHeavy {
   home.packages = with pkgs; [
     google-chrome
+    brave
   ];
 }
