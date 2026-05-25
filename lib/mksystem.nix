@@ -71,6 +71,7 @@ systemFunc rec {
     )
     ../machines/nix-core.nix
     ../overlays/rldd.nix
+    ../overlays/mtg.nix
     ../hosts/${hostName}
     home-manager.home-manager
     {
