@@ -5,6 +5,8 @@ alias s := switch
 alias f := nixfmt
 alias sh := switch-home
 
+sys_conf_root := if os() == "macos" { "darwinConfigurations" } else { "nixosConfigurations" }
+
 default:
   @just --list
 
@@ -70,6 +72,11 @@ nixinfo:
 current-sys:
   readlink /run/current-system
 
+[private]
+[group('nix')]
+sys-top-attr host=`hostname`:
+  @printf '%s\n' '.#{{sys_conf_root}}."{{host}}".config.system.build.toplevel'
+
 [group('nix')]
 query-all pkgname:
   which {{pkgname}} | xargs realpath | xargs nix why-depends --all /run/current-system
@@ -95,10 +102,14 @@ repl-nh:
 query-tree:
   nix-store --gc --print-roots | rg -v '/proc/' | rg -Po '(?<= -> ).*' | xargs -o nix-tree
 
-[linux]
+# Evaluate the system toplevel derivation for a host
 [group('nix')]
-query-depends pkgname:
-  which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation .#nixosConfigurations.$(hostname).config.system.build.toplevel 2>/dev/null
+evtop host=`hostname`:
+  nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')"
+
+[group('nix')]
+query-depends pkgname host=`hostname`:
+  which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')" 2>/dev/null
 
 [linux]
 [group('nix')]
@@ -120,8 +131,3 @@ switch:
 [group('nix')]
 repl-nh:
   nh darwin repl .
-
-[macos]
-[group('nix')]
-query-depends pkgname:
-  which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation .#darwinConfigurations.$(hostname).config.system.build.toplevel 2>/dev/null
