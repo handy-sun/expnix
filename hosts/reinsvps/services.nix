@@ -6,9 +6,15 @@
 
   services = {
     mtg = {
-      enable = false; # set to true and fill in secret to activate
-      secret = null; # e.g. "ee..." or base64 string
-      bind = "0.0.0.0:443";
+      enable = false; # set to true to activate
+      settings = {
+        bind-to = "0.0.0.0:11443";
+        secret = "00000000000000000000aaaaaaaaaaaaaaaa";
+        defense.blocklist.urls = [
+          "https://lalala.com/index.html"
+          "https://lalala.com/contacts.html"
+        ];
+      };
     };
 
     rustdesk-server = {
