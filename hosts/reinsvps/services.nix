@@ -10,7 +10,7 @@
       settings = {
         bind-to = "0.0.0.0:11443";
         secret = "00000000000000000000aaaaaaaaaaaaaaaa";
-        defense.blocklist.urls = [
+        defense.doppelganger.urls = [
           "https://lalala.com/index.html"
           "https://lalala.com/contacts.html"
         ];

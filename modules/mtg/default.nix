@@ -85,6 +85,7 @@ in
         Type = "simple";
         ExecStart = "${lib.getExe cfg.package} run ${configFile}";
         DynamicUser = true;
+        LimitNOFILE = 65536;
         Restart = "on-failure";
         RestartSec = "5s";
         CapabilityBoundingSet = [ "CAP_NET_BIND_SERVICE" ];
