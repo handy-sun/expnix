@@ -129,7 +129,7 @@ let
         ];
       };
       preferredAddress = "orb";
-      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuKM3DmTBChkXQOokBv1w8vGr4tsU/bQ1BYqGMyLF+k";
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXv7vJ9dWH6CY/xKzB6qjpWCcTlhxI17BHn8/g+zI9x qi@handyMini";
     };
 
     buking = {
@@ -154,6 +154,7 @@ let
 
     nixwsl = {
       user = username;
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4enUIMLYr8hinZIAy8NM7uqtwAJO8Ts1H/pB0h9b+S qi@nixwsl";
     };
   };
 
