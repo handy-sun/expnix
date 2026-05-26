@@ -4,6 +4,7 @@
   inputs,
   myvars,
   myutils,
+  networkingVars,
 }:
 
 system:
@@ -32,6 +33,7 @@ let
       username
       myvars
       myutils
+      networkingVars
       homeDir
       isDarwin
       isWSL

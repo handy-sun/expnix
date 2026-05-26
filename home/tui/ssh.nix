@@ -1,30 +1,32 @@
 {
+  networkingVars,
   ...
 }:
 
 {
   programs.ssh = {
-    enable = false;
+    enable = true;
     enableDefaultConfig = false;
 
-    matchBlocks = {
+    settings = {
       "*" = {
-        compression = true;
-        serverAliveInterval = 30;
-        serverAliveCountMax = 3;
-        hashKnownHosts = false;
-        userKnownHostsFile = "~/.ssh/known_hosts";
+        Compression = true;
+        ServerAliveInterval = 30;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = false;
+        UserKnownHostsFile = "~/.ssh/known_hosts";
       };
 
       "github.com" = {
-        hostname = "ssh.github.com";
-        port = 443;
-        user = "git";
+        HostName = "ssh.github.com";
+        Port = 443;
+        User = "git";
         ## Specifies that ssh should only use the identity file explicitly configured above
         ## required to prevent sending default identity files first.
         # identitiesOnly = true;
       };
-    };
+    }
+    // networkingVars.ssh.settings;
 
     # includes = [
     #   (lib.mkIf isDarwin "~/.orbstack/ssh/config")

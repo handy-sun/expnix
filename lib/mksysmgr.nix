@@ -4,6 +4,7 @@
   inputs,
   myvars,
   myutils,
+  networkingVars,
 }:
 
 hostName:
@@ -28,6 +29,7 @@ let
       username
       myvars
       myutils
+      networkingVars
       homeDir
       isDarwin
       isWSL
@@ -108,6 +110,7 @@ inputs.system-manager.lib.makeSystemConfig {
     )
   ]
   ++ builtins.map myutils.relativeToRoot [
+    "modules/networking/system-manager.nix"
     "modules/_system-manager"
     "hosts/${hostName}/system-manager.nix"
   ];

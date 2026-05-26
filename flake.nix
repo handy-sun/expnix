@@ -89,6 +89,10 @@
 
       myvars = import ./lib/vars.nix;
       myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
+      networkingVars = import ./lib/networking.nix {
+        inherit lib;
+        username = myvars.user;
+      };
 
       mkHome = import ./lib/mkhome.nix {
         inherit
@@ -96,6 +100,7 @@
           inputs
           myvars
           myutils
+          networkingVars
           ;
       };
 
@@ -106,6 +111,7 @@
           self
           myvars
           myutils
+          networkingVars
           ;
       };
 
@@ -115,6 +121,7 @@
           inputs
           myvars
           myutils
+          networkingVars
           ;
       };
     in

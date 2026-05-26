@@ -5,6 +5,7 @@
   self,
   myvars,
   myutils,
+  networkingVars,
 }:
 
 hostName:
@@ -43,6 +44,7 @@ let
       username
       myvars
       myutils
+      networkingVars
       homeDir
       isDarwin
       isWSL
@@ -70,6 +72,8 @@ systemFunc rec {
         }
     )
     ../machines/nix-core.nix
+    ../modules/networking
+    (if !isDarwin then ../modules/networking/nixos.nix else { })
     ../overlays/rldd.nix
     ../overlays/mtg.nix
     ../hosts/${hostName}
