@@ -61,6 +61,7 @@ let
       hostname = target;
       user = host.user or username;
       port = host.port or 22;
+      identityFile = "~/.ssh/id_ed25519";
     }
     // optionalAttrs (hasInfix "orb.local" target) {
       checkHostIP = false;
@@ -72,6 +73,7 @@ let
       HostName = target;
       User = host.user or username;
       Port = host.port or 22;
+      IdentityFile = "~/.ssh/id_ed25519";
     }
     // optionalAttrs (hasInfix "orb.local" target) {
       CheckHostIP = false;

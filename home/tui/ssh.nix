@@ -1,4 +1,6 @@
 {
+  lib,
+  isDarwin,
   networkingVars,
   ...
 }:
@@ -26,9 +28,6 @@
     }
     // networkingVars.ssh.settings;
 
-    # includes = [
-    #   (lib.mkIf isDarwin "~/.orbstack/ssh/config")
-    #   (lib.mkIf isDarwin "~/.ssh/lan_config")
-    # ];
+    includes = lib.optionals isDarwin [ "~/.orbstack/ssh/config" ];
   };
 }
