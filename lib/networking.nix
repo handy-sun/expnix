@@ -20,6 +20,10 @@ let
 
   hasAddresses = host: (host.addresses or { }) != { };
 
+  addressAttrNames = host: attrNames (host.addresses or { });
+
+  hasSingleAddress = host: builtins.length (addressAttrNames host) == 1;
+
   addressTarget =
     address:
     if address ? hostName then
@@ -31,11 +35,28 @@ let
 
   preferredAddressName =
     host:
-    if host ? preferredAddress then host.preferredAddress else builtins.head (attrNames host.addresses);
+    if host ? preferredAddress then
+      host.preferredAddress
+    else if hasSingleAddress host then
+      builtins.head (addressAttrNames host)
+    else
+      null;
 
-  preferredAddress = host: host.addresses.${preferredAddressName host};
+  preferredAddress =
+    host:
+    let
+      name = preferredAddressName host;
+    in
+    if name != null then host.addresses.${name} else null;
 
-  preferredTarget = host: if hasAddresses host then addressTarget (preferredAddress host) else null;
+  preferredTarget =
+    host:
+    let
+      address = preferredAddress host;
+    in
+    if address != null then addressTarget address else null;
+
+  useCanonicalName = host: (host.useCanonicalName or false) || hasSingleAddress host;
 
   hostNames = name: host: unique ([ name ] ++ (host.aliases or [ ]));
 
@@ -84,7 +105,7 @@ let
     let
       target = preferredTarget host;
       canonicalBlocks =
-        if target != null && host.useCanonicalName or false then
+        if target != null && useCanonicalName host then
           genAttrs (hostNames name host) (_: sshCommon host target)
         else
           { };
@@ -103,7 +124,7 @@ let
     let
       target = preferredTarget host;
       canonicalBlocks =
-        if target != null && host.useCanonicalName or false then
+        if target != null && useCanonicalName host then
           genAttrs (hostNames name host) (_: sshSettingsCommon host target)
         else
           { };
@@ -123,9 +144,7 @@ let
       user = username;
       addresses.orb = {
         hostName = "orbvmnix.orb.local";
-        names = [ "orbvmnix-orb" ];
       };
-      preferredAddress = "orb";
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIERWaYmUBGmyw6unmj+fOd55jkFL3o/kfAJFw2WZ/i+8 qi@orbvmnix";
     };
 
@@ -140,31 +159,25 @@ let
 
     handyMini = {
       user = username;
-      addresses.orb = {
+      addresses.ethernet = {
         ipv4 = "192.168.1.27";
       };
-      preferredAddress = "orb";
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXv7vJ9dWH6CY/xKzB6qjpWCcTlhxI17BHn8/g+zI9x qi@handyMini";
     };
 
     buking = {
       user = username;
-      addresses.lan = {
+      addresses.ethernet = {
         ipv4 = "192.168.1.58";
-        names = [ "buking-lan" ];
       };
-      preferredAddress = "lan";
     };
 
     reinsvps = {
-      user = "qi";
+      user = username;
       port = 23512;
-      useCanonicalName = true;
       addresses.common = {
         ipv4 = "10.3.1.9";
-        names = [ "reinsvps-common" ];
       };
-      preferredAddress = "common";
     };
 
     nixwsl = {
@@ -176,7 +189,6 @@ let
       addresses.eth = {
         ipv4 = "192.168.1.29";
       };
-      preferredAddress = "eth";
       sshHostKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB7ZnRR8sF38eSwf67aDEeBnL+O74iNDfnQnJ9Qxr6chte2bZv4p9q9nb3LDx1ZRNCGEQmB1k36NFbMrFixCCqs= sunqi@MS-7D17-SQ";
     };
   };
@@ -185,8 +197,8 @@ let
     mapAttrsToList (
       name: host:
       let
-        preferred = if hasAddresses host then preferredAddress host else { };
-        canonicalEntry = optional (preferred ? ipv4) {
+        preferred = preferredAddress host;
+        canonicalEntry = optional (preferred != null && preferred ? ipv4) {
           ip = preferred.ipv4;
           names = hostNames name host;
         };
@@ -207,7 +219,7 @@ let
   groupedHostsFileEntries = groupBy (entry: entry.ip) hostsFileEntries;
 
   extraUserAuthorizedKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3OY9BaZt4/C5Dxo733g21yHwBb7Id9kRoEZTY6MrF3 replace old id_rsa due to github"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3OY9BaZt4/C5Dxo733g21yHwBb7Id9kRoEZTY6MrF3 replace-old-id_rsa"
   ];
 
   sshHostAuthorizedKeysFor =
