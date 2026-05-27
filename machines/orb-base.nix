@@ -32,7 +32,7 @@
     . /opt/orbstack-guest/etc/profile-late
   '';
   # Disable sshd by default; individual OrbStack hosts can opt in.
-  services.openssh.enable = lib.mkDefault false;
+  services.openssh.enable = lib.mkForce false;
   programs.ssh.extraConfig = lib.mkAfter ''
     Include /opt/orbstack-guest/etc/ssh_config
   '';
@@ -57,7 +57,6 @@
 
     homeMode = "700";
     useDefaultShell = true;
-    openssh.authorizedKeys.keys = [ ];
     # shell = pkgs.zsh;
   };
   users.groups.orbstack.gid = 67278;

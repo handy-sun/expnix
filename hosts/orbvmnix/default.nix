@@ -23,13 +23,19 @@
     search orb.local
   '';
 
-  services.openssh = {
+  # services.openssh = {
+  #   enable = true;
+  #   openFirewall = true;
+  #   settings = {
+  #     PasswordAuthentication = false;
+  #     PermitRootLogin = "no";
+  #   };
+  # };
+
+  services.beszel.agent = {
     enable = true;
+    environmentFile = "/etc/beszel-agent.env";
     openFirewall = true;
-    settings = {
-      PasswordAuthentication = false;
-      PermitRootLogin = "no";
-    };
   };
 
   ## Mask mounts that are not available in isolated OrbStack containers
