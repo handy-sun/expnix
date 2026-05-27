@@ -10,7 +10,6 @@
   ...
 }:
 let
-  # rustupServer = "https://mirrors.tuna.tsinghua.edu.cn/rustup";
   conf = config.xdg.configHome;
   data = config.xdg.dataHome;
   cache = config.xdg.cacheHome;
@@ -22,6 +21,8 @@ let
   local_bin = config.home.homeDirectory + "/.local/bin";
   ## npm settings in npmrc
   npm_global_bin = data + "/npm-global/bin";
+  PNPM_HOME = data + "/pnpm";
+  pnpm_global_bin = PNPM_HOME + "/bin";
 in
 {
   home.stateVersion = "25.11";
@@ -34,11 +35,14 @@ in
     LESSHISTFILE = cache + "/less/history";
     LESSKEY = conf + "/less/lesskey";
 
-    inherit GOPATH CARGO_HOME RUSTUP_HOME;
+    inherit
+      GOPATH
+      CARGO_HOME
+      RUSTUP_HOME
+      PNPM_HOME
+      ;
 
     # HERMES_HOME = conf + "/hermes";
-    # RUSTUP_DIST_SERVER = rustupServer;
-    # RUSTUP_UPDATE_ROOT = rustupServer + "/rustup";
     UV_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple/";
 
     NPM_CONFIG_USERCONFIG = conf + "/npmrc";
@@ -59,6 +63,7 @@ in
 
   home.sessionPath = [
     npm_global_bin
+    pnpm_global_bin
     cargo_bin
     go_bin
   ]

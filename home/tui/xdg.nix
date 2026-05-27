@@ -23,6 +23,7 @@ in
       "pip/pip.conf".source = "${dotconfig}/pip/pip.conf";
       "npmrc".text = ''
         prefix=${config.xdg.dataHome}/npm-global
+        cache=${config.xdg.cacheHome}/npm
       '';
     }
     (lib.mkIf profileLevel.tuiOptional {

@@ -111,6 +111,9 @@
       multitail
       sd # sed
       ouch
+      age
+      sops
+      ssh-to-age
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       strace # a diagnostic, debugging and instructional userspace utility for Linux.

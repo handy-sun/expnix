@@ -18,7 +18,7 @@ let
     unique
     ;
 
-  hasAddresses = host: (host.addresses or { }) != { };
+  # hasAddresses = host: (host.addresses or { }) != { };
 
   addressAttrNames = host: attrNames (host.addresses or { });
 
@@ -148,15 +148,6 @@ let
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIERWaYmUBGmyw6unmj+fOd55jkFL3o/kfAJFw2WZ/i+8 qi@orbvmnix";
     };
 
-    # debnsm = {
-    #   user = username;
-    #   addresses.orb = {
-    #     hostName = "debnsm.orb.local";
-    #     names = [ "debnsm-orb" ];
-    #   };
-    #   preferredAddress = "orb";
-    # };
-
     handyMini = {
       user = username;
       addresses.ethernet = {
@@ -218,6 +209,19 @@ let
 
   groupedHostsFileEntries = groupBy (entry: entry.ip) hostsFileEntries;
 
+  externalKnownHosts = {
+    "github.com" = {
+      hostNames = [
+        "github.com"
+        "ssh.github.com"
+      ];
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+    };
+    "codeberg.org" = {
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIVIC02vnjFyL+I4RHfvIGNtOgJMe769VTF1VR4EB3ZB";
+    };
+  };
+
   extraUserAuthorizedKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3OY9BaZt4/C5Dxo733g21yHwBb7Id9kRoEZTY6MrF3 replace-old-id_rsa"
   ];
@@ -254,15 +258,7 @@ rec {
         hostNames = knownHostNames name host;
         publicKey = host.sshHostKey;
       }) (filterAttrs (_: host: host ? sshHostKey) hosts))
-      // {
-        "github.com" = {
-          hostNames = [
-            "github.com"
-            "ssh.github.com"
-          ];
-          publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
-        };
-      };
+      // externalKnownHosts;
 
     knownHostsText = concatStringsSep "\n" (
       mapAttrsToList (
