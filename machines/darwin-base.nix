@@ -5,6 +5,7 @@
   hostName,
   myvars,
   myutils,
+  networkingVars,
   ...
 }:
 let
@@ -97,6 +98,23 @@ in
   networking.computerName = hostName;
   system.defaults.smb.NetBIOSName = hostName;
 
+  environment.etc."hosts".text = ''
+    ##
+    # Host Database
+    #
+    # localhost is used to configure the loopback interface
+    # when the system is booting.  Do not change this entry.
+    ##
+    127.0.0.1 localhost
+    255.255.255.255 broadcasthost
+    ::1 localhost
+
+    ## expnix managed hosts
+    ${networkingVars.hostsText}
+  '';
+  # networking.search = lib.mkAfter [ "orb.local" ];
+  programs.ssh.knownHosts = networkingVars.ssh.knownHosts;
+
   ## Create /etc/zshrc that loads the nix-darwin environment.
   ## this is required if you want to use darwin's default shell - zsh
   programs.zsh.enable = true;
@@ -130,6 +148,7 @@ in
     home = "/Users/${username}";
     description = username;
     shell = pkgs.fish;
+    openssh.authorizedKeys.keys = networkingVars.userAuthorizedKeysFor hostName;
   };
   system.primaryUser = username;
 

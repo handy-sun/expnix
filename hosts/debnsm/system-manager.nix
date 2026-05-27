@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   myvars,
   myutils,
@@ -33,4 +34,15 @@ in
     enable = true;
     environmentFile = "/etc/beszel-agent.env";
   };
+
+  services.openssh = {
+    enable = true;
+    openFirewall = false;
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
+
+  systemd.services."ssh-system-manager".aliases = lib.mkForce [ ];
 }

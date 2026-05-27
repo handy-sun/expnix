@@ -4,6 +4,7 @@
   inputs,
   myvars,
   myutils,
+  networkingVars,
 }:
 
 hostName:
@@ -28,6 +29,7 @@ let
       username
       myvars
       myutils
+      networkingVars
       homeDir
       isDarwin
       isWSL
@@ -93,9 +95,31 @@ inputs.system-manager.lib.makeSystemConfig {
           home = homeDir;
           createHome = true;
           shell = pkgs.fish;
+          openssh.authorizedKeys.keys = networkingVars.userAuthorizedKeysFor hostName;
           # system-manager does not provide NixOS's programs.fish module.
           ignoreShellProgramCheck = true;
         };
+
+        environment.etc."hosts" = {
+          text = ''
+            127.0.0.1 localhost
+            ::1 localhost ip6-localhost ip6-loopback
+            127.0.1.1 ${hostName}
+
+            # The following lines are desirable for IPv6 capable hosts
+            ::1     ip6-localhost ip6-loopback
+            fe00::0 ip6-localnet
+            ff00::0 ip6-mcastprefix
+            ff02::1 ip6-allnodes
+            ff02::2 ip6-allrouters
+
+            ## expnix managed hosts
+            ${networkingVars.hostsText}
+          '';
+          replaceExisting = true;
+        };
+
+        environment.etc."ssh/ssh_known_hosts".text = networkingVars.ssh.knownHostsText;
 
         home-manager = {
           useGlobalPkgs = true;

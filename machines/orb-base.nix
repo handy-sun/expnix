@@ -31,9 +31,9 @@
     # add your customizations here
     . /opt/orbstack-guest/etc/profile-late
   '';
-  # Disable sshd
-  services.openssh.enable = lib.mkForce false;
-  programs.ssh.extraConfig = ''
+  # Disable sshd by default; individual OrbStack hosts can opt in.
+  services.openssh.enable = lib.mkDefault false;
+  programs.ssh.extraConfig = lib.mkAfter ''
     Include /opt/orbstack-guest/etc/ssh_config
   '';
   # Disable systemd-resolved
