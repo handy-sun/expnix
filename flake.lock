@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779728458,
-        "narHash": "sha256-ty5NREoTb75O+fnxGimtDQkm5SN8b2t1aIR5qr+wRN4=",
+        "lastModified": 1779875119,
+        "narHash": "sha256-YEPuajuW4ecWC8RklxL62PzSMjHvZz8KajzENvkUm5I=",
         "owner": "handy-sun",
         "repo": "cc-switch-tui",
-        "rev": "8431783843e22330efbb676984d7ee37911ff742",
+        "rev": "34384326e3232ee5e9954d572792cb5510d53ce7",
         "type": "github"
       },
       "original": {
@@ -581,11 +581,11 @@
     "sbtpl": {
       "flake": false,
       "locked": {
-        "lastModified": 1779590758,
-        "narHash": "sha256-9aI7LMmqcI5SjKGqBh+b0aKyfMktUEojJj/HVvqByE4=",
+        "lastModified": 1779861191,
+        "narHash": "sha256-vvwfTwJv7LvhOIBTPtrAZt9akSu5l4uO3i9qVHmGT5c=",
         "owner": "handy-sun",
         "repo": "sbtpl",
-        "rev": "1217a226768bab5eddeeb9eea85f38d75f2d3782",
+        "rev": "9c2603030dcb7513a90fe9122ff960d4a29505d8",
         "type": "github"
       },
       "original": {
