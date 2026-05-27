@@ -112,7 +112,7 @@ in
     ## expnix managed hosts
     ${networkingVars.hostsText}
   '';
-  networking.search = lib.mkAfter [ "orb.local" ];
+  # networking.search = lib.mkAfter [ "orb.local" ];
   programs.ssh.knownHosts = networkingVars.ssh.knownHosts;
 
   ## Create /etc/zshrc that loads the nix-darwin environment.
@@ -148,7 +148,7 @@ in
     home = "/Users/${username}";
     description = username;
     shell = pkgs.fish;
-    openssh.authorizedKeys.keys = networkingVars.userAuthorizedKeys;
+    openssh.authorizedKeys.keys = networkingVars.userAuthorizedKeysFor hostName;
   };
   system.primaryUser = username;
 

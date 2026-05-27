@@ -126,6 +126,7 @@ let
         names = [ "orbvmnix-orb" ];
       };
       preferredAddress = "orb";
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIERWaYmUBGmyw6unmj+fOd55jkFL3o/kfAJFw2WZ/i+8 qi@orbvmnix";
     };
 
     # debnsm = {
@@ -170,6 +171,14 @@ let
       user = username;
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4enUIMLYr8hinZIAy8NM7uqtwAJO8Ts1H/pB0h9b+S qi@nixwsl";
     };
+
+    ms7d = {
+      addresses.eth = {
+        ipv4 = "192.168.1.29";
+      };
+      preferredAddress = "eth";
+      sshHostKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB7ZnRR8sF38eSwf67aDEeBnL+O74iNDfnQnJ9Qxr6chte2bZv4p9q9nb3LDx1ZRNCGEQmB1k36NFbMrFixCCqs= sunqi@MS-7D17-SQ";
+    };
   };
 
   hostsFileEntries = concatLists (
@@ -196,12 +205,22 @@ let
   );
 
   groupedHostsFileEntries = groupBy (entry: entry.ip) hostsFileEntries;
+
+  extraUserAuthorizedKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3OY9BaZt4/C5Dxo733g21yHwBb7Id9kRoEZTY6MrF3 replace old id_rsa due to github"
+  ];
+
+  sshHostAuthorizedKeysFor =
+    localHostName:
+    mapAttrsToList (_: host: host.sshHostKey) (
+      filterAttrs (name: host: host ? sshHostKey && name != localHostName) hostDefinitions
+    );
 in
 rec {
-  userAuthorizedKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3OY9BaZt4/C5Dxo733g21yHwBb7Id9kRoEZTY6MrF3 replace old id_rsa due to github"
-    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB7ZnRR8sF38eSwf67aDEeBnL+O74iNDfnQnJ9Qxr6chte2bZv4p9q9nb3LDx1ZRNCGEQmB1k36NFbMrFixCCqs= sunqi@MS-7D17-SQ"
-  ];
+  userAuthorizedKeysFor =
+    localHostName: unique (extraUserAuthorizedKeys ++ sshHostAuthorizedKeysFor localHostName);
+
+  userAuthorizedKeys = userAuthorizedKeysFor null;
 
   hosts = hostDefinitions;
 

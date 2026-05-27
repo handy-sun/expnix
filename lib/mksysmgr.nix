@@ -95,7 +95,7 @@ inputs.system-manager.lib.makeSystemConfig {
           home = homeDir;
           createHome = true;
           shell = pkgs.fish;
-          openssh.authorizedKeys.keys = networkingVars.userAuthorizedKeys;
+          openssh.authorizedKeys.keys = networkingVars.userAuthorizedKeysFor hostName;
           # system-manager does not provide NixOS's programs.fish module.
           ignoreShellProgramCheck = true;
         };

@@ -2,6 +2,7 @@
   pkgs,
   lib,
   myvars,
+  hostName,
   homeDir,
   myutils,
   networkingVars,
@@ -64,7 +65,7 @@ in
     extraGroups = mkDefault [
       "wheel"
     ];
-    openssh.authorizedKeys.keys = networkingVars.userAuthorizedKeys;
+    openssh.authorizedKeys.keys = networkingVars.userAuthorizedKeysFor hostName;
   };
 
   users.extraGroups.docker.members = [ "${myvars.user}" ];
