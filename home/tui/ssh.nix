@@ -10,10 +10,8 @@
 
     settings = {
       "*" = {
-        Compression = true;
         ServerAliveInterval = 30;
         ServerAliveCountMax = 3;
-        HashKnownHosts = false;
         UserKnownHostsFile = "~/.ssh/known_hosts";
       };
 

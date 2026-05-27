@@ -8,6 +8,8 @@ let
     concatStringsSep
     filterAttrs
     foldl'
+    hasInfix
+    optionalAttrs
     genAttrs
     groupBy
     mapAttrs
@@ -53,26 +55,37 @@ let
 
   knownHostNames = name: host: unique ((hostNames name host) ++ (addressNames host));
 
-  sshCommon = host: target: {
-    hostname = target;
-    user = host.user or username;
-    port = host.port or 22;
-    checkHostIP = false;
-  };
+  sshCommon =
+    host: target:
+    {
+      hostname = target;
+      user = host.user or username;
+      port = host.port or 22;
+    }
+    // optionalAttrs (hasInfix "orb.local" target) {
+      checkHostIP = false;
+    };
 
-  sshSettingsCommon = host: target: {
-    HostName = target;
-    User = host.user or username;
-    Port = host.port or 22;
-    CheckHostIP = false;
-  };
+  sshSettingsCommon =
+    host: target:
+    {
+      HostName = target;
+      User = host.user or username;
+      Port = host.port or 22;
+    }
+    // optionalAttrs (hasInfix "orb.local" target) {
+      CheckHostIP = false;
+    };
 
   sshBlocksForHost =
     name: host:
     let
       target = preferredTarget host;
       canonicalBlocks =
-        if target == null then { } else genAttrs (hostNames name host) (_: sshCommon host target);
+        if target != null && host.useCanonicalName or false then
+          genAttrs (hostNames name host) (_: sshCommon host target)
+        else
+          { };
       addressBlocks = foldl' (
         acc: address:
         let
@@ -88,7 +101,10 @@ let
     let
       target = preferredTarget host;
       canonicalBlocks =
-        if target == null then { } else genAttrs (hostNames name host) (_: sshSettingsCommon host target);
+        if target != null && host.useCanonicalName or false then
+          genAttrs (hostNames name host) (_: sshSettingsCommon host target)
+        else
+          { };
       addressBlocks = foldl' (
         acc: address:
         let
@@ -99,6 +115,7 @@ let
     in
     canonicalBlocks // addressBlocks;
 
+  ## All hosts ssh keys should be added to known_hosts to prevent ssh asking for confirmation when connecting for the first time, which is especially important for hosts with dynamic IPs. However, we still want to have github.com in known_hosts to prevent MITM attack, so we add it manually here.
   hostDefinitions = {
     orbvmnix = {
       user = username;
@@ -109,24 +126,20 @@ let
       preferredAddress = "orb";
     };
 
-    debnsm = {
-      user = username;
-      addresses.orb = {
-        hostName = "debnsm.orb.local";
-        names = [ "debnsm-orb" ];
-      };
-      preferredAddress = "orb";
-    };
+    # debnsm = {
+    #   user = username;
+    #   addresses.orb = {
+    #     hostName = "debnsm.orb.local";
+    #     names = [ "debnsm-orb" ];
+    #   };
+    #   preferredAddress = "orb";
+    # };
 
     handyMini = {
       user = username;
-      aliases = [ "mac" ];
+      # aliases = [ "mac" ];
       addresses.orb = {
-        hostName = "host.orb.internal";
-        names = [
-          "handyMini-orb"
-          "mac-orb"
-        ];
+        ipv4 = "192.168.1.27";
       };
       preferredAddress = "orb";
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXv7vJ9dWH6CY/xKzB6qjpWCcTlhxI17BHn8/g+zI9x qi@handyMini";
@@ -136,20 +149,20 @@ let
       user = username;
       aliases = [ "handy" ];
       addresses.lan = {
-        ipv4 = "192.168.1.27";
+        ipv4 = "192.168.1.58";
         names = [ "buking-lan" ];
       };
       preferredAddress = "lan";
     };
 
     reinsvps = {
-      user = "root";
+      user = "qi";
       port = 23512;
-      addresses.private = {
+      addresses.common = {
         ipv4 = "10.3.1.9";
-        names = [ "reinsvps-private" ];
+        names = [ "reinsvps-common" ];
       };
-      preferredAddress = "private";
+      preferredAddress = "common";
     };
 
     nixwsl = {
