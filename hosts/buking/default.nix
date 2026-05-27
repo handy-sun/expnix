@@ -49,12 +49,7 @@
     #   PermitRootLogin = "yes";
     # };
   };
-  networking = {
-    networkmanager.enable = true;
-    extraHosts = ''
-      192.168.1.27 handy
-    '';
-  };
+  networking.networkmanager.enable = true;
 
   system.stateVersion = "26.05";
   ## ------ other optional services ------

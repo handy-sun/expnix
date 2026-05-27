@@ -139,7 +139,6 @@ let
 
     handyMini = {
       user = username;
-      # aliases = [ "mac" ];
       addresses.orb = {
         ipv4 = "192.168.1.27";
       };
@@ -149,7 +148,6 @@ let
 
     buking = {
       user = username;
-      aliases = [ "handy" ];
       addresses.lan = {
         ipv4 = "192.168.1.58";
         names = [ "buking-lan" ];
@@ -160,6 +158,7 @@ let
     reinsvps = {
       user = "qi";
       port = 23512;
+      useCanonicalName = true;
       addresses.common = {
         ipv4 = "10.3.1.9";
         names = [ "reinsvps-common" ];

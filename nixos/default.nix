@@ -4,6 +4,7 @@
   myvars,
   homeDir,
   myutils,
+  networkingVars,
   profileLevel,
   ...
 }:
@@ -46,6 +47,10 @@ in
     };
   };
 
+  networking.hosts = networkingVars.hostsFile;
+  networking.search = lib.mkAfter [ "orb.local" ];
+  programs.ssh.knownHosts = networkingVars.ssh.knownHosts;
+
   programs.zsh.enable = true;
   programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;
@@ -59,6 +64,7 @@ in
     extraGroups = mkDefault [
       "wheel"
     ];
+    openssh.authorizedKeys.keys = networkingVars.userAuthorizedKeys;
   };
 
   users.extraGroups.docker.members = [ "${myvars.user}" ];

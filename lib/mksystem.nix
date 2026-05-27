@@ -72,8 +72,7 @@ systemFunc rec {
         }
     )
     ../machines/nix-core.nix
-    ../modules/networking
-    (if !isDarwin then ../modules/networking/nixos.nix else { })
+    # ../modules/networking
     ../overlays/rldd.nix
     ../overlays/mtg.nix
     ../hosts/${hostName}
