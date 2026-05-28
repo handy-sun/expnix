@@ -33,6 +33,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ## ------ my applications, configs and scripts ------
     cc-switch-tui = {
       url = "github:handy-sun/cc-switch-tui";
@@ -60,6 +64,12 @@
 
     my-helix-config = {
       url = "github:handy-sun/helix-config";
+      flake = false;
+    };
+
+    ## secret settings
+    my-super = {
+      url = "github:handy-sun/superconf";
       flake = false;
     };
 

@@ -76,6 +76,7 @@ systemFunc rec {
     ../overlays/rldd.nix
     ../overlays/mtg.nix
     ../hosts/${hostName}
+    inputs.sops-nix.nixosModules.sops
     home-manager.home-manager
     {
       home-manager.useGlobalPkgs = true;
