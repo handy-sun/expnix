@@ -88,7 +88,6 @@ inputs.system-manager.lib.makeSystemConfig {
           };
         };
 
-        users.groups.${username} = { };
         users.users.${username} = {
           isNormalUser = true;
           group = "users";
