@@ -193,7 +193,7 @@ in
     ## `brew install --cask`
     casks = [
       "ghostty"
-      "antigravity"
+      # "antigravity"
       "cc-switch"
       "nomachine"
       ## ------ Failed to install: ------

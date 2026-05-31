@@ -2,7 +2,6 @@
 ## tuiAdvanced — larger / more complex terminal programs
 ## ============================================================
 {
-  inputs,
   pkgs,
   lib,
   profileLevel,
@@ -26,7 +25,7 @@
       ## downloads / transfers
       aria2 # A lightweight multi-protocol & multi-source command-line download utility
       axel
-      lftp
+      # lftp
       lrzsz
 
       ## archives (extras)
