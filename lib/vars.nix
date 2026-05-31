@@ -48,6 +48,7 @@ rec {
     "dnsmasq"
     "ldns"
     "socat"
+    "zoxide"
   ];
 
   ## Profile level defaults — hosts can override.

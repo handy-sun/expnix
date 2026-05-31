@@ -105,6 +105,7 @@ in
       bind-key C-t send-prefix -2
 
       setw -g xterm-keys on
+      set -g extended-keys on
 
       bind-key j select-pane -D
       bind-key k select-pane -U
