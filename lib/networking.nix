@@ -161,6 +161,7 @@ let
       addresses.ethernet = {
         ipv4 = "192.168.1.58";
       };
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMizFfVaUfb6gY10IXqG7dguFa3P5Z8OwLiU8n4Q+SvG qi@buking";
     };
 
     reinsvps = {
