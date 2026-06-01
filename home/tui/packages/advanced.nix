@@ -35,6 +35,7 @@
       unrar-free
 
       ## disk / files
+      gdu
       miniserve
 
       ## monitoring

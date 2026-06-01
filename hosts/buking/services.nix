@@ -12,6 +12,7 @@ in
   imports = [ (myutils.relativeToRoot "modules/sing-box") ];
 
   services = {
+    onedrive.enable = true;
     zerotierone.enable = true;
     dae.enable = true;
     sing-box = {

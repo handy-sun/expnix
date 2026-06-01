@@ -44,6 +44,7 @@
       dust
 
       ## file ops
+      exfatprogs
       rsync
       tree
       just

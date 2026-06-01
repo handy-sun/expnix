@@ -125,8 +125,8 @@ lib.mkIf profileLevel.guiBase {
     settings = {
       colors = {
         primary = {
-          background = "#343d46";
-          foreground = "#D8DEE9";
+          background = "#1f1f28";
+          foreground = "#d8dfda";
         };
         normal = {
           black = "#1E1E1E";
@@ -136,7 +136,7 @@ lib.mkIf profileLevel.guiBase {
           blue = "#6699CC";
           magenta = "#C695C6";
           cyan = "#5FB4B4";
-          white = "#F7F7F7";
+          white = "#F0F1F0";
         };
         bright = {
           black = "#B4B4A6";
@@ -146,7 +146,15 @@ lib.mkIf profileLevel.guiBase {
           blue = "#85ADD6";
           magenta = "#D8B6D8";
           cyan = "#82C4C4";
-          white = "#FAFAFA";
+          white = "#E1E9E4";
+        };
+        cursor = {
+          cursor = "#f5e0dc";
+          text = "#11111b";
+        };
+        selection = {
+          background = "#585b70";
+          text = "#d8dfda";
         };
       };
       bell = {
@@ -175,6 +183,7 @@ lib.mkIf profileLevel.guiBase {
         multiplier = 5;
       };
       window = {
+        blur = pkgs.stdenv.isDarwin;
         decorations = "None";
         dynamic_padding = true;
         dynamic_title = true;
