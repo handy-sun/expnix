@@ -53,10 +53,6 @@
 
   system.stateVersion = "26.05";
   ## ------ other optional services ------
-  services.dae.enable = true;
-  services.zerotierone = {
-    enable = true;
-  };
   ## replace sddm
   services.greetd = {
     enable = true;
