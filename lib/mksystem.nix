@@ -36,6 +36,8 @@ let
   systemFunc = if isDarwin then inputs.nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
   home-manager =
     if isDarwin then inputs.home-manager.darwinModules else inputs.home-manager.nixosModules;
+  sopsModule =
+    if isDarwin then inputs.sops-nix.darwinModules.sops else inputs.sops-nix.nixosModules.sops;
   ## Expose some extra arguments so that our modules can parameterize better based on these values.
   specialArgs = {
     inherit
@@ -76,7 +78,7 @@ systemFunc rec {
     ../overlays/rldd.nix
     ../overlays/mtg.nix
     ../hosts/${hostName}
-    inputs.sops-nix.nixosModules.sops
+    sopsModule
     home-manager.home-manager
     {
       home-manager.useGlobalPkgs = true;
