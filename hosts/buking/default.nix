@@ -45,9 +45,9 @@
 
   services.openssh = {
     enable = true;
-    # settings = {
-    #   PermitRootLogin = "yes";
-    # };
+    settings = {
+      PubkeyAuthentication = "yes";
+    };
   };
   networking.networkmanager.enable = true;
 

@@ -148,19 +148,35 @@ let
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIERWaYmUBGmyw6unmj+fOd55jkFL3o/kfAJFw2WZ/i+8 qi@orbvmnix";
     };
 
-    handyMini = {
+    handy = {
       user = username;
-      addresses.ethernet = {
-        ipv4 = "192.168.1.27";
+      addresses = {
+        eth = {
+          ipv4 = "192.168.1.27";
+          names = [ "handyMini" ];
+        };
+        zt = {
+          ipv4 = "10.144.2.8";
+          names = [ "handy-zt" ];
+        };
       };
+      preferredAddress = "eth";
+      useCanonicalName = true;
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXv7vJ9dWH6CY/xKzB6qjpWCcTlhxI17BHn8/g+zI9x qi@handyMini";
     };
 
     buking = {
       user = username;
-      addresses.ethernet = {
-        ipv4 = "192.168.1.58";
+      addresses = {
+        eth = {
+          ipv4 = "192.168.1.29";
+        };
+        zt = {
+          ipv4 = "10.144.2.9";
+        };
       };
+      preferredAddress = "eth";
+      useCanonicalName = true;
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMizFfVaUfb6gY10IXqG7dguFa3P5Z8OwLiU8n4Q+SvG qi@buking";
     };
 
@@ -178,10 +194,22 @@ let
     };
 
     ms7d = {
-      addresses.eth = {
-        ipv4 = "192.168.1.29";
+      addresses = {
+        # eth = {
+        #   ipv4 = "192.168.1.60";
+        # };
+        zt = {
+          ipv4 = "10.144.4.7";
+        };
       };
       sshHostKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB7ZnRR8sF38eSwf67aDEeBnL+O74iNDfnQnJ9Qxr6chte2bZv4p9q9nb3LDx1ZRNCGEQmB1k36NFbMrFixCCqs= sunqi@MS-7D17-SQ";
+    };
+
+    p600qi = {
+      addresses.zt = {
+        ipv4 = "10.144.7.6";
+      };
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHV2n5spE7gV6tnspfAqMXs/siviXqj5e34PWCn75SrP qi@p600qi";
     };
   };
 
@@ -263,7 +291,7 @@ rec {
 
     knownHostsText = concatStringsSep "\n" (
       mapAttrsToList (
-        _: value: "${concatStringsSep "," value.hostNames} ${value.publicKey}"
+        name: value: "${concatStringsSep "," (value.hostNames or [ name ])} ${value.publicKey}"
       ) ssh.knownHosts
     );
   };
