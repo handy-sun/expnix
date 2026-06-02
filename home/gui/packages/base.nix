@@ -11,8 +11,6 @@ lib.mkIf profileLevel.guiBase {
     [
       mpv
       zed-editor
-      telegram-desktop
-      rustdesk
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       wayclip
@@ -20,5 +18,7 @@ lib.mkIf profileLevel.guiBase {
       thunar
       peazip
       appimage-run
+      telegram-desktop
+      rustdesk
     ];
 }

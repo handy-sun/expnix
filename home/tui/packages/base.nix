@@ -44,7 +44,6 @@
       dust
 
       ## file ops
-      exfatprogs
       rsync
       tree
       just
@@ -126,6 +125,7 @@
       fio
       ioping
       hdparm
+      exfatprogs
     ]
     ++ lib.optionals isDarwin [
       # xquartz
