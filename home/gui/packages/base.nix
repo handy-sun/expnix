@@ -11,6 +11,8 @@ lib.mkIf profileLevel.guiBase {
     [
       mpv
       zed-editor
+      telegram-desktop
+      rustdesk
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       wayclip

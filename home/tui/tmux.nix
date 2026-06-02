@@ -106,6 +106,7 @@ in
 
       setw -g xterm-keys on
       set -g extended-keys on
+      set -g extended-keys-format csi-u
 
       bind-key j select-pane -D
       bind-key k select-pane -U
