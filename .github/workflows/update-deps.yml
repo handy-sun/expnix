@@ -28,7 +28,7 @@ jobs:
           git config user.name "github-actions[bot]"
 
           before_rev="$(git rev-parse HEAD)"
-          nix flake update --commit-lock-file
+          nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager system-manager helix-dev
           after_rev="$(git rev-parse HEAD)"
 
           if [ "$before_rev" = "$after_rev" ]; then
