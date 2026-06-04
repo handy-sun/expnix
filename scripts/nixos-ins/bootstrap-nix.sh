@@ -9,7 +9,33 @@ mkdir -p ~/.local/bin
 
 gh auth login -p ssh
 
-! test -d ~/.config/nix && mkdir -p ~/.config/nix && echo "access-tokens = github.com=$(gh auth token)" >> ~/.config/nix/nix.conf
+mkdir -p ~/.config/nix
+NIX_CONF="${HOME}/.config/nix/nix.conf"
+TOKEN_TMP="$(mktemp)"
+NIX_CONF_TMP="$(mktemp)"
+trap 'rm -f "${TOKEN_TMP}" "${NIX_CONF_TMP}"' EXIT
+
+touch "${NIX_CONF}"
+chmod 600 "${NIX_CONF}"
+gh auth token > "${TOKEN_TMP}"
+chmod 600 "${NIX_CONF_TMP}"
+awk -v token="$(<"${TOKEN_TMP}")" '
+    BEGIN { written = 0 }
+    /^access-tokens = github.com=/ {
+        if (!written) {
+            print "access-tokens = github.com=" token
+            written = 1
+        }
+        next
+    }
+    { print }
+    END {
+        if (!written) {
+            print "access-tokens = github.com=" token
+        }
+    }
+' "${NIX_CONF}" > "${NIX_CONF_TMP}"
+install -m 600 "${NIX_CONF_TMP}" "${NIX_CONF}"
 
 npm i -g @anthropic-ai/claude-code@latest
 npm i -g @openai/codex@latest

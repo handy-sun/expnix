@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-## 05-install.sh — Install NixOS and create user
-## Usage: ./05-install.sh [USERNAME]
+## 05-install.sh — Install NixOS and enter the installed system
+## Usage: ./05-install.sh
 set -euo pipefail
 
 echo "========================================="
@@ -13,12 +13,9 @@ read -rp "Confirm? (y/N): " confirm
 echo ">>> Installing system..."
 nixos-install --option substituters https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
 
-echo ">>> Creating user..."
-USER_NAME="${1:-qi}"
-
-nixos-enter -c "useradd ${USER_NAME} -m -G wheel"
-echo ">>> Set user password:"
-nixos-enter -c "passwd ${USER_NAME}"
+echo ">>> Entering installed system..."
+echo "Create users and set passwords inside the shell, then run: exit"
+nixos-enter
 
 echo ""
 echo "========================================="

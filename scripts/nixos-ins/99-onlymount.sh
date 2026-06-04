@@ -1,17 +1,34 @@
 #!/usr/bin/env bash
-## 03-onlymount.sh — Mount existing btrfs subvolumes (no subvolume creation)
-## Usage: ./03-onlymount.sh [DISK] [SWAP_SIZE]
+## 99-onlymount.sh — Mount existing btrfs subvolumes (no subvolume creation)
+## Usage: ./99-onlymount.sh [DISK] [SWAP_SIZE]
 ## Defaults: /dev/sda, 4g
 ## Use this when subvolumes already exist but need to remount (e.g. after reboot)
 set -euo pipefail
 
 DISK="${1:-/dev/sda}"
 SWAP_SIZE="${2:-4g}"
-ROOT_PART="${DISK}2"
-ESP_PART="${DISK}1"
+
+partition_path() {
+    local disk="$1"
+    local number="$2"
+
+    if [[ "${disk}" =~ [0-9]$ ]]; then
+        printf '%sp%s\n' "${disk}" "${number}"
+    else
+        printf '%s%s\n' "${disk}" "${number}"
+    fi
+}
+
+ROOT_PART="$(partition_path "${DISK}" 2)"
+ESP_PART="$(partition_path "${DISK}" 1)"
 
 if [[ ! -b "${ROOT_PART}" ]]; then
     echo "Error: ${ROOT_PART} not found"
+    exit 1
+fi
+
+if [[ ! -b "${ESP_PART}" ]]; then
+    echo "Error: ${ESP_PART} not found"
     exit 1
 fi
 
