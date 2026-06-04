@@ -32,6 +32,14 @@ in
       ".DS_Store"
     ];
 
+    includes = [
+      {
+        ## use different email & name for work:
+        path = xdgGitConfDir + "/second.gitconfig";
+        condition = "gitdir:~/work/";
+      }
+    ];
+
     settings = {
       user.name = "sooncheer";
       user.email = "handy-sun@foxmail.com";
