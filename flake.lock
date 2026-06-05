@@ -348,15 +348,15 @@
       "locked": {
         "lastModified": 1780664273,
         "narHash": "sha256-OkLgo+/UQQxdHcv6zkNE7yzYImucsELCtX55Bm40tgA=",
-        "owner": "handy-sun",
-        "repo": "superconf",
+        "ref": "refs/heads/master",
         "rev": "448ae32b0982c5805e17b559ececce9da7b831d1",
-        "type": "github"
+        "revCount": 44,
+        "type": "git",
+        "url": "ssh://git@github.com/handy-sun/superconf.git"
       },
       "original": {
-        "owner": "handy-sun",
-        "repo": "superconf",
-        "type": "github"
+        "type": "git",
+        "url": "ssh://git@github.com/handy-sun/superconf.git"
       }
     },
     "my-wezterm": {

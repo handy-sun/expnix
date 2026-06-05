@@ -69,7 +69,7 @@
 
     ## secret settings
     my-super = {
-      url = "github:handy-sun/superconf";
+      url = "git+ssh://git@github.com/handy-sun/superconf.git";
       flake = false;
     };
 
