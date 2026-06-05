@@ -183,9 +183,6 @@ let
     reinsvps = {
       user = username;
       port = 23512;
-      addresses.common = {
-        ipv4 = "10.3.1.9";
-      };
     };
 
     nixwsl = {

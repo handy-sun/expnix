@@ -1,6 +1,4 @@
 {
-  inputs,
-  hostName,
   lib,
   pkgs,
   myutils,
@@ -10,7 +8,6 @@
   imports =
     (lib.map myutils.relativeToRoot [
       "nixos"
-      "modules/sops-static-ipv4"
     ])
     ++ (myutils.scanPaths ./.);
 
@@ -98,17 +95,6 @@
     "console=tty0"
   ];
 
-  sops = {
-    age.keyFile = "/var/lib/sops-nix/key.txt";
-  };
-
-  networking.sopsStaticIpv4 = {
-    enable = true;
-    sopsFile = inputs.my-super + "/hosts/${hostName}/net.yaml";
-    interface = "eth0";
-    defaultPrefixLength = 23;
-  };
-
   services.openssh = {
     enable = true;
     ports = [ 23512 ];
@@ -121,6 +107,16 @@
   };
   networking = {
     usePredictableInterfaceNames = false;
+    interfaces.eth0.ipv4.addresses = [
+      {
+        address = "10.3.1.9";
+        prefixLength = 23;
+      }
+    ];
+    defaultGateway = {
+      address = "10.3.1.1";
+      interface = "eth0";
+    };
     nameservers = [
       "1.1.1.1"
       "8.8.8.8"

@@ -346,11 +346,11 @@
     "my-super": {
       "flake": false,
       "locked": {
-        "lastModified": 1780664273,
-        "narHash": "sha256-OkLgo+/UQQxdHcv6zkNE7yzYImucsELCtX55Bm40tgA=",
+        "lastModified": 1780668763,
+        "narHash": "sha256-8edSIcpZ+e5EwIsQCzGwU/tYMLUUMsQIsoJtpX5DZLI=",
         "ref": "refs/heads/master",
-        "rev": "448ae32b0982c5805e17b559ececce9da7b831d1",
-        "revCount": 44,
+        "rev": "ca60dc0295e499d4e90cd08803a97260bc8a5f2e",
+        "revCount": 45,
         "type": "git",
         "url": "ssh://git@github.com/handy-sun/superconf.git"
       },
