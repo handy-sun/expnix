@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   hostName,
   lib,
@@ -7,15 +6,11 @@
   myutils,
   ...
 }:
-let
-  netSopsFile = inputs.my-super + "/hosts/${hostName}/net.yaml";
-  networkInterface = "eth0";
-  defaultPrefixLength = 23;
-in
 {
   imports =
     (lib.map myutils.relativeToRoot [
       "nixos"
+      "modules/sops-static-ipv4"
     ])
     ++ (myutils.scanPaths ./.);
 
@@ -105,53 +100,13 @@ in
 
   sops = {
     age.keyFile = "/var/lib/sops-nix/key.txt";
-    secrets = {
-      reinsvps-ip = {
-        sopsFile = netSopsFile;
-        key = "ip";
-      };
-      reinsvps-gateway = {
-        sopsFile = netSopsFile;
-        key = "gateway";
-      };
-    };
-    templates."reinsvps-net.env" = {
-      content = ''
-        REINSVPS_IP=${config.sops.placeholder.reinsvps-ip}
-        REINSVPS_GATEWAY=${config.sops.placeholder.reinsvps-gateway}
-      '';
-      restartUnits = [ "reinsvps-static-network.service" ];
-    };
   };
 
-  systemd.services.reinsvps-static-network = {
-    description = "Apply reinsvps static network settings from SOPS";
-    wantedBy = [ "multi-user.target" ];
-    before = [
-      "network-online.target"
-      "sshd.service"
-    ];
-    wants = [ "network-pre.target" ];
-    after = [ "network-pre.target" ];
-    path = [ pkgs.iproute2 ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      EnvironmentFile = config.sops.templates."reinsvps-net.env".path;
-    };
-    script = ''
-      set -euo pipefail
-
-      ip_addr="$REINSVPS_IP"
-      case "$ip_addr" in
-        */*) ;;
-        *) ip_addr="$ip_addr/${toString defaultPrefixLength}" ;;
-      esac
-
-      ip link set dev ${networkInterface} up
-      ip address replace "$ip_addr" dev ${networkInterface}
-      ip route replace default via "$REINSVPS_GATEWAY" dev ${networkInterface}
-    '';
+  networking.sopsStaticIpv4 = {
+    enable = true;
+    sopsFile = inputs.my-super + "/hosts/${hostName}/net.yaml";
+    interface = "eth0";
+    defaultPrefixLength = 23;
   };
 
   services.openssh = {
@@ -165,7 +120,6 @@ in
     };
   };
   networking = {
-    networkmanager.unmanaged = [ "interface-name:${networkInterface}" ];
     usePredictableInterfaceNames = false;
     nameservers = [
       "1.1.1.1"
