@@ -58,6 +58,7 @@
     defaultSopsFormat = "dotenv";
     age.keyFile = "/var/lib/sops-nix/key.txt";
     secrets.beszel-agent-env = {
+      key = "";
       restartUnits = [ "beszel-agent.service" ];
     };
   };

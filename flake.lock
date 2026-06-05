@@ -346,11 +346,11 @@
     "my-super": {
       "flake": false,
       "locked": {
-        "lastModified": 1780639092,
-        "narHash": "sha256-Y4Prwkx6K+h/S91B4++i/kiUcnDhVxU+Tj1PALLD6dc=",
+        "lastModified": 1780647930,
+        "narHash": "sha256-iRKSddoHHww6z/gckxSliU4xqhljESSkHpXNLAOgGRQ=",
         "owner": "handy-sun",
         "repo": "superconf",
-        "rev": "83eccc8d61e3a8d5eee1c5361980399f048eceab",
+        "rev": "9f15dd253a712f101b96e6689ed7a671775f544b",
         "type": "github"
       },
       "original": {
