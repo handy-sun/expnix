@@ -1,4 +1,7 @@
 {
+  config,
+  inputs,
+  hostName,
   lib,
   pkgs,
   myvars,
@@ -49,6 +52,22 @@
       PubkeyAuthentication = "yes";
     };
   };
+
+  sops = {
+    defaultSopsFile = inputs.my-super + "/hosts/${hostName}/beszel-agent.env";
+    defaultSopsFormat = "dotenv";
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+    secrets.beszel-agent-env = {
+      restartUnits = [ "beszel-agent.service" ];
+    };
+  };
+
+  services.beszel.agent = {
+    enable = true;
+    environmentFile = config.sops.secrets.beszel-agent-env.path;
+    openFirewall = true;
+  };
+
   networking.networkmanager.enable = true;
 
   system.stateVersion = "26.05";
