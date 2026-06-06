@@ -7,6 +7,9 @@ alias sh := switch-home
 
 sys_conf_root := if os() == "macos" { "darwinConfigurations" } else { "nixosConfigurations" }
 
+nix_inputs := "nixpkgs nix-darwin nixos-wsl home-manager system-manager helix-dev"
+my_inputs := "cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config sbtpl"
+
 default:
   @just --list
 
@@ -17,16 +20,16 @@ setup-hook:
 # Update the flake inputs about nix and create commit
 [group('nix')]
 upc-nix:
-  nix flake update --commit-lock-file nixpkgs nix-darwin nixos-wsl home-manager system-manager helix-dev
+  nix flake update --commit-lock-file {{nix_inputs}}
 
 # Update the flake inputs starts with 'my-'
 [group('nix')]
 upc-my:
-  nix flake update --commit-lock-file cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config my-superc sbtpl
+  nix flake update --commit-lock-file {{my_inputs}}
 
 [group('nix')]
 up-my:
-  nix flake update cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config my-superc sbtpl
+  nix flake update {{my_inputs}}
 
 # Open a nix repl shell with the current profile
 [group('nix')]

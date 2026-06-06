@@ -5,14 +5,16 @@
   ...
 }:
 let
-  template = pkgs.writeText "real-dns.json" (builtins.readFile (inputs.sbtpl + "/substore/real-dns.json"));
+  template = pkgs.writeText "real-dns.json" (
+    builtins.readFile (inputs.sbtpl + "/substore/real-dns.json")
+  );
 in
 {
   disabledModules = [ "services/networking/sing-box.nix" ];
   imports = [ (myutils.relativeToRoot "modules/sing-box") ];
 
   services = {
-    onedrive.enable = true;
+    # onedrive.enable = true;
     zerotierone.enable = true;
     dae.enable = true;
     sing-box = {

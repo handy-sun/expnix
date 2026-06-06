@@ -195,7 +195,7 @@ in
       "ghostty"
       # "antigravity"
       "cc-switch"
-      "nomachine"
+      # "nomachine"
       ## ------ Failed to install: ------
       # "lite-edit" # not found
       # "alacritty" # deprecated

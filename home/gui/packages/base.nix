@@ -15,7 +15,7 @@ lib.mkIf profileLevel.guiBase {
     ++ lib.optionals pkgs.stdenv.isLinux [
       wayclip
       wdisplays
-      thunar
+      # thunar
       peazip
       appimage-run
       telegram-desktop
