@@ -67,12 +67,6 @@
       flake = false;
     };
 
-    ## secret settings
-    my-super = {
-      url = "git+ssh://git@github.com/handy-sun/superconf.git";
-      flake = false;
-    };
-
     sbtpl = {
       url = "github:handy-sun/sbtpl";
       flake = false;

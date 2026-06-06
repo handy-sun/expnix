@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   hostName,
   lib,
   pkgs,
@@ -54,7 +53,7 @@
   };
 
   sops = {
-    defaultSopsFile = inputs.my-super + "/hosts/${hostName}/beszel-agent.env";
+    defaultSopsFile = myutils.relativeToRoot "secrets/hosts/${hostName}/beszel-agent.env";
     defaultSopsFormat = "dotenv";
     age.keyFile = "/var/lib/sops-nix/key.txt";
     secrets.beszel-agent-env = {

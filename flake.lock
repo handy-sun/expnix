@@ -343,22 +343,6 @@
         "type": "github"
       }
     },
-    "my-super": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1780668763,
-        "narHash": "sha256-8edSIcpZ+e5EwIsQCzGwU/tYMLUUMsQIsoJtpX5DZLI=",
-        "ref": "refs/heads/master",
-        "rev": "ca60dc0295e499d4e90cd08803a97260bc8a5f2e",
-        "revCount": 45,
-        "type": "git",
-        "url": "ssh://git@github.com/handy-sun/superconf.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/handy-sun/superconf.git"
-      }
-    },
     "my-wezterm": {
       "flake": false,
       "locked": {
@@ -565,7 +549,6 @@
         "my-dotzsh": "my-dotzsh",
         "my-helix-config": "my-helix-config",
         "my-nvimdots": "my-nvimdots",
-        "my-super": "my-super",
         "my-wezterm": "my-wezterm",
         "nix-darwin": "nix-darwin",
         "nixos-wsl": "nixos-wsl",
