@@ -16,7 +16,12 @@ in
   services = {
     # onedrive.enable = true;
     zerotierone.enable = true;
-    dae.enable = true;
+
+    dae = {
+      enable = true;
+      configFile = inputs.my-dotfiles + "/dae/config-with-singb.dae";
+    };
+
     sing-box = {
       enable = true;
       configGeneration = {
