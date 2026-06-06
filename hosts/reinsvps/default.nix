@@ -131,8 +131,17 @@ in
       : "''${REINSVPS_IPV4_PREFIX_LENGTH:?missing REINSVPS_IPV4_PREFIX_LENGTH in ${privateNetworkEnv}}"
       : "''${REINSVPS_IPV4_GATEWAY:?missing REINSVPS_IPV4_GATEWAY in ${privateNetworkEnv}}"
 
+      desired_address="$REINSVPS_IPV4_ADDRESS/$REINSVPS_IPV4_PREFIX_LENGTH"
+
       ip link set dev eth0 up
-      ip address replace "$REINSVPS_IPV4_ADDRESS/$REINSVPS_IPV4_PREFIX_LENGTH" dev eth0
+      ip address replace "$desired_address" dev eth0
+
+      ip -o -4 address show dev eth0 scope global | while read -r _ _ _ current_address _; do
+        if [ "$current_address" != "$desired_address" ]; then
+          ip address delete "$current_address" dev eth0
+        fi
+      done
+
       ip route replace default via "$REINSVPS_IPV4_GATEWAY" dev eth0
     '';
   };
