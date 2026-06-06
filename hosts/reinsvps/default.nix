@@ -4,16 +4,12 @@
   myutils,
   ...
 }:
-let
-  localNetworkModule = /etc/nixos/private/reinsvps-network.nix;
-in
 {
   imports =
     (lib.map myutils.relativeToRoot [
       "nixos"
     ])
-    ++ (myutils.scanPaths ./.)
-    ++ lib.optional (builtins.pathExists localNetworkModule) localNetworkModule;
+    ++ (myutils.scanPaths ./.);
 
   boot.loader.grub.enable = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -111,6 +107,16 @@ in
   };
   networking = {
     usePredictableInterfaceNames = false;
+    interfaces.eth0.ipv4.addresses = [
+      {
+        address = "10.3.1.9";
+        prefixLength = 23;
+      }
+    ];
+    defaultGateway = {
+      address = "10.3.1.1";
+      interface = "eth0";
+    };
     nameservers = [
       "1.1.1.1"
       "8.8.8.8"

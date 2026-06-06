@@ -90,15 +90,7 @@ gc:
 [linux]
 [group('nix')]
 switch:
-  if [ "$(hostname)" = "reinsvps" ]; then \
-    test -e /etc/nixos/private/reinsvps-network.nix || { \
-      printf '%s\n' "missing /etc/nixos/private/reinsvps-network.nix"; \
-      exit 1; \
-    }; \
-    nh os switch --impure .; \
-  else \
-    nh os switch .; \
-  fi
+  nh os switch .
 
 [linux]
 [group('nix')]
@@ -113,15 +105,7 @@ query-tree:
 # Evaluate the system toplevel derivation for a host
 [group('nix')]
 evtop host=`hostname`:
-  if [ "{{host}}" = "reinsvps" ] && [ "$(hostname)" = "reinsvps" ]; then \
-    test -e /etc/nixos/private/reinsvps-network.nix || { \
-      printf '%s\n' "missing /etc/nixos/private/reinsvps-network.nix"; \
-      exit 1; \
-    }; \
-    nix eval --impure "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')"; \
-  else \
-    nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')"; \
-  fi
+  nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')"
 
 [group('nix')]
 query-depends pkgname host=`hostname`:
