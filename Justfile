@@ -22,11 +22,11 @@ upc-nix:
 # Update the flake inputs starts with 'my-'
 [group('nix')]
 upc-my:
-  nix flake update --commit-lock-file cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config sbtpl
+  nix flake update --commit-lock-file cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config my-superc sbtpl
 
 [group('nix')]
 up-my:
-  nix flake update cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config sbtpl
+  nix flake update cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config my-superc sbtpl
 
 # Open a nix repl shell with the current profile
 [group('nix')]

@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779987295,
-        "narHash": "sha256-EAzJHdFhbj5jEcpY9PnCJ22cJOyU1J3AwiwrPT6ffgg=",
+        "lastModified": 1780565144,
+        "narHash": "sha256-s9QjatHW2Ftt9y0T1YqhKS+MrXiJHDl8zU6Ez+oM+dc=",
         "owner": "handy-sun",
         "repo": "cc-switch-tui",
-        "rev": "5aa71d37f4ac771356101881126dced2a8a7db52",
+        "rev": "ff9a06e1b4e01efa3d60119414b54b0d8cac75ab",
         "type": "github"
       },
       "original": {
@@ -240,11 +240,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778805320,
-        "narHash": "sha256-nGFJ01m2CTBKD4ABtcY4vLhHrRN91LKr/pn41PcU78A=",
+        "lastModified": 1780099287,
+        "narHash": "sha256-efIPwVGtIWIjWcznhaop6XN6HxnOL8800hF6CBNvlqQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "9846abe15e7d0d36b8acbd4d05f2b87461744c92",
+        "rev": "7d8127d308c3fb9664f7e643eec944be74ebb37d",
         "type": "github"
       },
       "original": {
@@ -330,11 +330,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1780478852,
-        "narHash": "sha256-U5Q/ojQTxpF5yJzG0Dmt8UGCPaMhOxdbaUDRDfZom6E=",
+        "lastModified": 1780638432,
+        "narHash": "sha256-b2HFX9iFbB2/SdYJZQ1z/r00NrJwo124mrZ1lyFbWj4=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "d97b4aecc95d4e3adfe5d68dbe49c64bf1dcc98c",
+        "rev": "8621a68aff153bdb14fe055a5f3f12b2eeaed9ba",
         "type": "github"
       },
       "original": {
@@ -346,17 +346,17 @@
     "my-super": {
       "flake": false,
       "locked": {
-        "lastModified": 1779903588,
-        "narHash": "sha256-AplhoI7RqaEFdapXVFlKfIyMgUzko+d9oFF909/AaTc=",
-        "owner": "handy-sun",
-        "repo": "superconf",
-        "rev": "fbdb15fb1cf9bd314eab13070fae68614896698c",
-        "type": "github"
+        "lastModified": 1780668763,
+        "narHash": "sha256-8edSIcpZ+e5EwIsQCzGwU/tYMLUUMsQIsoJtpX5DZLI=",
+        "ref": "refs/heads/master",
+        "rev": "ca60dc0295e499d4e90cd08803a97260bc8a5f2e",
+        "revCount": 45,
+        "type": "git",
+        "url": "ssh://git@github.com/handy-sun/superconf.git"
       },
       "original": {
-        "owner": "handy-sun",
-        "repo": "superconf",
-        "type": "github"
+        "type": "git",
+        "url": "ssh://git@github.com/handy-sun/superconf.git"
       }
     },
     "my-wezterm": {
@@ -497,11 +497,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1778672786,
-        "narHash": "sha256-Blg88K1jwG+P0Mr27+rKMFCufdrWkV3wWh9AdYtz0FQ=",
+        "lastModified": 1780030872,
+        "narHash": "sha256-u6WU/yd/o8iYQrHX3RAwO1hYa3LkoSL+WNQD0rJfJZQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "eef00dfd8a712b34af845f9350bac681b1228bd1",
+        "rev": "e9a7635a57597d9754eccebdfc7045e6c8600e6b",
         "type": "github"
       },
       "original": {
@@ -599,11 +599,11 @@
     "sbtpl": {
       "flake": false,
       "locked": {
-        "lastModified": 1780554555,
-        "narHash": "sha256-plzXeW3j8jo3DCzRqyCtCILZ7htJCK9N9iEOxi4Cad0=",
+        "lastModified": 1780640121,
+        "narHash": "sha256-xCg+CS42VCbGgnFZt+O0sfaJaY8TdeAuEbD3Udr5k10=",
         "owner": "handy-sun",
         "repo": "sbtpl",
-        "rev": "f2370f7fc926622577ca0a675469d92b1f01c06b",
+        "rev": "55a1b10ee6edfe90940efe2847134c2c28668ef2",
         "type": "github"
       },
       "original": {

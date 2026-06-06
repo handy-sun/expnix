@@ -27,6 +27,6 @@
     }
     // networkingVars.ssh.settings;
 
-    includes = lib.optionals isDarwin [ "~/.orbstack/ssh/config" ];
+    includes = [ "~/.ssh/private-hosts" ] ++ lib.optionals isDarwin [ "~/.orbstack/ssh/config" ];
   };
 }
