@@ -14,7 +14,11 @@ let
   commonSystemPackages = myutils.resolveNames pkgs myvars.systemCommonPkgs;
 in
 {
-  imports = myutils.scanPaths ./.;
+  imports =
+    lib.map myutils.relativeToRoot [
+      "modules/fcitx5-candlelight-macos-dark"
+    ]
+    ++ (myutils.scanPaths ./.);
 
   programs.nix-ld.enable = true;
 
@@ -94,6 +98,7 @@ in
           qt6Packages.fcitx5-chinese-addons
           fcitx5-gtk
         ];
+        candlelightMacosDark.enable = true;
         ## Font size donnot changed?
         settings.addons.classicui = {
           globalSection = {
