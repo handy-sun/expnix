@@ -22,6 +22,13 @@ lib.mkIf profileLevel.guiBase {
     "wezterm/utils".source = wezConfDir + "/utils";
   };
 
+  xdg.dataFile = lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
+    "applications/kitty.desktop".source = pkgs.runCommand "kitty-desktop-entry" { } ''
+      sed 's|^Exec=kitty$|Exec=${lib.getExe pkgs.kitty} --start-as=maximized|' \
+        ${pkgs.kitty}/share/applications/kitty.desktop > $out
+    '';
+  };
+
   programs.wezterm = {
     enable = true;
 
@@ -83,6 +90,75 @@ lib.mkIf profileLevel.guiBase {
     };
 
     extraConfig = builtins.readFile (wezConfDir + "/extra.lua");
+  };
+
+  ## ------ kitty ------
+  programs.kitty = {
+    enable = true;
+    package = pkgs.kitty;
+    darwinLaunchOptions = [ "--start-as=maximized" ];
+
+    font = {
+      name = myvars.fontFamily;
+      size = font_size;
+    };
+
+    settings = {
+      shell = "${fish} -il";
+
+      background = "#1f1f28";
+      foreground = "#d8dfda";
+      selection_background = "#585b70";
+      selection_foreground = "#d8dfda";
+      cursor = "#f5e0dc";
+      cursor_text_color = "#11111b";
+      color0 = "#1E1E1E";
+      color1 = "#EC5F66";
+      color2 = "#99C794";
+      color3 = "#F9AE58";
+      color4 = "#6699CC";
+      color5 = "#C695C6";
+      color6 = "#5FB4B4";
+      color7 = "#F0F1F0";
+      color8 = "#B4B4A6";
+      color9 = "#F97B58";
+      color10 = "#ACD1A8";
+      color11 = "#FAC761";
+      color12 = "#85ADD6";
+      color13 = "#D8B6D8";
+      color14 = "#82C4C4";
+      color15 = "#E1E9E4";
+
+      copy_on_select = "clipboard";
+      clear_selection_on_clipboard_loss = true;
+
+      enable_audio_bell = false;
+      cursor_shape = "block";
+      scrollback_lines = 15000;
+      wheel_scroll_multiplier = 5;
+      dynamic_window_title = true;
+      tab_bar_edge = "top";
+      tab_bar_style = "powerline";
+      tab_bar_min_tabs = 1;
+      confirm_os_window_close = 0;
+      hide_window_decorations = "yes";
+      background_opacity = "0.98";
+      window_padding_width = 0;
+    };
+
+    keybindings = {
+      "ctrl+shift+c" = "copy_to_clipboard";
+      "ctrl+shift+v" = "paste_from_clipboard";
+      "shift+insert" = "paste_from_selection";
+      "ctrl+shift+t" = "new_tab";
+      "ctrl+shift+w" = "close_tab";
+      "ctrl+tab" = "next_tab";
+      "ctrl+shift+tab" = "previous_tab";
+      "ctrl+shift+right" = "next_tab";
+      "ctrl+shift+left" = "previous_tab";
+      "ctrl+shift+enter" = "new_os_window";
+      "ctrl+shift+f11" = "toggle_fullscreen";
+    };
   };
 
   ## ------ neovide ------
