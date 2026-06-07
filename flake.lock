@@ -346,11 +346,11 @@
     "my-wezterm": {
       "flake": false,
       "locked": {
-        "lastModified": 1779707278,
-        "narHash": "sha256-evOZh5LrJnphjLj6gOLrwCzzNbUaIUip/THZUEUj13Y=",
+        "lastModified": 1780802444,
+        "narHash": "sha256-3D8kkrrKyOeYd9BRj6huerXoqDksa4U//li9LGnzjqc=",
         "owner": "handy-sun",
         "repo": "wezterm-config",
-        "rev": "6c7b5015774d18a1c809fb4a23c14e227fc0e6ba",
+        "rev": "6e67bbf22709fb40cb6aeef48dc373f76cf17638",
         "type": "github"
       },
       "original": {
