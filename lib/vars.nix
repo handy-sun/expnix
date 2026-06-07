@@ -60,6 +60,12 @@ rec {
     guiHeavy = false;
   };
 
+  reinsvpsNetwork = {
+    ipv4Address = "154.219.119.117";
+    ipv4PrefixLength = 24;
+    ipv4Gateway = "154.219.119.1";
+  };
+
   ## Fonts shared across NixOS and darwin.
   ## Attribute name strings — resolved to packages at call sites.
   fontsPkgs = [

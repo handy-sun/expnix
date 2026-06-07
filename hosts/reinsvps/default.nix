@@ -1,11 +1,12 @@
 {
   lib,
   pkgs,
+  myvars,
   myutils,
   ...
 }:
 let
-  privateNetworkEnv = "/etc/nixos/private/reinsvps-network.env";
+  network = myvars.reinsvpsNetwork;
 in
 {
   imports =
@@ -109,46 +110,18 @@ in
     };
   };
 
-  systemd.services.reinsvps-static-network = {
-    description = "Apply reinsvps static network from local env file";
-    wantedBy = [ "multi-user.target" ];
-    before = [
-      "network-online.target"
-      "sshd.service"
-    ];
-    wants = [ "network-pre.target" ];
-    after = [ "network-pre.target" ];
-    path = [ pkgs.iproute2 ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      EnvironmentFile = privateNetworkEnv;
-    };
-    script = ''
-      set -euo pipefail
-
-      : "''${REINSVPS_IPV4_ADDRESS:?missing REINSVPS_IPV4_ADDRESS in ${privateNetworkEnv}}"
-      : "''${REINSVPS_IPV4_PREFIX_LENGTH:?missing REINSVPS_IPV4_PREFIX_LENGTH in ${privateNetworkEnv}}"
-      : "''${REINSVPS_IPV4_GATEWAY:?missing REINSVPS_IPV4_GATEWAY in ${privateNetworkEnv}}"
-
-      desired_address="$REINSVPS_IPV4_ADDRESS/$REINSVPS_IPV4_PREFIX_LENGTH"
-
-      ip link set dev eth0 up
-      ip address replace "$desired_address" dev eth0
-
-      ip -o -4 address show dev eth0 scope global | while read -r _ _ _ current_address _; do
-        if [ "$current_address" != "$desired_address" ]; then
-          ip address delete "$current_address" dev eth0
-        fi
-      done
-
-      ip route replace default via "$REINSVPS_IPV4_GATEWAY" dev eth0
-    '';
-  };
-
   networking = {
     usePredictableInterfaceNames = false;
-    networkmanager.unmanaged = [ "interface-name:eth0" ];
+    interfaces.eth0.ipv4.addresses = [
+      {
+        address = network.ipv4Address;
+        prefixLength = network.ipv4PrefixLength;
+      }
+    ];
+    defaultGateway = {
+      address = network.ipv4Gateway;
+      interface = "eth0";
+    };
     nameservers = [
       "1.1.1.1"
       "8.8.8.8"

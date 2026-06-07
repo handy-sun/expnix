@@ -1,4 +1,8 @@
-{ lib, username }:
+{
+  lib,
+  username,
+  myvars,
+}:
 
 let
   inherit (lib)
@@ -183,6 +187,9 @@ let
     reinsvps = {
       user = username;
       port = 23512;
+      addresses.eth = {
+        ipv4 = myvars.reinsvpsNetwork.ipv4Address;
+      };
     };
 
     nixwsl = {

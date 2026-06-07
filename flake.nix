@@ -95,6 +95,7 @@
       myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
       networkingVars = import ./lib/networking.nix {
         inherit lib;
+        inherit myvars;
         username = myvars.user;
       };
 
