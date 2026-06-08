@@ -1,4 +1,13 @@
-{ pkgs, myutils, ... }:
+{
+  config,
+  hostName,
+  pkgs,
+  myutils,
+  ...
+}:
+let
+  singBoxSopsFile = myutils.relativeToRoot "secrets/hosts/${hostName}/sing-box.yaml";
+in
 {
   imports = [
     (myutils.relativeToRoot "modules/mtg")
@@ -6,7 +15,65 @@
 
   environment.systemPackages = [ pkgs.mtg ];
 
+  sops = {
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+
+    secrets = {
+      sing-box-ss-password = {
+        sopsFile = singBoxSopsFile;
+        key = "ss_password";
+        restartUnits = [ "sing-box.service" ];
+      };
+
+      sing-box-vmess-uuid = {
+        sopsFile = singBoxSopsFile;
+        key = "vmess_uuid";
+        restartUnits = [ "sing-box.service" ];
+      };
+    };
+  };
+
   services = {
+    sing-box = {
+      enable = true;
+      settings = {
+        log = {
+          level = "info";
+          timestamp = true;
+          output = "/tmp/box-access.log";
+        };
+
+        inbounds = [
+          {
+            type = "shadowsocks";
+            tag = "ss-in";
+            listen = "::";
+            listen_port = 29960;
+            method = "2022-blake3-aes-256-gcm";
+            password._secret = config.sops.secrets.sing-box-ss-password.path;
+          }
+          {
+            type = "vmess";
+            tag = "vmess-in";
+            listen = "::";
+            listen_port = 29961;
+            users = [
+              {
+                uuid._secret = config.sops.secrets.sing-box-vmess-uuid.path;
+              }
+            ];
+          }
+        ];
+
+        outbounds = [
+          {
+            type = "direct";
+            tag = "direct";
+          }
+        ];
+      };
+    };
+
     mtg = {
       enable = false; # set to true to activate
       settings = {
