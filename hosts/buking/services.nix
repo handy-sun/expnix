@@ -27,7 +27,7 @@ in
       configGeneration = {
         enable = true;
         sourceUrl = "http://handyMini:3001/c53248f264d9997/download/collection/main?target=V2Ray";
-        policyFilter = "@🌐Proxy@⚡UrlTest-~^(?!.*(aote|流量|到期|过滤|官网)).*$@💬AI-~^(?!.*(流量|到期|过滤|官网)).*$@🚀LowLatency-~^(?!.*(流量|到期|过滤|官网)).*$";
+        policyFilter = "@🌐Proxy@⚡UrlTest-~^(?!.*(aote|kooya|流量|到期|过滤|官网)).*$@💬AI-~^(?!.*(流量|到期|过滤|官网)).*$@🚀LowLatency-~^(?!.*(流量|到期|过滤|官网)).*$";
         extraArgs = [
           "--template"
           "${template}"
