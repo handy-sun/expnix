@@ -102,7 +102,10 @@ in
 
     extraConfig = ''
       set -g prefix2 C-t
-      bind-key C-t send-prefix -2
+      bind-key C-a show-wk-menu-root
+      bind-key C-t show-wk-menu-root
+      bind-key a send-prefix
+      bind-key t send-prefix -2
 
       setw -g xterm-keys on
       set -g extended-keys on
@@ -145,7 +148,6 @@ in
       set -ga terminal-overrides ",xterm-256color:Tc"
       set -g allow-passthrough on
 
-      bind-key Space show-wk-menu-root
     '';
   };
 }
