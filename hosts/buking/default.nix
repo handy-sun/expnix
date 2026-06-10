@@ -69,7 +69,7 @@
   };
 
   networking.networkmanager.enable = true;
-  networking.firewall.checkReversePath = "loose";
+  networking.firewall.enable = false;
 
   system.stateVersion = "26.05";
   ## ------ other optional services ------

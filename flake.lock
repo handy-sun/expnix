@@ -330,11 +330,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1781057768,
-        "narHash": "sha256-Yq8XowQF1FvN1x6oL3MKiJhcgBQYiay0089OGSQXV6A=",
+        "lastModified": 1781075744,
+        "narHash": "sha256-SEc7iPEkj5mXz70H3zC42BmeXEmK1qJbFbLHfpSLdVk=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "08a7e9af80d4a573eb5d8324a5d16c5767a2094f",
+        "rev": "e1dd82b4f35f4737275d0a4e2319b268cd128611",
         "type": "github"
       },
       "original": {
