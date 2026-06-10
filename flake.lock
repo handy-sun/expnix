@@ -256,11 +256,11 @@
     "my-dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1780753148,
-        "narHash": "sha256-W5ATtfHkFAmxj9T3ofW1POExVuhbKK+Jizqis1N+5cQ=",
+        "lastModified": 1780983841,
+        "narHash": "sha256-tO6FXdGQhX4uOO1u3ELTB3QwjjtDJ+p/j4EOluosob8=",
         "owner": "handy-sun",
         "repo": "dotfiles",
-        "rev": "ad36189c46dea0bc9c731cd43d22aa026b211fcc",
+        "rev": "9fb6bc9ec715a62848ed1e556687072e7effe197",
         "type": "github"
       },
       "original": {
@@ -330,11 +330,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1780758847,
-        "narHash": "sha256-G6r32TbNIgIniEGHk2RFRC6jkzpweRTjUB+cr4Us6R8=",
+        "lastModified": 1781057768,
+        "narHash": "sha256-Yq8XowQF1FvN1x6oL3MKiJhcgBQYiay0089OGSQXV6A=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "3b2146d154903fe5378cf1ba89201e8f65233108",
+        "rev": "08a7e9af80d4a573eb5d8324a5d16c5767a2094f",
         "type": "github"
       },
       "original": {
@@ -582,11 +582,11 @@
     "sbtpl": {
       "flake": false,
       "locked": {
-        "lastModified": 1780640121,
-        "narHash": "sha256-xCg+CS42VCbGgnFZt+O0sfaJaY8TdeAuEbD3Udr5k10=",
+        "lastModified": 1780925389,
+        "narHash": "sha256-Em/oOvROzoq3vPvVu1XuoB/UgelelcQl+W/3l0KeMfI=",
         "owner": "handy-sun",
         "repo": "sbtpl",
-        "rev": "55a1b10ee6edfe90940efe2847134c2c28668ef2",
+        "rev": "c20f683224c763f21806935a41bfee547f0d4d53",
         "type": "github"
       },
       "original": {
