@@ -8,14 +8,14 @@ let
   inherit (lib) mkDefault;
 
   settings = {
-    registry-mirrors = [
-      "https://func.ink"
-      "https://lispy.org"
-      "https://docker.xiaogenban1993.com"
-      "https://docker.mybacc.com"
-      "https://docker.yomansunter.com"
-      "https://dockerhub.websoft9.com"
-    ];
+    # registry-mirrors = [
+    #   "https://func.ink"
+    #   "https://lispy.org"
+    #   "https://docker.xiaogenban1993.com"
+    #   "https://docker.mybacc.com"
+    #   "https://docker.yomansunter.com"
+    #   "https://dockerhub.websoft9.com"
+    # ];
     # bip = "172.17.0.1/16";
     max-concurrent-downloads = 10;
     max-concurrent-uploads = 10;

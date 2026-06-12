@@ -83,8 +83,8 @@ inputs.system-manager.lib.makeSystemConfig {
               "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             ];
             accept-flake-config = true;
-            sandbox = false;
-            filter-syscalls = false;
+            # sandbox = false;
+            # filter-syscalls = false;
           };
         };
 

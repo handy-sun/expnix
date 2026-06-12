@@ -17,10 +17,10 @@
 
 所有命令默认在仓库根目录执行。
 
-首次进入开发 shell：
+首次进入开发 shell(需要开启实验性特性)：
 
 ```bash
-nix develop
+nix develop --experimental-features nix-command --extra-experimental-features flakes
 ```
 
 仓库在 `flake.nix` 顶层声明了 `nixConfig.bash-prompt`，进入 `nix develop` 后会直接使用项目定义的 bash prompt。系统侧配置里也默认开启了 `accept-flake-config = true`，因此会自动接受该 flake 暴露的 Nix 配置。

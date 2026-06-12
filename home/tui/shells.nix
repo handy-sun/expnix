@@ -16,6 +16,10 @@ in
   #   "/run/system-manager/sw/bin"
   # ];
 
+  programs.bash = {
+    enable = true;
+  };
+
   programs.zsh = {
     enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
@@ -51,6 +55,7 @@ in
 
   programs.dotzsh = {
     enable = true;
+    enableBashIntegration = true;
     enableFishIntegration = true;
     enableFishPrompt = false;
     fishGreetingMode = "custom";
