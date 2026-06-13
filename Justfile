@@ -75,11 +75,6 @@ nixinfo:
 current-sys:
   readlink /run/current-system
 
-[private]
-[group('nix')]
-sys-top-attr host=`hostname`:
-  @printf '%s\n' '.#{{sys_conf_root}}."{{host}}".config.system.build.toplevel'
-
 [group('nix')]
 query-all pkgname:
   which {{pkgname}} | xargs realpath | xargs nix why-depends --all /run/current-system
@@ -88,6 +83,20 @@ query-all pkgname:
 [group('nix')]
 gc:
   sudo nix-collect-garbage --delete-older-than 4d
+
+# Evaluate the system toplevel derivation for a host
+[group('nix')]
+evtop host=`hostname`:
+  nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')" |& nom
+
+[group('nix')]
+query-depends pkgname host=`hostname`:
+  which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')" 2>/dev/null
+
+[private]
+[group('nix')]
+sys-top-attr host=`hostname`:
+  @printf '%s\n' '.#{{sys_conf_root}}."{{host}}".config.system.build.toplevel'
 
 # Linux
 [linux]
@@ -104,15 +113,6 @@ repl-nh:
 [group('nix')]
 query-tree:
   nix-store --gc --print-roots | rg -v '/proc/' | rg -Po '(?<= -> ).*' | xargs -o nix-tree
-
-# Evaluate the system toplevel derivation for a host
-[group('nix')]
-evtop host=`hostname`:
-  nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')" |& nom
-
-[group('nix')]
-query-depends pkgname host=`hostname`:
-  which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')" 2>/dev/null
 
 [linux]
 [group('nix')]
