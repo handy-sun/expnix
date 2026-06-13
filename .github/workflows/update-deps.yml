@@ -1,8 +1,8 @@
 name: Update dependencies
 
 on:
-  schedule:
-    - cron: "0 3 * * 6"
+  # schedule:
+  #   - cron: "0 3 * * 6"
   workflow_dispatch:
 
 permissions:

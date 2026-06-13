@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, isWSL ? false, ... }:
 {
   programs = {
     nh = {
@@ -10,7 +10,8 @@
     # very fast version of tldr in Rust
     tealdeer = {
       enable = true;
-      enableAutoUpdates = true;
+      # WSL2 systemd user services May init failed
+      enableAutoUpdates = !isWSL;
       settings = {
         display = {
           compact = false;

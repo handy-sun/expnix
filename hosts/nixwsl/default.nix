@@ -2,14 +2,16 @@
   lib,
   pkgs,
   myutils,
+  profileLevel,
   ...
 }:
 {
-  imports = lib.map myutils.relativeToRoot [
+  imports = lib.map myutils.relativeToRoot ([
     "machines/wsl-base.nix"
     "nixos"
+  ] ++ lib.optionals profileLevel.guiBase [
     "modules/niri"
-  ];
+  ]);
 
   # nixpkgs.config.cudaSupport = true;
 

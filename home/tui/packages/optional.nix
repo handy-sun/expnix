@@ -9,7 +9,7 @@
   ...
 }:
 let
-  system = pkgs.stdenv.hostPlatform.system;
+  inherit (pkgs.stdenv.hostPlatform) system;
   helixDev = inputs.helix-dev.packages.${system}.helix;
   inherit (inputs.cc-switch-tui.packages.${system}) cc-switch-tui;
 in

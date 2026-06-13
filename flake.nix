@@ -146,10 +146,6 @@
         "nixwsl" = mkSystem "nixwsl" {
           system = "x86_64-linux";
           isWSL = true;
-          profileLevelOver = {
-            tuiOptional = true;
-            guiBase = true;
-          };
         };
 
         "buking" = mkSystem "buking" {

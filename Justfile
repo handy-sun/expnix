@@ -108,7 +108,7 @@ query-tree:
 # Evaluate the system toplevel derivation for a host
 [group('nix')]
 evtop host=`hostname`:
-  nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')"
+  nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')" |& nom
 
 [group('nix')]
 query-depends pkgname host=`hostname`:
@@ -122,7 +122,7 @@ query-dep-home pkgname:
 [linux]
 [group('nix')]
 sysmgr:
-  system-manager switch --flake .#$(hostname) --sudo
+  system-manager switch --flake .#debnsm --sudo
 
 # MacOS
 [macos]

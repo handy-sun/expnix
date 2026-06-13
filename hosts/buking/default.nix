@@ -5,16 +5,17 @@
   pkgs,
   myvars,
   myutils,
+  profileLevel,
   ...
 }:
 
 {
   imports =
-    lib.map myutils.relativeToRoot [
+    lib.map myutils.relativeToRoot ([
       "nixos"
+    ] ++ lib.optionals profileLevel.guiBase [
       "modules/niri"
-    ]
-    ++ (myutils.scanPaths ./.);
+    ]) ++ (myutils.scanPaths ./.);
 
   users.users.${myvars.user} = {
     extraGroups = [
