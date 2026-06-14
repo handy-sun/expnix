@@ -10,7 +10,6 @@ lib.mkIf profileLevel.guiBase {
     with pkgs;
     [
       mpv
-      zed-editor
       sunshine
       moonlight-qt
     ]
