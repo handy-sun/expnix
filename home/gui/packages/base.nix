@@ -11,6 +11,8 @@ lib.mkIf profileLevel.guiBase {
     [
       mpv
       zed-editor
+      sunshine
+      moonlight-qt
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       wayclip

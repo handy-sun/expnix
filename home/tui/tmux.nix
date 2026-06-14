@@ -16,7 +16,7 @@ in
     terminal = "xterm-256color";
     baseIndex = 1;
     escapeTime = 50;
-    historyLimit = 5000;
+    historyLimit = 10000;
     mouse = true;
     focusEvents = true;
     sensibleOnTop = true;
@@ -48,7 +48,7 @@ in
         extraConfig = ''
           set -g @continuum-save-interval '15'
           set -g @continuum-restore 'on'
-          set -g @continuum-boot 'off'
+          set -g @continuum-boot 'on'
         '';
       }
       open
@@ -96,6 +96,7 @@ in
           set -agF status-right "#{E:@catppuccin_status_cpu}"
           set -agF status-right "#[fg=#{@thm_yellow}]#{@catppuccin_status_left_separator}#[fg=#{@thm_crust},bg=#{@thm_yellow}]RAM #[fg=#{@thm_fg},bg=#{@catppuccin_status_module_text_bg}] ##{ram_percentage}#[fg=#{@catppuccin_status_module_text_bg}]#{@catppuccin_status_right_separator}"
           set -ag status-right "#{E:@catppuccin_status_date_time}"
+          set -ag status-right " #{continuum_status}"
         '';
       }
     ];

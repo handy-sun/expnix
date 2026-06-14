@@ -37,6 +37,7 @@
       ## disk / files
       gdu
       miniserve
+      rclone
 
       ## monitoring
       iftop # network monitoring

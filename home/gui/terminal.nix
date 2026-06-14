@@ -149,15 +149,21 @@ lib.mkIf profileLevel.guiBase {
     keybindings = {
       "ctrl+shift+c" = "copy_to_clipboard";
       "ctrl+shift+v" = "paste_from_clipboard";
-      "shift+insert" = "paste_from_selection";
+      "shift+insert" = "paste_from_clipboard";
       "ctrl+shift+t" = "new_tab";
       "ctrl+shift+w" = "close_tab";
       "ctrl+tab" = "next_tab";
       "ctrl+shift+tab" = "previous_tab";
       "ctrl+shift+right" = "next_tab";
       "ctrl+shift+left" = "previous_tab";
-      "ctrl+shift+enter" = "new_os_window";
+      "alt+\\" = "launch --location=hsplit";
+      "ctrl+alt+\\" = "launch --location=vsplit";
+      "ctrl+alt+enter" = "new_os_window";
       "ctrl+shift+f11" = "toggle_fullscreen";
+      "ctrl+alt+h" = "neighboring_window left";
+      "ctrl+alt+j" = "neighboring_window down";
+      "ctrl+alt+k" = "neighboring_window up";
+      "ctrl+alt+l" = "neighboring_window right";
     };
   };
 
