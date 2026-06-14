@@ -177,8 +177,8 @@ in
 
     onActivation = {
       autoUpdate = false;
-      ## 'zap': uninstalls all formulae(and related files) not listed here.
-      cleanup = "zap";
+      ## 'zap' removed: brew bundle --cleanup is deprecated in newer Homebrew.
+      cleanup = "none";
     };
 
     taps = [
