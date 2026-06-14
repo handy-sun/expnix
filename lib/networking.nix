@@ -166,7 +166,7 @@ let
       };
       preferredAddress = "eth";
       useCanonicalName = true;
-      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXv7vJ9dWH6CY/xKzB6qjpWCcTlhxI17BHn8/g+zI9x qi@handyMini";
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuKM3DmTBChkXQOokBv1w8vGr4tsU/bQ1BYqGMyLF+k qi@handyMini";
     };
 
     buking = {
@@ -181,7 +181,7 @@ let
       };
       preferredAddress = "eth";
       useCanonicalName = true;
-      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMizFfVaUfb6gY10IXqG7dguFa3P5Z8OwLiU8n4Q+SvG qi@buking";
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOC5Ip/vr7Pao1prc/T08AtUNWQycXaze8rtthg/2/Nd qi@buking";
     };
 
     reinsvps = {
@@ -190,6 +190,7 @@ let
       addresses.eth = {
         ipv4 = myvars.reinsvpsNetwork.ipv4Address;
       };
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4gNTbJ0XyYyO/bSTe84E0SLRalPEQZqsJv9fu83xMV root@nixos";
     };
 
     nixwsl = {
