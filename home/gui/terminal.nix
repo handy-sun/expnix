@@ -20,6 +20,21 @@ lib.mkIf profileLevel.guiBase {
     "wezterm/config".source = wezConfDir + "/config";
     "wezterm/events".source = wezConfDir + "/events";
     "wezterm/utils".source = wezConfDir + "/utils";
+    # Force Alacritty to use NerdFontSymbolsOnly for PUA glyphs instead of
+    # the embedded Nerd Font outlines in Maple Mono NF CN which Alacritty's
+    # renderer renders as transparent.
+    "fontconfig/conf.d/10-nerd-font-symbols.conf".text = ''
+      <?xml version="1.0"?>
+      <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+      <fontconfig>
+        <alias>
+          <family>Maple Mono NF CN</family>
+          <prefer>
+            <family>NerdFontSymbolsOnly</family>
+          </prefer>
+        </alias>
+      </fontconfig>
+    '';
   };
 
   xdg.dataFile = lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
