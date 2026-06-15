@@ -10,7 +10,7 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) system;
-  helixDev = inputs.helix-dev.packages.${system}.helix;
+  # helixDev = inputs.helix-dev.packages.${system}.helix;
   inherit (inputs.cc-switch-tui.packages.${system}) cc-switch-tui;
 in
 lib.mkIf profileLevel.tuiOptional {
@@ -21,7 +21,7 @@ lib.mkIf profileLevel.tuiOptional {
       # podman
       docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
       ## https://github.com/erasin/helix more features more than official helix package
-      helixDev
+      # helixDev
       llvmPackages.clang-unwrapped
       cc-switch-tui
     ]

@@ -77,7 +77,7 @@ in
         in
         {
           ExecStartPre = "${script}";
-          ExecStartPreTimeoutSec = "20s";
+          TimeoutStartSec = "20s";
           ExecStart = [
             ""
             "${lib.getExe cfg.package} -D ${"$"}{STATE_DIRECTORY} -C ${"$"}{RUNTIME_DIRECTORY} run"

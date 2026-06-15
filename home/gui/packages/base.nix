@@ -20,6 +20,6 @@ lib.mkIf profileLevel.guiBase {
       peazip
       appimage-run
       telegram-desktop
-      rustdesk
+      # rustdesk
     ];
 }

@@ -24,7 +24,6 @@
       tmux
       zoxide
       trash-cli
-      fastfetch
       fzf
       fd
       ripgrep
