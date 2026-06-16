@@ -97,6 +97,15 @@ inputs.system-manager.lib.makeSystemConfig {
           openssh.authorizedKeys.keys = networkingVars.userAuthorizedKeysFor hostName;
           # system-manager does not provide NixOS's programs.fish module.
           ignoreShellProgramCheck = true;
+          extraGroups = [
+            "adm"
+            "wheel"
+          ];
+        };
+
+        security.sudo = {
+          enable = true;
+          wheelNeedsPassword = false;
         };
 
         # environment.etc."hosts" = {

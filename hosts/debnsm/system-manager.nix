@@ -31,7 +31,7 @@ in
     ]);
 
   services.beszel.agent = {
-    enable = true;
+    enable = false;
     environmentFile = "/etc/beszel-agent.env";
   };
 
@@ -43,6 +43,9 @@ in
       PermitRootLogin = "no";
     };
   };
+  # PVE manages /root/.ssh/authorized_keys as a symlink to /etc/pve/priv/authorized_keys
+  # Remove root SSH tmpfiles provisioning to avoid conflict
+  systemd.tmpfiles.settings."ssh-root-provision" = lib.mkForce { };
 
   systemd.services."ssh-system-manager".aliases = lib.mkForce [ ];
 }
