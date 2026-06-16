@@ -293,11 +293,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1781487535,
-        "narHash": "sha256-kDAhCf2SPC6fUhmkpqhKLSAzg5/onXBWtsrSzZ/GzQA=",
+        "lastModified": 1781594659,
+        "narHash": "sha256-631PqhrdgKCWg2i56Trbr7yE/C3YjQwM89BKzezIUa8=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "96c4ca15bbc46bb70df7d9e88cd007d7ec7df2bf",
+        "rev": "8ec8ea12d4b611e940455e71a00f542aafedb1ca",
         "type": "github"
       },
       "original": {
@@ -330,11 +330,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1781075744,
-        "narHash": "sha256-SEc7iPEkj5mXz70H3zC42BmeXEmK1qJbFbLHfpSLdVk=",
+        "lastModified": 1781579416,
+        "narHash": "sha256-vNk2nTnwNnYRbcoJuHIHQwOez5dS9y5SOlMWNWsukv8=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "e1dd82b4f35f4737275d0a4e2319b268cd128611",
+        "rev": "af1f774ef8a2003d3a2157ec650d0b1579742342",
         "type": "github"
       },
       "original": {
@@ -346,11 +346,11 @@
     "my-wezterm": {
       "flake": false,
       "locked": {
-        "lastModified": 1780802444,
-        "narHash": "sha256-3D8kkrrKyOeYd9BRj6huerXoqDksa4U//li9LGnzjqc=",
+        "lastModified": 1781533050,
+        "narHash": "sha256-XxvwGOGu4y4g7Bko5ubXtc5nVv6PpI8Cvo34MgH0S1Q=",
         "owner": "handy-sun",
         "repo": "wezterm-config",
-        "rev": "6e67bbf22709fb40cb6aeef48dc373f76cf17638",
+        "rev": "f4586355225decf34b19a955cd9fda94624ad2f5",
         "type": "github"
       },
       "original": {
