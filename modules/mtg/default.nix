@@ -8,45 +8,22 @@ let
   cfg = config.services.mtg;
   format = pkgs.formats.toml { };
 
-  defaults = {
-    bind-to = "0.0.0.0:443";
-    concurrency = 8192;
-    tcp-buffer = "128kb";
-    prefer-ip = "only-ipv4";
-    tolerate-time-skewness = "5s";
-    domain-fronting.port = 443;
-    network = {
-      dns = "1.1.1.1";
-      proxies = [ ];
-      timeout = {
-        tcp = "5s";
-        http = "10s";
-        idle = "1m";
-      };
-    };
-    defense = {
-      anti-replay = {
-        enabled = true;
-        max-size = "1mib";
-        error-rate = 0.001;
-      };
-      blocklist = {
-        enabled = true;
-        download-concurrency = 2;
-        urls = [ ];
-        update-each = "24h";
-      };
-    };
-    stats.statsd = {
-      enabled = true;
-      address = "127.0.0.1:9833";
-      metric-prefix = "mtg";
-      tag-format = "datadog";
-    };
-  };
+  # 非敏感设置（排除 secret/bind-to，这两个运行时从文件读取）
+  baseSettings = lib.filterAttrs (n: _: !lib.elem n [ "secret" "bind-to" ]) cfg.settings;
+  baseConfigFile = format.generate "mtg-base.toml" baseSettings;
 
-  settings = lib.recursiveUpdate defaults cfg.settings;
-  configFile = format.generate "mtg.toml" settings;
+  # 运行时以 root 执行，拼合敏感值 + 静态配置 → /run/mtg/mtg.toml
+  genConfig = pkgs.writeShellScript "mtg-gen-config" ''
+    {
+      printf 'secret = "%s"\n' "$(cat "${cfg.secretFile}")"
+      ${lib.optionalString (cfg.bindToFile != null) ''
+        printf 'bind-to = "%s"\n' "$(cat "${cfg.bindToFile}")"
+      ''}
+      cat "${baseConfigFile}"
+    } > /run/mtg/mtg.toml
+    chown mtg:mtg /run/mtg/mtg.toml
+    chmod 400 /run/mtg/mtg.toml
+  '';
 in
 {
   options.services.mtg = {
@@ -54,38 +31,52 @@ in
 
     package = lib.mkPackageOption pkgs "mtg" { };
 
+    secretFile = lib.mkOption {
+      type = lib.types.path;
+      description = "File containing the mtg secret value (e.g., config.sops.secrets.mtg-secret.path).";
+    };
+
+    bindToFile = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      description = "File containing the bind-to address. If null, use settings.bind-to instead.";
+    };
+
     settings = lib.mkOption {
       type = format.type;
       default = { };
       description = ''
-        mtg TOML settings merged on top of module defaults via recursiveUpdate.
-        At minimum, set `secret`. Other fields override the defaults.
+        Non-secret mtg TOML settings. Only explicitly set values are written.
+        Do NOT set `secret` or `bind-to` here; use secretFile/bindToFile instead.
 
-        Defaults:
-        ${lib.generators.toPretty { } defaults}
+        Optional sections: defense.anti-replay, defense.blocklist, stats.statsd, etc.
       '';
     };
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = settings ? secret;
-        message = "services.mtg.settings.secret must be set";
-      }
-    ];
+    users.users.mtg = {
+      isSystemUser = true;
+      group = "mtg";
+    };
+    users.groups.mtg = { };
 
     systemd.services.mtg = {
-      description = "mtg Telegram MTProto proxy";
+      description = "mtg: Telegram MTProto proxy";
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${lib.getExe cfg.package} run ${configFile}";
-        DynamicUser = true;
-        LimitNOFILE = 65536;
+        ExecStartPre = [ "+${genConfig}" ];
+        ExecStart = "${lib.getExe cfg.package} run /run/mtg/mtg.toml";
+        RuntimeDirectory = "mtg";
+        RuntimeDirectoryMode = "0700";
+        User = "mtg";
+        Group = "mtg";
+        LimitNOFILE = 1048576;
+        LimitNPROC = 512;
         Restart = "on-failure";
         RestartSec = "5s";
         CapabilityBoundingSet = [ "CAP_NET_BIND_SERVICE" ];
