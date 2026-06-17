@@ -89,7 +89,7 @@ in
     };
 
     mtg = {
-      enable = false; # set to true to activate
+      enable = true;
       secretFile = config.sops.secrets.mtg-secret.path;
       bindToFile = config.sops.secrets.mtg-bind-to.path;
       settings = {
@@ -100,9 +100,13 @@ in
         domain-fronting.port = 443;
         network = {
           dns = "1.1.1.1";
-          timeout = { tcp = "5s"; http = "10s"; idle = "1m"; };
+          timeout = {
+            tcp = "5s";
+            http = "10s";
+            idle = "1m";
+          };
         };
-        # 需要时取消注释：
+        ## Uncomment as needed:
         # defense.anti-replay = { enabled = true; max-size = "1mib"; error-rate = 0.001; };
         # stats.statsd = { enabled = true; address = "127.0.0.1:9833"; metric-prefix = "mtg"; tag-format = "datadog"; };
       };

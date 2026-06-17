@@ -8,11 +8,17 @@ let
   cfg = config.services.mtg;
   format = pkgs.formats.toml { };
 
-  # 非敏感设置（排除 secret/bind-to，这两个运行时从文件读取）
-  baseSettings = lib.filterAttrs (n: _: !lib.elem n [ "secret" "bind-to" ]) cfg.settings;
+  ## Non-secret settings (excludes secret/bind-to, injected at runtime from files)
+  baseSettings = lib.filterAttrs (
+    n: _:
+    !lib.elem n [
+      "secret"
+      "bind-to"
+    ]
+  ) cfg.settings;
   baseConfigFile = format.generate "mtg-base.toml" baseSettings;
 
-  # 运行时以 root 执行，拼合敏感值 + 静态配置 → /run/mtg/mtg.toml
+  ## Runs as root at service start; merges secret values + static config into /run/mtg/mtg.toml
   genConfig = pkgs.writeShellScript "mtg-gen-config" ''
     {
       printf 'secret = "%s"\n' "$(cat "${cfg.secretFile}")"
