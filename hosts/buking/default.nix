@@ -50,6 +50,8 @@
     enable = true;
     settings = {
       PubkeyAuthentication = "yes";
+      MaxSessions = "20";
+      TCPKeepAlive = "yes";
     };
   };
 

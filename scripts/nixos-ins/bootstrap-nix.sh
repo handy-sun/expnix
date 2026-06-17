@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-dotzsh_tide lean2 && dotzsh_tide set-vi-icon && dotzsh_tide ar private_mode shlvl proxy
+# dotzsh_tide is a fish function, not a standalone binary — must invoke via fish
+fish -c 'dotzsh_tide lean2 && dotzsh_tide set-vi-icon && dotzsh_tide ar private_mode shlvl proxy'
 
 mkdir -p ~/.local/share/npm-global
 mkdir -p ~/.local/bin
