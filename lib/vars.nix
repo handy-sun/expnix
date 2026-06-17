@@ -88,4 +88,6 @@ rec {
   ];
 
   fontFamily = "Maple Mono NF CN";
+
+  domain = "example.org";
 }
