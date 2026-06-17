@@ -6,7 +6,9 @@
   ...
 }:
 let
-  singBoxSopsFile = myutils.relativeToRoot "secrets/hosts/${hostName}/sing-box.yaml";
+  hostSecrets = myutils.relativeToRoot "secrets/hosts/${hostName}";
+  singBoxSopsFile = hostSecrets + "/sing-box.yaml";
+  mtgSopsFile = hostSecrets + "/mtg.yaml";
 in
 {
   imports = [
@@ -29,6 +31,18 @@ in
         sopsFile = singBoxSopsFile;
         key = "vmess_uuid";
         restartUnits = [ "sing-box.service" ];
+      };
+
+      mtg-bind-to = {
+        sopsFile = mtgSopsFile;
+        key = "bind_to";
+        restartUnits = [ "mtg.service" ];
+      };
+
+      mtg-secret = {
+        sopsFile = mtgSopsFile;
+        key = "secret";
+        restartUnits = [ "mtg.service" ];
       };
     };
   };
@@ -75,14 +89,26 @@ in
     };
 
     mtg = {
-      enable = false; # set to true to activate
+      enable = true;
+      secretFile = config.sops.secrets.mtg-secret.path;
+      bindToFile = config.sops.secrets.mtg-bind-to.path;
       settings = {
-        bind-to = "0.0.0.0:11443";
-        secret = "00000000000000000000aaaaaaaaaaaaaaaa";
-        defense.doppelganger.urls = [
-          "https://lalala.com/index.html"
-          "https://lalala.com/contacts.html"
-        ];
+        concurrency = 8192;
+        tcp-buffer = "128kb";
+        prefer-ip = "only-ipv4";
+        tolerate-time-skewness = "5s";
+        domain-fronting.port = 443;
+        network = {
+          dns = "1.1.1.1";
+          timeout = {
+            tcp = "5s";
+            http = "10s";
+            idle = "1m";
+          };
+        };
+        ## Uncomment as needed:
+        # defense.anti-replay = { enabled = true; max-size = "1mib"; error-rate = 0.001; };
+        # stats.statsd = { enabled = true; address = "127.0.0.1:9833"; metric-prefix = "mtg"; tag-format = "datadog"; };
       };
     };
 
