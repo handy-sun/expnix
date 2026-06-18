@@ -12,9 +12,13 @@ in
 {
   services.nginx = {
     enable = true;
+    ## replace hand-written worker / sendfile / tcp_nopush / keepalive defaults
     recommendedOptimisation = true;
+    ## replace hand-written ssl_protocols / ssl_ciphers / ssl_session_timeout
     recommendedTlsSettings = true;
+    ## replace hand-written gzip block
     recommendedGzipSettings = true;
+    ## auto add X-Real-IP / X-Forwarded-* / Host proxy headers
     recommendedProxySettings = true;
 
     eventsConfig = ''
@@ -34,61 +38,63 @@ in
       real_ip_header proxy_protocol;
     '';
 
-    virtualHosts."bes.${domain}" = {
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8090";
-        extraConfig = ''
-          real_ip_header X-Forwarded-For;
-          real_ip_recursive on;
-          proxy_set_header Host $http_host;
-        '';
+    virtualHosts = {
+      "bes.${domain}" = {
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8090";
+          extraConfig = ''
+            real_ip_header X-Forwarded-For;
+            real_ip_recursive on;
+            proxy_set_header Host $http_host;
+          '';
+        };
       };
-    };
 
-    virtualHosts."upku.${domain}" = {
-      locations."/" = {
-        proxyPass = "http://localhost:17531/";
-        proxyWebsockets = true;
-        extraConfig = ''
-          real_ip_header X-Forwarded-For;
-          real_ip_recursive on;
-          proxy_set_header Host $http_host;
-          proxy_read_timeout 86400;
-        '';
+      "upku.${domain}" = {
+        locations."/" = {
+          proxyPass = "http://localhost:17531/";
+          proxyWebsockets = true;
+          extraConfig = ''
+            real_ip_header X-Forwarded-For;
+            real_ip_recursive on;
+            proxy_set_header Host $http_host;
+            proxy_read_timeout 86400;
+          '';
+        };
       };
-    };
 
-    virtualHosts."${domain}" = {
-      root = "/var/www/html";
-      extraConfig = ''
-        charset utf-8;
-        index index.html index.nginx-debian.html;
-        error_page 497 https://$http_host$request_uri;
-        if ($http_user_agent ~ ^$) { return 403; }
-        if ($http_user_agent ~* "Scrapy|python|Nmap|wget|httpclient|MJ12bot|Expanse|ahrefsbot|seznambot|serpstatbot|sindresorhus|zgrab") { return 403; }
-      '';
-      locations."/" = {
-        tryFiles = "$uri $uri/ =404";
-      };
-      locations."^~ /.*" = {
-        extraConfig = "deny all;";
-      };
-      locations."= /404.html" = {
-        extraConfig = "internal;";
-      };
-      locations."= /50x.html" = {
-        extraConfig = "internal;";
-      };
-    };
-
-    virtualHosts."*.${domain}" = {
-      forceSSL = true;
-      useACMEHost = domain;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:9480";
+      "${domain}" = {
+        root = "/var/www/html";
         extraConfig = ''
-          error_page 502 http://$host:9480$request_uri;
+          charset utf-8;
+          index index.html index.nginx-debian.html;
+          error_page 497 https://$http_host$request_uri;
+          if ($http_user_agent ~ ^$) { return 403; }
+          if ($http_user_agent ~* "Scrapy|python|Nmap|wget|httpclient|MJ12bot|Expanse|ahrefsbot|seznambot|serpstatbot|sindresorhus|zgrab") { return 403; }
         '';
+        locations."/" = {
+          tryFiles = "$uri $uri/ =404";
+        };
+        locations."^~ /.*" = {
+          extraConfig = "deny all;";
+        };
+        locations."= /404.html" = {
+          extraConfig = "internal;";
+        };
+        locations."= /50x.html" = {
+          extraConfig = "internal;";
+        };
+      };
+
+      "*.${domain}" = {
+        forceSSL = true;
+        useACMEHost = domain;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:9480";
+          extraConfig = ''
+            error_page 502 http://$host:9480$request_uri;
+          '';
+        };
       };
     };
   };
@@ -98,7 +104,9 @@ in
     key = "token";
   };
 
+  security.acme.acceptTerms = true;
   security.acme.certs.${domain} = {
+    group = "nginx";
     email = "handy-sun@foxmail.com";
     dnsProvider = "cloudflare";
     domain = domain;
