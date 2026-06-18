@@ -9,6 +9,7 @@ in
 {
   sops.secrets.beszel-agent-env = {
     sopsFile = hostSecrets + "/beszel-agent.env";
+    format = "dotenv";
     key = "";
     restartUnits = [ "beszel-agent.service" ];
   };
