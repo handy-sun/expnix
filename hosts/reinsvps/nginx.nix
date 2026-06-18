@@ -3,6 +3,7 @@
   hostName,
   myvars,
   myutils,
+  pkgs,
   ...
 }:
 
@@ -64,10 +65,10 @@ in
       };
 
       "${domain}" = {
-        root = "/var/www/html";
+        root = "${pkgs.nginx}/html";
         extraConfig = ''
           charset utf-8;
-          index index.html index.nginx-debian.html;
+          index index.html;
           error_page 497 https://$http_host$request_uri;
           if ($http_user_agent ~ ^$) { return 403; }
           if ($http_user_agent ~* "Scrapy|python|Nmap|wget|httpclient|MJ12bot|Expanse|ahrefsbot|seznambot|serpstatbot|sindresorhus|zgrab") { return 403; }
