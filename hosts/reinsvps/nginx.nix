@@ -142,5 +142,11 @@ in
     domain = domain;
     extraDomainNames = [ "*.${domain}" ];
     credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets."cloudflare-dns-token".path;
+    ## This host's outbound UDP/53 to Cloudflare's authoritative NS is blocked,
+    ## so lego's own propagation self-check times out even though the TXT record
+    ## was created successfully (Cloudflare API returns a record ID). Skip the
+    ## self-check (--dns.propagation-disable-ans) and let Let's Encrypt's own
+    ## validators query the record instead.
+    dnsPropagationCheck = false;
   };
 }
