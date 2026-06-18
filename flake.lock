@@ -330,11 +330,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1781579416,
-        "narHash": "sha256-vNk2nTnwNnYRbcoJuHIHQwOez5dS9y5SOlMWNWsukv8=",
+        "lastModified": 1781795488,
+        "narHash": "sha256-KinpkkzwL8GVKEsQjSioXmOz3xVLuKUEYpcch+8rlsc=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "af1f774ef8a2003d3a2157ec650d0b1579742342",
+        "rev": "025b790aeff6c8333c81b20cec16a9f20e046fd2",
         "type": "github"
       },
       "original": {
@@ -582,11 +582,11 @@
     "sbtpl": {
       "flake": false,
       "locked": {
-        "lastModified": 1780925389,
-        "narHash": "sha256-Em/oOvROzoq3vPvVu1XuoB/UgelelcQl+W/3l0KeMfI=",
+        "lastModified": 1781685229,
+        "narHash": "sha256-f0a1eJnHVvHtqkVSScr/y6WXlTeHK6e5iakKDhAAQVs=",
         "owner": "handy-sun",
         "repo": "sbtpl",
-        "rev": "c20f683224c763f21806935a41bfee547f0d4d53",
+        "rev": "333cd4cbb2a573293b31233ac473fa35aa06c703",
         "type": "github"
       },
       "original": {
