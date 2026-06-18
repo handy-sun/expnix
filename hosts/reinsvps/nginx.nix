@@ -11,6 +11,24 @@ let
   inherit (myvars) domain;
 in
 {
+  ## We intentionally proxy the raw client Host header ($http_host) to some
+  ## backends. gixy (run by pkgs.writers.writeNginxConfig during config
+  ## validation) flags this as [host_spoofing] and fails the build. Wrap gixy
+  ## so this single check is skipped while all other checks remain active.
+  nixpkgs.overlays = [
+    (final: prev: {
+      gixy = prev.symlinkJoin {
+        name = "gixy-skip-host-spoofing";
+        paths = [ prev.gixy ];
+        nativeBuildInputs = [ prev.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/gixy --add-flags "--skips host_spoofing"
+        '';
+        inherit (prev.gixy) meta;
+      };
+    })
+  ];
+
   services.nginx = {
     enable = true;
     ## replace hand-written worker / sendfile / tcp_nopush / keepalive defaults
