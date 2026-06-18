@@ -89,5 +89,5 @@ rec {
 
   fontFamily = "Maple Mono NF CN";
 
-  domain = "example.org";
+  domain = "647792.xyz";
 }
