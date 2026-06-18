@@ -40,15 +40,16 @@ in
     ## auto add X-Real-IP / X-Forwarded-* / Host proxy headers
     recommendedProxySettings = true;
 
+    ## set via module options to avoid duplicate directives in the merged config
+    typesHashMaxSize = 3096;
+    clientMaxBodySize = "128M";
+
     eventsConfig = ''
       worker_connections 1024;
       multi_accept on;
     '';
 
     commonHttpConfig = ''
-      types_hash_max_size 3096;
-      client_max_body_size 128M;
-
       log_format main escape=json '$remote_addr [$time_iso8601] "$request" '
                       '$status "$http_user_agent" $body_bytes_sent '
                       '"$http_referer" "$http_x_forwarded_for" $remote_user';
