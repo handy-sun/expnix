@@ -30,7 +30,7 @@ in
 
   services.frp.instances = {
     frps = {
-      enable = false;
+      enable = true;
       role = "server";
       environmentFiles = [ config.sops.templates."frp.env".path ];
       settings = {
@@ -77,7 +77,7 @@ in
     };
 
     frpc = {
-      enable = false;
+      enable = true;
       role = "client";
       environmentFiles = [ config.sops.templates."frp.env".path ];
       settings = {
