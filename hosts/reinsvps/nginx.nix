@@ -84,6 +84,11 @@ in
       };
 
       "${domain}" = {
+        ## The wildcard cert's SAN covers both the apex (domain) and *.domain,
+        ## so serve the apex static site over TLS too; forceSSL adds the
+        ## :80 -> :443 redirect and puts root / UA filters on the 443 server.
+        forceSSL = true;
+        useACMEHost = domain;
         root = "${pkgs.nginx}/html";
         extraConfig = ''
           charset utf-8;
@@ -109,6 +114,11 @@ in
       "*.${domain}" = {
         forceSSL = true;
         useACMEHost = domain;
+        ## 497 (plain HTTP sent to the TLS port) can only fire on an ssl server,
+        ## so it belongs here on the 443 vhost, not on a plain :80 server.
+        extraConfig = ''
+          error_page 497 https://$http_host$request_uri;
+        '';
         locations."/" = {
           proxyPass = "http://127.0.0.1:9480";
           extraConfig = ''
