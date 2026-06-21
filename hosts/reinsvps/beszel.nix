@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   myutils,
   ...
 }:
@@ -29,4 +30,10 @@ in
       environmentFile = config.sops.secrets.beszel-agent-env.path;
     };
   };
+
+  ## upstream module runs "beszel-hub history-sync" in ExecStartPre,
+  ## but the command was removed in beszel 0.18.x — override to skip it
+  systemd.services.beszel-hub.serviceConfig.ExecStartPre = lib.mkForce [
+    "${config.services.beszel.hub.package}/bin/beszel-hub migrate up"
+  ];
 }
