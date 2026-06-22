@@ -1,6 +1,5 @@
 {
   config,
-  hostName,
   lib,
   pkgs,
   myvars,
@@ -11,11 +10,15 @@
 
 {
   imports =
-    lib.map myutils.relativeToRoot ([
-      "nixos"
-    ] ++ lib.optionals profileLevel.guiBase [
-      "modules/niri"
-    ]) ++ (myutils.scanPaths ./.);
+    lib.map myutils.relativeToRoot (
+      [
+        "nixos"
+      ]
+      ++ lib.optionals profileLevel.guiBase [
+        "modules/niri"
+      ]
+    )
+    ++ (myutils.scanPaths ./.);
 
   users.users.${myvars.user} = {
     extraGroups = [
@@ -56,7 +59,7 @@
   };
 
   sops = {
-    defaultSopsFile = myutils.relativeToRoot "secrets/hosts/${hostName}/beszel-agent.env";
+    defaultSopsFile = myutils.relativeToRoot "secrets/beszel-agent.env";
     defaultSopsFormat = "dotenv";
     age.keyFile = "/var/lib/sops-nix/key.txt";
     secrets.beszel-agent-env = {

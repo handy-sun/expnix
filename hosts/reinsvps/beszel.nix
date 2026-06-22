@@ -5,11 +5,11 @@
   ...
 }:
 let
-  hostSecrets = myutils.relativeToRoot "secrets/hosts/reinsvps";
+  hostSecrets = myutils.relativeToRoot "secrets/beszel-agent.env";
 in
 {
   sops.secrets.beszel-agent-env = {
-    sopsFile = hostSecrets + "/beszel-agent.env";
+    sopsFile = hostSecrets;
     format = "dotenv";
     key = "";
     restartUnits = [ "beszel-agent.service" ];
