@@ -58,7 +58,15 @@ in
 
   programs.zsh.enable = true;
   programs.fish.enable = true;
-  users.defaultUserShell = pkgs.fish;
+  programs.bash = {
+    enable = true;
+    interactiveShellInit = "exec fish";
+  };
+  services.envfs.enable = true;
+
+  services.openssh.settings.SetEnv = "PATH=/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin";
+
+  users.defaultUserShell = pkgs.bash;
   users.mutableUsers = false;
   users.users.${myvars.user} = {
     home = homeDir;
