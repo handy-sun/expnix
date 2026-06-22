@@ -61,8 +61,9 @@ in
     virtualHosts = {
       "bes.${domain}" = {
         locations."/" = {
-          proxyPass = "http://127.0.0.1:8090";
+          proxyPass = "http://localhost:8090";
           recommendedProxySettings = false;
+          proxyWebsockets = true;
           extraConfig = ''
             real_ip_header X-Forwarded-For;
             real_ip_recursive on;
