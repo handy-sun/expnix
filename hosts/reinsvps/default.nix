@@ -38,12 +38,6 @@ in
       17531
       17580
       17581
-      21115
-      21116
-      21117
-      21118
-      21119
-      23512
       25465
       29960
       29961
@@ -58,7 +52,6 @@ in
       5201
       9473
       19302
-      21116
     ];
     extraCommands = ''
       iptables -A INPUT -i lo -j ACCEPT
@@ -102,6 +95,7 @@ in
   services.openssh = {
     enable = true;
     ports = [ 23512 ];
+    openFirewall = true;
     settings = {
       PermitRootLogin = "yes";
       PubkeyAuthentication = "yes";

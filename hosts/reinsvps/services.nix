@@ -2,6 +2,7 @@
   config,
   hostName,
   pkgs,
+  myvars,
   myutils,
   ...
 }:
@@ -44,6 +45,19 @@ in
         key = "secret";
         restartUnits = [ "mtg.service" ];
       };
+    };
+  };
+
+  systemd = {
+    tmpfiles.rules = [
+      "Z /var/lib/private/rustdesk 0750 rustdesk rustdesk -"
+    ];
+
+    services.rustdesk-signal.serviceConfig = {
+      # ExecStartPre =
+      #   let chown = "${pkgs.coreutils}/bin/chown -R rustdesk:rustdesk /var/lib/rustdesk";
+      #   in [ "+${chown}" ];
+      Environment = [ "XDG_CONFIG_HOME=/var/lib/rustdesk/.config" ];
     };
   };
 
@@ -113,19 +127,23 @@ in
     };
 
     rustdesk-server = {
-      enable = false;
+      enable = true;
       ## auto open (TCP 21115-21119, UDP 21116)
       openFirewall = true;
 
-      ## enable ID server (hbbs)
+      ## ID server (hbbs)
       signal = {
         enable = true;
-        extraArgs = [ ]; # ex: "-key" force secret
+        ## ENCRYPTED_ONLY: require encryption
+        extraArgs = [ "-k" "_" ];
+        relayHosts = [ myvars.reinsvpsNetwork.ipv4Address ];
       };
 
+      ## relay server (hbbr)
       relay = {
         enable = true;
-        extraArgs = [ ];
+        ## also require encryption on relay side
+        extraArgs = [ "-k" "_" ];
       };
     };
   };
