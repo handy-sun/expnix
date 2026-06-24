@@ -9,6 +9,7 @@
 let
   isNeedBuildEnv = !isDarwin && !isHmSingle;
   nvimConfDir = config.xdg.configHome + "/nvim";
+  emacsConfDir = inputs.my-dotfiles + "/.emacs.d";
 in
 {
   home.activation.rmNotNixStoreLink = lib.mkIf config.programs.neovim.nvimdots.enable (
@@ -44,4 +45,7 @@ in
     enable = true;
   };
 
+  home.file.".emacs.d/init.el".source = emacsConfDir + "/init.el";
+  home.file.".emacs.d/early-init.el".source = emacsConfDir + "/early-init.el";
+  home.file.".emacs.d/conf".source = emacsConfDir + "/conf";
 }

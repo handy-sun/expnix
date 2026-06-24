@@ -2,6 +2,8 @@
 set shell := ["bash", "-uc"]
 
 alias s := switch
+alias e := evtop
+alias es := ev-sysmgr
 alias f := nixfmt
 alias sh := switch-home
 
@@ -90,6 +92,10 @@ evtop host=`hostname`:
   nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')" |& nom
 
 [group('nix')]
+ev-sysmgr host="debnsm":
+  nix eval "$(just --justfile '{{justfile()}}' sysmgr-top-attr '{{host}}')" |& nom
+
+[group('nix')]
 query-depends pkgname host=`hostname`:
   which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')" 2>/dev/null
 
@@ -97,6 +103,11 @@ query-depends pkgname host=`hostname`:
 [group('nix')]
 sys-top-attr host=`hostname`:
   @printf '%s\n' '.#{{sys_conf_root}}."{{host}}".config.system.build.toplevel'
+
+[private]
+[group('nix')]
+sysmgr-top-attr host="debnsm":
+  @printf '%s\n' '.#systemConfigs."{{host}}".config.build.toplevel'
 
 # Linux
 [linux]
