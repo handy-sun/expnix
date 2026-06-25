@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   hostName,
   pkgs,
   myvars,
@@ -51,6 +52,7 @@ in
   systemd = {
     tmpfiles.rules = [
       "Z /var/lib/private/rustdesk 0750 rustdesk rustdesk -"
+      # "Z /var/lib/private/uptime-kuma 0750 uptime-kuma uptime-kuma -"
     ];
 
     services.rustdesk-signal.serviceConfig = {
@@ -146,5 +148,22 @@ in
         extraArgs = [ "-k" "_" ];
       };
     };
+
+    uptime-kuma = {
+      enable = true;
+      settings = {
+        # HOST = "::"; # default value
+        PORT = "17531";
+        UPTIME_KUMA_DB_TYPE = "sqlite";
+      };
+    };
   };
+
+  users.users.uptime-kuma = {
+    isSystemUser = true;
+    group = "uptime-kuma";
+  };
+  users.groups.uptime-kuma = {};
+
+  systemd.services.uptime-kuma.serviceConfig.DynamicUser = lib.mkForce false;
 }
