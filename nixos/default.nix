@@ -22,27 +22,6 @@ in
 
   programs.nix-ld.enable = true;
 
-  environment.systemPackages =
-    commonSystemPackages
-    ++ (with pkgs; [
-      docker
-      zerotierone
-      acme-sh
-      gcc
-      strace # a diagnostic, debugging and instructional userspace utility for Linux.
-
-      ## system tools
-      sysstat
-      ethtool
-      lm_sensors # for `sensors` command
-
-      ## networking tools
-      dae
-      glider
-      iproute2
-      iptables
-    ]);
-
   environment = {
     localBinInPath = true;
     sessionVariables = myvars.commonEnv // {
@@ -50,10 +29,33 @@ in
       SYSTEMD_PAGER = "nvim";
       SYSTEMD_EDITOR = "nvim";
     };
+
+    systemPackages =
+      commonSystemPackages
+      ++ (with pkgs; [
+        docker
+        zerotierone
+        acme-sh
+        gcc
+        strace # a diagnostic, debugging and instructional userspace utility for Linux.
+
+        ## system tools
+        sysstat
+        ethtool
+        lm_sensors # for `sensors` command
+
+        ## networking tools
+        dae
+        glider
+        iproute2
+        iptables
+      ]);
   };
 
   networking.hosts = networkingVars.hostsFile;
   networking.search = lib.mkAfter [ "orb.local" ];
+  networking.firewall.enable = mkDefault false;
+
   programs.ssh.knownHosts = networkingVars.ssh.knownHosts;
 
   programs.zsh.enable = true;
