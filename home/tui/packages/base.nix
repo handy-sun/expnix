@@ -125,6 +125,7 @@
       ioping
       hdparm
       exfatprogs
+      flatpak
     ]
     ++ lib.optionals isDarwin [
       # xquartz
