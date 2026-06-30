@@ -1,4 +1,8 @@
-{ lib, isWSL ? false, ... }:
+{
+  lib,
+  isWSL ? false,
+  ...
+}:
 {
   programs = {
     nh = {
@@ -27,6 +31,14 @@
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+    };
+
+    htop = {
+      enable = true;
+      settings = {
+        hide_userland_threads = 1;
+        highlight_base_name = 1;
+      };
     };
 
     # Keep man cache generation off even if upstream modules enable it by default.
