@@ -197,10 +197,16 @@ lib.mkIf profileLevel.guiBase {
         size = font_size;
         normal = [
           { family = myvars.fontFamily; }
-          { family = "NotoMono Nerd Font Mono"; style = "Normal"; }
+          {
+            family = "NotoMono Nerd Font Mono";
+            style = "Normal";
+          }
         ];
         bold = [
-          { family = myvars.fontFamily; style = "Bold"; }
+          {
+            family = myvars.fontFamily;
+            style = "Bold";
+          }
         ];
         hinting = "full";
         edging = "antialias";

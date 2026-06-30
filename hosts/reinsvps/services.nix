@@ -137,7 +137,10 @@ in
       signal = {
         enable = true;
         ## ENCRYPTED_ONLY: require encryption
-        extraArgs = [ "-k" "_" ];
+        extraArgs = [
+          "-k"
+          "_"
+        ];
         relayHosts = [ myvars.reinsvpsNetwork.ipv4Address ];
       };
 
@@ -145,7 +148,10 @@ in
       relay = {
         enable = true;
         ## also require encryption on relay side
-        extraArgs = [ "-k" "_" ];
+        extraArgs = [
+          "-k"
+          "_"
+        ];
       };
     };
 
@@ -163,7 +169,7 @@ in
     isSystemUser = true;
     group = "uptime-kuma";
   };
-  users.groups.uptime-kuma = {};
+  users.groups.uptime-kuma = { };
 
   systemd.services.uptime-kuma.serviceConfig.DynamicUser = lib.mkForce false;
 }
