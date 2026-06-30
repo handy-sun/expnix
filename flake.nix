@@ -43,9 +43,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    my-nvimdots.url = "github:handy-sun/nvimdots";
+    my-nvimdots = {
+      url = "github:handy-sun/nvimdots";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    my-dotzsh.url = "github:handy-sun/dotzsh";
+    my-dotzsh = {
+      url = "github:handy-sun/dotzsh";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     my-dotvim = {
       url = "github:handy-sun/dotvim";
