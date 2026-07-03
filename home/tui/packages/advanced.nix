@@ -41,6 +41,7 @@
 
       ## monitoring
       iftop # network monitoring
+      netwatch
 
       ## formatting / styling
       stylua # lua format tool
@@ -61,6 +62,7 @@
       cachix # Command-line client for Nix binary cache hosting https://cachix.org
 
       ## productivity
+      bc
       hugo # static site generator
       glow # markdown previewer in terminal
     ]
