@@ -126,6 +126,11 @@ in
       bind s split-window -v -c "#{pane_current_path}"
       bind v split-window -h -c "#{pane_current_path}"
 
+      # floating pane (tmux 3.7); overrides default `prefix f` find-window
+      bind f new-pane -c "#{pane_current_path}"
+      # keep find-window, moved from the now-overridden `f`
+      bind F command-prompt { find-window -Z "%%" }
+
       bind m command-prompt -p "join pane to window:" "join-pane -t ':%%'"
       bind M set -g mouse \; display "Mouse #{?mouse,ON,OFF}!"
 
