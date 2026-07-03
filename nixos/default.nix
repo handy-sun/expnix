@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  inputs,
   myvars,
   hostName,
   homeDir,
@@ -45,7 +46,6 @@ in
         lm_sensors # for `sensors` command
 
         ## networking tools
-        dae
         glider
         iproute2
         iptables

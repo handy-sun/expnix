@@ -8,10 +8,16 @@ let
   template = pkgs.writeText "real-dns.json" (
     builtins.readFile (inputs.sbtpl + "/substore/real-dns.json")
   );
+  inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
   disabledModules = [ "services/networking/sing-box.nix" ];
   imports = [ (myutils.relativeToRoot "modules/sing-box") ];
+
+  environment.etc."dae/config.dae" = {
+    source = inputs.my-dotfiles + "/dae/config-with-singb.dae";
+    mode = "0600";
+  };
 
   services = {
     # onedrive.enable = true;
@@ -19,7 +25,7 @@ in
 
     dae = {
       enable = true;
-      configFile = inputs.my-dotfiles + "/dae/config-with-singb.dae";
+      package = inputs.daeuniverse.packages.${system}.dae-unstable;
     };
 
     sing-box = {

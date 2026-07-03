@@ -9,7 +9,7 @@ alias sh := switch-home
 
 sys_conf_root := if os() == "macos" { "darwinConfigurations" } else { "nixosConfigurations" }
 
-nix_inputs := "nixpkgs nix-darwin nixos-wsl home-manager system-manager helix-dev"
+nix_inputs := "nixpkgs nix-darwin nixos-wsl home-manager system-manager helix-dev sops-nix daeuniverse"
 my_inputs := "cc-switch-tui my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm my-helix-config sbtpl"
 
 default:
@@ -89,11 +89,11 @@ gc:
 # Evaluate the system toplevel derivation for a host
 [group('nix')]
 evtop host=`hostname`:
-  nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')" |& nom
+  nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')"
 
 [group('nix')]
 ev-sysmgr host="debnsm":
-  nix eval "$(just --justfile '{{justfile()}}' sysmgr-top-attr '{{host}}')" |& nom
+  nix eval "$(just --justfile '{{justfile()}}' sysmgr-top-attr '{{host}}')"
 
 [group('nix')]
 query-depends pkgname host=`hostname`:

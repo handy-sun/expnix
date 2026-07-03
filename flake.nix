@@ -37,6 +37,8 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    daeuniverse.url = "github:daeuniverse/flake.nix";
     ## ------ my applications, configs and scripts ------
     cc-switch-tui = {
       url = "github:handy-sun/cc-switch-tui";

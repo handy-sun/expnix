@@ -61,6 +61,7 @@ systemFunc rec {
   modules = [
     ## Bring in WSL if this is a WSL build
     (if isWSL then inputs.nixos-wsl.nixosModules.wsl else { })
+    (if !isDarwin then inputs.daeuniverse.nixosModules.dae else { })
     (
       if !isDarwin then
         { lib, ... }:
@@ -74,7 +75,6 @@ systemFunc rec {
         }
     )
     ../machines/nix-core.nix
-    # ../modules/networking
     ../overlays/rldd.nix
     ../overlays/mtg.nix
     ../hosts/${hostName}
