@@ -38,6 +38,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    mark-shot = {
+      url = "github:jswysnemc/mark-shot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     daeuniverse.url = "github:daeuniverse/flake.nix";
     ## ------ my applications, configs and scripts ------
     cc-switch-tui = {

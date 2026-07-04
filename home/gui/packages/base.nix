@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  inputs,
   profileLevel,
   ...
 }:
@@ -22,5 +23,6 @@ lib.mkIf profileLevel.guiBase {
       telegram-desktop
       # rustdesk
       deskflow
+      inputs.mark-shot.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 }
