@@ -9,6 +9,37 @@ lib.mkIf profileLevel.guiBase {
   programs.zed-editor = {
     enable = true;
 
+    ## Extensions auto-installed on startup (repo names from zed-industries/extensions).
+    ## Most VSCode plugins (Rust, TS, YAML, git blame/history, outline, remote SSH/WSL,
+    ## markdown preview, One Dark/Ayu themes) are native in Zed and need no extension.
+    extensions = [
+      # language support / LSP / syntax
+      "nix" # jnoortheen.nix-ide + brettm12345.nixfmt-vscode
+      "toml" # tamasfe.even-better-toml
+      "xml" # dotjoshjohnson.xml
+      "lua" # sumneko.lua + johnnymorganz.stylua
+      "just" # kokakiwi.vscode-just
+      "make" # ms-vscode.makefile-tools
+      "neocmake" # CMake syntax + LSP (no native Zed support)
+      "ninja" # surajbarkale.ninja
+      "ini" # highlight vimrc/config files mapped in file_types below
+      "ssh-config" # ms-vscode-remote.remote-ssh (~/.ssh/config highlighting)
+      "linkerscript" # zixuanwang.linkerscript
+      "assembly" # pengyifu.x8664assemblys
+      "doxygen" # cschlosser.doxdocgen
+      "powershell" # ms-vscode.powershell
+      # tooling
+      "bookmark" # alefragnani.bookmarks
+      "dependi" # fill-labs.dependi
+      "rainbow-csv" # mechatroner.rainbow-csv + janisdd.vscode-edit-csv
+      "github-actions" # github.vscode-github-actions
+      "docker-compose" # ms-azuretools.vscode-containers
+      "dockerfile" # ms-azuretools.vscode-containers
+      "colorizer" # kamikillerto.vscode-colorize
+      # icon theme referenced by icon_theme setting below
+      "catppuccin-icons" # vscode-icons-team.vscode-icons
+    ];
+
     userSettings = {
       ui_font_family = ".SystemUIFont";
       format_on_save = "off";
