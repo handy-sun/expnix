@@ -3,8 +3,7 @@
   ...
 }:
 let
-  daeConfig = "/etc/dae/config.dae"; # WARN: NOT reproducible
-  # daeBin = lib.getExe pkgs.dae;
+  daeConfig = "/etc/dae/config.dae";
   inherit (lib) mkDefault;
 
   settings = {

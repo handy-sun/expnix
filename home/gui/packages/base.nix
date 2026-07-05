@@ -10,7 +10,9 @@ lib.mkIf profileLevel.guiBase {
   home.packages =
     with pkgs;
     [
-      mpv
+      ## mpv-mpris exposes track metadata (incl. embedded album art) over MPRIS
+      ## so shells like noctalia show the cover instead of mpv's default icon
+      (mpv.override { scripts = [ mpvScripts.mpris ]; })
       sunshine
       moonlight-qt
     ]
