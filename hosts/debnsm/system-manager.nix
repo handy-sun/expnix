@@ -19,10 +19,8 @@ in
       docker
       zerotierone
       acme-sh
-      gcc
       strace
       sysstat
-      ethtool
       lm_sensors
       dae
       glider

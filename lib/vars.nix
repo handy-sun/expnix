@@ -45,6 +45,7 @@ rec {
     "pciutils"
     "usbutils"
     "iperf3"
+    "tcpdump"
     "dnsmasq"
     "ldns"
     "socat"

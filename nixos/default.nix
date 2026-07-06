@@ -42,10 +42,11 @@ in
 
         ## system tools
         sysstat
-        ethtool
         lm_sensors # for `sensors` command
 
         ## networking tools
+        ethtool
+        net-tools
         glider
         iproute2
         iptables
