@@ -24,6 +24,10 @@
     extraGroups = [
       "wheel"
       "networkmanager"
+      ## sunshine (Moonlight host) injects input via /dev/uinput and reads
+      ## /dev/input/*; needs both groups or key/mouse events silently fail
+      "input"
+      "uinput"
     ];
   };
 
