@@ -20,7 +20,6 @@ in
   };
 
   services = {
-    # onedrive.enable = true;
     zerotierone.enable = true;
 
     ## Moonlight stream host. Enabling this also flips on hardware.uinput

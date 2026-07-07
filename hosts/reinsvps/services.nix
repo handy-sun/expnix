@@ -64,6 +64,8 @@ in
   };
 
   services = {
+    zerotierone.enable = true;
+
     sing-box = {
       enable = true;
       settings = {
