@@ -91,10 +91,10 @@
         user = "greeter";
       };
       ## Auto login
-      # initial_session = {
-      #   command = "niri-session";
-      #   user = "${myvars.user}";
-      # };
+      initial_session = {
+        command = "niri-session";
+        user = "${myvars.user}";
+      };
     };
   };
 }
