@@ -5,17 +5,19 @@
   profileLevel,
   ...
 }:
-
+let
+  inherit (pkgs.stdenv) isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) system;
+in
 lib.mkIf profileLevel.guiBase {
   home.packages =
     with pkgs;
     [
-      ## mpv-mpris exposes track metadata (incl. embedded album art) over MPRIS
-      ## so shells like noctalia show the cover instead of mpv's default icon
-      (mpv.override { scripts = [ mpvScripts.mpris ]; })
       moonlight-qt # Moonlight client; sunshine host is set up per-host via services.sunshine
     ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
+    ++ lib.optionals (!isDarwin) [
+      ## mpv-mpris (MPRIS/D-Bus) is Linux-only, so mpv carries the mpris script here
+      (mpv.override { scripts = [ mpvScripts.mpris ]; })
       wayclip
       wdisplays
       # thunar
@@ -24,6 +26,9 @@ lib.mkIf profileLevel.guiBase {
       telegram-desktop
       # rustdesk
       deskflow
-      inputs.mark-shot.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.mark-shot.packages.${system}.default
+    ]
+    ++ lib.optionals isDarwin [
+      mpv
     ];
 }

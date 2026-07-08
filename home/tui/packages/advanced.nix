@@ -65,6 +65,8 @@
       bc
       hugo # static site generator
       glow # markdown previewer in terminal
+    ]
+    ++ lib.optionals (profileLevel.tuiAdvanced && pkgs.stdenv.isLinux) [
       bubblewrap
     ]
   );
