@@ -21,6 +21,7 @@ lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
   # };
 
   home.pointerCursor = {
+    enable = true;
     name = "BreezeX-RosePine-Linux";
     package = pkgs.rose-pine-cursor;
     size = 24;
