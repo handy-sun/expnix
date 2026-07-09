@@ -29,12 +29,12 @@ in
           set -g @yank_with_mouse on
         '';
       }
-      # {
-      #   plugin = copycat;
-      #   extraConfig = ''
-      #     set -g @copycat_search '/'
-      #   '';
-      # }
+      {
+        plugin = copycat;
+        extraConfig = ''
+          set -g @copycat_search '/'
+        '';
+      }
       {
         plugin = resurrect;
         extraConfig = ''
