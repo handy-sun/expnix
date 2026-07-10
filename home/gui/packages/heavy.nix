@@ -7,7 +7,7 @@
 
 lib.mkIf profileLevel.guiHeavy {
   home.packages = with pkgs; [
-    google-chrome
+    # google-chrome # cannot download .deb from url after some nixpkgs version
     brave
   ];
 }

@@ -6,7 +6,7 @@
 }:
 lib.mkIf profileLevel.guiBase {
   programs.chromium = {
-    enable = false;
+    enable = true;
   };
   programs.firefox = {
     enable = profileLevel.guiHeavy;
