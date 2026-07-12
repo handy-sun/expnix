@@ -9,6 +9,26 @@
 let
   wezConfDir = inputs.my-wezterm;
   qimocha = myvars.qimocha;
+  colorNames = [
+    "black"
+    "red"
+    "green"
+    "yellow"
+    "blue"
+    "magenta"
+    "cyan"
+    "white"
+  ];
+  toNamedColors =
+    colors:
+    lib.listToAttrs (
+      lib.imap0 (index: name: lib.nameValuePair name (builtins.elemAt colors index)) colorNames
+    );
+  kittyColors = lib.listToAttrs (
+    lib.imap0 (index: color: lib.nameValuePair "color${toString index}" color) (
+      qimocha.ansi ++ qimocha.brights
+    )
+  );
   font_size = if pkgs.stdenv.isDarwin then 16 else 12;
   fish = lib.getExe pkgs.fish;
   zsh = lib.getExe pkgs.zsh;
@@ -121,28 +141,11 @@ lib.mkIf profileLevel.guiBase {
     settings = {
       shell = "${fish} -il";
 
-      background = "#1f1f28";
-      foreground = "#c5ccc7";
-      selection_background = "#585b70";
-      selection_foreground = "#c5ccc7";
-      cursor = "#f5e0dc";
-      cursor_text_color = "#11111b";
-      color0 = "#1E1E1E";
-      color1 = "#EC5F66";
-      color2 = "#99C794";
-      color3 = "#F9AE58";
-      color4 = "#6699CC";
-      color5 = "#C695C6";
-      color6 = "#5FB4B4";
-      color7 = "#DFE0DF";
-      color8 = "#B4B4A6";
-      color9 = "#F97B58";
-      color10 = "#ACD1A8";
-      color11 = "#FAC761";
-      color12 = "#85ADD6";
-      color13 = "#D8B6D8";
-      color14 = "#82C4C4";
-      color15 = "#CDD5D1";
+      inherit (qimocha) background foreground;
+      selection_background = qimocha.selection_bg;
+      selection_foreground = qimocha.selection_fg;
+      cursor = qimocha.cursor_bg;
+      cursor_text_color = qimocha.cursor_fg;
 
       copy_on_select = "clipboard";
       clear_selection_on_clipboard_loss = true;
@@ -159,7 +162,8 @@ lib.mkIf profileLevel.guiBase {
       hide_window_decorations = "yes";
       background_opacity = "0.98";
       window_padding_width = 0;
-    };
+    }
+    // kittyColors;
 
     keybindings = {
       "ctrl+shift+c" = "copy_to_clipboard";
@@ -228,36 +232,17 @@ lib.mkIf profileLevel.guiBase {
     settings = {
       colors = {
         primary = {
-          background = "#1f1f28";
-          foreground = "#c5ccc7";
+          inherit (qimocha) background foreground;
         };
-        normal = {
-          black = "#1E1E1E";
-          red = "#EC5F66";
-          green = "#99C794";
-          yellow = "#F9AE58";
-          blue = "#6699CC";
-          magenta = "#C695C6";
-          cyan = "#5FB4B4";
-          white = "#DFE0DF";
-        };
-        bright = {
-          black = "#B4B4A6";
-          red = "#F97B58";
-          green = "#ACD1A8";
-          yellow = "#FAC761";
-          blue = "#85ADD6";
-          magenta = "#D8B6D8";
-          cyan = "#82C4C4";
-          white = "#CDD5D1";
-        };
+        normal = toNamedColors qimocha.ansi;
+        bright = toNamedColors qimocha.brights;
         cursor = {
-          cursor = "#f5e0dc";
-          text = "#11111b";
+          cursor = qimocha.cursor_bg;
+          text = qimocha.cursor_fg;
         };
         selection = {
-          background = "#585b70";
-          text = "#c5ccc7";
+          background = qimocha.selection_bg;
+          text = qimocha.selection_fg;
         };
       };
       bell = {
