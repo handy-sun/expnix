@@ -31,6 +31,11 @@ in
       enable = true;
       openFirewall = true;
       capSysAdmin = true; # required for KMS/DRM screen capture on Wayland (niri)
+      package = pkgs.sunshine.override {
+        cudaSupport = true;
+        cudaPackages = pkgs.cudaPackages.overrideScope (_: _: { cuda_compat = null; });
+      };
+      settings.encoder = "nvenc";
     };
 
     dae = {
