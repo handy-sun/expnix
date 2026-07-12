@@ -8,7 +8,7 @@
 }:
 let
   wezConfDir = inputs.my-wezterm;
-  qimocha = (builtins.fromTOML (builtins.readFile (wezConfDir + "/colors/qimocha.toml"))).colors;
+  qimocha = myvars.qimocha;
   font_size = if pkgs.stdenv.isDarwin then 16 else 12;
   fish = lib.getExe pkgs.fish;
   zsh = lib.getExe pkgs.zsh;

@@ -90,5 +90,35 @@ rec {
 
   fontFamily = "Maple Mono NF CN";
 
+  qimocha = {
+    foreground = "#c5ccc7";
+    background = "#1f1f28";
+    cursor_bg = "#f5e0dc";
+    cursor_border = "#f5e0dc";
+    cursor_fg = "#11111b";
+    selection_bg = "#585b70";
+    selection_fg = "#c5ccc7";
+    ansi = [
+      "#1E1E1E"
+      "#EC5F66"
+      "#99C794"
+      "#F9AE58"
+      "#6699CC"
+      "#C695C6"
+      "#5FB4B4"
+      "#DFE0DF"
+    ];
+    brights = [
+      "#B4B4A6"
+      "#F97B58"
+      "#ACD1A8"
+      "#FAC761"
+      "#85ADD6"
+      "#D8B6D8"
+      "#82C4C4"
+      "#DFE0DF"
+    ];
+  };
+
   domain = "647792.xyz";
 }
