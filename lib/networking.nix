@@ -166,7 +166,8 @@ let
       };
       preferredAddress = "eth";
       useCanonicalName = true;
-      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXv7vJ9dWH6CY/xKzB6qjpWCcTlhxI17BHn8/g+zI9x qi@handyMini";
+      userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXv7vJ9dWH6CY/xKzB6qjpWCcTlhxI17BHn8/g+zI9x qi@handyMini";
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuKM3DmTBChkXQOokBv1w8vGr4tsU/bQ1BYqGMyLF+k";
     };
 
     buking = {
@@ -259,15 +260,19 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3OY9BaZt4/C5Dxo733g21yHwBb7Id9kRoEZTY6MrF3 replace-old-id_rsa"
   ];
 
-  sshHostAuthorizedKeysFor =
+  sshUserAuthorizedKeysFor =
     localHostName:
-    mapAttrsToList (_: host: host.sshHostKey) (
-      filterAttrs (name: host: host ? sshHostKey && name != localHostName) hostDefinitions
+    mapAttrsToList (_: host: host.userPublicKey or host.sshHostKey) (
+      filterAttrs (
+        name: host:
+        (host ? userPublicKey || host ? sshHostKey)
+        && !(builtins.elem localHostName (knownHostNames name host))
+      ) hostDefinitions
     );
 in
 rec {
   userAuthorizedKeysFor =
-    localHostName: unique (extraUserAuthorizedKeys ++ sshHostAuthorizedKeysFor localHostName);
+    localHostName: unique (extraUserAuthorizedKeys ++ sshUserAuthorizedKeysFor localHostName);
 
   userAuthorizedKeys = userAuthorizedKeysFor null;
 
