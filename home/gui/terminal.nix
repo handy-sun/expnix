@@ -122,9 +122,9 @@ lib.mkIf profileLevel.guiBase {
       shell = "${fish} -il";
 
       background = "#1f1f28";
-      foreground = "#d8dfda";
+      foreground = "#c5ccc7";
       selection_background = "#585b70";
-      selection_foreground = "#d8dfda";
+      selection_foreground = "#c5ccc7";
       cursor = "#f5e0dc";
       cursor_text_color = "#11111b";
       color0 = "#1E1E1E";
@@ -134,7 +134,7 @@ lib.mkIf profileLevel.guiBase {
       color4 = "#6699CC";
       color5 = "#C695C6";
       color6 = "#5FB4B4";
-      color7 = "#F0F1F0";
+      color7 = "#DFE0DF";
       color8 = "#B4B4A6";
       color9 = "#F97B58";
       color10 = "#ACD1A8";
@@ -142,7 +142,7 @@ lib.mkIf profileLevel.guiBase {
       color12 = "#85ADD6";
       color13 = "#D8B6D8";
       color14 = "#82C4C4";
-      color15 = "#E1E9E4";
+      color15 = "#CDD5D1";
 
       copy_on_select = "clipboard";
       clear_selection_on_clipboard_loss = true;
@@ -229,7 +229,7 @@ lib.mkIf profileLevel.guiBase {
       colors = {
         primary = {
           background = "#1f1f28";
-          foreground = "#d8dfda";
+          foreground = "#c5ccc7";
         };
         normal = {
           black = "#1E1E1E";
@@ -239,7 +239,7 @@ lib.mkIf profileLevel.guiBase {
           blue = "#6699CC";
           magenta = "#C695C6";
           cyan = "#5FB4B4";
-          white = "#F0F1F0";
+          white = "#DFE0DF";
         };
         bright = {
           black = "#B4B4A6";
@@ -249,7 +249,7 @@ lib.mkIf profileLevel.guiBase {
           blue = "#85ADD6";
           magenta = "#D8B6D8";
           cyan = "#82C4C4";
-          white = "#E1E9E4";
+          white = "#CDD5D1";
         };
         cursor = {
           cursor = "#f5e0dc";
@@ -257,7 +257,7 @@ lib.mkIf profileLevel.guiBase {
         };
         selection = {
           background = "#585b70";
-          text = "#d8dfda";
+          text = "#c5ccc7";
         };
       };
       bell = {
