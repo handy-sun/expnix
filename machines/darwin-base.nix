@@ -79,6 +79,13 @@ in
 
   time.timeZone = "Asia/Shanghai";
 
+  # Temporary workaround for nix-darwin passing the removed
+  # nixos-render-docs --toc-depth option while building its manual.
+  documentation.enable = false;
+  # The uninstaller evaluates a separate nix-darwin system with documentation
+  # enabled, so it must also be omitted until the locked input is fixed.
+  system.tools.darwin-uninstaller.enable = false;
+
   ## Set variables for you to manually install homebrew packages.
   environment.variables =
     myvars.commonEnv
