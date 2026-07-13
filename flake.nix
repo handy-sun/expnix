@@ -45,11 +45,6 @@
 
     daeuniverse.url = "github:daeuniverse/flake.nix";
     ## ------ my applications, configs and scripts ------
-    cc-switch-tui = {
-      url = "github:handy-sun/cc-switch-tui";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     my-nvimdots = {
       url = "github:handy-sun/nvimdots";
       inputs.nixpkgs.follows = "nixpkgs";
