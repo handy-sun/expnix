@@ -199,9 +199,8 @@ in
 
     ## `brew install --cask`
     casks = [
-      "ghostty"
+      # "ghostty"
       # "antigravity"
-      "cc-switch"
       # "nomachine"
       ## ------ Failed to install: ------
       # "lite-edit" # not found
