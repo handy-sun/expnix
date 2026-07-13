@@ -1,0 +1,25 @@
+name: Build aarch64-linux
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: build-aarch64-linux
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build:
+    name: build orbvmnix (aarch64-linux)
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+        with:
+          use-flakehub: false
+      - run: nix build .#nixosConfigurations.orbvmnix.config.system.build.toplevel

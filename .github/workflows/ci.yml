@@ -44,8 +44,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: orbvmnix (aarch64-linux)
-            os: ubuntu-24.04-arm
+          - name: orbvmnix (aarch64-linux, eval only)
+            os: ubuntu-latest
             attr: nixosConfigurations.orbvmnix.config.system.build.toplevel
           - name: nixwsl (x86_64-linux)
             os: ubuntu-latest

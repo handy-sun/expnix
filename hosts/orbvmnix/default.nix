@@ -1,7 +1,5 @@
 {
-  config,
   lib,
-  hostName,
   myutils,
   ...
 }:
@@ -24,15 +22,6 @@
     search orb.local
   '';
 
-  sops = {
-    defaultSopsFile = myutils.relativeToRoot "secrets/hosts/${hostName}/beszel-agent.env";
-    defaultSopsFormat = "dotenv";
-    age.keyFile = "/var/lib/sops-nix/key.txt";
-    secrets.beszel-agent-env = {
-      key = "";
-    };
-  };
-
   # services.openssh = {
   #   enable = true;
   #   openFirewall = true;
@@ -41,12 +30,6 @@
   #     PermitRootLogin = "no";
   #   };
   # };
-
-  services.beszel.agent = {
-    enable = true;
-    environmentFile = config.sops.secrets.beszel-agent-env.path;
-    openFirewall = true;
-  };
 
   ## Mask mounts that are not available in isolated OrbStack containers
   systemd.units."sys-kernel-debug.mount".enable = false;
