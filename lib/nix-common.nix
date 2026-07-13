@@ -18,13 +18,9 @@
         "flakes"
       ];
       substituters = [
-        "https://cache.garnix.io"
         "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store/"
         "https://mirrors.ustc.edu.cn/nix-channels/store"
         # "https://mirror.sjtu.edu.cn/nix-channels/store"
-      ];
-      trusted-public-keys = [
-        "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
       ];
       extra-substituters = [
         "https://cache.numtide.com"
