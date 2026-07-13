@@ -34,6 +34,11 @@ in
 
   programs.neovim = {
     withRuby = false;
+    ## untokenize, a docformatter dependency, does not support Python 3.14 yet.
+    ## Keep the Neovim provider on the default Python and expose docformatter
+    ## from Python 3.13 as a standalone CLI until that dependency is fixed.
+    extraPackages = [ pkgs.python313Packages.docformatter ];
+    extraPython3Packages = lib.mkForce (ps: [ ps.isort ]);
     nvimdots = {
       enable = true;
       bindLazyLock = false;
