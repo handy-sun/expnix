@@ -182,7 +182,7 @@ let
       };
       preferredAddress = "eth";
       useCanonicalName = true;
-      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMizFfVaUfb6gY10IXqG7dguFa3P5Z8OwLiU8n4Q+SvG qi@buking";
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOC5Ip/vr7Pao1prc/T08AtUNWQycXaze8rtthg/2/Nd root@buking";
     };
 
     reinsvps = {
