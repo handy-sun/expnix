@@ -28,6 +28,7 @@ lib.mkIf profileLevel.guiBase {
       "assembly" # pengyifu.x8664assemblys
       "doxygen" # cschlosser.doxdocgen
       "powershell" # ms-vscode.powershell
+      "log"
       # tooling
       "bookmark" # alefragnani.bookmarks
       "dependi" # fill-labs.dependi
@@ -91,7 +92,6 @@ lib.mkIf profileLevel.guiBase {
         font_family = "${myvars.fontFamily}";
         font_fallbacks = [
           "NotoMono Nerd Font Mono"
-          "SF Mono"
           "Consolas"
         ];
         max_scroll_history_lines = 9000;
@@ -107,8 +107,6 @@ lib.mkIf profileLevel.guiBase {
       };
       buffer_font_fallbacks = [
         "NotoMono Nerd Font Mono"
-        "SF Mono"
-        "monospace"
       ];
       buffer_font_family = "Maple Mono NF CN";
       file_types = {
@@ -126,6 +124,8 @@ lib.mkIf profileLevel.guiBase {
       soft_wrap = "editor_width";
       hard_tabs = false;
       tab_size = 4;
+      title_bar.show_menus = true;
+      status_bar.active_encoding_button = "enabled";
       ui_font_size = 17.0;
       buffer_font_size = 15.0;
       theme = {
