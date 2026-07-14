@@ -7,7 +7,7 @@ on:
 
 concurrency:
   group: build-cache
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: read
