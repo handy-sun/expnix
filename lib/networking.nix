@@ -211,10 +211,32 @@ let
     };
 
     p600qi = {
+      user = "cheer";
       addresses.zt = {
         ipv4 = "10.144.7.6";
       };
-      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHV2n5spE7gV6tnspfAqMXs/siviXqj5e34PWCn75SrP qi@p600qi";
+      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDA/QWK/rav8cNqFk2fYpLMn1/C3WW/Op+v9gMKtqQgm system@p600qi";
+    };
+
+    htqd = {
+      user = "root";
+      addresses.zt = {
+        ipv4 = "10.144.7.16";
+      };
+    };
+
+    dowrt = {
+      user = "root";
+      addresses.zt = {
+        ipv4 = "10.144.7.18";
+      };
+    };
+
+    fngo = {
+      user = "admm";
+      addresses.zt = {
+        ipv4 = "10.144.7.32";
+      };
     };
   };
 
