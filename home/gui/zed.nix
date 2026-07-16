@@ -33,6 +33,7 @@ lib.mkIf profileLevel.guiBase {
       "bookmark" # alefragnani.bookmarks
       "dependi" # fill-labs.dependi
       "rainbow-csv" # mechatroner.rainbow-csv + janisdd.vscode-edit-csv
+      "git-firefly"
       "github-actions" # github.vscode-github-actions
       "docker-compose" # ms-azuretools.vscode-containers
       "dockerfile" # ms-azuretools.vscode-containers
@@ -42,13 +43,14 @@ lib.mkIf profileLevel.guiBase {
     ];
 
     userSettings = {
+      auto_update = false;
       ui_font_family = ".SystemUIFont";
       format_on_save = "off";
       outline_panel = { };
       collaboration_panel = { };
       git_panel = { };
       proxy = "";
-      relative_line_numbers = "wrapped";
+      # relative_line_numbers = "wrapped";
       icon_theme = {
         mode = "light";
         light = "Catppuccin Mocha";
@@ -124,6 +126,25 @@ lib.mkIf profileLevel.guiBase {
       soft_wrap = "editor_width";
       hard_tabs = false;
       tab_size = 4;
+      languages = {
+        JavaScript.tab_size = 2;
+        JSON.tab_size = 2;
+        JSONC.tab_size = 2;
+      };
+      use_system_path_prompts = false;
+      use_system_prompts = false;
+      file_scan_exclusions = [
+        "**/.git"
+        "**/node_modules"
+        "**/target"
+        "**/.venv"
+        "**/build"
+      ];
+      session = {
+        restore_unsaved_buffers = true;
+        trust_all_worktrees = false;
+      };
+      restore_on_startup = "last_session";
       title_bar.show_menus = true;
       status_bar.active_encoding_button = "enabled";
       ui_font_size = 17.0;
