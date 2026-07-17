@@ -6,6 +6,7 @@
 }:
 let
   frpSopsFile = myutils.relativeToRoot "secrets/hosts/reinsvps/frp.yaml";
+  logTo = "console";
 in
 {
   sops.secrets = {
@@ -44,7 +45,7 @@ in
           maxIncomingStreams = 100000;
         };
         log = {
-          to = "/var/log/frps.log";
+          to = logTo;
           level = "info";
           maxDays = 3;
           disablePrintColor = false;
@@ -90,7 +91,7 @@ in
         };
         dnsServer = "223.6.6.6";
         log = {
-          to = "/tmp/frpc.log";
+          to = logTo;
           level = "info";
           maxDays = 3;
           disablePrintColor = false;
