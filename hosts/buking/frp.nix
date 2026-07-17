@@ -1,6 +1,7 @@
 {
   config,
   hostName,
+  myvars,
   myutils,
   ...
 }:
@@ -11,10 +12,12 @@ in
   sops.secrets = {
     frp-token = {
       sopsFile = frpSopsFile;
+      format = "yaml";
       key = "token";
     };
     frp-web-password = {
       sopsFile = frpSopsFile;
+      format = "yaml";
       key = "web_password";
     };
   };
@@ -35,7 +38,7 @@ in
       environmentFiles = [ config.sops.templates."frp.env".path ];
       settings = {
         user = hostName;
-        serverAddr = "localhost";
+        serverAddr = myvars.reinsvpsNetwork.ipv4Address;
         serverPort = 9473;
         auth = {
           method = "token";
