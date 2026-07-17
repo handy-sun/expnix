@@ -45,4 +45,6 @@
     environmentFile = "/etc/beszel-agent.env";
     openFirewall = true;
   };
+
+  services.envfs.enable = lib.mkForce false;
 }
