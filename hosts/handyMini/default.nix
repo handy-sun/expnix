@@ -35,17 +35,6 @@ in
     };
   };
 
-  launchd.user.agents.frpc.serviceConfig = {
-    Label = "nixdwn.${username}.frpc";
-    ProgramArguments = [
-      "${lib.getBin pkgs.frp}/bin/frpc"
-      "-c"
-      "/etc/frp/frpc.toml"
-    ];
-    KeepAlive = true;
-    RunAtLoad = true;
-  };
-
   launchd.user.agents.beszel-agent = {
     script = ''
       #!/usr/bin/env bash
@@ -70,35 +59,6 @@ in
       StandardErrorPath = "/tmp/beszel-agent.log";
       StandardOutPath = "/tmp/beszel-agent.log";
     };
-  };
-
-  launchd.user.agents.nginx.serviceConfig = {
-    Label = "nixdwn.${username}.nginx";
-    ProgramArguments = [
-      "${lib.getExe pkgs.nginx}"
-      "-e"
-      "stderr"
-      "-c"
-      "/etc/nginx/nginx.conf"
-      "-g"
-      "daemon off;"
-    ];
-    KeepAlive = true;
-    RunAtLoad = true;
-  };
-
-  launchd.user.agents.php-fpm.serviceConfig = {
-    Label = "nixdwn.${username}.php-fpm";
-    ProgramArguments = [
-      "${pkgs.php}/bin/php-fpm"
-      "-F"
-      "-y"
-      "${homeDir}/.config/php/php-fpm.conf"
-    ];
-    KeepAlive = true;
-    RunAtLoad = true;
-    StandardOutPath = "/tmp/php-fpm.out.log";
-    # StandardErrorPath = "/tmp/php-fpm.err.log";
   };
 
   launchd.user.agents.webdav.serviceConfig = {
