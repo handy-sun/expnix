@@ -351,11 +351,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784160828,
-        "narHash": "sha256-onE8Zp5/6Dtyg1od5UEQ54XFzEvVjJv+tRx3v8FEI+4=",
+        "lastModified": 1784379267,
+        "narHash": "sha256-4I8rRpAiNXeSjFEcj0KuMohVK6Jup52WtosV78bDBG8=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "da7f03ea31585a72685ff89e7177af068bd82c1e",
+        "rev": "24e09d1eb5f98b67aa174fed85972be6d914ade3",
         "type": "github"
       },
       "original": {
@@ -390,11 +390,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783785687,
-        "narHash": "sha256-iEdLZ8H384Z2kV/k8RpxEykPQQCR5XMHReWn5aQTXuA=",
+        "lastModified": 1784358075,
+        "narHash": "sha256-NAxFc8KR9LiAk3grrsjQ44DFnlVwJ1QJdZrSib6MPdI=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "5924d3fa838292efa9fb509c786b0a5e0f4676ab",
+        "rev": "1680d5a2c08659d5b412931698d39e609f9ac174",
         "type": "github"
       },
       "original": {
