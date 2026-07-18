@@ -26,6 +26,7 @@ lib.mkIf profileLevel.guiBase {
       telegram-desktop
       # rustdesk
       deskflow
+      lan-mouse
       inputs.mark-shot.packages.${system}.default
     ]
     ++ lib.optionals isDarwin [
