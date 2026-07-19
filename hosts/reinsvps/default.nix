@@ -7,6 +7,8 @@
 }:
 let
   network = myvars.reinsvpsNetwork;
+  # rustdeskTcpPorts = builtins.genList (x: x + 21115) 5;
+  frpClientPorts = builtins.genList (x: x + 17580) 30;
 in
 {
   imports =
@@ -36,18 +38,14 @@ in
       9993
       11443
       17531
-      17580
-      17581
-      17582
-      17583
-      17584
-      17585
       25465
       29960
       29961
       29962
       29970
-    ]; # mtg.local:9833, mtp.proxy:29843
+    ]
+    # ++ rustdeskTcpPorts
+    ++ frpClientPorts;
     allowedUDPPorts = [
       53
       443
@@ -56,6 +54,7 @@ in
       5201
       9473
       19302
+      # 21116
     ];
     extraCommands = ''
       iptables -A INPUT -i lo -j ACCEPT
