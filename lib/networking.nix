@@ -149,7 +149,7 @@ let
       addresses.orb = {
         hostName = "orbvmnix.orb.local";
       };
-      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIERWaYmUBGmyw6unmj+fOd55jkFL3o/kfAJFw2WZ/i+8 qi@orbvmnix";
+      userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIERWaYmUBGmyw6unmj+fOd55jkFL3o/kfAJFw2WZ/i+8 qi@orbvmnix";
     };
 
     handy = {
@@ -182,6 +182,7 @@ let
       };
       preferredAddress = "eth";
       useCanonicalName = true;
+      userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMizFfVaUfb6gY10IXqG7dguFa3P5Z8OwLiU8n4Q+SvG qi@buking";
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOC5Ip/vr7Pao1prc/T08AtUNWQycXaze8rtthg/2/Nd root@buking";
     };
 
@@ -195,7 +196,7 @@ let
 
     nixwsl = {
       user = username;
-      sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4enUIMLYr8hinZIAy8NM7uqtwAJO8Ts1H/pB0h9b+S qi@nixwsl";
+      userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4enUIMLYr8hinZIAy8NM7uqtwAJO8Ts1H/pB0h9b+S qi@nixwsl";
     };
 
     ms7d = {
@@ -207,7 +208,7 @@ let
           ipv4 = "10.144.4.7";
         };
       };
-      sshHostKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB7ZnRR8sF38eSwf67aDEeBnL+O74iNDfnQnJ9Qxr6chte2bZv4p9q9nb3LDx1ZRNCGEQmB1k36NFbMrFixCCqs= sunqi@MS-7D17-SQ";
+      userPublicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB7ZnRR8sF38eSwf67aDEeBnL+O74iNDfnQnJ9Qxr6chte2bZv4p9q9nb3LDx1ZRNCGEQmB1k36NFbMrFixCCqs= sunqi@MS-7D17-SQ";
     };
 
     p600qi = {
@@ -215,6 +216,7 @@ let
       addresses.zt = {
         ipv4 = "10.144.7.6";
       };
+      userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHV2n5spE7gV6tnspfAqMXs/siviXqj5e34PWCn75SrP qi@p600qi";
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDA/QWK/rav8cNqFk2fYpLMn1/C3WW/Op+v9gMKtqQgm system@p600qi";
     };
 
@@ -284,11 +286,9 @@ let
 
   sshUserAuthorizedKeysFor =
     localHostName:
-    mapAttrsToList (_: host: host.userPublicKey or host.sshHostKey) (
+    mapAttrsToList (_: host: host.userPublicKey) (
       filterAttrs (
-        name: host:
-        (host ? userPublicKey || host ? sshHostKey)
-        && !(builtins.elem localHostName (knownHostNames name host))
+        name: host: host ? userPublicKey && !(builtins.elem localHostName (knownHostNames name host))
       ) hostDefinitions
     );
 in
