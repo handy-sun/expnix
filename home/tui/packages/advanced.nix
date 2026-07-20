@@ -68,6 +68,7 @@
     ]
     ++ lib.optionals (profileLevel.tuiAdvanced && pkgs.stdenv.isLinux) [
       bubblewrap
+      rldd
     ]
   );
 }

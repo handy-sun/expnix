@@ -4,7 +4,6 @@
 {
   pkgs,
   lib,
-  inputs,
   profileLevel,
   ...
 }:
@@ -25,6 +24,5 @@ lib.mkIf profileLevel.tuiOptional {
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       btrfs-progs
-      rldd
     ];
 }
