@@ -79,6 +79,16 @@
       url = "github:handy-sun/sbtpl";
       flake = false;
     };
+
+    rust-analyzer-mcp-src = {
+      url = "github:zeenix/rust-analyzer-mcp";
+      flake = false;
+    };
+
+    qt-rules-mcp-src = {
+      url = "github:lpmwfx/QT-RulesMCP";
+      flake = false;
+    };
   };
 
   outputs =

@@ -598,6 +598,22 @@
         "type": "github"
       }
     },
+    "qt-rules-mcp-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774340049,
+        "narHash": "sha256-cjdeqhjW5v4GAhds1g+QpSSsNcSNLFlG8WVM3NkaCXk=",
+        "owner": "lpmwfx",
+        "repo": "QT-RulesMCP",
+        "rev": "fbe6c04a1772b7f4db2cf7dc77d5fd0643686970",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lpmwfx",
+        "repo": "QT-RulesMCP",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "daeuniverse": "daeuniverse",
@@ -613,9 +629,27 @@
         "nix-darwin": "nix-darwin",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_4",
+        "qt-rules-mcp-src": "qt-rules-mcp-src",
+        "rust-analyzer-mcp-src": "rust-analyzer-mcp-src",
         "sbtpl": "sbtpl",
         "sops-nix": "sops-nix",
         "system-manager": "system-manager"
+      }
+    },
+    "rust-analyzer-mcp-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756728400,
+        "narHash": "sha256-Ztt7adnMIOaCy3+Vwz/HPImD1Q2ybvLcTA2dtXe6Ua8=",
+        "owner": "zeenix",
+        "repo": "rust-analyzer-mcp",
+        "rev": "ce8d64c9febe313bd9398ac9f6896a62e5097662",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zeenix",
+        "repo": "rust-analyzer-mcp",
+        "type": "github"
       }
     },
     "rust-overlay": {

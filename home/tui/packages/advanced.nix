@@ -4,9 +4,19 @@
 {
   pkgs,
   lib,
+  inputs,
+  myutils,
   profileLevel,
   ...
 }:
+let
+  rustAnalyzerMcp = pkgs.callPackage (myutils.relativeToRoot "packages/rust-analyzer-mcp.nix") {
+    inherit inputs;
+  };
+  qtRulesMcp = pkgs.callPackage (myutils.relativeToRoot "packages/qt-rules-mcp.nix") {
+    inherit inputs;
+  };
+in
 {
   home.packages = (
     with pkgs;
@@ -67,6 +77,8 @@
       mcp-nixos
       playwright-mcp
       mcp-server-sequential-thinking
+      rustAnalyzerMcp
+      qtRulesMcp
 
       ## productivity
       bc
