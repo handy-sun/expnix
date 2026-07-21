@@ -3,6 +3,7 @@
 ## ============================================================
 {
   pkgs,
+  inputs,
   isDarwin,
   ...
 }:
@@ -73,6 +74,7 @@
       webdav
 
       ## git / forge
+      inputs.githand.packages.${pkgs.stdenv.hostPlatform.system}.default
       git-filter-repo
       gh
       tea

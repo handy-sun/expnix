@@ -45,6 +45,11 @@
 
     daeuniverse.url = "github:daeuniverse/flake.nix";
     ## ------ my applications, configs and scripts ------
+    githand = {
+      url = "github:handy-sun/githand";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     my-nvimdots = {
       url = "github:handy-sun/nvimdots";
       inputs.nixpkgs.follows = "nixpkgs";
