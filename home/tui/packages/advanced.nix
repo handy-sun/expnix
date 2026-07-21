@@ -61,6 +61,13 @@
       nix-tree
       cachix # Command-line client for Nix binary cache hosting https://cachix.org
 
+      ## MCP servers
+      context7-mcp
+      github-mcp-server
+      mcp-nixos
+      playwright-mcp
+      mcp-server-sequential-thinking
+
       ## productivity
       bc
       hugo # static site generator

@@ -153,6 +153,9 @@
 
         "nixwsl" = mkSystem "nixwsl" {
           system = "x86_64-linux";
+          profileLevelOver = {
+            tuiOptional = true;
+          };
           isWSL = true;
         };
 
