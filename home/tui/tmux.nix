@@ -121,6 +121,13 @@ in
       bind -n C-M-n next-window
       bind -n C-M-p previous-window
 
+      bind -n M-H resize-pane -L 5
+      bind -n M-J resize-pane -D 5
+      bind -n M-K resize-pane -U 5
+      bind -n M-L resize-pane -R 5
+      bind -n M-N swap-window -t +1 \; select-window -t +1
+      bind -n M-P swap-window -t -1 \; select-window -t -1
+
       bind r source-file ${tmuxConfig}
 
       bind s split-window -v -c "#{pane_current_path}"
