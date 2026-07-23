@@ -109,22 +109,7 @@ in
 
   networking = {
     usePredictableInterfaceNames = false;
-    interfaces.eth0.ipv4.addresses = [
-      {
-        address = network.ipv4Address;
-        prefixLength = network.ipv4PrefixLength;
-      }
-    ];
-    defaultGateway = {
-      address = network.ipv4Gateway;
-      interface = "eth0";
-    };
-    nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
-      "2606:4700:4700::1111"
-      "2001:4860:4860::8888"
-    ];
+    interfaces.eth0.useDHCP = true;
   };
   ###################################################
 }
