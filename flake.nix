@@ -220,9 +220,15 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          devNixConfig = ''
+            extra-experimental-features = nix-command flakes
+            accept-flake-config = true
+            substituters = https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store/ https://mirrors.ustc.edu.cn/nix-channels/store
+          '';
         in
         {
           default = pkgs.mkShell {
+            NIX_CONFIG = devNixConfig;
             packages = with pkgs; [
               git
               just
@@ -235,6 +241,7 @@
             '';
           };
           sysmgr = pkgs.mkShell {
+            NIX_CONFIG = devNixConfig;
             packages = with pkgs; [
               just
               nix-output-monitor
