@@ -87,7 +87,7 @@ in
   swapDevices = [
     {
       device = "/swapfile";
-      size = 512;
+      size = 1024;
     }
   ];
   boot.kernelParams = [

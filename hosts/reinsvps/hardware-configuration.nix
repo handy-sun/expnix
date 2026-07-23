@@ -24,11 +24,11 @@
     "vmw_pvscsi"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/0aea0268-5247-4123-9560-5fcc16c8bec2";
+    device = "/dev/disk/by-uuid/aafe95a6-c611-4549-9ab4-5a18b2b46593";
     fsType = "ext4";
   };
 
