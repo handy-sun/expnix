@@ -160,7 +160,7 @@ in
     uptime-kuma = {
       enable = true;
       settings = {
-        # HOST = "::"; # default value
+        HOST = "::";
         PORT = "17531";
         UPTIME_KUMA_DB_TYPE = "sqlite";
       };
