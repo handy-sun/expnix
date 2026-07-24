@@ -23,20 +23,10 @@ in
   services = {
     zerotierone.enable = true;
 
-    ## Moonlight stream host. Enabling this also flips on hardware.uinput
-    ## (creates the uinput group + udev rule) and installs sunshine's udev
-    ## rules; it runs as a user-level systemd service, not root. The user
-    ## still needs to be in the input/uinput groups to inject keyboard/mouse
-    ## events -- see users.users extraGroups in default.nix.
     sunshine = {
       enable = true;
       openFirewall = true;
       capSysAdmin = true; # required for KMS/DRM screen capture on Wayland (niri)
-      package = pkgs.sunshine.override {
-        cudaSupport = true;
-        cudaPackages = pkgs.cudaPackages.overrideScope (_: _: { cuda_compat = null; });
-      };
-      settings.encoder = "nvenc";
     };
 
     dae = {
