@@ -37,6 +37,11 @@ in
       };
       configFile = mkDefault daeConfig;
     };
+
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   # systemd.services.dae.serviceConfig = lib.mkIf config.services.dae.enable {

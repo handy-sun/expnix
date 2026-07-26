@@ -21,6 +21,12 @@ in
     ]
   );
 
+  services.tailscale = {
+    enable = true;
+    ## Not avoid conflicts with the existing sing-box TUN/DNS setup?
+    overrideLocalDns = true;
+  };
+
   services.sing-box = {
     enable = true;
     configGeneration = {
