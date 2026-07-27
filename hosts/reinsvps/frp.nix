@@ -134,6 +134,14 @@ in
             localPort = 80;
             transport.useCompression = true;
           }
+          {
+            name = "subs";
+            type = "http";
+            subdomain = "subs";
+            localIP = "127.0.0.1";
+            localPort = 3001;
+            transport.useCompression = true;
+          }
         ];
       };
     };
