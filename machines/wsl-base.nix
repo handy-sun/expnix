@@ -10,5 +10,7 @@
     startMenuLaunchers = true;
   };
 
+  users.users.${username}.linger = true;
+
   system.stateVersion = "26.05";
 }
