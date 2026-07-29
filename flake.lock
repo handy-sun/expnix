@@ -390,11 +390,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784804392,
-        "narHash": "sha256-RBs4rPW1kbYvB2J/dKJgi685meYEnhuk2AETpRSKdBU=",
+        "lastModified": 1785295105,
+        "narHash": "sha256-Sog7qpFEX8VmO/ZUNehWtIMzOfHvijf5FftkvGQLsQc=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "f66a0b77b29f79d8261369147070eb87163331b3",
+        "rev": "88c43848399639d5bbbe0e0c81404cf80a776bc1",
         "type": "github"
       },
       "original": {
