@@ -20,6 +20,7 @@
     "nvme"
     "usbhid"
     "usb_storage"
+    "uas"
     "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
