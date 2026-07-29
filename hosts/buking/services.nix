@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   inputs,
   myutils,
   ...
@@ -10,10 +11,18 @@ let
     builtins.readFile (inputs.sbtpl + "/substore/real-dns.json")
   );
   inherit (pkgs.stdenv.hostPlatform) system;
+  subsSopsFile = myutils.relativeToRoot "secrets/subs.yaml";
 in
 {
   disabledModules = [ "services/networking/sing-box.nix" ];
   imports = [ (myutils.relativeToRoot "modules/sing-box") ];
+
+  sops.secrets.subs-main = {
+    sopsFile = subsSopsFile;
+    format = "yaml";
+    key = "main";
+    restartUnits = [ "sing-box.service" ];
+  };
 
   environment.etc."dae/config.dae" = {
     source = inputs.my-dotfiles + "/dae/config-with-singb.dae";
@@ -38,7 +47,7 @@ in
       enable = true;
       configGeneration = {
         enable = true;
-        sourceUrl = "http://handyMini:3001/c53248f264d9997/download/collection/main?target=V2Ray";
+        sourceUrlFile = config.sops.secrets.subs-main.path;
         policyFilter = "@🌐Proxy@⚡UrlTest-${reverseFilter}@💬AI@🚀LowLatency";
         extraArgs = [
           "--template"
