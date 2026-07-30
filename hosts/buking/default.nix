@@ -78,6 +78,14 @@
     openFirewall = true;
   };
 
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchExternalPower = "suspend";
+    HandleLidSwitchDocked = "ignore";
+  };
+
+  services.power-profiles-daemon.enable = true;
+
   networking.networkmanager.enable = true;
 
   system.stateVersion = "26.05";
