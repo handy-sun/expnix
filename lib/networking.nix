@@ -227,17 +227,10 @@ let
       };
     };
 
-    dowrt = {
-      user = "root";
-      addresses.zt = {
-        ipv4 = "10.144.7.18";
-      };
-    };
-
     fngo = {
       user = "admm";
-      addresses.zt = {
-        ipv4 = "10.144.7.32";
+      addresses.eth = {
+        ipv4 = "192.168.48.71";
       };
     };
   };
