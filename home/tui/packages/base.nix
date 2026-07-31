@@ -75,6 +75,7 @@
 
       ## git / forge
       inputs.githand.packages.${pkgs.stdenv.hostPlatform.system}.default
+      git-credential-manager
       git-filter-repo
       gh
       tea
