@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  inputs,
   myvars,
   hostName,
   homeDir,
@@ -54,7 +53,7 @@ in
   };
 
   networking.hosts = networkingVars.hostsFile;
-  networking.search = lib.mkAfter [ "orb.local" ];
+  # networking.search = lib.mkAfter [ "orb.local" ];
   networking.firewall.enable = mkDefault false;
 
   programs.ssh.knownHosts = networkingVars.ssh.knownHosts;

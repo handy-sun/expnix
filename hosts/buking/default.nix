@@ -50,6 +50,8 @@
   };
 
   services = {
+    fprintd.enable = true;
+    fwupd.enable = true;
     xserver.enable = true;
   };
 
