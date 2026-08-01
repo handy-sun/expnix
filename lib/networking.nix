@@ -208,9 +208,9 @@ let
 
     ms7d = {
       addresses = {
-        # eth = {
-        #   ipv4 = "192.168.1.60";
-        # };
+        eth = {
+          ipv4 = "192.168.1.29";
+        };
         zt = {
           ipv4 = "10.144.4.7";
         };
@@ -222,7 +222,7 @@ let
       user = "cheer";
       addresses = {
         eth = {
-          ipv4 = "192.168.48.71";
+          ipv4 = "192.168.48.47";
           names = [ "p600qi.lan" ];
         };
         zt = {
@@ -237,16 +237,27 @@ let
 
     htqd = {
       user = "root";
-      addresses.zt = {
-        ipv4 = "10.144.7.16";
+      addresses = {
+        eth = {
+          ipv4 = "192.168.48.16";
+          names = [ "htqd.lan" ];
+        };
+        zt = {
+          ipv4 = "10.144.7.16";
+        };
       };
     };
 
     fngo = {
-      user = "admm";
-      addresses.eth = {
-        ipv4 = "192.168.48.71";
-        names = [ "fngo.lan" ];
+      user = username;
+      addresses = {
+        eth = {
+          ipv4 = "192.168.48.71";
+          names = [ "fngo.lan" ];
+        };
+        zt = {
+          ipv4 = "10.144.8.71";
+        };
       };
       resolveCanonicalNameWithDns = true;
     };
