@@ -149,7 +149,7 @@ lib.mkIf profileLevel.guiBase {
       line_ending = "enforce_lf";
       status_bar = {
         active_encoding_button = "enabled";
-        line_endings_button = "true";
+        line_endings_button = true;
       };
       ui_font_size = 17.0;
       buffer_font_size = 15.0;
