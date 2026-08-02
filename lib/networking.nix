@@ -53,12 +53,17 @@ let
     in
     if name != null then host.addresses.${name} else null;
 
+  resolveCanonicalNameWithDns = host: host.resolveCanonicalNameWithDns or false;
+
   preferredTarget =
-    host:
-    let
-      address = preferredAddress host;
-    in
-    if address != null then addressTarget address else null;
+    name: host:
+    if resolveCanonicalNameWithDns host then
+      name
+    else
+      let
+        address = preferredAddress host;
+      in
+      if address != null then addressTarget address else null;
 
   useCanonicalName = host: (host.useCanonicalName or false) || hasSingleAddress host;
 
@@ -107,7 +112,7 @@ let
   sshBlocksForHost =
     name: host:
     let
-      target = preferredTarget host;
+      target = preferredTarget name host;
       canonicalBlocks =
         if target != null && useCanonicalName host then
           genAttrs (hostNames name host) (_: sshCommon host target)
@@ -126,7 +131,7 @@ let
   sshSettingsForHost =
     name: host:
     let
-      target = preferredTarget host;
+      target = preferredTarget name host;
       canonicalBlocks =
         if target != null && useCanonicalName host then
           genAttrs (hostNames name host) (_: sshSettingsCommon host target)
@@ -175,12 +180,14 @@ let
       addresses = {
         eth = {
           ipv4 = "192.168.1.29";
+          names = [ "buking.lan" ];
         };
         zt = {
           ipv4 = "10.144.2.9";
         };
       };
       preferredAddress = "eth";
+      resolveCanonicalNameWithDns = true;
       useCanonicalName = true;
       userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMizFfVaUfb6gY10IXqG7dguFa3P5Z8OwLiU8n4Q+SvG qi@buking";
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOC5Ip/vr7Pao1prc/T08AtUNWQycXaze8rtthg/2/Nd root@buking";
@@ -201,9 +208,9 @@ let
 
     ms7d = {
       addresses = {
-        # eth = {
-        #   ipv4 = "192.168.1.60";
-        # };
+        eth = {
+          ipv4 = "192.168.1.29";
+        };
         zt = {
           ipv4 = "10.144.4.7";
         };
@@ -213,25 +220,46 @@ let
 
     p600qi = {
       user = "cheer";
-      addresses.zt = {
-        ipv4 = "10.144.7.6";
+      addresses = {
+        eth = {
+          ipv4 = "192.168.48.47";
+          names = [ "p600qi.lan" ];
+        };
+        zt = {
+          ipv4 = "10.144.7.6";
+        };
       };
+      resolveCanonicalNameWithDns = true;
+      useCanonicalName = true;
       userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHV2n5spE7gV6tnspfAqMXs/siviXqj5e34PWCn75SrP qi@p600qi";
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDA/QWK/rav8cNqFk2fYpLMn1/C3WW/Op+v9gMKtqQgm system@p600qi";
     };
 
     htqd = {
       user = "root";
-      addresses.zt = {
-        ipv4 = "10.144.7.16";
+      addresses = {
+        eth = {
+          ipv4 = "192.168.48.16";
+          names = [ "htqd.lan" ];
+        };
+        zt = {
+          ipv4 = "10.144.7.16";
+        };
       };
     };
 
     fngo = {
-      user = "admm";
-      addresses.eth = {
-        ipv4 = "192.168.48.71";
+      user = username;
+      addresses = {
+        eth = {
+          ipv4 = "192.168.48.71";
+          names = [ "fngo.lan" ];
+        };
+        zt = {
+          ipv4 = "10.144.8.71";
+        };
       };
+      resolveCanonicalNameWithDns = true;
     };
   };
 
@@ -240,10 +268,12 @@ let
       name: host:
       let
         preferred = preferredAddress host;
-        canonicalEntry = optional (preferred != null && preferred ? ipv4) {
-          ip = preferred.ipv4;
-          names = hostNames name host;
-        };
+        canonicalEntry =
+          optional (!resolveCanonicalNameWithDns host && preferred != null && preferred ? ipv4)
+            {
+              ip = preferred.ipv4;
+              names = hostNames name host;
+            };
         addressEntries = concatLists (
           map (
             address:
