@@ -6,9 +6,14 @@
 }:
 
 lib.mkIf profileLevel.guiHeavy {
-  home.packages = with pkgs; [
-    # google-chrome # cannot download .deb from url after some nixpkgs version
-    # brave
-    feishin
-  ];
+  home.packages =
+    with pkgs;
+    [
+      # google-chrome # cannot download .deb from url after some nixpkgs version
+      # brave
+      feishin
+    ]
+    ++ lib.optionals stdenv.isLinux [
+      mangohud
+    ];
 }
