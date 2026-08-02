@@ -24,7 +24,7 @@ lib.mkIf profileLevel.guiBase {
       peazip
       appimage-run
       telegram-desktop
-      # rustdesk
+      inputs.rustdesk-flutter-nixpkgs.legacyPackages.${system}.rustdesk-flutter
       deskflow
       lan-mouse
       inputs.mark-shot.packages.${system}.default

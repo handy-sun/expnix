@@ -43,6 +43,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Flutter UI 1.4.9 from nixpkgs#541451; use nixpkgs.rustdesk-flutter after it merges.
+    rustdesk-flutter-nixpkgs.url = "github:NixOS/nixpkgs/862d3001bcdfed4e93ee565073e2254ad339ebb0";
+
     daeuniverse.url = "github:daeuniverse/flake.nix";
     ## ------ my applications, configs and scripts ------
     githand = {
