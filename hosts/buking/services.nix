@@ -6,7 +6,7 @@
   ...
 }:
 let
-  reverseFilter = "~^(?!.*(kooya)).*$";
+  reverseFilter = "~^(?!.*(kooya|流量|套餐|重置)).*$";
   template = pkgs.writeText "real-dns.json" (
     builtins.readFile (inputs.sbtpl + "/substore/real-dns.json")
   );
@@ -48,7 +48,7 @@ in
       configGeneration = {
         enable = true;
         sourceUrlFile = config.sops.secrets.subs-main.path;
-        policyFilter = "@🌐Proxy@⚡UrlTest-${reverseFilter}@💬AI@🚀LowLatency";
+        policyFilter = "@🌐Proxy@⚡UrlTest-${reverseFilter}@💬AI@🚀LowLatency@🎮Steam";
         extraArgs = [
           "--template"
           "${template}"

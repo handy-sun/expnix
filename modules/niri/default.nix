@@ -25,7 +25,6 @@ in
     swayimg
     gpu-screen-recorder
     xwayland-satellite
-    tokyonight-gtk-theme
     rose-pine-cursor
     papirus-icon-theme
     nemo

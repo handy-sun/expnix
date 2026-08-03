@@ -50,7 +50,7 @@ in
           maxDays = 3;
           disablePrintColor = false;
         };
-        loginFailExit = true;
+        loginFailExit = false;
         transport = {
           protocol = "tcp";
           tcpMux = true;
