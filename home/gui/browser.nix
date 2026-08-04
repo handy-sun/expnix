@@ -27,14 +27,5 @@ lib.mkIf profileLevel.guiBase {
       "icons/hicolor/256x256/apps/helium.png".source =
         "${helium}/share/icons/hicolor/256x256/apps/helium.png";
     };
-
-    mimeApps = {
-      enable = true;
-      defaultApplications = {
-        "text/html" = [ "helium.desktop" ];
-        "x-scheme-handler/http" = [ "helium.desktop" ];
-        "x-scheme-handler/https" = [ "helium.desktop" ];
-      };
-    };
   };
 }
