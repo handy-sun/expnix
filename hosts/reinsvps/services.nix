@@ -64,6 +64,11 @@ in
   };
 
   services = {
+    tailscale.extraSetFlags = [
+      "--relay-server-port=40000"
+      "--relay-server-static-endpoints=${myvars.reinsvpsNetwork.ipv4Address}:40000"
+    ];
+
     zerotierone.enable = true;
 
     sing-box = {
