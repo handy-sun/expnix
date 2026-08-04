@@ -162,11 +162,11 @@ let
       addresses = {
         eth = {
           ipv4 = "192.168.1.27";
-          names = [ "handyMini" ];
+          names = [ "handy.lan" ];
         };
         zt = {
           ipv4 = "10.144.2.8";
-          names = [ "handy-zt" ];
+          names = [ "handy.zt" ];
         };
       };
       preferredAddress = "eth";
@@ -179,11 +179,12 @@ let
       user = username;
       addresses = {
         eth = {
-          ipv4 = "192.168.1.29";
+          ipv4 = "192.168.48.114";
           names = [ "buking.lan" ];
         };
         zt = {
           ipv4 = "10.144.2.9";
+          names = [ "buking.zt" ];
         };
       };
       preferredAddress = "eth";
