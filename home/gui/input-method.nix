@@ -7,6 +7,7 @@
 
 lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
   xdg.configFile."fcitx5/profile" = {
+    ## Declaratively own the profile; activation overwrites fcitx5-configtool changes.
     force = true;
     text = ''
       [Groups/0]
@@ -37,8 +38,8 @@ lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
       schema_list:
         - schema: rime_ice
       menu/page_size: 9
-      key_binder/bindings/+:
-        - { when: has_menu, accept: Up, send: Page_Up }
-        - { when: has_menu, accept: Down, send: Page_Down }
+      selector/bindings:
+        Up: previous_page
+        Down: next_page
   '';
 }
