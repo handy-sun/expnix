@@ -104,8 +104,6 @@ in
       fcitx5 = {
         waylandFrontend = true;
         addons = with pkgs; [
-          ## pinyin
-          qt6Packages.fcitx5-chinese-addons
           fcitx5-gtk
           (fcitx5-rime.override {
             rimeDataPkgs = [

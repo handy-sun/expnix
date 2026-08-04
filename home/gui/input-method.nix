@@ -23,10 +23,6 @@ lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
       Name=rime
       Layout=
 
-      [Groups/0/Items/2]
-      Name=pinyin
-      Layout=
-
       [GroupOrder]
       0=默认
     '';
@@ -41,5 +37,20 @@ lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
       selector/bindings:
         Up: previous_page
         Down: next_page
+  '';
+
+  xdg.dataFile."fcitx5/rime/rime_ice.custom.yaml".text = ''
+    patch:
+      "speller/algebra/+":
+        # 声母模糊音：z/zh、c/ch、s/sh。
+        - derive/^([zcs])h/$1/
+        - derive/^([zcs])([^h])/$1h$2/
+        # 韵母模糊音：an/ang、en/eng、in/ing。
+        - derive/ang$/an/
+        - derive/an$/ang/
+        - derive/eng$/en/
+        - derive/en$/eng/
+        - derive/in$/ing/
+        - derive/ing$/in/
   '';
 }
