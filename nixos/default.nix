@@ -107,6 +107,12 @@ in
           ## pinyin
           qt6Packages.fcitx5-chinese-addons
           fcitx5-gtk
+          (fcitx5-rime.override {
+            rimeDataPkgs = [
+              rime-data
+              rime-ice
+            ];
+          })
         ];
         candlelightMacosDark.enable = true;
         ## Font size donnot changed?
