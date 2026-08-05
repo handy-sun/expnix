@@ -21,7 +21,7 @@ in
 
     templates."rclone-openlist.conf" = {
       owner = myvars.user;
-      group = "users";
+      group = myvars.group;
       mode = "0400";
       restartUnits = [ "rclone-openlist.service" ];
       content = ''
@@ -58,7 +58,7 @@ in
       serviceConfig = {
         Type = "notify";
         User = myvars.user;
-        Group = "users";
+        Group = myvars.group;
         UMask = "0027";
         CacheDirectory = "rclone-openlist";
         CacheDirectoryMode = "0750";

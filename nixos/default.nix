@@ -73,7 +73,7 @@ in
   users.users.${myvars.user} = {
     home = homeDir;
     createHome = true;
-    group = mkDefault "users";
+    group = mkDefault myvars.group;
     hashedPassword = "$6$rgT4Zw3CMO04LwFY$6L5MfeKp9/wsVXHNSylpN3H8xUgEpZmQNM6QIvPk2kSDR2VGxqCUwga8IpaWxYhuuVRY.4uJPlLpWl7hrsjtw0";
     isNormalUser = mkDefault true;
     extraGroups = mkDefault [

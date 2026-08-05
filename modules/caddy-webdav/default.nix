@@ -122,7 +122,7 @@ in
           {
             # NixOS mirrors the configured user's home ownership.
             system.activationScripts.caddy-webdav = {
-              deps = [ "users" ];
+              deps = [ myvars.group ];
               text = ''
                 mkdir -p "${cfg.storagePath}"
                 chown --reference="${homeDir}" "${cfg.storagePath}"

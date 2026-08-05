@@ -1,6 +1,6 @@
 rec {
   user = "qi";
-
+  group = "users";
   langEnv = "zh_CN.UTF-8";
 
   ## common system environment
