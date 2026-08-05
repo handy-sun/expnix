@@ -41,16 +41,19 @@ lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
 
   xdg.dataFile."fcitx5/rime/rime_ice.custom.yaml".text = ''
     patch:
-      "speller/algebra/+":
-        # 声母模糊音：z/zh、c/ch、s/sh。
-        - derive/^([zcs])h/$1/
-        - derive/^([zcs])([^h])/$1h$2/
-        # 韵母模糊音：an/ang、en/eng、in/ing。
-        - derive/ang$/an/
-        - derive/an$/ang/
-        - derive/eng$/en/
-        - derive/en$/eng/
-        - derive/in$/ing/
-        - derive/ing$/in/
+      # 中文模式下输入英文时，左右 Shift 都直接上屏原始英文编码并切换到英文。
+      "ascii_composer/switch_key/Shift_L": commit_code
+      "ascii_composer/switch_key/Shift_R": commit_code
+      # "speller/algebra/+":
+        ## 声母模糊音：z/zh、c/ch、s/sh。
+        # - derive/^([zcs])h/$1/
+        # - derive/^([zcs])([^h])/$1h$2/
+        ## 韵母模糊音：an/ang、en/eng、in/ing。
+        # - derive/ang$/an/
+        # - derive/an$/ang/
+        # - derive/eng$/en/
+        # - derive/en$/eng/
+        # - derive/in$/ing/
+        # - derive/ing$/in/
   '';
 }

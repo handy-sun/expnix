@@ -30,6 +30,7 @@ in
     nemo
     libsForQt5.qt5ct
     mpvpaper
+    ddcutil
   ];
 
   hardware.i2c.enable = true;
