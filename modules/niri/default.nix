@@ -1,8 +1,10 @@
 {
   pkgs,
+  myutils,
   ...
 }:
 let
+  lrc_tty = pkgs.callPackage (myutils.relativeToRoot "packages/lrc_tty.nix") { };
   baseConfig = pkgs.writeText "niri-base-config.kdl" ''
     include "${pkgs.niri.src}/resources/default-config.kdl"
   '';
@@ -16,6 +18,7 @@ in
 
   environment.systemPackages = with pkgs; [
     noctalia-shell
+    lrc_tty
     gnome-themes-extra # Adwaita theme
     glib # gsettings
     kdePackages.breeze-icons
