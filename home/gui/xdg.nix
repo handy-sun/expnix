@@ -24,7 +24,7 @@ in
     };
 
     mimeApps = {
-      enable = true;
+      enable = isLinuxDe;
       defaultApplications = {
         "text/html" = [ defaultBrowser ];
         "x-scheme-handler/http" = [ defaultBrowser ];

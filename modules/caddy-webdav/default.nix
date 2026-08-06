@@ -5,6 +5,7 @@
   pkgs,
   username,
   homeDir,
+  myvars,
   ...
 }:
 let
