@@ -351,11 +351,11 @@
     "my-dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1785908380,
-        "narHash": "sha256-ReUCN729VNb+ZimiG6gCc2bVF+H7cc29VUvozou636U=",
+        "lastModified": 1785911562,
+        "narHash": "sha256-bvCB5izr+tQkjTvzVuEy0JUx2rhzhiZ98z2SuVNvBZ8=",
         "owner": "handy-sun",
         "repo": "dotfiles",
-        "rev": "9aa36330a5535e4c21f056db2069f2ace41e3235",
+        "rev": "66aab687bb851a4b399e670d930c14bf71c377a2",
         "type": "github"
       },
       "original": {
@@ -390,11 +390,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785295105,
-        "narHash": "sha256-Sog7qpFEX8VmO/ZUNehWtIMzOfHvijf5FftkvGQLsQc=",
+        "lastModified": 1786071202,
+        "narHash": "sha256-7NpCBJDvVIrbicO33S57zbrIQH/YXMoSFoDN7/8ekK8=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "88c43848399639d5bbbe0e0c81404cf80a776bc1",
+        "rev": "92317a61da0476ec6b925801b8fa78e90f318cf6",
         "type": "github"
       },
       "original": {
@@ -445,11 +445,11 @@
     "my-wezterm": {
       "flake": false,
       "locked": {
-        "lastModified": 1784465286,
-        "narHash": "sha256-gVr1YzACI3ngY8MuA8blvImU7BeaJMkXpQcFcDlDRwA=",
+        "lastModified": 1786204836,
+        "narHash": "sha256-pm4Hwh3ZoZNlFFTUY5F+296UgniFpkA6ltjjbiAYfnk=",
         "owner": "handy-sun",
         "repo": "wezterm-config",
-        "rev": "0bedd0390682f966cce47acfb0b49f0437458118",
+        "rev": "80a6324f2cf0bcb0e23fc42f665c3b25ee5964b3",
         "type": "github"
       },
       "original": {
