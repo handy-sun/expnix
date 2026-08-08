@@ -27,6 +27,7 @@ lib.mkIf profileLevel.guiBase {
       inputs.rustdesk-flutter-nixpkgs.legacyPackages.${system}.rustdesk-flutter
       deskflow
       lan-mouse
+      waynergy
       inputs.mark-shot.packages.${system}.default
     ]
     ++ lib.optionals isDarwin [
