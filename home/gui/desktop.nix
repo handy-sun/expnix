@@ -3,6 +3,7 @@
   pkgs,
   inputs,
   profileLevel,
+  hostName ? null,
   ...
 }:
 let
@@ -10,6 +11,16 @@ let
     include "${pkgs.niri.src}/resources/default-config.kdl"
     include "extra.kdl"
     include "noctalia.kdl"
+
+    ${lib.optionalString (hostName == "buking") ''
+      // buking's screen
+      output "eDP-1" {
+          mode "1920x1080@60.049"
+          scale 1.1
+          transform "normal"
+          position x=0 y=0
+      }
+    ''}
   '';
   niriCfgDir = inputs.my-dotfiles + "/.config/niri";
 in
