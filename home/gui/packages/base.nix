@@ -18,6 +18,13 @@ lib.mkIf profileLevel.guiBase {
     ++ lib.optionals (!isDarwin) [
       ## mpv-mpris (MPRIS/D-Bus) is Linux-only, so mpv carries the mpris script here
       (mpv.override { scripts = [ mpvScripts.mpris ]; })
+      nwg-look
+      pavucontrol
+      networkmanagerapplet
+      gnome-disk-utility
+      mission-center
+      kdePackages.filelight
+      obs-studio
       wayclip
       wdisplays
       # thunar
@@ -25,7 +32,6 @@ lib.mkIf profileLevel.guiBase {
       appimage-run
       telegram-desktop
       inputs.rustdesk-flutter-nixpkgs.legacyPackages.${system}.rustdesk-flutter
-      deskflow
       lan-mouse
       waynergy
       inputs.mark-shot.packages.${system}.default
