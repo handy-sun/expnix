@@ -31,6 +31,8 @@ in
     rose-pine-cursor
     papirus-icon-theme
     nemo
+    kdePackages.dolphin
+    kdePackages.ffmpegthumbs
     libsForQt5.qt5ct
     mpvpaper
     ddcutil
