@@ -29,6 +29,14 @@ in
       RuntimeMaxUse=200M
     '';
 
+    iperf3 = {
+      enable = true;
+      port = 5201;
+      ## Omitting --bind makes iperf3 listen on all available interfaces.
+      bind = null;
+      openFirewall = true;
+    };
+
     dae = {
       enable = mkDefault false;
       openFirewall = {

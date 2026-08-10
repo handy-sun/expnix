@@ -66,7 +66,8 @@ in
   };
   services.envfs.enable = true;
 
-  services.openssh.settings.SetEnv = "PATH=/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin";
+  ## MobaXterm monitoring uses non-interactive SSH sessions; keep privileged wrappers first.
+  services.openssh.settings.SetEnv = "PATH=/run/wrappers/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin";
 
   users.defaultUserShell = pkgs.bash;
   users.mutableUsers = false;
