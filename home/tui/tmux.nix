@@ -28,13 +28,7 @@ in
         plugin = yank;
         extraConfig = ''
           set -g @yank_action 'copy-pipe-and-cancel'
-          set -g @yank_with_mouse on
-        '';
-      }
-      {
-        plugin = copycat;
-        extraConfig = ''
-          set -g @copycat_search '/'
+          set -g @yank_with_mouse off
         '';
       }
       {
@@ -110,6 +104,13 @@ in
       setw -g xterm-keys on
       set -g extended-keys on
       set -g extended-keys-format csi-u
+      set -g set-clipboard external
+
+      bind-key -T copy-mode-vi q send-keys -X cancel
+      bind-key -T copy-mode-vi C-c send-keys -X cancel
+      bind-key -T copy-mode-vi Enter send-keys -X copy-selection-and-cancel
+      bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+      bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection-and-cancel
 
       bind-key j select-pane -D
       bind-key k select-pane -U
