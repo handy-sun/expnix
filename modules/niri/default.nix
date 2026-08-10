@@ -14,6 +14,19 @@ in
 
   environment.etc = {
     "niri/config.kdl".source = baseConfig;
+    "xdg/menus/applications.menu".text = ''
+      <!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN"
+        "http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd">
+      <Menu>
+        <Name>Applications</Name>
+        <DefaultAppDirs/>
+        <DefaultDirectoryDirs/>
+        <DefaultMergeDirs/>
+        <Include>
+          <All/>
+        </Include>
+      </Menu>
+    '';
   };
 
   environment.systemPackages = with pkgs; [
