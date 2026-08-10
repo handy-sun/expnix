@@ -59,6 +59,7 @@ in
       ## media
       ffmpeg
       imagemagick
+      yt-dlp
 
       ## dev tools
       devenv

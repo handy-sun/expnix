@@ -20,20 +20,18 @@ lib.mkIf profileLevel.guiBase {
       (mpv.override { scripts = [ mpvScripts.mpris ]; })
       nwg-look
       pavucontrol
-      networkmanagerapplet
       gnome-disk-utility
       mission-center
       kdePackages.filelight
       obs-studio
       wayclip
+      waynergy
       wdisplays
-      # thunar
+
       peazip
       appimage-run
       telegram-desktop
       inputs.rustdesk-flutter-nixpkgs.legacyPackages.${system}.rustdesk-flutter
-      lan-mouse
-      waynergy
       inputs.mark-shot.packages.${system}.default
     ]
     ++ lib.optionals isDarwin [
