@@ -98,6 +98,8 @@ in
     ];
 
     extraConfig = ''
+      set -g exit-empty off
+
       set -g prefix2 C-t
       bind-key C-t send-prefix -2
 
@@ -230,7 +232,7 @@ in
     ## Keep continuum's boot service declarative so start and stop use the same secure socket.
     tmux = {
       Unit = {
-        Description = "tmux default session (detached)";
+        Description = "tmux server for continuum restore";
         Documentation = [ "man:tmux(1)" ];
         X-SwitchMethod = "keep-old";
       };
@@ -241,7 +243,7 @@ in
           "DISPLAY=:0"
           "TMUX_TMPDIR=%t"
         ];
-        ExecStart = "${tmuxBin} new-session -d";
+        ExecStart = "${tmuxBin} start-server";
         ExecStop = [
           "-${resurrectSave}"
           "${tmuxBin} kill-server"
