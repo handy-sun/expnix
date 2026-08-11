@@ -2,6 +2,7 @@
   pkgs,
   config,
   inputs,
+  hostName,
   myutils,
   ...
 }:
@@ -11,6 +12,7 @@ let
     builtins.readFile (inputs.sbtpl + "/substore/real-dns.json")
   );
   inherit (pkgs.stdenv.hostPlatform) system;
+  daeSopsFile = myutils.relativeToRoot "secrets/hosts/${hostName}/config.dae";
   subsSopsFile = myutils.relativeToRoot "secrets/subs.yaml";
 in
 {
@@ -24,9 +26,11 @@ in
     restartUnits = [ "sing-box.service" ];
   };
 
-  environment.etc."dae/config.dae" = {
-    source = inputs.my-dotfiles + "/dae/config-with-singb.dae";
-    mode = "0600";
+  sops.secrets.dae-config = {
+    path = "/run/secrets/dae-config.dae";
+    sopsFile = daeSopsFile;
+    format = "binary";
+    restartUnits = [ "dae.service" ];
   };
 
   services = {
@@ -41,6 +45,7 @@ in
     dae = {
       enable = true;
       package = inputs.daeuniverse.packages.${system}.dae-unstable;
+      configFile = config.sops.secrets.dae-config.path;
     };
 
     sing-box = {
