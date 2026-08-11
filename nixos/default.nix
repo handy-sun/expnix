@@ -49,6 +49,7 @@ in
         glider
         iproute2
         iptables
+        traceroute
       ]);
   };
 

@@ -26,6 +26,8 @@ in
       glider
       iproute2
       iptables
+      traceroute
+      iputils
     ]);
 
   services.beszel.agent = {

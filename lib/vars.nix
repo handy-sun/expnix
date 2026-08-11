@@ -50,6 +50,7 @@ rec {
     "ldns"
     "socat"
     "zoxide"
+    "mtr"
   ];
 
   ## Profile level defaults — hosts can override.
