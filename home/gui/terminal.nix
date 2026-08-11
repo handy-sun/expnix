@@ -152,6 +152,9 @@ lib.mkIf profileLevel.guiBase {
 
       enable_audio_bell = false;
       cursor_shape = "block";
+      cursor_trail = 50;
+      cursor_trail_decay = "0.08 0.25";
+      cursor_trail_start_threshold = 1;
       scrollback_lines = 15000;
       wheel_scroll_multiplier = 5;
       dynamic_window_title = true;
