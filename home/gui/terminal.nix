@@ -147,6 +147,11 @@ lib.mkIf profileLevel.guiBase {
       cursor = qimocha.cursor_bg;
       cursor_text_color = qimocha.cursor_fg;
 
+      active_border_color = builtins.elemAt qimocha.ansi 5;
+      draw_minimal_borders = false;
+      inactive_border_color = qimocha.selection_bg;
+      window_border_width = "2px";
+
       copy_on_select = "clipboard";
       clear_selection_on_clipboard_loss = true;
 
@@ -162,6 +167,9 @@ lib.mkIf profileLevel.guiBase {
       tab_bar_edge = "top";
       tab_bar_style = "powerline";
       tab_bar_min_tabs = 1;
+      active_tab_background = builtins.elemAt qimocha.ansi 5;
+      active_tab_foreground = qimocha.background;
+      tab_title_template = "{index} {tab.active_exe} ~ {title}";
       confirm_os_window_close = 0;
       hide_window_decorations = "yes";
       background_opacity = "0.98";
