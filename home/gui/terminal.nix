@@ -150,6 +150,7 @@ lib.mkIf profileLevel.guiBase {
       copy_on_select = "clipboard";
       clear_selection_on_clipboard_loss = true;
 
+      enabled_layouts = "splits";
       enable_audio_bell = false;
       cursor_shape = "block";
       cursor_trail = 50;
@@ -175,10 +176,12 @@ lib.mkIf profileLevel.guiBase {
       "ctrl+shift+t" = "new_tab";
       "ctrl+shift+w" = "close_tab";
       "ctrl+tab" = "next_tab";
+      "alt+[" = "previous_tab";
+      "alt+]" = "next_tab";
       "ctrl+shift+tab" = "previous_tab";
       "ctrl+shift+right" = "next_tab";
       "ctrl+shift+left" = "previous_tab";
-      "alt+\\" = "launch --location=hsplit";
+      "alt+\\" = "launch --location=vsplit";
       "ctrl+alt+\\" = "launch --location=vsplit";
       "ctrl+alt+enter" = "new_os_window";
       "ctrl+shift+f11" = "toggle_fullscreen";
