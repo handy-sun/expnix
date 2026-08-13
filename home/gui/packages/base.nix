@@ -18,6 +18,7 @@ lib.mkIf profileLevel.guiBase {
     ++ lib.optionals (!isDarwin) [
       ## mpv-mpris (MPRIS/D-Bus) is Linux-only, so mpv carries the mpris script here
       (mpv.override { scripts = [ mpvScripts.mpris ]; })
+      filezilla
       nwg-look
       pavucontrol
       gnome-disk-utility
@@ -27,6 +28,7 @@ lib.mkIf profileLevel.guiBase {
       wayclip
       waynergy
       wdisplays
+      wineWow64Packages.stable
 
       peazip
       appimage-run
