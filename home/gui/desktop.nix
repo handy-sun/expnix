@@ -8,6 +8,8 @@
   ...
 }:
 let
+  cursorThemeName = "Bibata-Rainbow-Modern";
+  cursorSize = 28;
   niriUserConfig = pkgs.writeText "niri-user-config.kdl" ''
     include "${pkgs.niri.src}/resources/default-config.kdl"
     include "extra.kdl"
@@ -22,6 +24,11 @@ let
           position x=0 y=0
       }
     ''}
+
+    cursor {
+        xcursor-theme "${cursorThemeName}"
+        xcursor-size ${toString cursorSize}
+    }
   '';
   niriCfgDir = inputs.my-dotfiles + "/.config/niri";
   bibataRainbowModern =
@@ -37,16 +44,16 @@ lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
 
   home.pointerCursor = {
     enable = true;
-    name = "Bibata-Rainbow-Modern";
+    name = cursorThemeName;
     package = bibataRainbowModern;
-    size = 28;
+    size = cursorSize;
     gtk.enable = true;
     x11.enable = true;
   };
 
   home.sessionVariables = {
-    XCURSOR_THEME = "Bibata-Rainbow-Modern";
-    XCURSOR_SIZE = "28";
+    XCURSOR_THEME = cursorThemeName;
+    XCURSOR_SIZE = toString cursorSize;
     NIXOS_OZONE_WL = "1";
   };
 
