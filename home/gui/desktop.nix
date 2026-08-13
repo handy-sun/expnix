@@ -2,6 +2,7 @@
   lib,
   pkgs,
   inputs,
+  myutils,
   profileLevel,
   hostName ? null,
   ...
@@ -23,6 +24,9 @@ let
     ''}
   '';
   niriCfgDir = inputs.my-dotfiles + "/.config/niri";
+  bibataRainbowModern =
+    pkgs.callPackage (myutils.relativeToRoot "packages/bibata-rainbow-modern.nix")
+      { };
 in
 lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
   # qt = {
@@ -33,16 +37,16 @@ lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
 
   home.pointerCursor = {
     enable = true;
-    name = "BreezeX-RosePine-Linux";
-    package = pkgs.rose-pine-cursor;
-    size = 24;
+    name = "Bibata-Rainbow-Modern";
+    package = bibataRainbowModern;
+    size = 28;
     gtk.enable = true;
     x11.enable = true;
   };
 
   home.sessionVariables = {
-    XCURSOR_THEME = "BreezeX-RosePine-Linux";
-    XCURSOR_SIZE = "24";
+    XCURSOR_THEME = "Bibata-Rainbow-Modern";
+    XCURSOR_SIZE = "28";
     NIXOS_OZONE_WL = "1";
   };
 
