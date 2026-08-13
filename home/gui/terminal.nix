@@ -174,6 +174,9 @@ lib.mkIf profileLevel.guiBase {
       hide_window_decorations = "yes";
       background_opacity = "0.98";
       window_padding_width = 0;
+
+      term = "xterm-256color";
+      terminfo_type = "none";
     }
     // kittyColors;
 
