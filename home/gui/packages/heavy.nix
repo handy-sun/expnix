@@ -1,10 +1,16 @@
 {
   pkgs,
   lib,
+  myutils,
   profileLevel,
   ...
 }:
 
+let
+  qqNixPak = myutils.mkNixPakPackage pkgs (myutils.relativeToRoot "packages/nixpaks/qq.nix");
+  wechatNixPak = myutils.mkNixPakPackage pkgs (myutils.relativeToRoot "packages/nixpaks/wechat.nix");
+  wemeetNixPak = myutils.mkNixPakPackage pkgs (myutils.relativeToRoot "packages/nixpaks/wemeet.nix");
+in
 lib.mkIf profileLevel.guiHeavy {
   home.packages =
     with pkgs;
@@ -16,5 +22,8 @@ lib.mkIf profileLevel.guiHeavy {
     ]
     ++ lib.optionals stdenv.isLinux [
       mangohud
+      qqNixPak
+      wechatNixPak
+      wemeetNixPak
     ];
 }

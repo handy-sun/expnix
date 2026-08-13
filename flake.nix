@@ -23,6 +23,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixpak = {
+      url = "github:nixpak/nixpak";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     system-manager = {
       url = "github:numtide/system-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -118,7 +123,10 @@
       forFormatterSystems = lib.genAttrs formatterSystems;
 
       myvars = import ./lib/vars.nix;
-      myutils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
+      myutils = import ./lib/utils.nix {
+        inherit inputs;
+        inherit (nixpkgs) lib;
+      };
       networkingVars = import ./lib/networking.nix {
         inherit lib;
         inherit myvars;
