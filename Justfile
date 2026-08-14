@@ -2,6 +2,7 @@
 set shell := ["bash", "-uc"]
 
 alias s := switch
+alias so := switch-offline
 alias e := evtop
 alias es := ev-sysmgr
 alias f := nixfmt
@@ -117,6 +118,11 @@ switch:
 
 [linux]
 [group('nix')]
+switch-offline:
+  nh os switch . --offline
+
+[linux]
+[group('nix')]
 repl-nh:
   nh os repl .
 
@@ -140,6 +146,11 @@ sysmgr:
 [group('nix')]
 switch:
   nh darwin switch .
+
+[macos]
+[group('nix')]
+switch-offline:
+  nh darwin switch . --offline
 
 [macos]
 [group('nix')]
