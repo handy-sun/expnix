@@ -14,16 +14,27 @@ let
   inherit (pkgs.stdenv.hostPlatform) system;
   daeSopsFile = myutils.relativeToRoot "secrets/hosts/${hostName}/config.dae";
   subsSopsFile = myutils.relativeToRoot "secrets/sb-subs.yaml";
+  mihomoSubsSopsFile = myutils.relativeToRoot "secrets/mhm-subs.yaml";
 in
 {
   disabledModules = [ "services/networking/sing-box.nix" ];
-  imports = [ (myutils.relativeToRoot "modules/sing-box") ];
+  imports = [
+    (myutils.relativeToRoot "modules/mihomo")
+    (myutils.relativeToRoot "modules/sing-box")
+  ];
 
   sops.secrets.subs-main = {
     sopsFile = subsSopsFile;
     format = "yaml";
     key = "main";
     restartUnits = [ "sing-box.service" ];
+  };
+
+  sops.secrets.mihomo-subscription-url = {
+    sopsFile = mihomoSubsSopsFile;
+    format = "yaml";
+    key = "main";
+    restartUnits = [ "mihomo.service" ];
   };
 
   sops.secrets.dae-config = {
@@ -60,6 +71,12 @@ in
           "--icmp"
         ];
       };
+    };
+
+    mihomo = {
+      enable = true;
+      subscriptionUrlFile = config.sops.secrets.mihomo-subscription-url.path;
+      tunMode = true;
     };
   };
 }
