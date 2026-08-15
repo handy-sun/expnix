@@ -13,7 +13,7 @@ let
   );
   inherit (pkgs.stdenv.hostPlatform) system;
   daeSopsFile = myutils.relativeToRoot "secrets/hosts/${hostName}/config.dae";
-  subsSopsFile = myutils.relativeToRoot "secrets/subs.yaml";
+  subsSopsFile = myutils.relativeToRoot "secrets/sb-subs.yaml";
 in
 {
   disabledModules = [ "services/networking/sing-box.nix" ];
