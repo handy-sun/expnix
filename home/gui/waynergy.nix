@@ -10,13 +10,13 @@
 let
   waynergyServers = {
     ms7d = {
-      host = networkingVars.hosts.ms7d.addresses.eth.ipv4;
+      host = networkingVars.hosts.ms7d.addresses.lan.ipv4;
       port = 24800;
       autoStart = false;
     };
 
     p600qi = {
-      host = networkingVars.hosts.p600qi.addresses.eth.ipv4;
+      host = networkingVars.hosts.p600qi.addresses.lan.ipv4;
       port = 24800;
       autoStart = true;
     };

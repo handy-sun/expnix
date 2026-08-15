@@ -7,7 +7,6 @@
 let
   inherit (lib)
     attrNames
-    attrValues
     concatLists
     concatStringsSep
     filterAttrs
@@ -69,21 +68,25 @@ let
 
   hostNames = name: host: unique ([ name ] ++ (host.aliases or [ ]));
 
+  addressNamesFor =
+    hostName: addressName: address:
+    if address ? names then address.names else [ "${hostName}.${addressName}" ];
+
   addressNames =
-    host:
+    name: host:
     unique (
       concatLists (
-        map (
-          address:
-          (address.names or [ ])
+        mapAttrsToList (
+          addressName: address:
+          (addressNamesFor name addressName address)
           ++ optional (address ? hostName) address.hostName
           ++ optional (address ? ipv4) address.ipv4
           ++ optional (address ? ipv6) address.ipv6
-        ) (attrValues (host.addresses or { }))
+        ) (host.addresses or { })
       )
     );
 
-  knownHostNames = name: host: unique ((hostNames name host) ++ (addressNames host));
+  knownHostNames = name: host: unique ((hostNames name host) ++ (addressNames name host));
 
   sshCommon =
     host: target:
@@ -119,12 +122,13 @@ let
         else
           { };
       addressBlocks = foldl' (
-        acc: address:
+        acc: addressName:
         let
-          names = address.names or [ ];
+          address = host.addresses.${addressName};
+          names = addressNamesFor name addressName address;
         in
         acc // genAttrs names (_: sshCommon host (addressTarget address))
-      ) { } (attrValues (host.addresses or { }));
+      ) { } (addressAttrNames host);
     in
     canonicalBlocks // addressBlocks;
 
@@ -138,12 +142,13 @@ let
         else
           { };
       addressBlocks = foldl' (
-        acc: address:
+        acc: addressName:
         let
-          names = address.names or [ ];
+          address = host.addresses.${addressName};
+          names = addressNamesFor name addressName address;
         in
         acc // genAttrs names (_: sshSettingsCommon host (addressTarget address))
-      ) { } (attrValues (host.addresses or { }));
+      ) { } (addressAttrNames host);
     in
     canonicalBlocks // addressBlocks;
 
@@ -160,16 +165,14 @@ let
     handy = {
       user = username;
       addresses = {
-        eth = {
+        lan = {
           ipv4 = "192.168.1.27";
-          names = [ "handy.lan" ];
         };
         zt = {
           ipv4 = "10.144.2.8";
-          names = [ "handy.zt" ];
         };
       };
-      preferredAddress = "eth";
+      preferredAddress = "lan";
       useCanonicalName = true;
       userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXv7vJ9dWH6CY/xKzB6qjpWCcTlhxI17BHn8/g+zI9x qi@handyMini";
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuKM3DmTBChkXQOokBv1w8vGr4tsU/bQ1BYqGMyLF+k";
@@ -178,16 +181,14 @@ let
     buking = {
       user = username;
       addresses = {
-        eth = {
+        lan = {
           ipv4 = "192.168.48.114";
-          names = [ "buking.lan" ];
         };
         zt = {
           ipv4 = "10.144.2.9";
-          names = [ "buking.zt" ];
         };
       };
-      preferredAddress = "eth";
+      preferredAddress = "lan";
       resolveCanonicalNameWithDns = true;
       useCanonicalName = true;
       userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMizFfVaUfb6gY10IXqG7dguFa3P5Z8OwLiU8n4Q+SvG qi@buking";
@@ -197,7 +198,7 @@ let
     reinsvps = {
       user = username;
       port = 23512;
-      addresses.eth = {
+      addresses.lan = {
         ipv4 = myvars.reinsvpsNetwork.ipv4Address;
       };
     };
@@ -209,7 +210,7 @@ let
 
     ms7d = {
       addresses = {
-        eth = {
+        lan = {
           ipv4 = "192.168.1.29";
         };
         zt = {
@@ -222,9 +223,8 @@ let
     p600qi = {
       user = "cheer";
       addresses = {
-        eth = {
+        lan = {
           ipv4 = "192.168.48.47";
-          names = [ "p600qi.lan" ];
         };
         zt = {
           ipv4 = "10.144.7.6";
@@ -239,9 +239,8 @@ let
     htqd = {
       user = "root";
       addresses = {
-        eth = {
+        lan = {
           ipv4 = "192.168.48.16";
-          names = [ "htqd.lan" ];
         };
         zt = {
           ipv4 = "10.144.7.16";
@@ -252,9 +251,8 @@ let
     fngo = {
       user = username;
       addresses = {
-        eth = {
+        lan = {
           ipv4 = "192.168.48.71";
-          names = [ "fngo.lan" ];
         };
         zt = {
           ipv4 = "10.144.8.71";
@@ -276,13 +274,16 @@ let
               names = hostNames name host;
             };
         addressEntries = concatLists (
-          map (
-            address:
-            optional (address ? ipv4 && (address.names or [ ]) != [ ]) {
+          mapAttrsToList (
+            addressName: address:
+            let
+              names = addressNamesFor name addressName address;
+            in
+            optional (address ? ipv4 && names != [ ]) {
               ip = address.ipv4;
-              names = address.names;
+              inherit names;
             }
-          ) (attrValues (host.addresses or { }))
+          ) (host.addresses or { })
         );
       in
       canonicalEntry ++ addressEntries
