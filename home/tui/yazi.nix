@@ -1,5 +1,7 @@
 {
   inputs,
+  lib,
+  networkingVars,
   pkgs,
   ...
 }:
@@ -7,6 +9,21 @@
 let
   yaziDir = inputs.my-dotfiles + "/.config/yazi";
   yaziPluginsDir = yaziDir + "/plugins";
+  vfsFormat = pkgs.formats.toml { };
+  manualVfs = builtins.fromTOML (builtins.readFile (yaziDir + "/vfs.toml"));
+  networkServices = lib.mapAttrs (_: sshSettings: {
+    type = "sftp";
+    host = sshSettings.HostName;
+    user = sshSettings.User;
+    port = sshSettings.Port;
+    key_file = sshSettings.IdentityFile;
+  }) networkingVars.ssh.settings;
+  vfsFile = vfsFormat.generate "vfs.toml" (
+    manualVfs
+    // {
+      services = networkServices // (manualVfs.services or { });
+    }
+  );
 in
 {
   programs.yazi = {
@@ -30,6 +47,6 @@ in
     "yazi/keymap.toml".source = yaziDir + "/keymap.toml";
     "yazi/theme.toml".source = yaziDir + "/theme.toml";
     ## optional
-    "yazi/vfs.toml".source = yaziDir + "/vfs.toml";
+    "yazi/vfs.toml".source = vfsFile;
   };
 }
