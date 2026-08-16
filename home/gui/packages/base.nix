@@ -38,5 +38,6 @@ lib.mkIf profileLevel.guiBase {
     ]
     ++ lib.optionals isDarwin [
       mpv
+      utm
     ];
 }
