@@ -8,7 +8,7 @@
 
 rustPlatform.buildRustPackage {
   pname = "rust-analyzer-mcp";
-  version = "0.2.0-unstable-2025-09-01";
+  version = "0.2.0-unstable-2026-08-15";
 
   src = inputs.rust-analyzer-mcp-src;
   cargoHash = "sha256-7t4bjyCcbxFAO/29re7cjoW1ACieeEaM4+QT5QAwc34=";

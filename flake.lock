@@ -749,11 +749,11 @@
     "rust-analyzer-mcp-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1756728400,
-        "narHash": "sha256-Ztt7adnMIOaCy3+Vwz/HPImD1Q2ybvLcTA2dtXe6Ua8=",
+        "lastModified": 1786821265,
+        "narHash": "sha256-iwf0iaJoSy2UbzjWCsmEYKFQQUQztymQRJhL/tz6wQc=",
         "owner": "zeenix",
         "repo": "rust-analyzer-mcp",
-        "rev": "ce8d64c9febe313bd9398ac9f6896a62e5097662",
+        "rev": "4ad21154c75c5839d71154c8a1a411cc1ed89b14",
         "type": "github"
       },
       "original": {
