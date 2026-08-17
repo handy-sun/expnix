@@ -14,6 +14,7 @@ lib.mkIf profileLevel.guiBase {
     with pkgs;
     [
       moonlight-qt # Moonlight client; sunshine host is set up per-host via services.sunshine
+      obsidian
     ]
     ++ lib.optionals (!isDarwin) [
       ## mpv-mpris (MPRIS/D-Bus) is Linux-only, so mpv carries the mpris script here

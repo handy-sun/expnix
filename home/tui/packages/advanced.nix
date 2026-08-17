@@ -81,8 +81,10 @@ in
       rustAnalyzerMcp
       qtRulesMcp
 
-      ## productivity
+      ## productivity | misc
       bc
+      fastfetch
+      python314Packages.rapidocr
       hugo # static site generator
       glow # markdown previewer in terminal
       subversion # svn

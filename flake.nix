@@ -48,10 +48,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    daeuniverse.url = "github:daeuniverse/flake.nix";
+
+    rust-analyzer-mcp-src = {
+      url = "github:zeenix/rust-analyzer-mcp";
+      flake = false;
+    };
+
+    qt-rules-mcp-src = {
+      url = "github:lpmwfx/QT-RulesMCP";
+      flake = false;
+    };
+
     # Flutter UI 1.4.9 from nixpkgs#541451; use nixpkgs.rustdesk-flutter after it merges.
     rustdesk-flutter-nixpkgs.url = "github:NixOS/nixpkgs/862d3001bcdfed4e93ee565073e2254ad339ebb0";
 
-    daeuniverse.url = "github:daeuniverse/flake.nix";
     ## ------ my applications, configs and scripts ------
     githand = {
       url = "github:handy-sun/githand";
@@ -90,16 +101,6 @@
 
     sbtpl = {
       url = "github:handy-sun/sbtpl";
-      flake = false;
-    };
-
-    rust-analyzer-mcp-src = {
-      url = "github:zeenix/rust-analyzer-mcp";
-      flake = false;
-    };
-
-    qt-rules-mcp-src = {
-      url = "github:lpmwfx/QT-RulesMCP";
       flake = false;
     };
   };
