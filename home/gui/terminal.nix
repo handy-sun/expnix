@@ -71,10 +71,10 @@ lib.mkIf profileLevel.guiBase {
 
     settings = {
       color_scheme = "qimocha";
-      default_prog = [
-        fish
-        "-il"
-      ];
+      # default_prog = [
+      #   fish
+      #   "-il"
+      # ];
       launch_menu = [
         {
           label = "Fish";
@@ -139,7 +139,7 @@ lib.mkIf profileLevel.guiBase {
     };
 
     settings = {
-      shell = "${fish} -il";
+      # shell = "${fish} -il";
 
       inherit (qimocha) background foreground;
       selection_background = qimocha.selection_bg;
