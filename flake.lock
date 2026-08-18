@@ -433,11 +433,11 @@
     "my-dotvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1785409955,
-        "narHash": "sha256-XoXZhDRwTKyX8G9FAgjlFC5M+LwQs1Ylo38xjXnFPb8=",
+        "lastModified": 1786979616,
+        "narHash": "sha256-LTKY1TbL/hbNra44TmV7hXA8gLLDkaXHhiDlhPS37VQ=",
         "owner": "handy-sun",
         "repo": "dotvim",
-        "rev": "995f8e0cf0d366bc1306db715a057e56d6a4af53",
+        "rev": "255c4cf72c2fe489e59d5f25ecc5cf8d066dbc42",
         "type": "github"
       },
       "original": {
@@ -456,11 +456,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786940293,
-        "narHash": "sha256-daPpoe/p1AljdORc0iGWK1ESRdEFPc4/YbiDBksL8XY=",
+        "lastModified": 1787049915,
+        "narHash": "sha256-wBHPCNKZpQ9dn4YC3tuOXxWlOj9Dw54STh8GN3WiYik=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "1f25abd728412ad357396cccebba954da5aed506",
+        "rev": "a5c85fc6a9d8f7b8b176beb8096e676ca0c323df",
         "type": "github"
       },
       "original": {
