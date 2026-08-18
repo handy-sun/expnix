@@ -48,6 +48,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    flyline = {
+      url = "github:HalFrgrd/flyline";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     daeuniverse.url = "github:daeuniverse/flake.nix";
 
     rust-analyzer-mcp-src = {

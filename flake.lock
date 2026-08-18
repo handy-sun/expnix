@@ -220,6 +220,26 @@
         "type": "github"
       }
     },
+    "flyline": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786919157,
+        "narHash": "sha256-+psf0oMHewZ/ajMAYFmdlNDH8zOU8KhKX9KTeS1OTi8=",
+        "owner": "HalFrgrd",
+        "repo": "flyline",
+        "rev": "3e554bb43cae38ac0825275ab1163c32d5ab1847",
+        "type": "github"
+      },
+      "original": {
+        "owner": "HalFrgrd",
+        "repo": "flyline",
+        "type": "github"
+      }
+    },
     "githand": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -413,11 +433,11 @@
     "my-dotvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1785409955,
-        "narHash": "sha256-XoXZhDRwTKyX8G9FAgjlFC5M+LwQs1Ylo38xjXnFPb8=",
+        "lastModified": 1786979616,
+        "narHash": "sha256-LTKY1TbL/hbNra44TmV7hXA8gLLDkaXHhiDlhPS37VQ=",
         "owner": "handy-sun",
         "repo": "dotvim",
-        "rev": "995f8e0cf0d366bc1306db715a057e56d6a4af53",
+        "rev": "255c4cf72c2fe489e59d5f25ecc5cf8d066dbc42",
         "type": "github"
       },
       "original": {
@@ -436,11 +456,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786940293,
-        "narHash": "sha256-daPpoe/p1AljdORc0iGWK1ESRdEFPc4/YbiDBksL8XY=",
+        "lastModified": 1787060022,
+        "narHash": "sha256-hsACQix0YXbS42y09IJ6G1VnrpSAONKhwpDcmD3a8q8=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "1f25abd728412ad357396cccebba954da5aed506",
+        "rev": "d55251fd034219da0bbf5a97d78b8c593260089d",
         "type": "github"
       },
       "original": {
@@ -724,6 +744,7 @@
     "root": {
       "inputs": {
         "daeuniverse": "daeuniverse",
+        "flyline": "flyline",
         "githand": "githand",
         "helix-dev": "helix-dev",
         "home-manager": "home-manager",

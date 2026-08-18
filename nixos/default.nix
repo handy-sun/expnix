@@ -5,6 +5,7 @@
   hostName,
   homeDir,
   myutils,
+  inputs,
   networkingVars,
   profileLevel,
   ...
@@ -14,11 +15,13 @@ let
   commonSystemPackages = myutils.resolveNames pkgs myvars.systemCommonPkgs;
 in
 {
-  imports =
-    lib.map myutils.relativeToRoot [
-      "modules/fcitx5-candlelight-macos-dark"
-    ]
-    ++ (myutils.scanPaths ./.);
+  imports = [
+    inputs.flyline.nixosModules.default
+  ]
+  ++ lib.map myutils.relativeToRoot [
+    "modules/fcitx5-candlelight-macos-dark"
+  ]
+  ++ (myutils.scanPaths ./.);
 
   programs.nix-ld.enable = true;
 
@@ -61,10 +64,8 @@ in
 
   programs.zsh.enable = true;
   programs.fish.enable = true;
-  programs.bash = {
-    enable = true;
-    interactiveShellInit = "exec fish";
-  };
+  programs.bash.enable = true;
+  programs.flyline.enable = true;
   services.envfs.enable = true;
 
   ## MobaXterm monitoring uses non-interactive SSH sessions; keep privileged wrappers first.
