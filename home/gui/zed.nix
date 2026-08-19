@@ -2,9 +2,13 @@
   lib,
   profileLevel,
   myvars,
+  username,
   ...
 }:
 
+let
+  userProfileBin = "/etc/profiles/per-user/${username}/bin";
+in
 lib.mkIf profileLevel.guiBase {
   programs.zed-editor = {
     enable = true;
@@ -84,6 +88,16 @@ lib.mkIf profileLevel.guiBase {
           remote = false;
           settings = {
             github_personal_access_token = "GITHUB_PERSONAL_ACCESS_TOKEN";
+          };
+        };
+      };
+      lsp = {
+        clangd = {
+          binary = {
+            arguments = [
+              "--query-driver=${userProfileBin}/g++"
+              "--query-driver=${userProfileBin}/gcc"
+            ];
           };
         };
       };
