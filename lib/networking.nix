@@ -248,6 +248,15 @@ let
       };
     };
 
+    dowrt = {
+      user = "root";
+      addresses = {
+        lan = {
+          ipv4 = "192.168.48.18";
+        };
+      };
+    };
+
     fngo = {
       user = username;
       addresses = {
