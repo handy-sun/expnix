@@ -110,11 +110,11 @@
         "nixpkgs-lib": "nixpkgs-lib_2"
       },
       "locked": {
-        "lastModified": 1782949081,
-        "narHash": "sha256-vp6Y/Grm98ESt6ceOkWiHWyZRDV3J1RID4w+6NWK9yA=",
+        "lastModified": 1785627969,
+        "narHash": "sha256-4dtXQk/NMePegK/nWp5NSeuZKLATItOq61lpEvmXqGw=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "17c9d6cdfc60c64f4ee8d306f9bc0b4ccb51481e",
+        "rev": "427bf4bd9435fdf21321c8cc628c24efc14c0f7a",
         "type": "github"
       },
       "original": {
@@ -359,11 +359,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784129366,
-        "narHash": "sha256-N5JiyICSeQF14x+OQebNyPpYowOT9Rs1iKyeCylSzOA=",
+        "lastModified": 1787176219,
+        "narHash": "sha256-djoRr6jBpe35q/0JwAvXpFXg1Ktf+X54NU2RLR7wnHw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "165228b0efefc3e635e5174020c40ea64271dc25",
+        "rev": "c53d643b3737e2fcd04e6cb3b3580ef50b2087a0",
         "type": "github"
       },
       "original": {
@@ -417,11 +417,11 @@
     "my-dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1786674036,
-        "narHash": "sha256-OHD8zvtyG+fr1mVV77r9MxHTatahpBMR+KfxNRCUs6s=",
+        "lastModified": 1787300684,
+        "narHash": "sha256-LMU6ahPkE17eb2IT6ZtaXP+Ic3rFU64RnXKNDfWSN8A=",
         "owner": "handy-sun",
         "repo": "dotfiles",
-        "rev": "5b2ce216521ae21183d40174930edb19f8148549",
+        "rev": "e1e00bfa1ac3f8a9421786b0f1943c0baa928581",
         "type": "github"
       },
       "original": {
@@ -456,11 +456,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787195469,
-        "narHash": "sha256-78CTxbl6pX5YQr1aplXpMsd2FKeKbwHRPpTEIj04fww=",
+        "lastModified": 1787207019,
+        "narHash": "sha256-WC/4sV6T4uYNHsGWhuYXB+lsKKBjN8YPRJ8of+LPK8k=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "26653948da281945047c45cc7bc0ae5fee4bc90e",
+        "rev": "58380dbce829e9e06adcda47840c9c3b2d0146f9",
         "type": "github"
       },
       "original": {
@@ -621,11 +621,11 @@
     },
     "nixpkgs-lib_2": {
       "locked": {
-        "lastModified": 1782614948,
-        "narHash": "sha256-ePjCwr1sNm9NYUqywL7QfK3JnlS015msC+eBu2zKlp8=",
+        "lastModified": 1785031560,
+        "narHash": "sha256-OmshNvn2vupOFpYinLUu+1Dnpu4n7Q5N3ggGVNHpkUI=",
         "owner": "nix-community",
         "repo": "nixpkgs.lib",
-        "rev": "db3f255737b94216eb71cce308e2912cf6bc2d7c",
+        "rev": "0e79af5e3d4dcfcd676ab5ba3f95d2e3352e078c",
         "type": "github"
       },
       "original": {
@@ -823,11 +823,11 @@
     "sbtpl": {
       "flake": false,
       "locked": {
-        "lastModified": 1786619626,
-        "narHash": "sha256-MFiXPm4KXBKB0K4s7be/2nq/3lNTwEcGWrXwnKYHzIk=",
+        "lastModified": 1787280910,
+        "narHash": "sha256-Cz6X18xYjQf87tCnlqBKJ3uzF/McjlSWphHoN+nDxrA=",
         "owner": "handy-sun",
         "repo": "sbtpl",
-        "rev": "13f26164137f81ddd80ad3313dd0bc06cf4d7123",
+        "rev": "c2002bd986e671536c43398c3b7b2d851e902702",
         "type": "github"
       },
       "original": {
