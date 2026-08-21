@@ -8,8 +8,8 @@
 }:
 let
   reverseFilter = "~^(?!.*(kooya|流量|套餐|重置)).*$";
-  template = pkgs.writeText "real-dns.json" (
-    builtins.readFile (inputs.sbtpl + "/substore/real-dns.json")
+  template = pkgs.writeText "real-dns-nosniff.json" (
+    builtins.readFile (inputs.sbtpl + "/substore/real-dns-nosniff.json")
   );
   inherit (pkgs.stdenv.hostPlatform) system;
   daeSopsFile = myutils.relativeToRoot "secrets/hosts/${hostName}/config.dae";
