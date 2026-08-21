@@ -31,6 +31,12 @@ lib.mkIf profileLevel.guiBase {
       wdisplays
       wineWow64Packages.stable
 
+      ## WPS China has the best compatibility with Chinese Office documents
+      ## and the macOS WPS installations used by colleagues.
+      wpsoffice-cn
+      ## Okular handles PDF annotations and navigation well on Wayland.
+      kdePackages.okular
+
       peazip
       appimage-run
       telegram-desktop

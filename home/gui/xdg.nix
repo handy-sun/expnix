@@ -11,6 +11,7 @@ let
   defaultBrowser = "helium.desktop";
   defaultFileManager = "org.kde.dolphin.desktop";
   defaultImageViewer = "swayimg.desktop";
+  defaultPdfViewer = "org.kde.okular.desktop";
   imageMimeTypes = [
     "image/avif"
     "image/bmp"
@@ -57,6 +58,19 @@ in
         "text/html" = [ defaultBrowser ];
         "x-scheme-handler/http" = [ defaultBrowser ];
         "x-scheme-handler/https" = [ defaultBrowser ];
+        "application/pdf" = [ defaultPdfViewer ];
+        "application/vnd.oasis.opendocument.text" = [ "wps-office-wps.desktop" ];
+        "application/vnd.oasis.opendocument.spreadsheet" = [ "wps-office-et.desktop" ];
+        "application/vnd.oasis.opendocument.presentation" = [ "wps-office-wpp.desktop" ];
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [
+          "wps-office-wps.desktop"
+        ];
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = [
+          "wps-office-et.desktop"
+        ];
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation" = [
+          "wps-office-wpp.desktop"
+        ];
       }
       // lib.genAttrs imageMimeTypes (_: [ defaultImageViewer ]);
     };
