@@ -36,12 +36,6 @@ let
       { };
 in
 lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
-  # qt = {
-  #   enable = true;
-  #   platformTheme.name = "qtct";
-  #   style.name = "Fusion";
-  # };
-
   home.pointerCursor = {
     enable = true;
     name = cursorThemeName;
