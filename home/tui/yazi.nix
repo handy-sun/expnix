@@ -58,7 +58,8 @@ assert lib.assertMsg (
     enable = true;
     shellWrapperName = "yy";
     plugins = {
-      inherit (pkgs.yaziPlugins) git ouch sudo;
+      inherit (pkgs.yaziPlugins) git sudo;
+      ouch = yaziPluginsDir + "/ouch.yazi";
       ## some local plugins
       yatline = yaziPluginsDir + "/yatline.yazi";
       preview-git = yaziPluginsDir + "/preview-git.yazi";
