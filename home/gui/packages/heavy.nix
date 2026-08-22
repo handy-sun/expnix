@@ -22,6 +22,7 @@ lib.mkIf profileLevel.guiHeavy {
     ]
     ++ lib.optionals stdenv.isLinux [
       mangohud
+      qtcreator
       qqNixPak
       wechatNixPak
       wemeetNixPak

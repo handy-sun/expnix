@@ -53,6 +53,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ## VoCoType-linux: offline Chinese voice input (FunASR) as a global
+    ## Fcitx5 module. Pin the tag; its nixpkgs stays self-pinned (validated).
+    vocotype = {
+      url = "github:LeonardNJU/VocoType-linux/v5.0.1";
+    };
+
     daeuniverse.url = "github:daeuniverse/flake.nix";
 
     rust-analyzer-mcp-src = {
