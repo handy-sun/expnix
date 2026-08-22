@@ -42,7 +42,7 @@ in
       PNPM_HOME
       ;
 
-    # HERMES_HOME = conf + "/hermes";
+    HERMES_HOME = conf + "/hermes";
     UV_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple/";
 
     NPM_CONFIG_USERCONFIG = conf + "/npmrc";
