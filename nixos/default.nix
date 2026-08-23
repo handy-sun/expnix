@@ -56,7 +56,7 @@ in
       ])
       ++ lib.optionals profileLevel.guiBase [
         ## VoCoType settings GUI / CLI (model download, mic, hotkeys)
-        inputs.vocotype.packages.${pkgs.system}.vocotype-fcitx5
+        inputs.vocotype.packages.${pkgs.stdenv.hostPlatform.system}.vocotype-fcitx5
       ];
   };
 
@@ -121,7 +121,7 @@ in
           ## VoCoType-linux: offline Chinese voice input as a global module.
           ## Keep rime as-is; hold F9 to dictate. Models downloaded on first
           ## run by `vocotype-settings` into the user cache.
-          inputs.vocotype.packages.${pkgs.system}.vocotype-fcitx5
+          inputs.vocotype.packages.${pkgs.stdenv.hostPlatform.system}.vocotype-fcitx5
         ];
         candlelightMacosDark.enable = true;
         ## Font size donnot changed?
