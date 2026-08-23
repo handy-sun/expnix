@@ -210,7 +210,6 @@
       darwinConfigurations = {
         "handyMini" = mkSystem "handyMini" {
           system = "aarch64-darwin";
-          isDarwin = true;
           profileLevelOver = {
             tuiOptional = true;
             guiBase = true;

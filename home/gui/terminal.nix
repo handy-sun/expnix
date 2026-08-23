@@ -4,6 +4,7 @@
   inputs,
   profileLevel,
   myvars,
+  isDarwin,
   ...
 }:
 let
@@ -29,7 +30,7 @@ let
       qimocha.ansi ++ qimocha.brights
     )
   );
-  font_size = if pkgs.stdenv.isDarwin then 16 else 12;
+  font_size = if isDarwin then 16 else 12;
   fish = lib.getExe pkgs.fish;
   zsh = lib.getExe pkgs.zsh;
   bash = lib.getExe pkgs.bash;
@@ -57,7 +58,7 @@ lib.mkIf profileLevel.guiBase {
     '';
   };
 
-  xdg.dataFile = lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
+  xdg.dataFile = lib.optionalAttrs (!isDarwin) {
     "applications/kitty.desktop".source = pkgs.runCommand "kitty-desktop-entry" { } ''
       sed 's|^Exec=kitty$|Exec=${lib.getExe pkgs.kitty} --start-as=maximized|' \
         ${pkgs.kitty}/share/applications/kitty.desktop > $out
@@ -208,10 +209,10 @@ lib.mkIf profileLevel.guiBase {
     enable = true;
     package = pkgs.neovide;
     settings = {
-      frame = if pkgs.stdenv.isDarwin then "transparent" else "none";
+      frame = if isDarwin then "transparent" else "none";
       maximized = true;
       tabs = false;
-      title-hidden = pkgs.stdenv.isDarwin;
+      title-hidden = isDarwin;
       vsync = true;
 
       font = {
@@ -288,7 +289,7 @@ lib.mkIf profileLevel.guiBase {
         multiplier = 5;
       };
       window = {
-        blur = pkgs.stdenv.isDarwin;
+        blur = isDarwin;
         decorations = "None";
         dynamic_padding = true;
         dynamic_title = true;

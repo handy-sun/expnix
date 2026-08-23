@@ -3,6 +3,7 @@
   lib,
   myutils,
   profileLevel,
+  isLinux,
   ...
 }:
 
@@ -20,7 +21,7 @@ lib.mkIf profileLevel.guiHeavy {
       feishin
       drawio
     ]
-    ++ lib.optionals stdenv.isLinux [
+    ++ lib.optionals isLinux [
       mangohud
       qtcreator
       qqNixPak

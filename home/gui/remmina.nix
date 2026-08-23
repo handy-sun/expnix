@@ -2,10 +2,11 @@
   lib,
   pkgs,
   profileLevel,
+  isLinux,
   ...
 }:
 
-lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
+lib.mkIf (profileLevel.guiBase && isLinux) {
   services.remmina = {
     enable = true;
     addRdpMimeTypeAssoc = true;

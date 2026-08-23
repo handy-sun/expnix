@@ -17,11 +17,14 @@ hostName:
 }:
 
 let
+  pkgs = nixpkgs.legacyPackages.${system};
   profileLevel = myvars.profileLevel // profileLevelOver;
-  isDarwin = false;
+  ## Derived from the target platform (system-manager only targets Linux here).
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   isHmSingle = true;
   homeDir = if "${username}" == "root" then "/root" else "/home/${username}";
-  isHeLinux = !isWSL;
+  isHeLinux = !isDarwin && !isWSL;
   specialArgs = {
     inherit
       inputs
@@ -32,6 +35,7 @@ let
       networkingVars
       homeDir
       isDarwin
+      isLinux
       isWSL
       isHeLinux
       isHmSingle

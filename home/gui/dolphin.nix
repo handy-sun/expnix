@@ -3,6 +3,7 @@
   lib,
   pkgs,
   profileLevel,
+  isLinux,
   ...
 }:
 let
@@ -43,7 +44,7 @@ let
     </xbel>
   '';
 in
-lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
+lib.mkIf (profileLevel.guiBase && isLinux) {
   home.activation = {
     ## Seed Dolphin 26.04.3 defaults only when dolphinrc does not exist.
     ## Keep dolphinrc mutable so later UI changes and migrations remain writable.

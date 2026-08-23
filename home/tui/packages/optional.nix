@@ -5,6 +5,7 @@
   pkgs,
   lib,
   profileLevel,
+  isLinux,
   ...
 }:
 let
@@ -22,7 +23,7 @@ lib.mkIf profileLevel.tuiOptional {
       # helixDev
       llvmPackages.clang-unwrapped
     ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
+    ++ lib.optionals isLinux [
       btrfs-progs
     ];
 }

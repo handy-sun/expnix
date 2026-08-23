@@ -12,13 +12,16 @@ hostName:
 {
   system,
   username ? "${myvars.user}",
-  isDarwin ? false,
   isWSL ? false,
   profileLevelOver ? { },
 }:
 
 let
+  pkgs = nixpkgs.legacyPackages.${system};
   profileLevel = myvars.profileLevel // profileLevelOver;
+  ## Derived from the target platform instead of being passed in by callers.
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   isHmSingle = false;
   homeDir =
     if "${username}" == "root" then
@@ -49,6 +52,7 @@ let
       networkingVars
       homeDir
       isDarwin
+      isLinux
       isWSL
       isHeLinux
       isHmSingle

@@ -16,7 +16,7 @@
             };
           });
       in
-      lib.optionalAttrs prev.stdenv.isDarwin {
+      lib.optionalAttrs prev.stdenv.hostPlatform.isDarwin {
         moonlight-qt = useLld prev.moonlight-qt;
         mpv-unwrapped = useLld prev.mpv-unwrapped;
       }

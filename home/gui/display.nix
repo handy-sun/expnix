@@ -1,6 +1,9 @@
 {
+  lib,
   pkgs,
   myutils,
+  profileLevel,
+  isLinux,
   ...
 }:
 let
@@ -10,7 +13,7 @@ let
     text = builtins.readFile (myutils.relativeToRoot "scripts/waykan-disp.sh");
   };
 in
-{
+lib.mkIf (profileLevel.guiBase && isLinux) {
   home.packages = [ waykanDisplay ];
 
   services.kanshi = {

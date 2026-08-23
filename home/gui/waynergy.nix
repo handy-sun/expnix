@@ -4,6 +4,7 @@
   pkgs,
   networkingVars,
   profileLevel,
+  isLinux,
   ...
 }:
 
@@ -88,7 +89,7 @@ let
     }
   ) waynergyServers;
 in
-lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
+lib.mkIf (profileLevel.guiBase && isLinux) {
   assertions = [
     {
       assertion = builtins.length (builtins.attrNames autoStartServers) <= 1;

@@ -3,6 +3,7 @@
   pkgs,
   config,
   profileLevel,
+  isLinux,
   ...
 }:
 
@@ -37,7 +38,7 @@ let
     "image/x-tga"
   ];
   ## Linux Desktop Environments (DEs) typically use XDG Base Directory Specification for configuration and user directories. This setup is not relevant for macOS (Darwin), which has its own conventions. Therefore, we check if the profile level indicates a GUI base and ensure it's not Darwin to determine if we should apply the XDG configuration.
-  isLinuxDe = (profileLevel.guiBase && pkgs.stdenv.isLinux);
+  isLinuxDe = (profileLevel.guiBase && isLinux);
 in
 {
   xdg = {

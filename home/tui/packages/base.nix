@@ -5,6 +5,7 @@
   pkgs,
   inputs,
   isDarwin,
+  isLinux,
   ...
 }:
 
@@ -117,7 +118,7 @@
       sops
       ssh-to-age
     ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
+    ++ lib.optionals isLinux [
       strace # a diagnostic, debugging and instructional userspace utility for Linux.
       ltrace # library call monitoring
       pahole

@@ -3,10 +3,10 @@
   lib,
   inputs,
   profileLevel,
+  isDarwin,
   ...
 }:
 let
-  inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv.hostPlatform) system;
 in
 lib.mkIf profileLevel.guiBase {

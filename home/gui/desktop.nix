@@ -4,6 +4,7 @@
   inputs,
   myutils,
   profileLevel,
+  isLinux,
   hostName ? null,
   ...
 }:
@@ -35,7 +36,7 @@ let
     pkgs.callPackage (myutils.relativeToRoot "packages/bibata-rainbow-modern.nix")
       { };
 in
-lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
+lib.mkIf (profileLevel.guiBase && isLinux) {
   home.pointerCursor = {
     enable = true;
     name = cursorThemeName;

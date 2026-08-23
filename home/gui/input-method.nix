@@ -2,10 +2,11 @@
   lib,
   pkgs,
   profileLevel,
+  isLinux,
   ...
 }:
 
-lib.mkIf (profileLevel.guiBase && pkgs.stdenv.isLinux) {
+lib.mkIf (profileLevel.guiBase && isLinux) {
   xdg.configFile."fcitx5/profile" = {
     ## Declaratively own the profile; activation overwrites fcitx5-configtool changes.
     force = true;

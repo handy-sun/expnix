@@ -7,6 +7,7 @@
   inputs,
   myutils,
   profileLevel,
+  isLinux,
   ...
 }:
 let
@@ -89,7 +90,7 @@ in
       glow # markdown previewer in terminal
       subversion # svn
     ]
-    ++ lib.optionals (profileLevel.tuiAdvanced && pkgs.stdenv.isLinux) [
+    ++ lib.optionals (profileLevel.tuiAdvanced && isLinux) [
       bubblewrap
       rldd
     ]

@@ -4,10 +4,10 @@
   config,
   inputs,
   isHmSingle,
+  isDarwin,
   ...
 }:
 let
-  inherit (pkgs.stdenv) isDarwin;
   isNeedBuildEnv = !isDarwin && !isHmSingle;
   nvimConfDir = config.xdg.configHome + "/nvim";
   emacsConfDir = inputs.my-dotfiles + "/.emacs.d";

@@ -10,13 +10,23 @@
 system:
 {
   username ? "${myvars.user}",
-  isDarwin ? false,
   isWSL ? false,
   profileLevelOver ? { },
 }:
 
 let
+  pkgs = import nixpkgs {
+    inherit system;
+    config = {
+      allowUnfree = true;
+      allowUnsupportedSystem = true;
+    };
+    overlays = (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays;
+  };
   profileLevel = myvars.profileLevel // profileLevelOver;
+  ## Derived from the target platform instead of being passed in by callers.
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   isHmSingle = true;
   homeDir =
     if "${username}" == "root" then
@@ -36,6 +46,7 @@ let
       networkingVars
       homeDir
       isDarwin
+      isLinux
       isWSL
       isHeLinux
       isHmSingle
@@ -44,15 +55,10 @@ let
   };
 in
 inputs.home-manager.lib.homeManagerConfiguration {
-  pkgs = import nixpkgs {
-    inherit system;
-    config = {
-      allowUnfree = true;
-      allowUnsupportedSystem = true;
-    };
-    overlays = (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays;
-  };
-  inherit extraSpecialArgs;
+  inherit
+    pkgs
+    extraSpecialArgs
+    ;
   modules = [
     ../home
   ];
