@@ -101,7 +101,9 @@
     };
 
     my-wezterm = {
-      url = "github:handy-sun/wezterm-config/nix-hm?shallow=1";
+      ## `shallow=1` is rejected by newer Nix (GitHub Actions runners), so
+      ## fetch the full tree. It is a tiny flake=false source anyway.
+      url = "github:handy-sun/wezterm-config/nix-hm";
       flake = false;
     };
 
