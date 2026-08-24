@@ -2,6 +2,8 @@
   appimageTools,
   fetchurl,
   lib,
+  desktopFile ? null,
+  desktopFilePath ? null,
 }:
 
 let
@@ -17,6 +19,13 @@ let
 in
 appimageTools.wrapType2 {
   inherit pname version src;
+
+  # ZCode rewrites its user-level desktop entry to process.execPath on every
+  # launch.  Keep that file read-only inside the FHS container so it cannot
+  # replace the stable wrapper command used by desktop launchers.
+  extraBwrapArgs = lib.optional (desktopFile != null && desktopFilePath != null) ''
+    --ro-bind ${desktopFile} ${desktopFilePath}
+  '';
 
   extraInstallCommands = ''
     install -m 444 -D ${appimageContents}/zcode.desktop \
