@@ -40,6 +40,7 @@ lib.mkIf profileLevel.guiBase {
       peazip
       appimage-run
       telegram-desktop
+      motrix-next
       inputs.rustdesk-flutter-nixpkgs.legacyPackages.${system}.rustdesk-flutter
       inputs.mark-shot.packages.${system}.default
     ]

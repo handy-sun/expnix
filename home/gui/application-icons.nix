@@ -8,6 +8,17 @@
 
 let
   papirus = "${pkgs.papirus-icon-theme}/share/icons/Papirus/48x48/apps";
+  ## Reuse the same mpv override as base.nix so the handler launches the
+  ## identical build (the MPRIS script keeps working during playback).
+  mpv = pkgs.mpv.override { scripts = [ pkgs.mpvScripts.mpris ]; };
+
+  ## OpenList emits mpv://<percent-encoded-url>; mpv knows nothing about the
+  ## mpv:// scheme, so strip it and URL-decode before handing mpv the real URL.
+  mpvHandler = pkgs.writeShellScript "mpv-handler" ''
+    url="''${1#mpv://}"
+    decoded="$(${lib.getExe pkgs.python3} -c 'import sys, urllib.parse; print(urllib.parse.unquote_plus(sys.argv[1]))' "$url")"
+    exec ${lib.getExe mpv} "$decoded"
+  '';
 in
 lib.mkIf (profileLevel.guiBase && isLinux) {
   # These upstream desktop files use icon names that Noctalia does not resolve
@@ -47,5 +58,17 @@ lib.mkIf (profileLevel.guiBase && isLinux) {
       Categories=Utility;Game;
       Keywords=Steam;Proton;Wine;Winetricks;
     '';
+
+    "applications/mpv-handler.desktop".text = ''
+      [Desktop Entry]
+      Name=mpv
+      Comment=Play video links from OpenList
+      Exec=${mpvHandler} %u
+      Terminal=false
+      Type=Application
+      MimeType=x-scheme-handler/mpv;
+      NoDisplay=true
+    '';
+
   };
 }

@@ -89,6 +89,7 @@ in
         "application/vnd.openxmlformats-officedocument.presentationml.presentation" = [
           "wps-office-wpp.desktop"
         ];
+        "x-scheme-handler/mpv" = [ "mpv-handler.desktop" ];
       }
       // lib.genAttrs imageMimeTypes (_: [ defaultImageViewer ]);
     };
