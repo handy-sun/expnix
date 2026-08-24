@@ -32,11 +32,23 @@ let
     }
   '';
   niriCfgDir = inputs.my-dotfiles + "/.config/niri";
+  niriWindowPicker = pkgs.writeShellApplication {
+    name = "niri-window-picker";
+    runtimeInputs = [
+      pkgs.fuzzel
+      pkgs.jq
+      pkgs.niri
+    ];
+    text = builtins.readFile (myutils.relativeToRoot "scripts/niri-window-picker.sh");
+  };
   bibataRainbowModern =
     pkgs.callPackage (myutils.relativeToRoot "packages/bibata-rainbow-modern.nix")
       { };
 in
 lib.mkIf (profileLevel.guiBase && isLinux) {
+  home.packages = [ niriWindowPicker ];
+  home.file.".local/bin/niri-window-picker".source = "${niriWindowPicker}/bin/niri-window-picker";
+
   home.pointerCursor = {
     enable = true;
     name = cursorThemeName;
