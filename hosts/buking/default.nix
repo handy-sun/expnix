@@ -49,6 +49,16 @@
     efiSupport = true;
   };
 
+  sops = {
+    defaultSopsFile = myutils.relativeToRoot "secrets/beszel-agent.env";
+    defaultSopsFormat = "dotenv";
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+    secrets.beszel-agent-env = {
+      key = "";
+      restartUnits = [ "beszel-agent.service" ];
+    };
+  };
+
   services = {
     fprintd.enable = true;
     fwupd.enable = true;
@@ -61,16 +71,6 @@
       PubkeyAuthentication = "yes";
       MaxSessions = "20";
       TCPKeepAlive = "yes";
-    };
-  };
-
-  sops = {
-    defaultSopsFile = myutils.relativeToRoot "secrets/beszel-agent.env";
-    defaultSopsFormat = "dotenv";
-    age.keyFile = "/var/lib/sops-nix/key.txt";
-    secrets.beszel-agent-env = {
-      key = "";
-      restartUnits = [ "beszel-agent.service" ];
     };
   };
 
@@ -88,6 +88,7 @@
 
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
+  services.xserver.windowManager.i3.enable = true;
 
   networking.networkmanager.enable = true;
 
@@ -98,7 +99,17 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --cmd niri-session";
+        command = lib.concatStringsSep " " [
+          (lib.getExe pkgs.tuigreet)
+          "--time"
+          "--remember"
+          "--remember-user-session"
+          "--asterisks"
+          "--kb-sessions 2"
+          "--sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions"
+          "--xsessions ${config.services.displayManager.sessionData.desktops}/share/xsessions"
+          "--xsession-wrapper ${pkgs.xinit}/bin/startx"
+        ];
         user = "greeter";
       };
       ## Auto login
