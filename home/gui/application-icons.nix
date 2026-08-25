@@ -21,6 +21,17 @@ let
   '';
 in
 lib.mkIf (profileLevel.guiBase && isLinux) {
+  ## Use the desktop-entry module so Home Manager includes this handler in
+  ## mimeinfo.cache. A raw xdg.dataFile is not registered with GIO/portals.
+  xdg.desktopEntries.mpv-handler = {
+    name = "mpv";
+    comment = "Play video links from OpenList";
+    exec = "${mpvHandler} %u";
+    terminal = false;
+    mimeType = [ "x-scheme-handler/mpv" ];
+    noDisplay = true;
+  };
+
   # These upstream desktop files use icon names that Noctalia does not resolve
   # reliably in the current session. Keep the desktop IDs and commands, but
   # point them at existing Papirus icons through stable Nix store paths.
@@ -57,17 +68,6 @@ lib.mkIf (profileLevel.guiBase && isLinux) {
       Type=Application
       Categories=Utility;Game;
       Keywords=Steam;Proton;Wine;Winetricks;
-    '';
-
-    "applications/mpv-handler.desktop".text = ''
-      [Desktop Entry]
-      Name=mpv
-      Comment=Play video links from OpenList
-      Exec=${mpvHandler} %u
-      Terminal=false
-      Type=Application
-      MimeType=x-scheme-handler/mpv;
-      NoDisplay=true
     '';
 
   };
