@@ -89,10 +89,12 @@ in
       hugo # static site generator
       glow # markdown previewer in terminal
       subversion # svn
+      swtpm # TPM emulator
     ]
     ++ lib.optionals (profileLevel.tuiAdvanced && isLinux) [
       bubblewrap
       rldd
+      virtiofsd
     ]
   );
 }

@@ -24,6 +24,12 @@ let
           transform "normal"
           position x=0 y=0
       }
+
+      // wemeet's Xwayland PipeWire hook does not advertise DRM modifiers.
+      // Force the compositor to offer a plain-memory format for screencasting.
+      debug {
+          force-pipewire-invalid-modifier
+      }
     ''}
 
     cursor {

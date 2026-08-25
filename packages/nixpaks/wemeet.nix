@@ -6,6 +6,9 @@
 }:
 let
   appId = "com.tencent.wemeet";
+  # The native entrypoint still calls libxcast's XShm path while sharing.
+  # The package's xwayland entrypoint uses the tested Portal/PipeWire hook
+  # without triggering that fatal X11 error.
   appPackage = mkNixPakAppWrapper pkgs.wemeet {
     binPath = "bin/wemeet-xwayland";
   };
@@ -33,6 +36,7 @@ let
 
         bubblewrap = {
           sockets = {
+            # wemeet-xwayland intentionally uses Xwayland/XCB.
             wayland = lib.mkForce false;
             pipewire = true;
             x11 = true;
