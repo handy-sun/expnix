@@ -214,7 +214,7 @@ let
           ipv4 = "192.168.1.29";
         };
         zt = {
-          ipv4 = "10.144.4.7";
+          ipv4 = "10.144.2.37";
         };
       };
       userPublicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB7ZnRR8sF38eSwf67aDEeBnL+O74iNDfnQnJ9Qxr6chte2bZv4p9q9nb3LDx1ZRNCGEQmB1k36NFbMrFixCCqs= sunqi@MS-7D17-SQ";

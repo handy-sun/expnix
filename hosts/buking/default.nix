@@ -31,8 +31,15 @@
     ];
   };
 
-  hardware.graphics.enable = true;
-  hardware.bluetooth.enable = true;
+  hardware = {
+    graphics = {
+      enable = true;
+      extraPackages = [
+        pkgs.intel-media-driver
+      ];
+    };
+    bluetooth.enable = true;
+  };
 
   services.pipewire = {
     enable = true;

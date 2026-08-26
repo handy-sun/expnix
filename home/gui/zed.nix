@@ -102,7 +102,7 @@ lib.mkIf profileLevel.guiBase {
         };
       };
       buffer_font_weight = 300.0;
-      vim_mode = false;
+      vim_mode = true;
       terminal = {
         font_size = 15.0;
         font_family = "${myvars.fontFamily}";
@@ -159,7 +159,7 @@ lib.mkIf profileLevel.guiBase {
         trust_all_worktrees = false;
       };
       restore_on_startup = "last_session";
-      title_bar.show_menus = true;
+      title_bar.show_menus = false;
       line_ending = "enforce_lf";
       status_bar = {
         active_encoding_button = "enabled";
