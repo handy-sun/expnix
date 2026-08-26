@@ -23,27 +23,25 @@ in
     (myutils.relativeToRoot "modules/sing-box")
   ];
 
-  sops.secrets = {
-    subs-main = {
-      sopsFile = subsSopsFile;
-      format = "yaml";
-      key = "main";
-      restartUnits = [ "sing-box.service" ];
-    };
+  sops.secrets.subs-main = {
+    sopsFile = subsSopsFile;
+    format = "yaml";
+    key = "main";
+    restartUnits = [ "sing-box.service" ];
+  };
 
-    mihomo-subscription-url = {
-      sopsFile = mihomoSubsSopsFile;
-      format = "yaml";
-      key = "main";
-      restartUnits = [ "mihomo.service" ];
-    };
+  sops.secrets.mihomo-subscription-url = {
+    sopsFile = mihomoSubsSopsFile;
+    format = "yaml";
+    key = "main";
+    restartUnits = [ "mihomo.service" ];
+  };
 
-    dae-config = {
-      path = "/run/secrets/dae-config.dae";
-      sopsFile = daeSopsFile;
-      format = "binary";
-      restartUnits = [ "dae.service" ];
-    };
+  sops.secrets.dae-config = {
+    path = "/run/secrets/dae-config.dae";
+    sopsFile = daeSopsFile;
+    format = "binary";
+    restartUnits = [ "dae.service" ];
   };
 
   services = {
