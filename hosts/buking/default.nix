@@ -88,6 +88,7 @@
 
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
+  services.xserver.windowManager.i3.enable = true;
 
   networking.networkmanager.enable = true;
 
@@ -98,7 +99,27 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --cmd niri-session";
+        command = lib.concatStringsSep " " [
+          (lib.getExe pkgs.tuigreet)
+          "--time"
+          "--remember"
+          "--remember-user-session"
+          "--asterisks"
+          "--kb-command"
+          "1"
+          "--kb-sessions"
+          "2"
+          "--kb-power"
+          "3"
+          "--kb-background"
+          "4"
+          "--sessions"
+          "${config.services.displayManager.sessionData.desktops}/share/wayland-sessions"
+          "--xsessions"
+          "${config.services.displayManager.sessionData.desktops}/share/xsessions"
+          "--xsession-wrapper"
+          "${pkgs.xinit}/bin/startx"
+        ];
         user = "greeter";
       };
       ## Auto login
