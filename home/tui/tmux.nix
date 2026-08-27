@@ -77,29 +77,21 @@ in
           set -g @catppuccin_flavor "mocha"
           set -g @catppuccin_window_status_style "basic"
           set -g @catppuccin_status_connect_separator "yes"
-          set -g @catppuccin_cpu_icon "CPU "
-          set -g @catppuccin_ram_icon "RAM "
           set -g @catppuccin_date_time_text " %H:%M"
-        '';
-      }
-      {
-        plugin = cpu;
-        extraConfig = ''
-          set -g status-left-length 100
-          set -g status-right-length 120
-          set -g status-left "#{E:@catppuccin_status_session}"
-          set -g status-right "#{E:@catppuccin_status_user}"
-          set -ag status-right "#{E:@catppuccin_status_host}"
-          set -agF status-right "#{E:@catppuccin_status_cpu}"
-          set -agF status-right "#[fg=#{@thm_yellow}]#{@catppuccin_status_left_separator}#[fg=#{@thm_crust},bg=#{@thm_yellow}]RAM #[fg=#{@thm_fg},bg=#{@catppuccin_status_module_text_bg}] ##{ram_percentage}#[fg=#{@catppuccin_status_module_text_bg}]#{@catppuccin_status_right_separator}"
-          set -ag status-right "#{E:@catppuccin_status_date_time}"
-          set -ag status-right " #{continuum_status}"
         '';
       }
     ];
 
     extraConfig = ''
       set -g exit-empty off
+
+      set -g status-left-length 100
+      set -g status-right-length 120
+      set -g status-left "#{E:@catppuccin_status_session}"
+      set -g status-right "#{E:@catppuccin_status_user}"
+      set -ag status-right "#{E:@catppuccin_status_host}"
+      set -ag status-right "#{E:@catppuccin_status_date_time}"
+      set -ag status-right " #{continuum_status}"
 
       set -g prefix2 C-t
       bind-key C-t send-prefix -2
