@@ -46,6 +46,14 @@ lib.mkIf profileLevel.guiBase {
       "catppuccin-icons" # vscode-icons-team.vscode-icons
     ];
 
+    userKeymaps = [
+      {
+        bindings = {
+          "alt-o" = "editor::SwitchSourceHeader";
+        };
+      }
+    ];
+
     userSettings = {
       auto_update = false;
       ui_font_family = ".SystemUIFont";
