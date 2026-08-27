@@ -52,6 +52,7 @@ in
         glider
         iproute2
         iptables
+        nftables
         traceroute
       ])
       ++ lib.optionals profileLevel.guiBase [
@@ -64,7 +65,10 @@ in
   # networking.search = lib.mkAfter [ "orb.local" ];
   networking.firewall.enable = mkDefault false;
 
-  programs.ssh.knownHosts = networkingVars.ssh.knownHosts;
+  programs.ssh = {
+    knownHosts = networkingVars.ssh.knownHosts;
+    enableAskPassword = mkDefault false;
+  };
 
   programs.zsh.enable = true;
   programs.fish.enable = true;
