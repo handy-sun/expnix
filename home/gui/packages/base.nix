@@ -17,8 +17,6 @@ lib.mkIf profileLevel.guiBase {
       obsidian
     ]
     ++ lib.optionals (!isDarwin) [
-      ## mpv-mpris (MPRIS/D-Bus) is Linux-only, so mpv carries the mpris script here
-      (mpv.override { scripts = [ mpvScripts.mpris ]; })
       filezilla
       nwg-look
       pavucontrol
@@ -44,8 +42,5 @@ lib.mkIf profileLevel.guiBase {
       inputs.rustdesk-flutter-nixpkgs.legacyPackages.${system}.rustdesk-flutter
       inputs.mark-shot.packages.${system}.default
     ]
-    ++ lib.optionals isDarwin [
-      mpv
-      utm
-    ];
+    ++ lib.optionals isDarwin [ utm ];
 }
