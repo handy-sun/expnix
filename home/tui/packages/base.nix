@@ -48,7 +48,7 @@
       rsync
       tree
       just
-      gnupg
+      pass
       util-linux
 
       ## archives (basics)
