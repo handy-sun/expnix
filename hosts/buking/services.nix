@@ -37,8 +37,13 @@ in
     restartUnits = [ "mihomo.service" ];
   };
 
+  ## Render the config into /var/lib/dae instead of the volatile /run/secrets:
+  ## dae caches `-file` subscriptions in `persist.d/` next to the config file
+  ## (hardcoded, see common/subscription/subscription.go), so the config must
+  ## live on persistent storage or every boot re-fetches subscriptions before
+  ## the proxy is up. sops-install-secrets creates the parent dir itself.
   sops.secrets.dae-config = {
-    path = "/run/secrets/dae-config.dae";
+    path = "/var/lib/dae/config.dae";
     sopsFile = daeSopsFile;
     format = "binary";
     restartUnits = [ "dae.service" ];
@@ -78,5 +83,13 @@ in
       subscriptionUrlFile = config.sops.secrets.mihomo-subscription-url.path;
       tunMode = true;
     };
+  };
+
+  ## systemd enforces this mode on every start, so the persisted config and
+  ## the `persist.d/` subscription cache stay root-only even though the
+  ## cached `.sub` files themselves are world-readable (0644).
+  systemd.services.dae.serviceConfig = {
+    StateDirectory = "dae";
+    StateDirectoryMode = "0700";
   };
 }
