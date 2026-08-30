@@ -49,6 +49,15 @@
   };
 
   boot.tmp.useTmpfs = true;
+  ## Keep the boot console quiet: without `quiet` systemd prints every
+  ## "[ OK ] Started ..." status line to the active tty and smears them all
+  ## over the tuigreet login screen. Errors still show; journald is unaffected.
+  boot.consoleLogLevel = 3;
+  boot.kernelParams = [
+    "quiet"
+    "systemd.show_status=auto"
+    "udev.log_level=3"
+  ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub = {
