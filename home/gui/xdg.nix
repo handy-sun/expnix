@@ -13,6 +13,54 @@ let
   defaultFileManager = "org.kde.dolphin.desktop";
   defaultImageViewer = "swayimg.desktop";
   defaultPdfViewer = "org.kde.okular.desktop";
+  defaultTextEditor = "nvim.desktop";
+  ## Text and source-code MIME types that open in nvim. `text/plain` catches
+  ## untyped formats (.nix, .conf, .log); code types are listed explicitly
+  ## because xdg-open does not walk the shared-mime-info subclass tree.
+  textEditorMimeTypes = [
+    ## plain text and markup
+    "text/plain"
+    "text/markdown"
+    "text/x-rst"
+    "text/x-org"
+    "text/x-tex"
+    "text/css"
+    "text/csv"
+    "text/tab-separated-values"
+    "text/x-diff"
+    "text/x-makefile"
+    "text/x-cmake"
+    ## compiled languages
+    "text/x-c"
+    "text/x-csrc"
+    "text/x-chdr"
+    "text/x-c++src"
+    "text/x-c++hdr"
+    "text/x-java"
+    "text/x-kotlin"
+    "text/x-go"
+    "text/x-rust"
+    ## interpreted languages
+    "text/x-python"
+    "text/x-python3"
+    "text/javascript"
+    "application/javascript"
+    "text/typescript"
+    "text/x-ruby"
+    "text/x-lua"
+    "text/x-php"
+    "application/x-perl"
+    "application/x-shellscript"
+    "text/x-shellscript"
+    ## structured data
+    "application/json"
+    "application/x-ndjson"
+    "application/xml"
+    "application/x-yaml"
+    "application/yaml"
+    "application/toml"
+    "application/sql"
+  ];
   imageMimeTypes = [
     "image/avif"
     "image/bmp"
@@ -69,6 +117,26 @@ in
       "applications/wps-office-wpp.desktop".text = wpsDesktop "wps-office-wpp.desktop" "wpp";
     };
 
+    ## The stock nvim.desktop sets Terminal=true, which neither gio nor KIO can
+    ## resolve here (no xdg-terminal-exec, no konsole). Launch nvim inside
+    ## wezterm explicitly so every opener (Dolphin, gio, portals) works.
+    desktopEntries = lib.mkIf isLinuxDe {
+      nvim = {
+        name = "Neovim";
+        genericName = "Text Editor";
+        comment = "Edit text and code files";
+        exec = "${lib.getExe pkgs.wezterm} start -- nvim %F";
+        icon = "nvim";
+        terminal = false;
+        categories = [
+          "Utility"
+          "Development"
+          "TextEditor"
+        ];
+        mimeType = textEditorMimeTypes;
+      };
+    };
+
     mimeApps = {
       enable = isLinuxDe;
       defaultApplications = {
@@ -91,6 +159,7 @@ in
         ];
         "x-scheme-handler/mpv" = [ "mpv-handler.desktop" ];
       }
+      // lib.genAttrs textEditorMimeTypes (_: [ defaultTextEditor ])
       // lib.genAttrs imageMimeTypes (_: [ defaultImageViewer ]);
     };
   };
