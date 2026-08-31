@@ -51,7 +51,7 @@
   boot.tmp.useTmpfs = true;
   ## Keep the boot console quiet: without `quiet` systemd prints every
   ## "[ OK ] Started ..." status line to the active tty and smears them all
-  ## over the tuigreet login screen. Errors still show; journald is unaffected.
+  ## over the ly login screen. Errors still show; journald is unaffected.
   boot.consoleLogLevel = 3;
   boot.kernelParams = [
     "quiet"
@@ -110,39 +110,24 @@
 
   system.stateVersion = "26.05";
   ## ------ other optional services ------
-  ## replace sddm
-  services.greetd = {
+  ## ly is a standalone TUI display manager. Its NixOS module wires the
+  ## generated session directory and xsession wrapper into ly's config:
+  ##   .../share/wayland-sessions  (currently niri.desktop)
+  ##   .../share/xsessions         (currently none+i3.desktop)
+  ## Keep both enabled because this host exposes both Wayland and X11 sessions.
+  services.displayManager.ly = {
     enable = true;
+    x11Support = true;
     settings = {
-      default_session = {
-        command = lib.concatStringsSep " " [
-          (lib.getExe pkgs.tuigreet)
-          "--time"
-          "--remember"
-          "--remember-user-session"
-          "--asterisks"
-          "--kb-command"
-          "1"
-          "--kb-sessions"
-          "2"
-          "--kb-power"
-          "3"
-          "--kb-background"
-          "4"
-          "--sessions"
-          "${config.services.displayManager.sessionData.desktops}/share/wayland-sessions"
-          "--xsessions"
-          "${config.services.displayManager.sessionData.desktops}/share/xsessions"
-          "--xsession-wrapper"
-          "${pkgs.xinit}/bin/startx"
-        ];
-        user = "greeter";
-      };
-      ## Auto login
-      # initial_session = {
-      #   command = "niri-session";
-      #   user = "${myvars.user}";
-      # };
+      ## Persist the selected user and desktop session across logins.
+      save = true;
+      ## Preserve tuigreet's visible clock and password masking behavior.
+      clock = "%H:%M";
+      asterisk = "*";
+      ## Match tuigreet's explicit session lists: don't add Ly's optional
+      ## shell or ~/.xinitrc entries to the chooser.
+      shell = false;
+      xinitrc = null;
     };
   };
 }
