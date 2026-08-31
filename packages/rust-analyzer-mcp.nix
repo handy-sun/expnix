@@ -8,10 +8,10 @@
 
 rustPlatform.buildRustPackage {
   pname = "rust-analyzer-mcp";
-  version = "0.2.0-unstable-2026-08-15";
+  version = "0.4.0";
 
   src = inputs.rust-analyzer-mcp-src;
-  cargoHash = "sha256-7t4bjyCcbxFAO/29re7cjoW1ACieeEaM4+QT5QAwc34=";
+  cargoHash = "sha256-LcX9VO1ArCdiq5j57JB/Tkfw6pAl6QvckhzMRv5C5dA=";
 
   # Upstream integration tests depend on test-only rust-analyzer behavior
   # that is unavailable in the Nix sandbox.
