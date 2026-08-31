@@ -42,6 +42,11 @@ in
       PNPM_HOME
       ;
 
+    ## git-credential-manager (credentialStore = gpg) uses a pass-compatible
+    ## GPG-encrypted store; keep it out of ~/.password-store.
+    ## Remember to init once: `pass init <gpg-id>`
+    PASSWORD_STORE_DIR = data + "/password-store";
+
     HERMES_HOME = conf + "/hermes";
     UV_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple/";
 
