@@ -4,8 +4,13 @@ env:
   CACHIX_CACHE: expnix
 
 on:
-  schedule:
-    - cron: "0 3,15 * * *"
+  push:
+    branches: [main, "dev*"]
+    paths-ignore:
+      - "**.md"
+      - Justfile
+      - .gitignore
+      - LICENSE
   workflow_dispatch:
 
 concurrency:
