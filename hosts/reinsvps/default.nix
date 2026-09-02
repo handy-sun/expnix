@@ -1,14 +1,12 @@
 {
   lib,
   pkgs,
-  myvars,
   myutils,
   ...
 }:
 let
-  network = myvars.reinsvpsNetwork;
-  # rustdeskTcpPorts = builtins.genList (x: x + 21115) 5;
-  frpClientPorts = builtins.genList (x: x + 17580) 30;
+  frpClientPorts = builtins.genList (x: x + 17580) 31;
+  customPorts = builtins.genList (x: x + 20120) 31;
 in
 {
   imports =
@@ -44,8 +42,9 @@ in
       29962
       29970
     ]
-    # ++ rustdeskTcpPorts
-    ++ frpClientPorts;
+    ++ frpClientPorts
+    ++ customPorts;
+
     allowedUDPPorts = [
       53
       443
@@ -55,8 +54,9 @@ in
       9473
       19302
       40000
-      # 21116
-    ];
+    ]
+    ++ customPorts;
+
     extraCommands = ''
       iptables -A INPUT -i lo -j ACCEPT
       iptables -A INPUT -s 127.0.0.0/8 -j ACCEPT
