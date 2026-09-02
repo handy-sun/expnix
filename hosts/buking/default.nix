@@ -118,16 +118,28 @@
   services.displayManager.ly = {
     enable = true;
     x11Support = true;
+    package = pkgs.ly; # TUI -- zig -- https://codeberg.org/AnErrupTion/ly
     settings = {
       ## Persist the selected user and desktop session across logins.
       save = true;
-      ## Preserve tuigreet's visible clock and password masking behavior.
-      clock = "%H:%M";
-      asterisk = "*";
+      clock = "%B, %A %d - %H:%M:%S";
+      asterisk = "*"; # password masking behavior.
       ## Match tuigreet's explicit session lists: don't add Ly's optional
       ## shell or ~/.xinitrc entries to the chooser.
       shell = false;
       xinitrc = null;
+
+      bg = "0x02000000";
+      fg = "0x01FFFFFF";
+      error_bg = "0x02000000";
+      error_fg = "0x01FF0000";
+      # border_fg = "0x01FFFFFF";
+
+      # animation = "colormix"; # "doom", "matrix", "colormix"
+      animation_timeout_sec = 300; # 5 minutes
     };
   };
+  ## Fix `graphical-session.target` too early issue.
+  ## Ref: https://github.com/NixOS/nixpkgs/pull/297434#issuecomment-2348783988
+  # systemd.services.display-manager.environment.XDG_CURRENT_DESKTOP = "X-NIXOS-SYSTEMD-AWARE";
 }
