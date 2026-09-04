@@ -245,10 +245,16 @@
             accept-flake-config = true
             substituters = https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store/ https://mirrors.ustc.edu.cn/nix-channels/store
           '';
+
+          ## Nixpkgs glibc only carries C.UTF-8; point shells at the full
+          ## locale archive so user locales (zh_CN.UTF-8) resolve on foreign
+          ## distros (NixOS already does this via /run/current-system fallback).
+          localeArchive = "${pkgs.glibcLocales}/lib/locale/locale-archive";
         in
         {
           default = pkgs.mkShell {
             NIX_CONFIG = devNixConfig;
+            LOCALE_ARCHIVE = localeArchive;
             packages = with pkgs; [
               vim
               git
@@ -267,6 +273,7 @@
           };
           sysmgr = pkgs.mkShell {
             NIX_CONFIG = devNixConfig;
+            LOCALE_ARCHIVE = localeArchive;
             packages = with pkgs; [
               git
               just
