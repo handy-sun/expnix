@@ -59,9 +59,9 @@ jobs:
           - name: handyMini (aarch64-darwin)
             os: macos-14
             attr: darwinConfigurations.handyMini.config.system.build.toplevel
-          - name: home (x86_64-linux)
-            os: ubuntu-latest
-            attr: homeConfigurations.qi.activationPackage
+          # - name: home (x86_64-linux)
+          #   os: ubuntu-latest
+          #   attr: homeConfigurations.qi.activationPackage
     name: build ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     steps:

@@ -61,9 +61,9 @@ jobs:
           - name: handyMini (aarch64-darwin)
             os: macos-14
             attr: darwinConfigurations.handyMini.config.system.build.toplevel
-          - name: home (x86_64-linux)
+          - name: buking (x86_64-linux)
             os: ubuntu-latest
-            attr: homeConfigurations.qi.activationPackage
+            attr: nixosConfigurations.buking.config.system.build.toplevel
     name: build ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     steps:
