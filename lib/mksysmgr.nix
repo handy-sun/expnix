@@ -56,6 +56,12 @@ inputs.system-manager.lib.makeSystemConfig {
       {
         nixpkgs.hostPlatform = system;
 
+        ## system-manager's bundled nixpkgs nix.nix defaults nix.enable to
+        ## mkDefault false (Nix is preinstalled on managed hosts). Setting a plain
+        ## value here wins over that and over the mkDefault in nix-common.nix,
+        ## which would otherwise conflict at equal priority.
+        nix.enable = true;
+
         system-manager = { inherit allowAnyDistro; };
         services.userborn.enable = true;
 

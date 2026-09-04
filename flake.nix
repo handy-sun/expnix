@@ -1,10 +1,6 @@
 {
   description = "handy-sun NixOS flake configuration";
 
-  # nixConfig = {
-  #   bash-prompt = "\\[\\e[0m\\]\\[\\033[0;32m\\]\\A (develop) \\[\\e[0;36m\\]\\w \\[\\e[0m\\]\\\\$\\[\\e[0m\\] ";
-  # };
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
@@ -272,9 +268,13 @@
           sysmgr = pkgs.mkShell {
             NIX_CONFIG = devNixConfig;
             packages = with pkgs; [
+              git
               just
               nix-output-monitor
               system-manager
+              age
+              sops
+              ssh-to-age
             ];
             name = "dev-sysmgr";
             shellHook = ''
