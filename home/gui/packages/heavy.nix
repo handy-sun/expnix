@@ -24,6 +24,7 @@ lib.mkIf profileLevel.guiHeavy {
     ++ lib.optionals isLinux [
       mangohud
       qtcreator
+      bottles
       qqNixPak
       wechatNixPak
       wemeetNixPak

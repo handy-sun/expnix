@@ -226,6 +226,7 @@
       systemConfigs = {
         "debnsm" = mkSysMgr "debnsm" {
           system = "x86_64-linux";
+          allowAnyDistro = true;
           profileLevelOver = {
             tuiAdvanced = true;
             tuiOptional = false;

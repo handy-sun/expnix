@@ -43,5 +43,9 @@
 
     # Keep man cache generation off even if upstream modules enable it by default.
     man.generateCaches = lib.mkForce false;
+
+    attic-client = {
+      enable = true;
+    };
   };
 }
