@@ -1,12 +1,15 @@
 {
   lib,
-  pkgs,
   myvars,
   myutils,
+  pkgs,
+  username,
   ...
 }:
 let
   commonSystemPackages = myutils.resolveNames pkgs myvars.systemCommonPkgs;
+  atticdPort = "8280";
+  AbsoluteStateDir = "/var/lib/atticd";
 in
 {
   ## TODO: check
@@ -29,6 +32,39 @@ in
       traceroute
       iputils
     ]);
+
+  services.atticd = {
+    enable = true;
+    environmentFile = "${AbsoluteStateDir}/atticd.env";
+    settings = {
+      listen = "0.0.0.0:${atticdPort}";
+      database.url = "sqlite://${AbsoluteStateDir}/server.db?mode=rwc";
+      storage = {
+        type = "local";
+        path = "${AbsoluteStateDir}";
+      };
+    };
+  };
+
+  # The client token lives here too; DynamicUser's /var/lib/private directory
+  # would prevent the Home Manager user from reaching it.
+  users.groups.atticd = { };
+  users.users.atticd = {
+    isSystemUser = true;
+    group = "atticd";
+  };
+  systemd.services.atticd.serviceConfig = {
+    DynamicUser = lib.mkForce false;
+    StateDirectoryMode = "0711";
+  };
+
+  # home-manager.users.${username}.programs.attic-client.settings = {
+  #   default-server = "debnsm";
+  #   servers.debnsm = {
+  #     endpoint = "http://127.0.0.1:${atticdPort}";
+  #     token-file = "${AbsoluteStateDir}/atticd-client.token";
+  #   };
+  # };
 
   services.beszel.agent = {
     enable = false;

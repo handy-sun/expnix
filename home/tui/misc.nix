@@ -3,6 +3,9 @@
   isWSL ? false,
   ...
 }:
+let
+  atticdServerName = "tc4600-nsm";
+in
 {
   programs = {
     nh = {
@@ -46,6 +49,13 @@
 
     attic-client = {
       enable = true;
+      settings = {
+        default-server = atticdServerName;
+        servers.${atticdServerName} = {
+          endpoint = "http://tc4600:8280";
+          token-file = "/etc/atticd-client.token";
+        };
+      };
     };
   };
 }
