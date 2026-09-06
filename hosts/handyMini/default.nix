@@ -23,23 +23,8 @@ in
 
   services.tailscale = {
     enable = true;
-    ## Not avoid conflicts with the existing sing-box TUN/DNS setup?
-    overrideLocalDns = true;
+    overrideLocalDns = false;
   };
-
-  # services.sing-box = {
-  #   enable = true;
-  #   configGeneration = {
-  #     enable = true;
-  #     sourceUrl = "http://localhost:3001/c53248f264d9997/download/collection/main?target=V2Ray";
-  #     policyFilter = "@🌐Proxy@⚡UrlTest-~^(?!.*(aote|流量|到期|过滤|官网)).*$@💬AI-~^(?!.*(流量|到期|过滤|官网)).*$@🚀LowLatency-~^(?!.*(流量|到期|过滤|官网)).*$";
-  #     extraArgs = [
-  #       "--log-file"
-  #       ""
-  #       "--icmp"
-  #     ];
-  #   };
-  # };
 
   launchd.user.agents.beszel-agent = {
     script = ''
