@@ -127,6 +127,7 @@ in
     enable = true;
     settings = {
       os.editPreset = "nvim";
+      git.autoFetch = false;
     };
   };
 }

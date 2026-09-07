@@ -35,7 +35,7 @@ in
 
   services.atticd = {
     enable = true;
-    environmentFile = "${AbsoluteStateDir}/atticd.env";
+    environmentFile = "/etc/atticd.env";
     settings = {
       listen = "0.0.0.0:${atticdPort}";
       database.url = "sqlite://${AbsoluteStateDir}/server.db?mode=rwc";
