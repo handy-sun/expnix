@@ -525,6 +525,26 @@
         "type": "github"
       }
     },
+    "netcatty": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788775441,
+        "narHash": "sha256-/Nw+JXwI8wJglkgihYyBjqw28kr6uUKgV+8ZB1mwl5w=",
+        "owner": "binaricat",
+        "repo": "Netcatty",
+        "rev": "8be56264fc6a3b93aacdc91277a11d0753c822f4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "binaricat",
+        "repo": "Netcatty",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -771,6 +791,7 @@
         "my-helix-config": "my-helix-config",
         "my-nvimdots": "my-nvimdots",
         "my-wezterm": "my-wezterm",
+        "netcatty": "netcatty",
         "nix-darwin": "nix-darwin",
         "nixos-wsl": "nixos-wsl",
         "nixpak": "nixpak",

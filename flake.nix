@@ -49,6 +49,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    netcatty = {
+      url = "github:binaricat/Netcatty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ## VoCoType-linux: offline Chinese voice input (FunASR) as a global
     ## Fcitx5 module. Pin the tag; its nixpkgs stays self-pinned (validated).
     vocotype = {

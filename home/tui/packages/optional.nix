@@ -9,7 +9,6 @@
   ...
 }:
 let
-  inherit (pkgs.stdenv.hostPlatform) system;
   # helixDev = inputs.helix-dev.packages.${system}.helix;
 in
 lib.mkIf profileLevel.tuiOptional {

@@ -41,6 +41,7 @@ lib.mkIf profileLevel.guiBase {
       motrix-next
       rustdesk-flutter
       inputs.mark-shot.packages.${system}.default
+      inputs.netcatty.packages.${system}.default
     ]
     ++ lib.optionals isDarwin [ utm ];
 }
