@@ -24,10 +24,10 @@ in
 {
   services = {
     # timesyncd.enable = true; # NTP
-    journald.extraConfig = ''
-      SystemMaxUse=2G
-      RuntimeMaxUse=200M
-    '';
+    journald.settings.Journal = {
+      SystemMaxUse = "2G";
+      RuntimeMaxUse = "200M";
+    };
 
     iperf3 = {
       enable = true;

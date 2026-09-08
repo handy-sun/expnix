@@ -39,7 +39,7 @@ lib.mkIf profileLevel.guiBase {
       appimage-run
       telegram-desktop
       motrix-next
-      inputs.rustdesk-flutter-nixpkgs.legacyPackages.${system}.rustdesk-flutter
+      rustdesk-flutter
       inputs.mark-shot.packages.${system}.default
     ]
     ++ lib.optionals isDarwin [ utm ];

@@ -67,7 +67,7 @@ in
   # };
 
   services.beszel.agent = {
-    enable = false;
+    enable = true;
     environmentFile = "/etc/beszel-agent.env";
   };
 

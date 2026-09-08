@@ -683,11 +683,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1788372231,
-        "narHash": "sha256-7aqErvrAEz/5OcPA5p3M+tVOqeYc4oJXkNIPXfCqxAw=",
+        "lastModified": 1788746152,
+        "narHash": "sha256-RaKngusl5I8pNi8RfrVvsHq3NZe7eFWzDlb01+hEVqY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "9387b3fcc0c23c86661636da63faabad4235a0a6",
+        "rev": "42f17a57f4f6e33b3de3dca0a2a5ea5233169d02",
         "type": "github"
       },
       "original": {
@@ -777,7 +777,6 @@
         "nixpkgs": "nixpkgs_4",
         "qt-rules-mcp-src": "qt-rules-mcp-src",
         "rust-analyzer-mcp-src": "rust-analyzer-mcp-src",
-        "rustdesk-flutter-nixpkgs": "rustdesk-flutter-nixpkgs",
         "sbtpl": "sbtpl",
         "sops-nix": "sops-nix",
         "system-manager": "system-manager",
@@ -818,22 +817,6 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "rustdesk-flutter-nixpkgs": {
-      "locked": {
-        "lastModified": 1785485847,
-        "narHash": "sha256-kIpJwQEXt7qAVAqD3CAe8dgTD/R3Sff/eXqsn7RG2lw=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "862d3001bcdfed4e93ee565073e2254ad339ebb0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "862d3001bcdfed4e93ee565073e2254ad339ebb0",
         "type": "github"
       }
     },
