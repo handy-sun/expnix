@@ -8,6 +8,14 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) system;
+  markShotOcrPython = pkgs.python314.withPackages (pythonPackages: [ pythonPackages.rapidocr ]);
+  markShot = inputs.mark-shot.packages.${system}.default.overrideAttrs (old: {
+    nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
+    postInstall = (old.postInstall or "") + ''
+      wrapProgram $out/bin/mark-shot-ocr \
+        --set MARK_SHOT_OCR_PYTHON ${markShotOcrPython}/bin/python
+    '';
+  });
 in
 lib.mkIf profileLevel.guiBase {
   home.packages =
@@ -40,7 +48,7 @@ lib.mkIf profileLevel.guiBase {
       telegram-desktop
       motrix-next
       rustdesk-flutter
-      inputs.mark-shot.packages.${system}.default
+      markShot
       inputs.netcatty.packages.${system}.default
     ]
     ++ lib.optionals isDarwin [ utm ];
