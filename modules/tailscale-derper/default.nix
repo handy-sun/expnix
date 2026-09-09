@@ -18,6 +18,8 @@ in
   options.services.tailscale.derperCustom = {
     enable = lib.mkEnableOption "Tailscale DERP relay server";
 
+    openFirewall = lib.mkEnableOption "the DERP and STUN ports in the firewall";
+
     hostname = lib.mkOption {
       type = lib.types.str;
       description = "TLS hostname advertised by the DERP server.";
@@ -48,7 +50,7 @@ in
     };
     users.groups.derp = { };
 
-    networking.firewall = {
+    networking.firewall = lib.mkIf cfg.openFirewall {
       allowedTCPPorts = [ cfg.port ];
       allowedUDPPorts = [ cfg.stunPort ];
     };

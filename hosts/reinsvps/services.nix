@@ -74,6 +74,7 @@ in
     tailscale = {
       derperCustom = {
         enable = true;
+        openFirewall = true;
         hostname = "hkderp.${myvars.domain}";
         certificateDirectory = "/var/lib/acme/${myvars.domain}";
         port = 19443;
