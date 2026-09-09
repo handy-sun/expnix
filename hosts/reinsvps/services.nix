@@ -15,9 +15,16 @@ in
 {
   imports = [
     (myutils.relativeToRoot "modules/mtg")
+    (myutils.relativeToRoot "modules/tailscale-derper")
   ];
 
   environment.systemPackages = [ pkgs.mtg ];
+
+  security.acme.certs.${myvars.domain}.reloadServices = [ "tailscale-derper.service" ];
+  systemd.services.tailscale-derper = {
+    after = [ "acme-${myvars.domain}.service" ];
+    wants = [ "acme-${myvars.domain}.service" ];
+  };
 
   sops = {
     age.keyFile = "/var/lib/sops-nix/key.txt";
@@ -64,10 +71,20 @@ in
   };
 
   services = {
-    tailscale.extraSetFlags = [
-      "--relay-server-port=40000"
-      "--relay-server-static-endpoints=${myvars.reinsvpsNetwork.ipv4Address}:40000"
-    ];
+    tailscale = {
+      derperCustom = {
+        enable = true;
+        hostname = "hkderp.${myvars.domain}";
+        certificateDirectory = "/var/lib/acme/${myvars.domain}";
+        port = 19443;
+        stunPort = 3479;
+      };
+
+      extraSetFlags = [
+        "--relay-server-port=40000"
+        "--relay-server-static-endpoints=${myvars.reinsvpsNetwork.ipv4Address}:40000"
+      ];
+    };
 
     zerotierone.enable = true;
 
