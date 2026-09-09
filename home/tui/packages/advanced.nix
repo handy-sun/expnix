@@ -4,20 +4,10 @@
 {
   pkgs,
   lib,
-  inputs,
-  myutils,
   profileLevel,
   isLinux,
   ...
 }:
-let
-  rustAnalyzerMcp = pkgs.callPackage (myutils.relativeToRoot "packages/rust-analyzer-mcp.nix") {
-    inherit inputs;
-  };
-  qtRulesMcp = pkgs.callPackage (myutils.relativeToRoot "packages/qt-rules-mcp.nix") {
-    inherit inputs;
-  };
-in
 {
   home.packages = (
     with pkgs;
@@ -26,7 +16,6 @@ in
       perl
       php
       pnpm
-      zig
 
       ## LSP / dev tools
       tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
@@ -36,7 +25,6 @@ in
       ## downloads / transfers
       aria2 # A lightweight multi-protocol & multi-source command-line download utility
       axel
-      # lftp
       lrzsz
 
       ## archives (extras)
@@ -71,16 +59,6 @@ in
       nix-info
       nix-init
       nix-tree
-      cachix # Command-line client for Nix binary cache hosting https://cachix.org
-
-      ## MCP servers
-      context7-mcp
-      github-mcp-server
-      mcp-nixos
-      playwright-mcp
-      mcp-server-sequential-thinking
-      rustAnalyzerMcp
-      qtRulesMcp
 
       ## productivity | misc
       bc
@@ -89,12 +67,10 @@ in
       hugo # static site generator
       glow # markdown previewer in terminal
       subversion # svn
-      swtpm # TPM emulator
+      chase
     ]
     ++ lib.optionals (profileLevel.tuiAdvanced && isLinux) [
-      bubblewrap
       rldd
-      virtiofsd
     ]
   );
 }
