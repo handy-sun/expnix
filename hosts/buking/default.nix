@@ -49,12 +49,9 @@
   };
 
   boot.tmp.useTmpfs = true;
-  ## Keep the boot console clean so nothing smears over the ly login screen
-  ## (console output lands on the ACTIVE tty, which is ly's once it starts).
-  ## Note `quiet` is deliberately absent: kernel output is already capped by
-  ## consoleLogLevel=3. systemd.show_status must stay `no` (not `auto`):
-  ## `auto` means "show status unless `quiet` is on the cmdline", so without
-  ## `quiet` the [ OK ] lines would come right back.
+  ## Keep the boot console clean so nothing smears over ly. `quiet` is
+  ## absent on purpose (kernel output is already capped by consoleLogLevel=3);
+  ## show_status must be `no`, since `auto` means "show status unless quiet".
   boot.consoleLogLevel = 3;
   boot.kernelParams = [
     "systemd.show_status=no"
@@ -104,6 +101,13 @@
     HandleLidSwitchDocked = "ignore";
   };
 
+  ## Foreign NTP pool is slow from CN networks; domestic servers shrink
+  ## the boot window where the clock is still unsynced (ly shows it).
+  services.timesyncd.servers = [
+    "ntp.aliyun.com"
+    "ntp.tencent.com"
+  ];
+
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
   services.xserver.windowManager.i3.enable = true;
@@ -112,11 +116,9 @@
 
   system.stateVersion = "26.05";
   ## ------ other optional services ------
-  ## ly is a standalone TUI display manager. Its NixOS module wires the
-  ## generated session directory and xsession wrapper into ly's config:
-  ##   .../share/wayland-sessions  (currently niri.desktop)
-  ##   .../share/xsessions         (currently none+i3.desktop)
-  ## Keep both enabled because this host exposes both Wayland and X11 sessions.
+  ## ly: standalone TUI display manager. Keep x11Support on: the module
+  ## wires generated session dirs (wayland-sessions: niri; xsessions:
+  ## none+i3) into ly, and this host exposes both kinds of session.
   services.displayManager.ly = {
     enable = true;
     x11Support = true;
@@ -126,8 +128,7 @@
       save = true;
       clock = "%B, %A %d - %H:%M:%S";
       asterisk = "*"; # password masking behavior.
-      ## Match tuigreet's explicit session lists: don't add Ly's optional
-      ## shell or ~/.xinitrc entries to the chooser.
+      ## Match tuigreet's explicit session lists (no shell/xinitrc entries).
       shell = false;
       xinitrc = null;
 

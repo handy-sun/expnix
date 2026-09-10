@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   myvars,
   hostName,
   homeDir,
@@ -100,6 +101,31 @@ in
   time = {
     hardwareClockInLocalTime = mkDefault false; # false is UTC; Windows double system set 'true'
     timeZone = lib.mkForce "Asia/Shanghai";
+  };
+
+  ## Make UTC mode converge, not just flip interpretation: pin /etc/adjtime
+  ## against LOCAL leftovers, and rewrite the RTC after the first NTP sync
+  ## so the next boot starts correct even if the RTC gets clobbered.
+  environment.etc = lib.mkIf (!config.time.hardwareClockInLocalTime) {
+    "adjtime".text = ''
+      0.0 0 0
+      0
+      UTC
+    '';
+  };
+
+  systemd.services.rtc-write-utc = lib.mkIf (!config.time.hardwareClockInLocalTime) {
+    description = "Write NTP-synced system time to the hardware clock (UTC)";
+    after = [
+      "time-sync.target"
+      "systemd-time-wait-sync.service"
+    ];
+    wants = [ "systemd-time-wait-sync.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.util-linux}/bin/hwclock --systohc --utc --noadjfile";
+    };
   };
 
   i18n = {
