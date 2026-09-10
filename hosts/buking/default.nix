@@ -49,13 +49,15 @@
   };
 
   boot.tmp.useTmpfs = true;
-  ## Keep the boot console quiet: without `quiet` systemd prints every
-  ## "[ OK ] Started ..." status line to the active tty and smears them all
-  ## over the ly login screen. Errors still show; journald is unaffected.
+  ## Keep the boot console clean so nothing smears over the ly login screen
+  ## (console output lands on the ACTIVE tty, which is ly's once it starts).
+  ## Note `quiet` is deliberately absent: kernel output is already capped by
+  ## consoleLogLevel=3. systemd.show_status must stay `no` (not `auto`):
+  ## `auto` means "show status unless `quiet` is on the cmdline", so without
+  ## `quiet` the [ OK ] lines would come right back.
   boot.consoleLogLevel = 3;
   boot.kernelParams = [
-    "quiet"
-    "systemd.show_status=auto"
+    "systemd.show_status=no"
     "udev.log_level=3"
   ];
   boot.loader.systemd-boot.enable = true;
