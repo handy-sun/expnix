@@ -98,7 +98,7 @@ in
   security.sudo.wheelNeedsPassword = false;
 
   time = {
-    hardwareClockInLocalTime = true;
+    hardwareClockInLocalTime = mkDefault false; # false is UTC; Windows double system set 'true'
     timeZone = lib.mkForce "Asia/Shanghai";
   };
 
