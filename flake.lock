@@ -456,11 +456,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788831368,
-        "narHash": "sha256-euRxuCUmqdP9uN8xkjPdawNn7mvKckiBgga6S6RU2e0=",
+        "lastModified": 1788938916,
+        "narHash": "sha256-ksFNygmsJ6lW/OL++M/AfaNu3ii9hTV61dfrrtfKMOA=",
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "rev": "45bcc1fa1d1742f77efd721c627fede73066c124",
+        "rev": "d7402b6bbd7c8f61fa0ca77b3b12155ff03558bd",
         "type": "github"
       },
       "original": {
