@@ -8,7 +8,6 @@
   myutils,
   inputs,
   networkingVars,
-  profileLevel,
   ...
 }:
 let
@@ -55,11 +54,7 @@ in
         iptables
         nftables
         traceroute
-      ])
-      ++ lib.optionals profileLevel.guiBase [
-        ## VoCoType settings GUI / CLI (model download, mic, hotkeys)
-        inputs.vocotype.packages.${pkgs.stdenv.hostPlatform.system}.vocotype-fcitx5
-      ];
+      ]);
   };
 
   networking.hosts = networkingVars.hostsFile;
@@ -98,14 +93,21 @@ in
 
   security.sudo.wheelNeedsPassword = false;
 
-  time = {
-    hardwareClockInLocalTime = mkDefault false; # false is UTC; Windows double system set 'true'
-    timeZone = lib.mkForce "Asia/Shanghai";
+  i18n = {
+    defaultLocale = mkDefault "${myvars.langEnv}";
+    extraLocaleSettings = {
+      LC_ALL = mkDefault "${myvars.langEnv}";
+    };
   };
 
   ## Make UTC mode converge, not just flip interpretation: pin /etc/adjtime
   ## against LOCAL leftovers, and rewrite the RTC after the first NTP sync
   ## so the next boot starts correct even if the RTC gets clobbered.
+  time = {
+    hardwareClockInLocalTime = mkDefault false; # false is UTC; Windows double system set 'true'
+    timeZone = lib.mkForce "Asia/Shanghai";
+  };
+
   environment.etc = lib.mkIf (!config.time.hardwareClockInLocalTime) {
     "adjtime".text = ''
       0.0 0 0
@@ -128,55 +130,4 @@ in
     };
   };
 
-  i18n = {
-    defaultLocale = "${myvars.langEnv}";
-    extraLocaleSettings = {
-      LC_ALL = "${myvars.langEnv}";
-    };
-
-    ## Fcitx5 input method for Chinese input on Wayland
-    inputMethod = lib.mkIf profileLevel.guiBase {
-      enable = true;
-      type = "fcitx5";
-      fcitx5 = {
-        waylandFrontend = true;
-        addons = with pkgs; [
-          fcitx5-gtk
-          (fcitx5-rime.override {
-            rimeDataPkgs = [
-              rime-ice
-              rime-data
-            ];
-          })
-          ## VoCoType-linux: offline Chinese voice input as a global module.
-          ## Keep rime as-is; hold F9 to dictate. Models downloaded on first
-          ## run by `vocotype-settings` into the user cache.
-          inputs.vocotype.packages.${pkgs.stdenv.hostPlatform.system}.vocotype-fcitx5
-        ];
-        candlelightMacosDark.enable = true;
-        ## Font size donnot changed?
-        settings.addons.classicui = {
-          globalSection = {
-            Font = "Noto Sans CJK SC 16";
-            MenuFont = "Noto Sans CJK SC 14";
-          };
-        };
-      };
-    };
-  };
-
-  fonts = lib.mkIf profileLevel.guiBase {
-    packages = myutils.resolveNames pkgs myvars.fontsPkgs;
-    fontconfig = {
-      defaultFonts = {
-        monospace = [ "Noto Sans Mono CJK SC" ];
-        sansSerif = [ "Noto Sans CJK SC" ];
-      };
-      hinting = {
-        enable = true;
-        style = "slight";
-      };
-      antialias = true;
-    };
-  };
 }
