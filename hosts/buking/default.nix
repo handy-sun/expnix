@@ -54,7 +54,7 @@
   ## show_status must be `no`, since `auto` means "show status unless quiet".
   boot.consoleLogLevel = 3;
   boot.kernelParams = [
-    "systemd.show_status=no"
+    "systemd.show_status=auto"
     "udev.log_level=3"
   ];
   boot.loader.systemd-boot.enable = true;
@@ -115,12 +115,13 @@
   services.desktopManager.plasma6.enable = true;
   ## Replaces hm duplicates: kitty/zed/mpv/okular/peazip/markShot.
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    konsole
+    # konsole
     kate
     elisa
     okular
     ark
     spectacle
+    discover # software center; can't manage NixOS, fwupd via fwupdmgr CLI
   ];
   ## No PIM usage; akonadi drags in mariadb.
   programs.kde-pim.enable = false;
@@ -137,15 +138,17 @@
   services.displayManager.ly = {
     enable = true;
     x11Support = true;
-    package = pkgs.ly; # TUI -- zig -- https://codeberg.org/AnErrupTion/ly
+    package = pkgs.ly; # https://codeberg.org/AnErrupTion/ly
     settings = {
       ## Persist the selected user and desktop session across logins.
       save = true;
-      clock = "%B, %A %d - %H:%M:%S";
+      clock = "%H:%M:%S - %m/%d";
       asterisk = "*"; # password masking behavior.
       ## Match tuigreet's explicit session lists (no shell/xinitrc entries).
       shell = false;
       xinitrc = null;
+      ## ly 1.x else touches $HOME/ly-session.log on every graphical login.
+      session_log = null;
 
       bg = "0x02000000";
       fg = "0x01FFFFFF";
