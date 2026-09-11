@@ -111,14 +111,29 @@
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
   services.xserver.windowManager.i3.enable = true;
+  ## Plasma 6: ly lists "Plasma (Wayland)" and "Plasma (X11)" (xserver on).
+  services.desktopManager.plasma6.enable = true;
+  ## Replaces hm duplicates: kitty/zed/mpv/okular/peazip/markShot.
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    konsole
+    kate
+    elisa
+    okular
+    ark
+    spectacle
+  ];
+  ## No PIM usage; akonadi drags in mariadb.
+  programs.kde-pim.enable = false;
+  ## plasma6/niri both mkDefault this; keep niri preselected.
+  services.displayManager.defaultSession = "niri";
 
   networking.networkmanager.enable = true;
 
   system.stateVersion = "26.05";
   ## ------ other optional services ------
   ## ly: standalone TUI display manager. Keep x11Support on: the module
-  ## wires generated session dirs (wayland-sessions: niri; xsessions:
-  ## none+i3) into ly, and this host exposes both kinds of session.
+  ## wires generated session dirs (wayland-sessions: niri + Plasma; xsessions:
+  ## i3 + Plasma X11) into ly, and this host exposes both kinds of session.
   services.displayManager.ly = {
     enable = true;
     x11Support = true;

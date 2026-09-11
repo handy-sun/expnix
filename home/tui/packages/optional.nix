@@ -27,7 +27,6 @@ lib.mkIf profileLevel.tuiOptional {
       docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
 
       llvmPackages.clang-unwrapped
-      zig
       cachix # Command-line client for Nix binary cache hosting https://cachix.org
       swtpm # TPM emulator
 
