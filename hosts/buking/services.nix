@@ -20,6 +20,7 @@ in
   imports = [
     (myutils.relativeToRoot "modules/mihomo")
     (myutils.relativeToRoot "modules/sing-box")
+    (myutils.relativeToRoot "modules/honk")
   ];
 
   sops.secrets = {
@@ -43,6 +44,11 @@ in
     mode = "0600";
   };
 
+  environment.etc."honk/config.dae" = {
+    source = ./honk-config.dae;
+    mode = "0600";
+  };
+
   services = {
     zerotierone.enable = true;
 
@@ -56,6 +62,13 @@ in
       enable = true;
       package = inputs.daeuniverse.packages.${system}.dae-unstable;
       configFile = "/etc/dae/config.dae";
+    };
+
+    # Trial successor of dae: same TC+dae0 datapath, units conflict so never both at once.
+    # To switch over: dae.enable -> false, this enable -> true, rebuild + switch.
+    honk-core = {
+      enable = false;
+      configFile = "/etc/honk/config.dae";
     };
 
     sing-box = {
@@ -73,7 +86,7 @@ in
     };
 
     mihomo = {
-      enable = false;
+      enable = true;
       subscriptionUrlFile = config.sops.secrets.mihomo-subscription-url.path;
       tunMode = true;
     };
