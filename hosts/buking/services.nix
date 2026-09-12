@@ -44,10 +44,10 @@ in
     mode = "0600";
   };
 
-  environment.etc."honk/config.dae" = {
-    source = ./honk-config.dae;
-    mode = "0600";
-  };
+  #  environment.etc."honk/honk-config.dae" = {
+  #    source = ./honk-config.dae;
+  #    mode = "0600";
+  #  };
 
   services = {
     zerotierone.enable = true;
@@ -67,12 +67,12 @@ in
     # Trial successor of dae: same TC+dae0 datapath, units conflict so never both at once.
     # To switch over: dae.enable -> false, this enable -> true, rebuild + switch.
     honk-core = {
-      enable = false;
-      configFile = "/etc/honk/config.dae";
+      enable = true;
+      configFile = "/etc/honk/honk-config.dae";
     };
 
     sing-box = {
-      enable = true;
+      enable = false;
       configGeneration = {
         enable = true;
         sourceUrlFile = config.sops.secrets.subs-main.path;
@@ -86,7 +86,7 @@ in
     };
 
     mihomo = {
-      enable = true;
+      enable = false;
       subscriptionUrlFile = config.sops.secrets.mihomo-subscription-url.path;
       tunMode = true;
     };
