@@ -10,7 +10,7 @@
 let
   qqNixPak = myutils.mkNixPakPackage pkgs (myutils.relativeToRoot "packages/nixpaks/qq.nix");
   wechatNixPak = myutils.mkNixPakPackage pkgs (myutils.relativeToRoot "packages/nixpaks/wechat.nix");
-  wemeetNixPak = myutils.mkNixPakPackage pkgs (myutils.relativeToRoot "packages/nixpaks/wemeet.nix");
+  # wemeetNixPak = myutils.mkNixPakPackage pkgs (myutils.relativeToRoot "packages/nixpaks/wemeet.nix");
 in
 lib.mkIf profileLevel.guiHeavy {
   home.packages =
@@ -25,8 +25,9 @@ lib.mkIf profileLevel.guiHeavy {
       mangohud
       qtcreator
       bottles
+      wemeet
       qqNixPak
       wechatNixPak
-      wemeetNixPak
+      # wemeetNixPak
     ];
 }
