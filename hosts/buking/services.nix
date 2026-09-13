@@ -3,6 +3,8 @@
   config,
   inputs,
   myutils,
+  homeDir,
+  myvars,
   ...
 }:
 let
@@ -97,5 +99,36 @@ in
     ## the subscription and generates config first, which used to make dae's health checks hit a dead port at boot.
     after = [ "sing-box.service" ];
     wants = [ "sing-box.service" ];
+  };
+
+  systemd.services.npm-global-update = {
+    description = "Update globally installed npm packages";
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = myvars.user;
+      WorkingDirectory = homeDir;
+      Environment = [
+        "HOME=${homeDir}"
+        "NPM_CONFIG_USERCONFIG=${homeDir}/.config/npmrc"
+      ];
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${homeDir}/.cache";
+      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.nodejs}/bin/npm update -g >> ${homeDir}/.cache/npm-updg.log 2>&1'";
+      TimeoutStartSec = "20min";
+    };
+  };
+
+  systemd.timers.npm-global-update = {
+    description = "Update globally installed npm packages twice a week";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = [
+        "Mon *-*-* 17:00:00"
+        "Fri *-*-* 17:00:00"
+      ];
+      Persistent = true;
+      Unit = "npm-global-update.service";
+    };
   };
 }
