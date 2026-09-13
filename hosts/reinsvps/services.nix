@@ -57,6 +57,25 @@ in
   };
 
   systemd = {
+    services.proxy-maintenance = {
+      description = "Restart mtg and sing-box every two days";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.systemd}/bin/systemctl restart mtg.service sing-box.service";
+      };
+    };
+
+    timers.proxy-maintenance = {
+      description = "Restart mtg and sing-box every two days";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        ## Monotonic intervals avoid shorter gaps at calendar month boundaries.
+        OnBootSec = "2d";
+        OnUnitActiveSec = "2d";
+        Unit = "proxy-maintenance.service";
+      };
+    };
+
     tmpfiles.rules = [
       "Z /var/lib/private/rustdesk 0750 rustdesk rustdesk -"
       # "Z /var/lib/private/uptime-kuma 0750 uptime-kuma uptime-kuma -"
