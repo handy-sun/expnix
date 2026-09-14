@@ -12,6 +12,8 @@ let
   markShot = inputs.mark-shot.packages.${system}.default.overrideAttrs (old: {
     nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
     postInstall = (old.postInstall or "") + ''
+      wrapProgram $out/bin/mark-shot \
+        --set QT_QPA_PLATFORMTHEME generic
       wrapProgram $out/bin/mark-shot-ocr \
         --set MARK_SHOT_OCR_PYTHON ${markShotOcrPython}/bin/python
     '';
