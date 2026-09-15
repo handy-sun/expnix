@@ -34,6 +34,16 @@ upc-my:
 up-my:
   nix flake update {{my_inputs}}
 
+# Update the version/hash pinned in packages/*.nix and create commit
+[group('nix')]
+upc-pkgs *args:
+  ./scripts/update-pkgs.sh {{args}}
+
+# Same as upc-pkgs but leave the changes uncommitted
+[group('nix')]
+up-pkgs *args:
+  ./scripts/update-pkgs.sh --no-commit {{args}}
+
 # Open a nix repl shell with the current profile
 [group('nix')]
 repl:
