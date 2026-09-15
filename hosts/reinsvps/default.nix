@@ -5,6 +5,7 @@
   ...
 }:
 let
+  sshdPort = 23512;
   frpClientPorts = builtins.genList (x: x + 17580) 31;
   customPorts = builtins.genList (x: x + 20120) 31;
 in
@@ -76,6 +77,9 @@ in
       iptables -A INPUT -p tcp -m state --state NEW -m recent --set --name CONNECTIONS --mask 255.255.255.255 --rsource
       iptables -A INPUT -p tcp -m state --state NEW -m recent --update --seconds 60 --hitcount 10 --name CONNECTIONS --mask 255.255.255.255 --rsource -j DROP
 
+      iptables -A INPUT -p tcp --dport ${sshdPort} -m state --state NEW -m recent --set
+      iptables -A INPUT -p tcp --dport ${sshdPort} -m state --state NEW -m recent --update --seconds 5 --hitcount 3 -j DROP
+
       ip6tables -A INPUT -i lo -j ACCEPT
       ip6tables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
       ip6tables -A INPUT -p icmp -j ACCEPT
@@ -98,7 +102,7 @@ in
 
   services.openssh = {
     enable = true;
-    ports = [ 23512 ];
+    ports = [ "${sshdPort}" ];
     openFirewall = true;
     settings = {
       PermitRootLogin = "yes";
