@@ -18,6 +18,13 @@ let
         --set MARK_SHOT_OCR_PYTHON ${markShotOcrPython}/bin/python
     '';
   });
+  netcattyPkg = inputs.netcatty.packages.${system}.default.overrideAttrs (old: {
+    nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
+    postInstall = (old.postInstall or "") + ''
+      wrapProgram $out/bin/netcatty \
+        --set XDG_CURRENT_DESKTOP GNOME
+    '';
+  });
 in
 lib.mkIf profileLevel.guiBase {
   home.packages =
@@ -51,7 +58,7 @@ lib.mkIf profileLevel.guiBase {
       motrix-next
       rustdesk-flutter
       markShot
-      inputs.netcatty.packages.${system}.default
+      netcattyPkg
     ]
     ++ lib.optionals isDarwin [ utm ];
 }
