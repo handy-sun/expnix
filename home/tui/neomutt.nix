@@ -1,16 +1,95 @@
 {
+  config,
   pkgs,
   lib,
   ...
 }:
+let
+  ## Mail account message, modify it
+  mailAddress = "sqzrdev@outlook.com";
+  mailRealName = "sqzr";
+  pgpKey = "0x6AD94E90CD0B516D";
 
+  ## mutt_oauth2.py generate/update token，use gpg
+  oauthTokenFile = "${config.xdg.cacheHome}/mutt/oauth-account-unixchad";
+
+  ## nixpkgs' neomutt don't install contrib/oauth2，package from source
+  muttOauth2 = pkgs.writeShellScriptBin "mutt_oauth2.py" ''
+    exec ${pkgs.python3}/bin/python3 ${pkgs.neomutt.src}/contrib/oauth2/mutt_oauth2.py "$@"
+  '';
+in
 {
+  home.packages = [ muttOauth2 ];
+
+  accounts.email.maildirBasePath = "${config.home.homeDirectory}/doc/mail";
+
+  accounts.email.accounts.account-unixchad = {
+    primary = true;
+    address = mailAddress;
+    userName = mailAddress;
+    realName = mailRealName;
+    ## auto fill imap/smtp host、port、tls（smtp.office365.com:587 + STARTTLS）
+    flavor = "outlook.office365.com";
+
+    ## set folder = "~/doc/mail/account-unixchad"
+    maildir.path = "account-unixchad";
+
+    folders = {
+      inbox = "INBOX";
+      ## null -> unset record；outlook send
+      sent = null;
+      drafts = "Drafts";
+      trash = "Deleted";
+    };
+
+    gpg = {
+      key = pgpKey;
+      signByDefault = false;
+      encryptByDefault = false;
+    };
+
+    neomutt = {
+      enable = true;
+      mailboxType = "maildir";
+      ## INBOX by showDefaultMailbox generate，
+      extraMailboxes = [
+        "Drafts"
+        "Sent"
+        "Junk"
+        "Deleted"
+        "Archive"
+      ];
+      extraConfig = ''
+        # MTA：HM's mtaSection only: passwordCommand，xoauth2 
+        set smtp_url = "smtp://${mailAddress}@smtp.office365.com:587"
+        set smtp_authenticators = "xoauth2"
+        set smtp_oauth_refresh_command = "${muttOauth2}/bin/mutt_oauth2.py --decryption-pipe 'gpg --decrypt --pinentry-mode default' ${oauthTokenFile}"
+        set ssl_starttls = yes
+        set pgp_sign_as = ${pgpKey}
+      '';
+    };
+  };
+
+  ## auto_view text/html depend it
+  xdg.configFile."neomutt/mailcap".text = ''
+    text/html; ${pkgs.w3m}/bin/w3m -I %{charset} -T text/html; copiousoutput;
+
+    image/*; SWAYSOCK=/dev/null swayimg %s;
+    video/*; mpv --loop %s;
+    audio/*; mpv --loop --audio-display=no %s;
+
+    application/pdf; zathura %s;
+    application/epub+zip; zathura %s;
+  '';
+
   programs.neomutt = {
     enable = true;
     editor = lib.getExe pkgs.neovim;
     sort = "threads";
     ## emits `set mail_check_stats` + interval into each account file
     checkStatsInterval = 60;
+    ## every account file head add unmailboxes *，clean sidebar when switch accout
+    unmailboxes = true;
 
     sidebar = {
       enable = true;
@@ -26,6 +105,7 @@
       compose_show_preview = "yes";
       sort_aux = "reverse-last-date-received";
       sidebar_folder_indent = "yes";
+      mailcap_path = "${config.xdg.configHome}/neomutt/mailcap";
 
       ## crypt_use_gpgme is already set by the module
       postpone_encrypt = "yes";
