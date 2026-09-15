@@ -18,6 +18,7 @@ Examples:
   waykan-disp list
   waykan-disp right DP-1 1920
   waykan-disp set DP-1 scale 1.0 position 1920 0
+  waykan-disp set DP-1 position -1920 0
   waykan-disp off HDMI-A-1
 EOF
 }
@@ -46,7 +47,8 @@ case "$1" in
           ;;
         position)
           [[ $# -ge 3 ]] || { usage; exit 2; }
-          niri msg output "$output" position set "$2" "$3"
+          # `--` so clap does not read a negative coordinate as a short option
+          niri msg output "$output" position set -- "$2" "$3"
           shift 3
           ;;
         *)
@@ -72,19 +74,19 @@ case "$1" in
     case "$1" in
       right)
         niri msg output eDP-1 position set 0 0
-        niri msg output "$output" position set "$coordinate" 0
+        niri msg output "$output" position set -- "$coordinate" 0
         ;;
       left)
         niri msg output "$output" position set 0 0
-        niri msg output eDP-1 position set "$coordinate" 0
+        niri msg output eDP-1 position set -- "$coordinate" 0
         ;;
       above)
         niri msg output "$output" position set 0 0
-        niri msg output eDP-1 position set 0 "$coordinate"
+        niri msg output eDP-1 position set -- 0 "$coordinate"
         ;;
       below)
         niri msg output eDP-1 position set 0 0
-        niri msg output "$output" position set 0 "$coordinate"
+        niri msg output "$output" position set -- 0 "$coordinate"
         ;;
     esac
     ;;
