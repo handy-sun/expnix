@@ -389,7 +389,7 @@ in
 
       # body
       color body         brightyellow     default "^> \.*"
-      color body               yellow     default "^(\t| )*(-|\*) \.*"
+      color body               yellow     default "^(\t| )*(-|\\*) \.*"
 
       color quoted             white      default
       color quoted1            white      default
