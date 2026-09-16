@@ -19,6 +19,14 @@ let
   muttOauth2 = pkgs.writeShellScriptBin "mutt_oauth2.py" ''
     exec ${pkgs.python3}/bin/python3 ${pkgs.neomutt.src}/contrib/oauth2/mutt_oauth2.py "$@"
   '';
+
+  ## refreshes if needed, then prints the access token on stdout;
+  ## shared by neomutt's SMTP refresh hook and mbsync's PassCmd
+  oauthTokenCmd = "${muttOauth2}/bin/mutt_oauth2.py --decryption-pipe 'gpg --decrypt --pinentry-mode default' ${oauthTokenFile}";
+
+  ## stock isync has no XOAUTH2 SASL mechanism, which Office365 requires.
+  ## The override wraps mbsync with SASL_PATH pointing at cyrus-sasl-xoauth2.
+  mbsyncXoauth2 = pkgs.isync.override { withCyrusSaslXoauth2 = true; };
 in
 {
   home.packages = [ muttOauth2 ];
@@ -34,6 +42,24 @@ in
     flavor = "outlook.office365.com";
 
     maildir.path = accountSqzr;
+
+    ## HM's mbsync module hard-asserts passwordCommand != null, but HM's neomutt
+    ## module turns the same option into `set smtp_pass = "`cmd`"` — a backtick
+    ## neomutt expands at *parse* time, i.e. a gpg decrypt + token refresh on
+    ## every launch. Keep this a no-op and hand mbsync the real command through
+    ## PassCmd below; SMTP auth stays on smtp_oauth_refresh_command.
+    passwordCommand = "true";
+
+    mbsync = {
+      enable = true;
+      ## upstream default is "none", which leaves the local maildirs absent and
+      ## makes neomutt report "Unknown Mailbox" for every folder on startup
+      create = "maildir";
+      extraConfig.account = {
+        AuthMechs = "XOAUTH2";
+        PassCmd = oauthTokenCmd;
+      };
+    };
 
     folders = {
       inbox = "INBOX";
@@ -64,7 +90,7 @@ in
         # MTA：HM's mtaSection only: passwordCommand，xoauth2 
         set smtp_url = "smtp://${mailAddress}@smtp.office365.com:587"
         set smtp_authenticators = "xoauth2"
-        set smtp_oauth_refresh_command = "${muttOauth2}/bin/mutt_oauth2.py --decryption-pipe 'gpg --decrypt --pinentry-mode default' ${oauthTokenFile}"
+        set smtp_oauth_refresh_command = "${oauthTokenCmd}"
         set ssl_starttls = yes
         set pgp_sign_as = ${gpgKey}
       '';
@@ -82,6 +108,13 @@ in
     application/pdf; zathura %s;
     application/epub+zip; zathura %s;
   '';
+
+  ## writes ~/.config/isyncrc; the module's activation hook also mkdir -p's the
+  ## account's maildir root, mbsync itself creates the folders under it
+  programs.mbsync = {
+    enable = true;
+    package = mbsyncXoauth2;
+  };
 
   programs.neomutt = {
     enable = true;
@@ -350,7 +383,8 @@ in
           "pager"
         ];
         key = "S";
-        action = "<sync-mailbox><enter-command>unset wait_key<enter><shell-escape>$HOME/.local/bin/mbs<enter><enter-command>set wait_key<enter>";
+        ## was $HOME/.local/bin/mbs, a script that does not exist in this config
+        action = "<sync-mailbox><enter-command>unset wait_key<enter><shell-escape>${lib.getExe mbsyncXoauth2} -a<enter><enter-command>set wait_key<enter>";
       }
     ];
 
