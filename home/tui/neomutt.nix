@@ -8,10 +8,12 @@ let
   ## Mail account message, modify it
   mailAddress = "sqzrdev@outlook.com";
   mailRealName = "sqzr";
-  pgpKey = "0x6AD94E90CD0B516D";
+  gpgKey = "0x9153A88363A54F0D";
 
+  accountSqzr = "account-sqzrdev";
   ## mutt_oauth2.py generate/update token，use gpg
-  oauthTokenFile = "${config.xdg.cacheHome}/mutt/oauth-account-unixchad";
+  oauthTokenFile = "${config.xdg.cacheHome}/mutt/oauth-${accountSqzr}";
+  mailDir = config.xdg.dataHome + "/mail";
 
   ## nixpkgs' neomutt don't install contrib/oauth2，package from source
   muttOauth2 = pkgs.writeShellScriptBin "mutt_oauth2.py" ''
@@ -21,9 +23,9 @@ in
 {
   home.packages = [ muttOauth2 ];
 
-  accounts.email.maildirBasePath = "${config.home.homeDirectory}/doc/mail";
+  accounts.email.maildirBasePath = mailDir;
 
-  accounts.email.accounts.account-unixchad = {
+  accounts.email.accounts.${accountSqzr} = {
     primary = true;
     address = mailAddress;
     userName = mailAddress;
@@ -31,8 +33,7 @@ in
     ## auto fill imap/smtp host、port、tls（smtp.office365.com:587 + STARTTLS）
     flavor = "outlook.office365.com";
 
-    ## set folder = "~/doc/mail/account-unixchad"
-    maildir.path = "account-unixchad";
+    maildir.path = accountSqzr;
 
     folders = {
       inbox = "INBOX";
@@ -43,7 +44,7 @@ in
     };
 
     gpg = {
-      key = pgpKey;
+      key = gpgKey;
       signByDefault = false;
       encryptByDefault = false;
     };
@@ -65,7 +66,7 @@ in
         set smtp_authenticators = "xoauth2"
         set smtp_oauth_refresh_command = "${muttOauth2}/bin/mutt_oauth2.py --decryption-pipe 'gpg --decrypt --pinentry-mode default' ${oauthTokenFile}"
         set ssl_starttls = yes
-        set pgp_sign_as = ${pgpKey}
+        set pgp_sign_as = ${gpgKey}
       '';
     };
   };
