@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   inputs,
   myutils,
@@ -93,6 +94,8 @@ in
       tunMode = true;
     };
   };
+
+  systemd.services.libvirt-guests.wantedBy = lib.mkForce [ ];
 
   systemd.services.dae = {
     ## dae's only node is sing-box's mixed inbound (127.0.0.1:2334). Never start it before sing-box is listening: sing-box's ExecStartPre fetches

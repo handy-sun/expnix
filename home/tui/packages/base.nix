@@ -73,6 +73,7 @@
       nexttrace
       bandwhich
       webdav
+      speedtest-cli
 
       ## git / forge
       inputs.githand.packages.${pkgs.stdenv.hostPlatform.system}.default

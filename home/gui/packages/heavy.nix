@@ -25,6 +25,7 @@ lib.mkIf profileLevel.guiHeavy {
       mangohud
       qtcreator
       bottles
+      gimp
       wemeet
       qqNixPak
       wechatNixPak
