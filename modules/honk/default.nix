@@ -49,7 +49,7 @@ in
 
       serviceConfig = {
         Type = "notify";
-        ExecStart = "${lib.getExe cfg.package} --config ${lib.escapeShellArg cfg.configFile}";
+        ExecStart = "${lib.getExe cfg.package} --disable-timestamp --config ${lib.escapeShellArg cfg.configFile}";
         ExecReload = "${lib.getExe cfg.package} reload";
         WorkingDirectory = "/var/lib/honk";
         StateDirectory = "honk";
