@@ -18,11 +18,13 @@ let
         --set MARK_SHOT_OCR_PYTHON ${markShotOcrPython}/bin/python
     '';
   });
+  ## buildFHSEnv builds via buildCommand, so postInstall is skipped: the wrapper
+  ## must go through extraInstallCommands. Pin the store explicitly because
+  ## Chromium's autodetection does not know niri and falls back to plaintext.
   netcattyPkg = inputs.netcatty.packages.${system}.default.overrideAttrs (old: {
     nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
-    postInstall = (old.postInstall or "") + ''
-      wrapProgram $out/bin/netcatty \
-        --set XDG_CURRENT_DESKTOP GNOME
+    extraInstallCommands = (old.extraInstallCommands or "") + ''
+      wrapProgram $out/bin/netcatty --add-flags --password-store=gnome-libsecret
     '';
   });
 in
