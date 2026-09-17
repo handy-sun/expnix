@@ -77,8 +77,8 @@ in
       iptables -A INPUT -p tcp -m state --state NEW -m recent --set --name CONNECTIONS --mask 255.255.255.255 --rsource
       iptables -A INPUT -p tcp -m state --state NEW -m recent --update --seconds 60 --hitcount 10 --name CONNECTIONS --mask 255.255.255.255 --rsource -j DROP
 
-      iptables -A INPUT -p tcp --dport ${sshdPort} -m state --state NEW -m recent --set
-      iptables -A INPUT -p tcp --dport ${sshdPort} -m state --state NEW -m recent --update --seconds 5 --hitcount 3 -j DROP
+      iptables -A INPUT -p tcp --dport ${toString sshdPort} -m state --state NEW -m recent --set
+      iptables -A INPUT -p tcp --dport ${toString sshdPort} -m state --state NEW -m recent --update --seconds 5 --hitcount 3 -j DROP
 
       ip6tables -A INPUT -i lo -j ACCEPT
       ip6tables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
@@ -102,7 +102,7 @@ in
 
   services.openssh = {
     enable = true;
-    ports = [ "${sshdPort}" ];
+    ports = [ sshdPort ];
     openFirewall = true;
     settings = {
       PermitRootLogin = "yes";
