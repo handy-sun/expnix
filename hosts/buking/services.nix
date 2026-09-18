@@ -14,7 +14,7 @@ let
   # storePathConfig = pkgs.writeText "real-dns-nosniff.json" (
   #   builtins.readFile (inputs.sbtpl + "/substore/real-dns-nosniff.json")
   # );
-  inherit (pkgs.stdenv.hostPlatform) system;
+  inherit (myvars) archSystem;
   subsSopsFile = myutils.relativeToRoot "secrets/sb-subs.yaml";
   mihomoSubsSopsFile = myutils.relativeToRoot "secrets/mhm-subs.yaml";
 in
@@ -63,7 +63,7 @@ in
 
     dae = {
       enable = true;
-      package = inputs.daeuniverse.packages.${system}.dae-unstable;
+      package = inputs.daeuniverse.packages.${archSystem}.dae-unstable;
       configFile = "/etc/dae/config.dae";
     };
 

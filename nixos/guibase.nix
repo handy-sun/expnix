@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (inputs.vocotype.packages.${pkgs.stdenv.hostPlatform.system}) vocotype-fcitx5;
+  inherit (inputs.vocotype.packages.${myvars.archSystem}) vocotype-fcitx5;
 in
 lib.mkIf profileLevel.guiBase {
   users.groups.wireshark.members = [ myvars.user ];

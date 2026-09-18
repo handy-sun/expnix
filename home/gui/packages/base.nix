@@ -2,14 +2,15 @@
   pkgs,
   lib,
   inputs,
+  myvars,
   profileLevel,
   isDarwin,
   ...
 }:
 let
-  inherit (pkgs.stdenv.hostPlatform) system;
+  inherit (myvars) archSystem;
   markShotOcrPython = pkgs.python314.withPackages (pythonPackages: [ pythonPackages.rapidocr ]);
-  markShot = inputs.mark-shot.packages.${system}.default.overrideAttrs (old: {
+  markShot = inputs.mark-shot.packages.${archSystem}.default.overrideAttrs (old: {
     nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
     postInstall = (old.postInstall or "") + ''
       wrapProgram $out/bin/mark-shot \
@@ -21,7 +22,7 @@ let
   ## buildFHSEnv builds via buildCommand, so postInstall is skipped: the wrapper
   ## must go through extraInstallCommands. Pin the store explicitly because
   ## Chromium's autodetection does not know niri and falls back to plaintext.
-  netcattyPkg = inputs.netcatty.packages.${system}.default.overrideAttrs (old: {
+  netcattyPkg = inputs.netcatty.packages.${archSystem}.default.overrideAttrs (old: {
     nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
     extraInstallCommands = (old.extraInstallCommands or "") + ''
       wrapProgram $out/bin/netcatty --add-flags --password-store=gnome-libsecret

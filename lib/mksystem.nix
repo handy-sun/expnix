@@ -22,6 +22,10 @@ let
   ## Derived from the target platform instead of being passed in by callers.
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  ## Shared vars plus the resolved target platform, exposed to modules as `myvars`.
+  hostVars = myvars // {
+    archSystem = pkgs.stdenv.hostPlatform.system;
+  };
   isHmSingle = false;
   homeDir =
     if "${username}" == "root" then
@@ -43,11 +47,11 @@ let
     if isDarwin then inputs.sops-nix.darwinModules.sops else inputs.sops-nix.nixosModules.sops;
   ## Expose some extra arguments so that our modules can parameterize better based on these values.
   specialArgs = {
+    myvars = hostVars;
     inherit
       inputs
       hostName
       username
-      myvars
       myutils
       networkingVars
       homeDir

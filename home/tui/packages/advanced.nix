@@ -13,6 +13,7 @@
     with pkgs;
     lib.optionals profileLevel.tuiAdvanced [
       ## languages
+      go
       perl
       php
       pnpm
@@ -34,6 +35,7 @@
       unrar-free
 
       ## disk / files
+      fzf
       gdu
       miniserve
       rclone

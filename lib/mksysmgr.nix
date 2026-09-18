@@ -22,15 +22,19 @@ let
   ## Derived from the target platform (system-manager only targets Linux here).
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  ## Shared vars plus the resolved target platform, exposed to modules as `myvars`.
+  hostVars = myvars // {
+    archSystem = pkgs.stdenv.hostPlatform.system;
+  };
   isHmSingle = true;
   homeDir = if "${username}" == "root" then "/root" else "/home/${username}";
   isHeLinux = !isDarwin && !isWSL;
   specialArgs = {
+    myvars = hostVars;
     inherit
       inputs
       hostName
       username
-      myvars
       myutils
       networkingVars
       homeDir

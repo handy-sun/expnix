@@ -4,11 +4,11 @@
 {
   pkgs,
   inputs,
+  myvars,
   isDarwin,
   isLinux,
   ...
 }:
-
 {
   home.packages =
     with pkgs;
@@ -26,7 +26,6 @@
       tmux
       zoxide
       trash-cli
-      fzf
       fd
       ripgrep
       bat
@@ -76,18 +75,17 @@
       speedtest-cli
 
       ## git / forge
-      inputs.githand.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.githand.packages.${myvars.archSystem}.default
       git-credential-manager
       git-filter-repo
       gh
       tea
 
       ## core languages
-      go
       python3
+      uv # replace for pip
       nodejs # provides node, npm
       lua5_4
-      uv # replace for pip
 
       ## editor tooling
       ctags
@@ -117,6 +115,7 @@
       age
       sops
       ssh-to-age
+      w3m-nographics
     ]
     ++ lib.optionals isLinux [
       strace # a diagnostic, debugging and instructional userspace utility for Linux.

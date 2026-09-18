@@ -27,6 +27,10 @@ let
   ## Derived from the target platform instead of being passed in by callers.
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  ## Shared vars plus the resolved target platform, exposed to modules as `myvars`.
+  hostVars = myvars // {
+    archSystem = pkgs.stdenv.hostPlatform.system;
+  };
   isHmSingle = true;
   homeDir =
     if "${username}" == "root" then
@@ -38,10 +42,10 @@ let
   ## True if Linux, which is a heuristic for not being Darwin.
   isHeLinux = !isDarwin && !isWSL;
   extraSpecialArgs = {
+    myvars = hostVars;
     inherit
       inputs
       username
-      myvars
       myutils
       networkingVars
       homeDir

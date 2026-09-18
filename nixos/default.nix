@@ -45,6 +45,7 @@ in
         ## system tools
         sysstat
         lm_sensors # for `sensors` command
+        e2fsprogs # chattr / lsattr, ext filesystem tools
 
         ## networking tools
         ethtool

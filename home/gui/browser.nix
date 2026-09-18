@@ -2,12 +2,13 @@
   lib,
   config,
   pkgs,
+  myvars,
   myutils,
   profileLevel,
   ...
 }:
 let
-  enableHelium = profileLevel.guiHeavy && pkgs.stdenv.hostPlatform.system == "x86_64-linux";
+  enableHelium = profileLevel.guiHeavy && myvars.archSystem == "x86_64-linux";
   helium = pkgs.callPackage (myutils.relativeToRoot "packages/helium.nix") { };
 in
 lib.mkIf profileLevel.guiBase {

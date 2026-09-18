@@ -1,4 +1,7 @@
 rec {
+  ## NOTE: `archSystem` (e.g. "x86_64-linux") is not defined here — the target platform
+  ## is only known per host, so lib/mk{system,home,sysmgr}.nix merge it in before handing
+  ## myvars to the modules.
   user = "qi";
   group = "users";
   langEnv = "zh_CN.UTF-8";
