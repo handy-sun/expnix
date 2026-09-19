@@ -30,7 +30,9 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    noctalia-shell
+    # noctalia-shell
+    noctalia # v5 rewrite (C++/Luau), trial alongside frozen v4 noctalia-shell
+    playerctl # MPRIS polling for the v5 community lyrics plugin
     lrc_tty
     gnome-themes-extra # Adwaita theme
     glib # gsettings
