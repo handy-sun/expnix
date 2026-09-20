@@ -4,12 +4,12 @@
 
 ## 管理的机器
 
-| 名称 | 类型 | 系统 | 说明 | 闭包大小
+| 名称 | 类型 | 系统 | 说明 | 闭包大小 |
 | --- | --- | --- | --- | --- |
 | `orbvmnix` | NixOS | `aarch64-linux` | OrbStack / 虚拟化 Linux 环境，启用 `tuiOptional` | / |
-| `reinsvps` | NixOS | `x86_64-linux` | VPS / 服务器环境 | 11.9GiB |
+| `reinsvps` | NixOS | `x86_64-linux` | VPS / 服务器环境 | 10GiB |
 | `nixwsl` | NixOS-WSL | `x86_64-linux` | WSL2 环境，启用 `tuiOptional` | / |
-| `buking` | NixOS | `x86_64-linux` | 物理 Linux 桌面环境，启用完整 GUI profile | 39.2GiB
+| `buking` | NixOS | `x86_64-linux` | 物理 Linux 桌面环境，启用完整 GUI profile | 39GiB |
 | `handyMini` | nix-darwin | `aarch64-darwin` | macOS 环境，启用 `tuiOptional` 和 `guiBase` | - |
 | `qi` | Home Manager | `x86_64-linux` | standalone Home Manager 配置 | - |
 | `debnsm` | system-manager | `x86_64-linux` | 非 NixOS Linux 主机配置，启用 system-manager 和 Home Manager | - |
@@ -21,8 +21,16 @@
 首次进入开发 shell（需要启用 flakes 和 nix-command）：
 
 ```bash
-nix develop --experimental-features "nix-command flakes"
+## 等同于 nix develop --experimental-features "nix-command flakes"
+./scripts/devshell-default.sh
 ```
+
+**如果是非NixOS系统，要进入system-manager的开发环境**
+
+```bash
+./scripts/devshell-sysmgr.sh
+```
+
 
 开发 shell 会通过 `NIX_CONFIG` 为 shell 内的命令启用 `nix-command` 和 `flakes`，并配置国内 substituter。若本机尚未允许 flake，首次运行时保留上面的 `--experimental-features` 参数即可。
 

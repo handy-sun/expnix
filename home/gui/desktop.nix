@@ -14,7 +14,6 @@ let
   niriUserConfig = pkgs.writeText "niri-user-config.kdl" ''
     include "${pkgs.niri.src}/resources/default-config.kdl"
     include "extra.kdl"
-    include "noctalia.kdl"
 
     ${lib.optionalString (hostName == "buking") ''
       // buking's screen
@@ -73,6 +72,5 @@ lib.mkIf (profileLevel.guiBase && isLinux) {
   xdg.configFile = {
     "niri/config.kdl".source = niriUserConfig;
     "niri/extra.kdl".source = niriCfgDir + "/extra.kdl";
-    "niri/noctalia.kdl".source = niriCfgDir + "/noctalia.kdl";
   };
 }
