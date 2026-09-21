@@ -1,12 +1,16 @@
 ## Icon theme + GTK plumbing, previously hand-maintained in ~/.icons and settings.ini.
 {
+  config,
   lib,
+  pkgs,
   profileLevel,
   isLinux,
   ...
 }:
 let
   iconThemeName = "hicolor-plus";
+  kdedConfig = config.xdg.configHome + "/kded6rc";
+  kwriteconfig = lib.getExe' pkgs.kdePackages.kconfig "kwriteconfig6";
 in
 lib.mkIf (profileLevel.guiBase && isLinux) {
   gtk = {
@@ -35,5 +39,15 @@ lib.mkIf (profileLevel.guiBase && isLinux) {
     Name=${iconThemeName}
     Comment=hicolor first, Papirus fills missing, breeze-dark last resort
     Inherits=hicolor,Papirus,breeze-dark
+  '';
+
+  ## kde-gtk-config is a plasma6 required package, so excludePackages (which only
+  ## filters optional ones) cannot drop it. Its kded6 module rewrites
+  ## gtk-{3,4}.0/{colors,gtk}.css whenever a KDE app activates kded6 under niri;
+  ## the GFileMonitor signal that follows segfaults GTK/GIO clients on a stale
+  ## closure. hm owns the GTK config here, so keep the syncer off. Reapplied each
+  ## activation because kded6 rewrites kded6rc itself.
+  home.activation.disableKdedGtkConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    $DRY_RUN_CMD ${kwriteconfig} --file ${lib.escapeShellArg kdedConfig} --group Module-gtkconfig --key autoload false
   '';
 }
