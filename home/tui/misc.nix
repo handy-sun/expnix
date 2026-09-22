@@ -4,7 +4,7 @@
   ...
 }:
 let
-  atticdServerName = "tc4600-nsm";
+  atticdServerName = "fngo-nsm";
 in
 {
   programs = {
@@ -52,8 +52,8 @@ in
       settings = {
         default-server = atticdServerName;
         servers.${atticdServerName} = {
-          endpoint = "http://tc4600:8280";
-          token-file = "/etc/atticd-client.token";
+          endpoint = "http://fngo:8480";
+          token-file = "/etc/atticd-client.token"; # WARN: not producible
         };
       };
     };

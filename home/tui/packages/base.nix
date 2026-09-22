@@ -76,6 +76,7 @@
 
       ## git / forge
       inputs.githand.packages.${myvars.archSystem}.default
+      tig
       git-credential-manager
       git-filter-repo
       gh
