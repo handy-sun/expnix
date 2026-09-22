@@ -34,7 +34,7 @@ lib.mkIf (profileLevel.guiBase && isLinux) {
       __include: rime_ice_suggestion:/
       schema_list:
         - schema: rime_ice
-      menu/page_size: 9
+      menu/page_size: 7
       selector/bindings:
         Up: previous_page
         Down: next_page

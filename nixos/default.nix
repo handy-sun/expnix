@@ -20,6 +20,7 @@ in
   ]
   ++ lib.map myutils.relativeToRoot [
     "modules/fcitx5-candlelight-macos-dark"
+    "modules/fcitx5-mellow-youlan-dark"
   ]
   ++ (myutils.scanPaths ./.);
 

@@ -48,7 +48,8 @@ lib.mkIf profileLevel.guiBase {
         ## Models downloaded on first run by `vocotype-settings` into the user cache.
         vocotype-fcitx5
       ];
-      candlelightMacosDark.enable = true;
+      candlelightMacosDark.enable = false;
+      mellowYoulanDark.enable = true;
       settings.addons.classicui = {
         globalSection = {
           Font = "Noto Sans CJK SC 16";
