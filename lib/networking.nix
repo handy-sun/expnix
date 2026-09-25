@@ -172,8 +172,6 @@ let
           ipv4 = "10.144.2.8";
         };
       };
-      preferredAddress = "lan";
-      useCanonicalName = true;
       userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXv7vJ9dWH6CY/xKzB6qjpWCcTlhxI17BHn8/g+zI9x qi@handyMini";
       sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuKM3DmTBChkXQOokBv1w8vGr4tsU/bQ1BYqGMyLF+k";
     };
