@@ -39,6 +39,8 @@ lib.mkIf (profileLevel.guiBase && isLinux) {
     ## The breeze vars are inert under Adwaita, kept for a switch back to Breeze.
     gtk3.extraCss = builtins.readFile (inputs.my-dotfiles + "/.config/gtk-3.0/colors.css");
     gtk4.extraCss = builtins.readFile (inputs.my-dotfiles + "/.config/gtk-4.0/colors.css");
+
+    gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
   };
 
   ## quickshell / portals resolve the icon theme through dconf, not settings.ini.
