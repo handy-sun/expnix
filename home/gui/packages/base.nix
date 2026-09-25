@@ -58,7 +58,6 @@ lib.mkIf profileLevel.guiBase {
       peazip
       appimage-run
       telegram-desktop
-      motrix-next
       rustdesk-flutter
       markShot
       netcattyPkg
