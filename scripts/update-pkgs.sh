@@ -100,7 +100,7 @@ pkg_assets() {
 
 # ------------------------------------------------------------ upstream lookups
 
-gh_json() {
+gh_json_once() {
   if command -v gh > /dev/null 2>&1; then
     # Authenticated, so not subject to the 60 requests/hour anonymous limit.
     gh api "$1"
@@ -109,13 +109,31 @@ gh_json() {
   fi
 }
 
+# Dropped TLS connections are common behind the local proxy; nix retries its
+# own downloads, so do the same for API calls. Buffer the body so a failed
+# attempt never feeds partial JSON downstream.
+gh_json() {
+  local attempt out
+  for attempt in 1 2 3; do
+    if out=$(gh_json_once "$1"); then
+      printf '%s\n' "$out"
+      return 0
+    fi
+    info "  GitHub API request failed (attempt $attempt/3), retrying"
+    sleep 2
+  done
+  return 1
+}
+
 gh_latest_tag() {
   gh_json "repos/$1/releases/latest" | jq -er '.tag_name' | sed 's/^v//'
 }
 
+# Skip rolling builds such as honk's "debug" tag, which has no versioned assets.
 gh_newest_tag() {
   gh_json "repos/$1/releases?per_page=20" \
-    | jq -er '[.[] | select(.draft | not)][0].tag_name' | sed 's/^v//'
+    | jq -er '[.[] | select((.draft | not) and (.tag_name | test("^v[0-9]")))][0].tag_name' \
+    | sed 's/^v//'
 }
 
 # The CDN exposes no manifest and its bucket listing is forbidden, but the
