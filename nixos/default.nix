@@ -56,6 +56,7 @@ in
         iptables
         nftables
         traceroute
+        conntrack-tools
       ]);
   };
 
