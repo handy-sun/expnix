@@ -63,16 +63,15 @@
       acme-sh
       frp
 
-      ## network basics
+      ## networking tools
       dnsutils
       ipcalc
-
-      ## networking tools
       pv
       nexttrace
       bandwhich
       webdav
       speedtest-cli
+      tshark
 
       ## git / forge
       inputs.githand.packages.${myvars.archSystem}.default

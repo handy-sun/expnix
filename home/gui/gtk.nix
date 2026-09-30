@@ -40,7 +40,10 @@ lib.mkIf (profileLevel.guiBase && isLinux) {
     gtk3.extraCss = builtins.readFile (inputs.my-dotfiles + "/.config/gtk-3.0/colors.css");
     gtk4.extraCss = builtins.readFile (inputs.my-dotfiles + "/.config/gtk-4.0/colors.css");
 
-    gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+    ## Nothing consumes GTK2 anymore:  Disabling stops HM from
+    ## exporting GTK2_RC_FILES, which plasma krdb honors when rewriting rc
+    ## files on cursor/color applies.
+    gtk2.enable = false;
   };
 
   ## quickshell / portals resolve the icon theme through dconf, not settings.ini.
