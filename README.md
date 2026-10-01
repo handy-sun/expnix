@@ -8,6 +8,7 @@
 | --- | --- | --- | --- | --- |
 | `orbvmnix` | NixOS | `aarch64-linux` | OrbStack / 虚拟化 Linux 环境，启用 `tuiOptional` | / |
 | `reinsvps` | NixOS | `x86_64-linux` | VPS / 服务器环境 | 10GiB |
+| `txsh011` | NixOS | `x86_64-linux` | VPS / 服务器环境，只启用 `tuiBase` | 7.5GiB |
 | `nixwsl` | NixOS-WSL | `x86_64-linux` | WSL2 环境，启用 `tuiOptional` | / |
 | `buking` | NixOS | `x86_64-linux` | 物理 Linux 桌面环境，启用完整 GUI profile | 39GiB |
 | `handyMini` | nix-darwin | `aarch64-darwin` | macOS 环境，启用 `tuiOptional` 和 `guiBase` | - |

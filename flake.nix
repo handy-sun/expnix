@@ -189,6 +189,13 @@
           system = "x86_64-linux";
         };
 
+        "txsh011" = mkSystem "txsh011" {
+          system = "x86_64-linux";
+          profileLevelOver = {
+            tuiAdvanced = false;
+          };
+        };
+
         "nixwsl" = mkSystem "nixwsl" {
           system = "x86_64-linux";
           profileLevelOver = {

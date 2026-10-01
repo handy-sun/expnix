@@ -201,6 +201,14 @@ let
       };
     };
 
+    txsh011 = {
+      user = username;
+      port = 23512;
+      addresses.lan = {
+        ipv4 = myvars.txsh011Network.ipv4Address;
+      };
+    };
+
     nixwsl = {
       user = username;
       userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4enUIMLYr8hinZIAy8NM7uqtwAJO8Ts1H/pB0h9b+S qi@nixwsl";

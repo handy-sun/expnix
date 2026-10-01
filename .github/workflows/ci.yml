@@ -56,6 +56,9 @@ jobs:
           - name: reinsvps (x86_64-linux)
             os: ubuntu-latest
             attr: nixosConfigurations.reinsvps.config.system.build.toplevel
+          - name: txsh011 (x86_64-linux)
+            os: ubuntu-latest
+            attr: nixosConfigurations.txsh011.config.system.build.toplevel
           - name: handyMini (aarch64-darwin)
             os: macos-14
             attr: darwinConfigurations.handyMini.config.system.build.toplevel

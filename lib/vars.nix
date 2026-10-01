@@ -69,6 +69,10 @@ rec {
     ipv4Address = "103.149.93.96";
   };
 
+  txsh011Network = {
+    ipv4Address = "43.142.23.69";
+  };
+
   ## Fonts shared across NixOS and darwin.
   ## Attribute name strings — resolved to packages at call sites.
   fontsPkgs = [
