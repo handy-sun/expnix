@@ -57,5 +57,26 @@ in
         };
       };
     };
+
+    ## broot: tree explorer. programs.broot ships broot's own default template
+    ## (special_paths etc. stay active) and merges `settings` into conf.hjson.
+    broot = {
+      enable = true;
+      settings = {
+        ## Three panels: tree | tree | preview. A new panel's type follows the
+        ## selection when ctrl-right opens it: directory -> tree, file -> preview.
+        max_panels_count = 3;
+        ## Pin the middle (0-indexed 1) tree column; instructions for absent
+        ## panels are inert, so single-panel sessions keep full width.
+        layout_instructions = [
+          {
+            panel = 1;
+            width = 55;
+          }
+        ];
+        ## Carried over from the pre-HM hand-generated config.
+        enable_kitty_keyboard = false;
+      };
+    };
   };
 }

@@ -30,7 +30,6 @@
       ripgrep
       bat
       eza
-      broot
 
       ## JSON / YAML
       jq
