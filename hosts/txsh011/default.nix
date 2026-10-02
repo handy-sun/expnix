@@ -101,7 +101,11 @@ in
     settings = {
       PermitRootLogin = "yes";
       PubkeyAuthentication = "yes";
-      MaxSessions = "20";
+      ## Key-only SSH: no password or keyboard-interactive auth for any
+      ## account (qi included). qi's keys come from the central mesh in
+      ## lib/networking.nix (userAuthorizedKeysFor), so no lockout.
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
       TCPKeepAlive = "yes";
     };
   };
