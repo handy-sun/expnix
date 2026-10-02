@@ -137,7 +137,7 @@ in
   };
 
   sops.secrets."cloudflare-dns-token" = {
-    sopsFile = myutils.relativeToRoot "secrets/hosts/${hostName}/cloudflare.yaml";
+    sopsFile = myutils.relativeToRoot "secrets/cloudflare.yaml";
     key = "token";
   };
 

@@ -22,15 +22,6 @@
     search orb.local
   '';
 
-  # services.openssh = {
-  #   enable = true;
-  #   openFirewall = true;
-  #   settings = {
-  #     PasswordAuthentication = false;
-  #     PermitRootLogin = "no";
-  #   };
-  # };
-
   ## Mask mounts that are not available in isolated OrbStack containers
   systemd.units."sys-kernel-debug.mount".enable = false;
 }

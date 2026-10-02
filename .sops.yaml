@@ -1,7 +1,24 @@
 creation_rules:
+  ## buking: the long-lived key, first generated as the personal key
+  ## (~/.config/sops/age/keys.txt) and later deployed to the host.
+  - path_regex: secrets/hosts/buking/.*$
+    age: >-
+      age1jf4luvktqylgdyrf46w3hk78966mg8p4hag3w82zzwspgaplvvzqludadh
+  ## reinsvps' own key, plus the personal key as a recovery recipient so the
+  ## secrets stay decryptable if the VPS is lost.
+  - path_regex: secrets/hosts/reinsvps/.*$
+    age: >-
+      age1lcyeqv3zn9mhxcqxtatudkhzcsgwqz9df0fezh4r02dqlndtteys5rwmsm,
+      age1jf4luvktqylgdyrf46w3hk78966mg8p4hag3w82zzwspgaplvvzqludadh
+  ## txsh011 carries its own key.
+  - path_regex: secrets/hosts/txsh011/.*$
+    age: >-
+      age1kavcjehdy7nvlvnx8yqt8hl6nx8n9v3evatezw54vgqfyjpla39s225dxl
+  ## Root-level shared secrets (beszel-agent.env, mhm-subs, sb-subs): the
+  ## buking key, txsh011, and the new reinsvps key (beszel-agent.env is
+  ## consumed by both buking and reinsvps).
   - path_regex: secrets/.*$
     age: >-
       age1jf4luvktqylgdyrf46w3hk78966mg8p4hag3w82zzwspgaplvvzqludadh,
-      age16vyrjx6s6yhqcsj08lhxa3ykf0f7jlsyrlzxk0w640c47zgcn9csu8w2f8,
-      age15je9u33w9g0m5vw5w4v02frrlr87dye9hcz54l3jl7uv486jseusu3jg55,
-      age1f5djyw7p24t4qvfghz00lrh83f89d5lh62jl07j0jlh6j8pqse2qs4g47f
+      age1kavcjehdy7nvlvnx8yqt8hl6nx8n9v3evatezw54vgqfyjpla39s225dxl,
+      age1lcyeqv3zn9mhxcqxtatudkhzcsgwqz9df0fezh4r02dqlndtteys5rwmsm

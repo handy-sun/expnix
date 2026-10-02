@@ -47,11 +47,6 @@ in
     mode = "0600";
   };
 
-  #  environment.etc."honk/honk-config.dae" = {
-  #    source = ./honk-config.dae;
-  #    mode = "0600";
-  #  };
-
   services = {
     zerotierone.enable = true;
 

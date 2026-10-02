@@ -154,14 +154,6 @@ let
 
   ## All hosts ssh keys should be added to known_hosts to prevent ssh asking for confirmation when connecting for the first time, which is especially important for hosts with dynamic IPs. However, we still want to have github.com in known_hosts to prevent MITM attack, so we add it manually here.
   hostDefinitions = {
-    orbvmnix = {
-      user = username;
-      addresses.orb = {
-        hostName = "orbvmnix.orb.local";
-      };
-      userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIERWaYmUBGmyw6unmj+fOd55jkFL3o/kfAJFw2WZ/i+8 qi@orbvmnix";
-    };
-
     handy = {
       user = username;
       addresses = {
@@ -207,6 +199,7 @@ let
       addresses.lan = {
         ipv4 = myvars.txsh011Network.ipv4Address;
       };
+      userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFBKOBZv98Vv59sgkpS78DkPw2QgYJYaVCwGzpRkltW qi@txsh011";
     };
 
     nixwsl = {
