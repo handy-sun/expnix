@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# dotzsh_tide is a fish function, not a standalone binary — must invoke via fish
-fish -c 'dotzsh_tide lean2 && dotzsh_tide set-vi-icon && dotzsh_tide ar private_mode shlvl proxy'
+# dotzsh_tide is a fish function, not a standalone binary — must invoke via fish.
+# Only run it when the account's login shell (from passwd, not $SHELL) is fish.
+user_shell="$(getent passwd "$(id -un)" | cut -d: -f7)"
+if [[ "${user_shell##*/}" == "fish" ]]; then
+    fish -c 'dotzsh_tide lean2 && dotzsh_tide set-vi-icon && dotzsh_tide ar private_mode shlvl proxy'
+fi
 
 mkdir -p ~/.local/share/npm-global
 mkdir -p ~/.local/bin
@@ -37,15 +41,6 @@ awk -v token="$(<"${TOKEN_TMP}")" '
     }
 ' "${NIX_CONF}" > "${NIX_CONF_TMP}"
 install -m 600 "${NIX_CONF_TMP}" "${NIX_CONF}"
-
-npm i -g @anthropic-ai/claude-code@latest
-npm i -g @openai/codex@latest
-npm i -g --ignore-scripts @earendil-works/pi-coding-agent
-npm i -g opencode-ai
-npm i -g oh-my-opencode
-curl -fsSL https://antigravity.google/cli/install.sh | bash
-
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --default-toolchain 1.94.0
 
 vim +PlugInstall +qall
 

@@ -123,8 +123,8 @@ sysmgr-top-attr host="debnsm":
 # Linux
 [linux]
 [group('nix')]
-switch:
-  nh os switch .
+switch host=`hostname`:
+  nh os switch . --hostname {{host}}
 
 [linux]
 [group('nix')]
