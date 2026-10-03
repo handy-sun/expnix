@@ -1,46 +1,87 @@
-## Only the rustdesk part of the reinsvps service set for now; frp / nginx /
-## sing-box / mtg / derper / beszel / uptime-kuma stay off until needed.
+## rustdesk plus a standalone derper (txshderp) for the tailnet; frp / nginx /
+## sing-box / mtg / beszel / uptime-kuma stay off until needed.
 {
+  config,
   myvars,
+  myutils,
   ...
 }:
+let
+  inherit (myvars) domain;
+  derpHostname = "txshderp.${domain}";
+in
 {
+  imports = [
+    (myutils.relativeToRoot "modules/tailscale-derper")
+  ];
+
+  sops.secrets."cloudflare-dns-token" = {
+    sopsFile = myutils.relativeToRoot "secrets/cloudflare.yaml";
+    key = "token";
+  };
+
+  ## Dedicated cert for the derp hostname only — no wildcard copy on this host.
+  security.acme.acceptTerms = true;
+  security.acme.certs.${derpHostname} = {
+    email = "handy-sun@foxmail.com";
+    dnsProvider = "cloudflare";
+    domain = derpHostname;
+    credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets."cloudflare-dns-token".path;
+    ## Same as reinsvps: fixed wait instead of probing authoritative NS over UDP/53.
+    extraLegoFlags = [
+      "--dns.propagation-wait"
+      "30s"
+    ];
+    reloadServices = [ "tailscale-derper.service" ];
+  };
+
+  systemd.services.tailscale-derper = {
+    after = [ "acme-${derpHostname}.service" ];
+    wants = [ "acme-${derpHostname}.service" ];
+  };
+
+  services = {
+    tailscale = {
+      derperCustom = {
+        enable = true;
+        openFirewall = true;
+        hostname = derpHostname;
+        certificateDirectory = "/var/lib/acme/${derpHostname}";
+        port = 19443;
+        stunPort = 3479;
+      };
+    };
+
+    rustdesk-server = {
+      enable = true;
+      ## auto open (TCP 21115-21119, UDP 21116)
+      openFirewall = true;
+      ## ID server (hbbs)
+      signal = {
+        enable = true;
+        extraArgs = [
+          "-k"
+          "_"
+        ];
+        relayHosts = [ myvars.txsh011Network.ipv4Address ];
+      };
+      ## relay server (hbbr)
+      relay = {
+        enable = true;
+        extraArgs = [
+          "-k"
+          "_"
+        ];
+      };
+    };
+  };
+
   systemd = {
     tmpfiles.rules = [
       "Z /var/lib/private/rustdesk 0750 rustdesk rustdesk -"
     ];
-
-    ## hbbs drops its key pair under $XDG_CONFIG_HOME, which is unset for
-    ## DynamicUser services — point it at the unit's own state directory.
     services.rustdesk-signal.serviceConfig = {
       Environment = [ "XDG_CONFIG_HOME=/var/lib/rustdesk/.config" ];
-    };
-  };
-
-  services.rustdesk-server = {
-    enable = true;
-    ## auto open (TCP 21115-21119, UDP 21116)
-    openFirewall = true;
-
-    ## ID server (hbbs)
-    signal = {
-      enable = true;
-      ## ENCRYPTED_ONLY: require encryption
-      extraArgs = [
-        "-k"
-        "_"
-      ];
-      relayHosts = [ myvars.txsh011Network.ipv4Address ];
-    };
-
-    ## relay server (hbbr)
-    relay = {
-      enable = true;
-      ## also require encryption on relay side
-      extraArgs = [
-        "-k"
-        "_"
-      ];
     };
   };
 }
