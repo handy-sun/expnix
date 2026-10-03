@@ -4,16 +4,16 @@
   fetchurl,
 }:
 let
-  version = "0.0.1.beta.81";
+  version = "0.0.1.beta.83";
   # musl assets are fully static and embed the eBPF object; digests come from the GitHub release API.
   assets = {
     x86_64-linux = {
       suffix = "x86_64-unknown-linux-musl";
-      hash = "sha256-NtqD7mRlCkkpfhDOQycUln+itwxO3wLhr2hufU78tyk=";
+      hash = "sha256-isMOmHtdDSYfBrvfSEZZyVFY7/Y/LRoJeNl+7t5vyjw=";
     };
     aarch64-linux = {
       suffix = "aarch64-unknown-linux-musl";
-      hash = "sha256-+jOkYJUl5drAtCQPffYZtR3qaHP/BnM/2a0klD13e6k=";
+      hash = "sha256-uXuRptMWI5pp7XKi6/c7ORo2jKej0Hs82LEpQLPsZLU=";
     };
   };
   asset =
