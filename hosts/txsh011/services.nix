@@ -16,9 +16,8 @@ in
   ];
 
   sops = {
-    ## Standalone age key generated on this host (age1kavc... in .sops.yaml),
-    ## same layout as reinsvps.
-    age.keyFile = "/var/lib/sops-nix/key.txt";
+    ## Standalone age key generated on this host (age1kavc... in .sops.yaml);
+    age.keyFile = "/var/lib/sops-nix/keys.txt";
 
     secrets."cloudflare-dns-token" = {
       sopsFile = myutils.relativeToRoot "secrets/cloudflare.yaml";
@@ -33,9 +32,10 @@ in
     dnsProvider = "cloudflare";
     domain = derpHostname;
     credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets."cloudflare-dns-token".path;
-    ## Same as reinsvps: fixed wait instead of probing authoritative NS over UDP/53.
+    ## Same as reinsvps: fixed wait instead of probing authoritative NS over
+    ## UDP/53. lego v5 renamed the flag --dns.propagation-wait -> .wait.
     extraLegoFlags = [
-      "--dns.propagation-wait"
+      "--dns.propagation.wait"
       "30s"
     ];
     reloadServices = [ "tailscale-derper.service" ];

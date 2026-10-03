@@ -153,8 +153,9 @@ in
     ## so use lego's fixed wait mode instead of querying authoritative servers.
     ## This gives Cloudflare's API change time to become visible before the
     ## Let's Encrypt validator queries the TXT record.
+    ## lego v5 (current nixpkgs) renamed --dns.propagation-wait -> .wait.
     extraLegoFlags = [
-      "--dns.propagation-wait"
+      "--dns.propagation.wait"
       "30s"
     ];
   };
