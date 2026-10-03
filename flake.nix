@@ -272,6 +272,7 @@
               just
               nh
               nix-output-monitor
+              tmux
               age
               sops
               ssh-to-age
@@ -289,6 +290,7 @@
               just
               nix-output-monitor
               system-manager
+              tmux
               age
               sops
               ssh-to-age
