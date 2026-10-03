@@ -15,9 +15,15 @@ in
     (myutils.relativeToRoot "modules/tailscale-derper")
   ];
 
-  sops.secrets."cloudflare-dns-token" = {
-    sopsFile = myutils.relativeToRoot "secrets/cloudflare.yaml";
-    key = "token";
+  sops = {
+    ## Standalone age key generated on this host (age1kavc... in .sops.yaml),
+    ## same layout as reinsvps.
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+
+    secrets."cloudflare-dns-token" = {
+      sopsFile = myutils.relativeToRoot "secrets/cloudflare.yaml";
+      key = "token";
+    };
   };
 
   ## Dedicated cert for the derp hostname only — no wildcard copy on this host.
