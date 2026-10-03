@@ -41,44 +41,9 @@ in
   networking.firewall = {
     enable = true;
 
-    allowedTCPPorts = [
-      80
-      443
-      8090
-      9473
-      9474
-      9475
-      9476
-      9477
-      9480
-      9483
-    ];
-
-    allowedUDPPorts = [
-      53
-      443
-      853
-      3478
-      5201
-    ];
-
-    extraCommands = ''
-      iptables -A INPUT -i lo -j ACCEPT
-      iptables -A INPUT -s 127.0.0.0/8 -j ACCEPT
-      iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
-      iptables -A INPUT -p icmp -m icmp --icmp-type 8 -m limit --limit 1/sec -j ACCEPT
-      iptables -A INPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT
-      iptables -A INPUT -p icmp -m icmp --icmp-type 3 -j ACCEPT
-      iptables -A INPUT -p icmp -m icmp --icmp-type 11 -j ACCEPT
-
-      iptables -A INPUT -p tcp --dport ${toString sshdPort} -m state --state NEW -m recent --set
-      iptables -A INPUT -p tcp --dport ${toString sshdPort} -m state --state NEW -m recent --update --seconds 5 --hitcount 3 -j DROP
-
-      ip6tables -A INPUT -i lo -j ACCEPT
-      ip6tables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
-      ip6tables -A INPUT -p icmp -j ACCEPT
-      ip6tables -A INPUT -j REJECT --reject-with icmp6-port-unreachable
-    '';
+    ## Only ports with actual listeners; service modules (sshd, derper,
+    ## rustdesk, iperf3) open their own ports.
+    allowedUDPPorts = [ 5201 ];
   };
 
   ############### Same layout as the reinstall.sh generated VPS ###############
