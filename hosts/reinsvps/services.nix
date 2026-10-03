@@ -78,13 +78,9 @@ in
 
     tmpfiles.rules = [
       "Z /var/lib/private/rustdesk 0750 rustdesk rustdesk -"
-      # "Z /var/lib/private/uptime-kuma 0750 uptime-kuma uptime-kuma -"
     ];
 
     services.rustdesk-signal.serviceConfig = {
-      # ExecStartPre =
-      #   let chown = "${pkgs.coreutils}/bin/chown -R rustdesk:rustdesk /var/lib/rustdesk";
-      #   in [ "+${chown}" ];
       Environment = [ "XDG_CONFIG_HOME=/var/lib/rustdesk/.config" ];
     };
   };

@@ -146,7 +146,7 @@ in
     group = "nginx";
     email = "handy-sun@foxmail.com";
     dnsProvider = "cloudflare";
-    domain = domain;
+    inherit domain;
     extraDomainNames = [ "*.${domain}" ];
     credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets."cloudflare-dns-token".path;
     ## This host's outbound UDP/53 to Cloudflare's authoritative NS is blocked,
