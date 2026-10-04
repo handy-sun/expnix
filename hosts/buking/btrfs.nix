@@ -20,6 +20,7 @@
         TIMELINE_LIMIT_DAILY = 7;
         TIMELINE_LIMIT_WEEKLY = 4;
         TIMELINE_LIMIT_MONTHLY = 3;
+        TIMELINE_LIMIT_YEARLY = 0;
       };
       home = {
         SUBVOLUME = "/home";
@@ -30,6 +31,7 @@
         TIMELINE_LIMIT_DAILY = 7;
         TIMELINE_LIMIT_WEEKLY = 4;
         TIMELINE_LIMIT_MONTHLY = 3;
+        TIMELINE_LIMIT_YEARLY = 0;
       };
     };
     ## @nix is skipped on purpose: the store is immutable and snapshots would
@@ -50,6 +52,7 @@
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = pkgs.writeShellScript "snapper-bootstrap" ''
+        set -e
         for d in /.snapshots /home/.snapshots; do
           if [ ! -e "$d" ]; then
             ${lib.getExe' pkgs.btrfs-progs "btrfs"} subvolume create "$d"
@@ -59,8 +62,9 @@
     };
   };
 
-  ## Silent corruption repair. fileSystems defaults to every btrfs mount point,
-  ## which would scrub the same device four times (/ /nix /home /swap share it).
+  ## Check for corruption and repair it where redundant copies are available.
+  ## Pin / explicitly: / /nix /home /swap share one device. The NixOS module
+  ## also deduplicates its default fileSystems list by device.
   services.btrfs.autoScrub = {
     enable = true;
     interval = "weekly";
