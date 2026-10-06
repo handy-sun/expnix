@@ -118,7 +118,6 @@
     ]
     ++ lib.optionals isLinux [
       strace # a diagnostic, debugging and instructional userspace utility for Linux.
-      ltrace # library call monitoring
       pahole
       iotop # io monitoring
       stun

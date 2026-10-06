@@ -84,7 +84,6 @@ systemFunc rec {
     )
     ../machines/nix-core.nix
     ../overlays/rldd.nix
-    ../overlays/mtg.nix
     ../hosts/${hostName}
     sopsModule
     home-manager.home-manager
