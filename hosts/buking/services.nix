@@ -47,6 +47,11 @@ in
     mode = "0600";
   };
 
+  environment.etc."honk/honk-config.dae" = {
+    source = inputs.my-dotfiles + "/honk-core/honk-config.dae";
+    mode = "0600";
+  };
+
   services = {
     zerotierone.enable = true;
 
@@ -57,13 +62,14 @@ in
     };
 
     dae = {
-      enable = true;
+      enable = false;
       package = inputs.daeuniverse.packages.${archSystem}.dae-unstable;
       configFile = "/etc/dae/config.dae";
     };
 
     # Trial successor of dae: same TC+dae0 datapath, units conflict so never both at once.
-    # To switch over: dae.enable -> false, this enable -> true, rebuild + switch.
+    # Switched over 2026-10-07: dae disabled above, honk-core owns the TC+dae0
+    # datapath. To roll back, flip both enables and rebuild.
     honk-core = {
       enable = true;
       configFile = "/etc/honk/honk-config.dae";
