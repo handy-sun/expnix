@@ -17,6 +17,7 @@ let
   inherit (myvars) archSystem;
   subsSopsFile = myutils.relativeToRoot "secrets/sb-subs.yaml";
   mihomoSubsSopsFile = myutils.relativeToRoot "secrets/mhm-subs.yaml";
+  honkSubsSopsFile = myutils.relativeToRoot "secrets/honk-subs.dae";
 in
 {
   disabledModules = [ "services/networking/sing-box.nix" ];
@@ -39,6 +40,12 @@ in
       format = "yaml";
       key = "main";
       restartUnits = [ "mihomo.service" ];
+    };
+
+    honk-subs = {
+      sopsFile = honkSubsSopsFile;
+      format = "binary";
+      restartUnits = [ "honk-core.service" ];
     };
   };
 
@@ -67,9 +74,6 @@ in
       configFile = "/etc/dae/config.dae";
     };
 
-    # Trial successor of dae: same TC+dae0 datapath, units conflict so never both at once.
-    # Switched over 2026-10-07: dae disabled above, honk-core owns the TC+dae0
-    # datapath. To roll back, flip both enables and rebuild.
     honk-core = {
       enable = true;
       configFile = "/etc/honk/honk-config.dae";
@@ -98,11 +102,11 @@ in
 
   systemd.services.libvirt-guests.wantedBy = lib.mkForce [ ];
 
-  systemd.services.dae = {
-    ## dae's only node is sing-box's mixed inbound (127.0.0.1:2334). Never start it before sing-box is listening: sing-box's ExecStartPre fetches
-    ## the subscription and generates config first, which used to make dae's health checks hit a dead port at boot.
-    after = [ "sing-box.service" ];
-    wants = [ "sing-box.service" ];
+  systemd.services.honk-core = {
+    ## Materialize the sops secret as a real file: sops-nix only deploys
+    ## symlinks, which honk's include confinement rejects. Fresh on every
+    ## (re)start, so restartUnits above keeps it in sync.
+    serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/install -Dm0600 ${config.sops.secrets.honk-subs.path} /etc/honk/honk-subs.dae";
   };
 
   systemd.services.npm-global-update = {
