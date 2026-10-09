@@ -417,11 +417,11 @@
     "my-dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1790043121,
-        "narHash": "sha256-yhGHryZlXEd0R8cEP6dLAeKqLFi7zoidQ0RWBoV97Ao=",
+        "lastModified": 1791526511,
+        "narHash": "sha256-s+jnCguZrfrvJNQLmDQ7YzeldS7YCCurucOlX9DozQA=",
         "owner": "handy-sun",
         "repo": "dotfiles",
-        "rev": "9a22f9cdca36e94dac382aeb7c52c115116245af",
+        "rev": "1216c1d44d7633f356ea98128159a3dfeb4b44ba",
         "type": "github"
       },
       "original": {
@@ -495,11 +495,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790432319,
-        "narHash": "sha256-AELawSn+pFPBb6nyPcqxRYDPQ2VmPL4ZfBe19b6c7n8=",
+        "lastModified": 1791511237,
+        "narHash": "sha256-d2qEjgO6mBv+PzOH8DMzJ6NTKIsMJFCC5ajIAzCh53w=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "0559996d9efde56a787a537c2113f6ee7c2ff5cc",
+        "rev": "fd4d830ce5fda2f5b3e6ec548c90935393eca676",
         "type": "github"
       },
       "original": {
