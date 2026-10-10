@@ -72,6 +72,13 @@
       flake = false;
     };
 
+    ## Rayburst (ex motrix-next): Tauri download manager. Vendored from
+    ## nixpkgs PR #566586 while it is unmerged; pin the tag, hashes inline.
+    rayburst-src = {
+      url = "github:AnInsomniacy/rayburst/v4.0.1";
+      flake = false;
+    };
+
     ## ------ my applications, configs and scripts ------
     githand = {
       url = "github:handy-sun/githand";
