@@ -71,6 +71,7 @@ rec {
 
   txsh011Network = {
     ipv4Address = "43.142.23.69";
+    ipv6Address = "2402:4e00:c032:6300:9434:a7ca:3030:0";
   };
 
   ## Fonts shared across NixOS and darwin.

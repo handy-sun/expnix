@@ -198,6 +198,7 @@ let
       port = 23512;
       addresses.lan = {
         ipv4 = myvars.txsh011Network.ipv4Address;
+        ipv6 = myvars.txsh011Network.ipv6Address;
       };
       userPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFBKOBZv98Vv59sgkpS78DkPw2QgYJYaVCwGzpRkltW qi@txsh011";
     };
