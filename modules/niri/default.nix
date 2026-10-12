@@ -11,6 +11,20 @@ let
 in
 {
   programs.niri.enable = true;
+  ## niri ships no polkit authentication agent; without one, pkexec-launched
+  ## apps (e.g. btrfs-assistant) fail silently from the launcher.
+  ## Scope it to niri so Plasma can use its own authentication agent.
+  systemd.user.services.polkit-gnome-authentication-agent = {
+    description = "polkit GNOME Authentication Agent";
+    wantedBy = [ "niri.service" ];
+    after = [ "graphical-session.target" ];
+    partOf = [ "niri.service" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+      Restart = "on-failure";
+      RestartSec = 1;
+    };
+  };
 
   environment.etc = {
     "niri/config.kdl".source = baseConfig;
