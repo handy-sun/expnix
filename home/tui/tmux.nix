@@ -93,9 +93,6 @@ in
       set -ag status-right "#{E:@catppuccin_status_date_time}"
       set -ag status-right " #{continuum_status}"
 
-      set -g prefix2 C-t
-      bind-key C-t send-prefix -2
-
       setw -g xterm-keys on
       set -g extended-keys on
       set -g extended-keys-format csi-u
