@@ -54,6 +54,7 @@ rec {
     "socat"
     "zoxide"
     "mtr"
+    "screen"
   ];
 
   ## Profile level defaults — hosts can override.

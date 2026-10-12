@@ -42,6 +42,7 @@ in
         acme-sh
         gcc
         strace # a diagnostic, debugging and instructional userspace utility for Linux.
+        parted
 
         ## system tools
         sysstat
