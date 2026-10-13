@@ -5,6 +5,7 @@ rec {
   user = "qi";
   group = "users";
   langEnv = "zh_CN.UTF-8";
+  sopsAgeKeyFile = "/var/lib/sops-nix/key.txt";
 
   ## common system environment
   commonEnv = {

@@ -82,7 +82,7 @@
   sops = {
     defaultSopsFile = myutils.relativeToRoot "secrets/beszel-agent.env";
     defaultSopsFormat = "dotenv";
-    age.keyFile = "/var/lib/sops-nix/key.txt";
+    age.keyFile = myvars.sopsAgeKeyFile;
     secrets.beszel-agent-env = {
       key = "";
       restartUnits = [ "beszel-agent.service" ];

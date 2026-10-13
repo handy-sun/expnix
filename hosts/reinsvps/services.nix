@@ -28,7 +28,7 @@ in
   };
 
   sops = {
-    age.keyFile = "/var/lib/sops-nix/key.txt";
+    age.keyFile = myvars.sopsAgeKeyFile;
 
     secrets = {
       sing-box-ss-password = {

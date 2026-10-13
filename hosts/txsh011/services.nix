@@ -17,7 +17,7 @@ in
 
   sops = {
     ## Standalone age key generated on this host (age1kavc... in .sops.yaml);
-    age.keyFile = "/var/lib/sops-nix/keys.txt";
+    age.keyFile = myvars.sopsAgeKeyFile;
 
     secrets."cloudflare-dns-token" = {
       sopsFile = myutils.relativeToRoot "secrets/cloudflare.yaml";
