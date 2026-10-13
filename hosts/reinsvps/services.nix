@@ -14,6 +14,7 @@ let
 in
 {
   imports = [
+    (myutils.relativeToRoot "overlays/mtg.nix")
     (myutils.relativeToRoot "modules/mtg")
     (myutils.relativeToRoot "modules/tailscale-derper")
   ];
