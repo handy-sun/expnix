@@ -1,6 +1,7 @@
 ## rustdesk plus a standalone derper (txshderp) for the tailnet; frp / nginx /
 ## sing-box / mtg / beszel / uptime-kuma stay off until needed.
 {
+  lib,
   config,
   myvars,
   myutils,
@@ -16,9 +17,7 @@ in
   ];
 
   sops = {
-    ## Standalone age key generated on this host (age1kavc... in .sops.yaml);
     age.keyFile = myvars.sopsAgeKeyFile;
-
     secrets."cloudflare-dns-token" = {
       sopsFile = myutils.relativeToRoot "secrets/cloudflare.yaml";
       key = "token";
@@ -80,6 +79,8 @@ in
         ];
       };
     };
+
+    iperf3.enable = lib.mkForce false;
   };
 
   systemd = {

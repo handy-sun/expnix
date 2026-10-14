@@ -65,26 +65,21 @@ in
   ## Fresh host: pin to the release it gets installed with, not reinsvps' 26.05.
   system.stateVersion = "26.11";
   ################ custom ################
-  networking.firewall = {
-    enable = true;
-
-    ## Only ports with actual listeners; service modules (sshd, derper,
-    ## rustdesk, iperf3) open their own ports.
-    allowedUDPPorts = [ 5201 ];
-  };
-
-  ############### Same layout as the reinstall.sh generated VPS ###############
   boot.loader.grub.device = "/dev/vda";
+  boot.kernelParams = [
+    "console=ttyS0,115200n8"
+    "console=tty0"
+  ];
   swapDevices = [
     {
       device = "/swapfile";
       size = 1024;
     }
   ];
-  boot.kernelParams = [
-    "console=ttyS0,115200n8"
-    "console=tty0"
-  ];
+
+  networking.firewall = {
+    enable = true;
+  };
 
   services.openssh = {
     enable = true;
