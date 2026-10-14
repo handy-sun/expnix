@@ -1,5 +1,4 @@
-## rustdesk plus a standalone derper (txshderp) for the tailnet; frp / nginx /
-## sing-box / mtg / beszel / uptime-kuma stay off until needed.
+## rustdesk plus a standalone derper (txshderp) for the tailnet; beszel agent reports to the reinsvps hub
 {
   lib,
   config,
@@ -19,9 +18,17 @@ in
 
   sops = {
     age.keyFile = myvars.sopsAgeKeyFile;
-    secrets."cloudflare-dns-token" = {
-      sopsFile = myutils.relativeToRoot "secrets/cloudflare.yaml";
-      key = "token";
+    secrets = {
+      cloudflare-dns-token = {
+        sopsFile = myutils.relativeToRoot "secrets/cloudflare.yaml";
+        key = "token";
+      };
+      beszel-agent-env = {
+        sopsFile = myutils.relativeToRoot "secrets/beszel-agent.env";
+        format = "dotenv";
+        key = "";
+        restartUnits = [ "beszel-agent.service" ];
+      };
     };
   };
 
@@ -31,7 +38,7 @@ in
     email = "handy-sun@foxmail.com";
     dnsProvider = "cloudflare";
     domain = derpHostname;
-    credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets."cloudflare-dns-token".path;
+    credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets.cloudflare-dns-token.path;
     ## Same as reinsvps: fixed wait instead of probing authoritative NS over
     ## UDP/53. lego v5 renamed the flag --dns.propagation-wait -> .wait.
     extraLegoFlags = [
@@ -47,6 +54,12 @@ in
   };
 
   services = {
+    beszel.agent = {
+      enable = true;
+      openFirewall = true;
+      environmentFile = config.sops.secrets.beszel-agent-env.path;
+    };
+
     tailscale = {
       derperCustom = {
         enable = true;
