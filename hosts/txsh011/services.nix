@@ -10,6 +10,7 @@
 let
   inherit (myvars) domain;
   derpHostname = "txshderp.${domain}";
+  rustdeskHostname = "rsdesk.${domain}";
 in
 {
   imports = [
@@ -68,7 +69,7 @@ in
           "-k"
           "_"
         ];
-        relayHosts = [ myvars.txsh011Network.ipv4Address ];
+        relayHosts = [ rustdeskHostname ];
       };
       ## relay server (hbbr)
       relay = {
