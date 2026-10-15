@@ -35,7 +35,7 @@ lib.mkIf profileLevel.guiBase {
       "log"
       # tooling
       "bookmark" # alefragnani.bookmarks
-      "dependi" # fill-labs.dependi
+      "depsy-lsp" # dependi renamed to depsy (fill-labs.dependi)
       "rainbow-csv" # mechatroner.rainbow-csv + janisdd.vscode-edit-csv
       "git-firefly"
       "github-actions" # github.vscode-github-actions

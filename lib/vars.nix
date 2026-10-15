@@ -56,6 +56,7 @@ rec {
     "zoxide"
     "mtr"
     "screen"
+    "minicom"
   ];
 
   ## Profile level defaults — hosts can override.
