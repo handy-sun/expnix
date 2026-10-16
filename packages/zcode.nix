@@ -8,10 +8,10 @@
 
 let
   pname = "zcode";
-  version = "3.14.5";
+  version = "3.15.3";
   src = fetchurl {
     url = "https://cdn-zcode.z.ai/zcode/electron/releases/${version}/linux-x64/ZCode-${version}-linux-x64.AppImage";
-    hash = "sha256-XPpIHB6Y7vhcTvPgVjnesUTeaMieGoRbXPGRJvSe7Qc=";
+    hash = "sha256-Ltx5ZQ/P9yNYZwr0/7+/fZebqVR2YRqArRFR1XfpD+M=";
   };
   appimageContents = appimageTools.extract {
     inherit pname version src;
