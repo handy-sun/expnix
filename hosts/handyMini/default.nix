@@ -4,12 +4,10 @@
   username,
   myutils,
   homeDir,
-  inputs,
   ...
 }:
 let
   beszelAgentEnv = homeDir + "/.config/beszel/beszel-agent.env";
-  webdavConf = inputs.my-dotfiles + "/.config/webdav/config.yml";
 in
 {
   imports = (
@@ -50,16 +48,5 @@ in
       StandardErrorPath = "/tmp/beszel-agent.log";
       StandardOutPath = "/tmp/beszel-agent.log";
     };
-  };
-
-  launchd.user.agents.webdav.serviceConfig = {
-    Label = "nixdwn.${username}.webdav";
-    ProgramArguments = [
-      "${lib.getExe pkgs.webdav}"
-      "-c"
-      "${webdavConf}"
-    ];
-    KeepAlive = true;
-    RunAtLoad = true;
   };
 }
