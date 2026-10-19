@@ -94,7 +94,8 @@ in
       set -ag status-right " #{continuum_status}"
 
       setw -g xterm-keys on
-      set -g extended-keys on
+      # Preserve Shift+Enter even when the application does not request extended keys.
+      set -g extended-keys always
       set -g extended-keys-format csi-u
       set -g set-clipboard external
 
