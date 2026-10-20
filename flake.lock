@@ -495,11 +495,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792338173,
-        "narHash": "sha256-/1J7NhSqZUffmJE3iOVJw9fV3SiMiHZSI1NP+W4Tr88=",
+        "lastModified": 1792488446,
+        "narHash": "sha256-74YAP3K1Ka3Frdq1JujJ4HCZ1WRpCEWGg6EMR/jp6x4=",
         "owner": "handy-sun",
         "repo": "nvimdots",
-        "rev": "33688b78d8cb2e78042781846f7e93cd950a993b",
+        "rev": "017c8a06cb8fd1c4fe7511ca39ef5e92dc0e90e9",
         "type": "github"
       },
       "original": {
