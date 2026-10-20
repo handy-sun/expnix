@@ -217,7 +217,6 @@ lib.mkIf profileLevel.guiBase {
       vsync = true;
 
       font = {
-        size = font_size;
         normal = [
           { family = myvars.fontFamily; }
           {
