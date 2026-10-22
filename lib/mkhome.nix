@@ -25,6 +25,9 @@ let
       (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays
       ++ (import (myutils.relativeToRoot "overlays/php-security.nix") {
         inherit (nixpkgs) lib;
+      }).nixpkgs.overlays
+      ++ (import (myutils.relativeToRoot "overlays/nodejs-security.nix") {
+        inherit (nixpkgs) lib;
       }).nixpkgs.overlays;
   };
   profileLevel = myvars.profileLevel // profileLevelOver;
