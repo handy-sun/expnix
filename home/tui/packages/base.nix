@@ -83,7 +83,7 @@
       ## core languages
       python3
       uv # replace for pip
-      nodejs # provides node, npm
+      nodejs_latest # provides node, npm
       lua5_4
 
       ## editor tooling
@@ -115,6 +115,7 @@
       sops
       ssh-to-age
       w3m-nographics
+      enca
     ]
     ++ lib.optionals isLinux [
       strace # a diagnostic, debugging and instructional userspace utility for Linux.

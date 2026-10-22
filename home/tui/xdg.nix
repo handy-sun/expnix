@@ -30,7 +30,6 @@ in
       "helix/init.scm".source = "${helixConfig}/init.scm";
       "helix/helix.scm".source = "${helixConfig}/helix.scm";
       "helix/languages.toml".source = "${helixConfig}/languages.toml";
-      # "helix/lsp-ai.json".source = "${helixConfig}/lsp-ai.json";
       ## directories
       "helix/actions".source = "${helixConfig}/actions";
       "helix/runtime".source = "${helixConfig}/runtime";

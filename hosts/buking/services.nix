@@ -63,7 +63,8 @@ in
     zerotierone.enable = true;
 
     sunshine = {
-      enable = false;
+      enable = true;
+      autoStart = false;
       openFirewall = true;
       capSysAdmin = true; # required for KMS/DRM screen capture on Wayland (niri)
     };
