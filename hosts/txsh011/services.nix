@@ -17,6 +17,7 @@ in
 {
   imports = [
     (myutils.relativeToRoot "modules/tailscale-derper")
+    (myutils.relativeToRoot "modules/honk")
   ];
 
   sops = {
