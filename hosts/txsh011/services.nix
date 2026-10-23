@@ -1,7 +1,9 @@
 ## rustdesk plus a standalone derper (txshderp) for the tailnet; beszel agent reports to the reinsvps hub
 {
   lib,
+  pkgs,
   config,
+  inputs,
   myvars,
   myutils,
   ...
@@ -10,6 +12,7 @@ let
   inherit (myvars) domain;
   derpHostname = "txshderp.${domain}";
   rustdeskHostname = "rsdesk.${domain}";
+  honkSubsSopsFile = myutils.relativeToRoot "secrets/honk-subs.dae";
 in
 {
   imports = [
@@ -29,6 +32,11 @@ in
         key = "";
         restartUnits = [ "beszel-agent.service" ];
       };
+      honk-subs = {
+        sopsFile = honkSubsSopsFile;
+        format = "binary";
+        restartUnits = [ "honk-core.service" ];
+      };
     };
   };
 
@@ -46,6 +54,11 @@ in
       "30s"
     ];
     reloadServices = [ "tailscale-derper.service" ];
+  };
+
+  environment.etc."honk/honk-config.dae" = {
+    source = inputs.my-dotfiles + "/honk-core/honk-config.dae";
+    mode = "0600";
   };
 
   systemd.services.tailscale-derper = {
@@ -69,6 +82,11 @@ in
         port = 19443;
         stunPort = 3479;
       };
+    };
+
+    honk-core = {
+      enable = true;
+      configFile = "/etc/honk/honk-config.dae";
     };
 
     rustdesk-server = {
@@ -103,6 +121,9 @@ in
     ];
     services.rustdesk-signal.serviceConfig = {
       Environment = [ "XDG_CONFIG_HOME=/var/lib/rustdesk/.config" ];
+    };
+    services.honk-core = {
+      serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/install -Dm0600 ${config.sops.secrets.honk-subs.path} /etc/honk/honk-subs.dae";
     };
   };
 }
