@@ -2,13 +2,14 @@
   config,
   lib,
   pkgs,
+  hostName,
   myvars,
   myutils,
   ...
 }:
 let
   mountPoint = "/mnt/opls";
-  openlistSecrets = myutils.relativeToRoot "secrets/hosts/buking/openlist.yaml";
+  openlistSecrets = myutils.relativeToRoot "secrets/hosts/${hostName}/openlist.yaml";
   rcloneConfig = config.sops.templates."rclone-openlist.conf".path;
 in
 {
