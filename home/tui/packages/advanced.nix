@@ -18,11 +18,6 @@
       php
       pnpm
 
-      ## LSP / dev tools
-      tree-sitter # otherwise nvim complains that the binary 'tree-sitter' is not found
-      just-lsp
-      lua-language-server
-
       ## downloads / transfers
       aria2 # A lightweight multi-protocol & multi-source command-line download utility
       axel
