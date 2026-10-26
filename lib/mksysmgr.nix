@@ -50,11 +50,7 @@ in
 inputs.system-manager.lib.makeSystemConfig {
   inherit specialArgs;
 
-  overlays =
-    (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays
-    ++ (import (myutils.relativeToRoot "overlays/php-security.nix") {
-      inherit (nixpkgs) lib;
-    }).nixpkgs.overlays;
+  overlays = (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays;
 
   modules = [
     ./nix-common.nix

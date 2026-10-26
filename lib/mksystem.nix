@@ -84,7 +84,6 @@ systemFunc rec {
     )
     ../machines/nix-core.nix
     ../overlays/rldd.nix
-    (myutils.relativeToRoot "overlays/php-security.nix")
     ../hosts/${hostName}
     sopsModule
     home-manager.home-manager
