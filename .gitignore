@@ -6,3 +6,6 @@ result
 .playwright-mcp/
 .deepseek
 docs/
+# .github/docs holds tracked design notes; the rule above is for scratch docs
+# directories elsewhere in the tree.
+!/.github/docs/

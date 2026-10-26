@@ -1,26 +1,25 @@
 # skills-nix
 
 管理 Agent Skills 的 child flake：来源、选择，以及 Claude、Codex、
-OpenCode/OMP、Gemini 的目标目录。部署入口仍然只有 `expnix`；本 flake 只导出
-一个 Home Manager module，根 flake 用 `path:./skills-nix` 引入它。
+OpenCode/OMP 和共享 `~/.agents/skills` 的部署目标。部署入口仍然只有 `expnix`；
+本 flake 只导出一个 Home Manager module，根 flake 用 `path:./skills-nix` 引入它。
 
 ## 结构
 
 ```text
 skills-nix/
 ├── flake.nix        # module 输出、bundle package、check、apps
-├── flake.lock       # 锁定 nixpkgs 与 agent-skills-nix
-├── catalog.nix      # sources、选中的 skills、启用的 targets
+├── flake.lock       # 锁定 nixpkgs、agent-skills-nix 与上游技能仓库
+├── catalog.nix      # sources、选中的 skills、hosts、targets
 ├── home-manager.nix # module 主体，读取 catalog.nix
-└── local/           # 本仓库维护的 skills
+└── local/           # 没有上游的技能（每个技能一个目录）
 ```
 
 ## 来源
 
 `catalog.nix` 里没有任何 source 设置 `idPrefix`：**每个技能 ID 就是一个目录名**，
-目标目录永远是 `<dest>/<name>/SKILL.md`。这样单层扫描器（DSH 读
-`~/.dsh/skills/<name>/SKILL.md`、`~/.agents/skills/<name>/SKILL.md`）也能发现全部
-技能。
+目标目录永远是 `<dest>/<name>/SKILL.md`。这样单层扫描器（dsh 读
+`~/.agents/skills/<name>/SKILL.md`）也能发现全部技能。
 
 | source | 上游 | 上游布局 | 取用方式 | 数量 |
 | --- | --- | --- | --- | --- |
@@ -29,9 +28,9 @@ skills-nix/
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 11 |
 | `local` | 本仓库 `local/` | 单层 | `enable` | 35 |
 
-上游技能不再复制进仓库：上游有就引用上游，`local/` 只放没有上游的项目专用技能，
+上游技能不复制进仓库：有上游就引用上游，`local/` 只放没有上游的项目专用技能，
 外加 5 个从 Hermes toolkit 复制出来的小工具技能。`NousResearch/hermes-agent`
-（271 MB 的 agent 运行时）没有作为输入引入，原因和取舍见 `INVENTORY.md` §2。
+（271 MB 的 agent 运行时）没有作为输入引入，取舍见 `INVENTORY.md` §2。
 
 ## 命令
 
@@ -69,7 +68,7 @@ nix run .#skills-install # 手动同步已启用的 targets
 
 全局目标使用 `symlink-tree`：激活时用 `rsync -a --delete` 从 store bundle
 同步，并在目标目录写入 `.agent-skills-managed.json` 表示归属。目标目录非空且
-没有该 marker 时，同步会拒绝而不是覆盖。
+没有该 marker 时，同步会拒绝而不是覆盖；校验在写入前完成，失败不会留下半截状态。
 
 只有 `catalog.nix` 的 `hosts`（`buking`、`handyMini`）会启用这四个目标；
 其它 hosts 和 standalone Home Manager 求值出 `enable = false`，不会创建目录。
@@ -78,6 +77,26 @@ nix run .#skills-install # 手动同步已启用的 targets
 Hermes 不是 target。`$HERMES_HOME/skills` 混合了 bundled skills、
 `.bundled_manifest`、`.archive` 和 curator 状态，`rsync --delete` 会删掉
 本 flake 并不拥有的内容。
+
+## 首次接管与回滚
+
+接管记录（2026-10-26）：备份在
+`~/backups/skills-nix-takeover-20261026-135340`（SSOT 全量副本、
+`cc-switch.db`、`settings.json`、旧的 `claude-skills.old` / `codex-skills.old`）。
+当时的做法是：旧目录整体 `mv` 进备份 → 四目标首次同步 → 把 Codex 的
+`.system` 拷回（同步按 `/.system` 排除，之后的重同步不会删）。
+
+回滚只回 Nix 侧：
+
+```bash
+git revert <skills-nix 相关提交>
+just s
+```
+
+回到 cc-switch-tui 管理（顺序不能反）：清空 `catalog.nix` 的 `hosts` 并
+`just s` → 删除当前 Nix 目标目录 → 从备份恢复旧目录 → 把 cc-switch 的
+`skills.mode` 改回 `managed` → 手动 sync 一次 → 验证 provider 与 WebDAV
+不会与 Nix 竞争。不要只改设置而保留 Nix target 激活。
 
 ## 边界
 
@@ -88,6 +107,5 @@ Hermes 不是 target。`$HERMES_HOME/skills` 混合了 bundled skills、
   继续由 `cc-switch-tui` 或 agent 自身配置管理。
 - 上游 skills 只能通过审查过的 lock 变更进入。
 
-基线数据、首次接管步骤和回滚方式见 `MIGRATION.md`；cc-switch SSOT 里 111 个
-技能的逐项分类结论见 `INVENTORY.md`；设计依据见
+来源清单见 `INVENTORY.md`；设计依据与偏差记录见
 `.github/docs/skills-nix-design.md`。

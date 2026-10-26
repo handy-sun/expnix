@@ -197,5 +197,5 @@ just skills-check     # 构建 bundle 并做 flake check
 主机（`buking`、`handyMini`）会启用目标目录，其它 hosts 与 standalone Home
 Manager 不受影响。
 
-来源清单见 `skills-nix/INVENTORY.md`，接管与回滚记录见
-`skills-nix/MIGRATION.md`，设计依据见 `.github/docs/skills-nix-design.md`。
+来源清单见 `skills-nix/INVENTORY.md`，接管与回滚说明见
+`skills-nix/README.md`，设计与偏差记录见 `.github/docs/skills-nix-design.md`。
