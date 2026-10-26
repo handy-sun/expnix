@@ -90,11 +90,6 @@ skills-list:
 skills-check:
   nix flake check ./skills-nix
 
-# Refresh skills-nix/registry/sources.lock.json
-[group('skills')]
-skills-lock:
-  cd skills-nix && nix run .#skills-sources-lock
-
 [group('nix')]
 nixinfo:
   nix-info -m

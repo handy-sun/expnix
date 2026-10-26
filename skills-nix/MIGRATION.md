@@ -198,15 +198,8 @@ just s
 ## 6. 更新流程
 
 ```bash
-# flake sources（含 agent-skills-nix 自身）
 cd skills-nix
-nix flake update
-nix flake check .
-cd ..
-
-# registry sources（第一个上游 manifest 进入后才需要）
-cd skills-nix
-nix run .#skills-sources-lock
+nix flake update   # nixpkgs、agent-skills-nix 与三个上游技能仓库
 nix flake check .
 ```
 
@@ -218,9 +211,9 @@ nix flake check .
 1. 设计文档里的 `nix flake update --flake ./skills-nix` 在当前 Nix（2.34.9）
    不存在 `--flake` 参数，实际用法是进入 `skills-nix/` 后执行
    `nix flake update`。
-2. `skills-sources-lock` 按当前工作目录解析 `registry/sources`，所以设计文档里的
-   `nix run ./skills-nix#skills-sources-lock` 只有在 `skills-nix/` 目录内执行才指向
-   本仓库的 manifest；在仓库根目录需要显式传 `--manifest-dir` 与 `--lock-file`。
+2. 设计文档里的 registry（manifest + `skills-sources-lock`）没有采用：上游技能
+   仓库都作为 flake input 固定，多出来的那层 lock 只会增加维护面，
+   `skills-nix/registry/` 已删除。
 3. 生效范围：`home/default.nix` 被所有 hosts 共用，所以 module 用
    `catalog.nix` 的 `hosts`（`buking`、`handyMini`）与 `hostName` 比对来决定是否
    启用。`hostName` 不能声明成模块参数：standalone Home Manager 不传它，
@@ -232,8 +225,8 @@ nix flake check .
    因此取消 `idPrefix` 并把本地分类目录展平，部署形态统一为
    `<dest>/<name>/SKILL.md`；上游的嵌套布局用 `skills.explicit` 改名压平。
 5. `hermes-agent` 没有作为输入：它是 271MB 的 agent 运行时，只为 12 个技能。
-   其中 9 个复制进 `local/`，3 个依赖 Hermes 自身工具的去掉；以后需要时按
-   `INVENTORY.md` §2 的做法取单个文件即可。
+   其中 5 个复制进 `local/`，3 个依赖 Hermes 自身工具的去掉，其余 4 个后来按
+   「用不上」删除；以后需要时按 `INVENTORY.md` §2 的做法取单个文件即可。
 6. 目标路径不再用 `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills` 这类带环境变量的
    默认值：Home Manager 激活跑在 `home-manager-qi.service` 里，unit 环境没有
    `CLAUDE_CONFIG_DIR` / `CODEX_HOME`，变量会回退到 `~/.claude`、`~/.codex`。

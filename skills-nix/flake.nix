@@ -130,14 +130,6 @@
             program = "${installProgram}/bin/skills-install";
             meta.description = "Sync the selected skills into the enabled target directories";
           };
-
-          # Must run inside skills-nix/: the program resolves
-          # registry/sources relative to the current directory.
-          skills-sources-lock = {
-            type = "app";
-            program = "${agentLib.mkSourceLockProgram { inherit pkgs; }}/bin/skills-sources-lock";
-            meta.description = "Refresh registry/sources.lock.json from registry/sources/*.nix";
-          };
         }
       );
     };

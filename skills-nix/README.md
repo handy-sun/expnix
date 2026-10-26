@@ -12,8 +12,7 @@ skills-nix/
 ├── flake.lock       # 锁定 nixpkgs 与 agent-skills-nix
 ├── catalog.nix      # sources、选中的 skills、启用的 targets
 ├── home-manager.nix # module 主体，读取 catalog.nix
-├── local/           # 本仓库维护的 skills
-└── registry/        # 上游仓库的 manifest 与 lock（见其 README）
+└── local/           # 本仓库维护的 skills
 ```
 
 ## 来源
@@ -47,22 +46,12 @@ just skills-check                           # nix flake check ./skills-nix
 在 `skills-nix/` 目录：
 
 ```bash
-nix run .#skills-sources-lock   # 刷新 registry/sources.lock.json
-nix flake update                # 刷新 flake.lock
-nix run .#skills-install        # 手动同步已启用的 targets
+nix flake update         # 刷新 flake.lock（nixpkgs、agent-skills-nix 与上游技能仓库）
+nix run .#skills-install # 手动同步已启用的 targets
 ```
 
 `skills-install` 会写真实目标目录。只想检查结果时用
 `AGENT_SKILLS_DESTS=/tmp/skills-preview` 指向临时目录。
-
-lock 更新程序按当前工作目录解析 `registry/sources`，因此要在
-`skills-nix/` 下运行；在仓库根目录也可以显式传参：
-
-```bash
-nix run ./skills-nix#skills-sources-lock -- \
-  --manifest-dir skills-nix/registry/sources \
-  --lock-file skills-nix/registry/sources.lock.json
-```
 
 ## 目标目录
 

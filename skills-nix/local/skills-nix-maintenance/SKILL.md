@@ -27,8 +27,7 @@ from `home-manager-<user>.service`, which has no `CLAUDE_CONFIG_DIR` or
 | `catalog.nix` | sources, selected skill IDs, enabled targets |
 | `local/` | skills with no upstream, one flat directory each |
 | `home-manager.nix` | module body; enables `programs.agent-skills` from the catalog |
-| `registry/` | unused manifest/lock machinery for repository sources |
-| `flake.nix` | upstream inputs, apps (`skills-list`, `skills-install`, `skills-sources-lock`), bundle package, check |
+| `flake.nix` | upstream inputs, apps (`skills-list`, `skills-install`), bundle package, check |
 
 ## Rules
 
@@ -80,9 +79,6 @@ enabled target.
 
 - `skills-nix/flake.lock` pins nixpkgs, agent-skills-nix and the three skill
   repositories: `cd skills-nix && nix flake update`.
-- Registry manifests are not used yet; when they are,
-  `cd skills-nix && nix run .#skills-sources-lock` refreshes
-  `registry/sources.lock.json`.
 
 After either update, run `nix flake check ./skills-nix`, review the skill
 diff, then switch. Never sync an unreviewed lock.

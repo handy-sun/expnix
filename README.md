@@ -83,7 +83,6 @@ just sysmgr
 | `just gc` | 清理 4 天前的未使用 Nix store 条目 |
 | `just skills-list` | 列出 `skills-nix` 选中的 Agent Skills |
 | `just skills-check` | 检查 `skills-nix` child flake（会构建 bundle） |
-| `just skills-lock` | 刷新 `skills-nix/registry/sources.lock.json` |
 
 ## 更新流程
 
