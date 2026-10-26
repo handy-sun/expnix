@@ -61,12 +61,15 @@
       # browser-act/skills
       "browser-act"
       # TaysiTsuki (home/agents/skills)
+      "challenge-architecture"
       "chinese-prose-lint"
       "code-cultivation"
       "group-meeting"
       "handoff"
       "host-system-convention"
       "humanizer"
+      "naming-and-magic-literals"
+      "post-impl-housekeep"
       "prune-comments-and-docs"
       "sillytavern-card-backup"
       # local/
@@ -90,11 +93,7 @@
       "github-release-management"
       "github-repo-management"
       "hdd-pending-sector-repair"
-      "himalaya"
-      "kanban-orchestrator"
-      "kanban-worker"
       "mcporter"
-      "native-mcp"
       "nix-flake-ci"
       "nix-flake-development"
       "nix-module-capability-detection"
@@ -111,10 +110,8 @@
       "skills-nix-maintenance"
       "spike"
       "systematic-debugging"
-      "webhook-subscriptions"
       "workflow-skill-architect"
       "writing-plans"
-      "xurl"
     ];
 
     enableAll = false;

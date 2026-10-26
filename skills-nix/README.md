@@ -27,11 +27,11 @@ skills-nix/
 | --- | --- | --- | --- | --- |
 | `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 20 |
 | `browser-act` | `github:browser-act/skills` | 单层（`filter.nameRegex`） | `enable` | 1 |
-| `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 8 |
-| `local` | 本仓库 `local/` | 单层 | `enable` | 45 |
+| `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 11 |
+| `local` | 本仓库 `local/` | 单层 | `enable` | 39 |
 
 上游技能不再复制进仓库：上游有就引用上游，`local/` 只放没有上游的项目专用技能，
-外加 10 个从 Hermes toolkit 复制出来的小工具技能。`NousResearch/hermes-agent`
+外加 7 个从 Hermes toolkit 复制出来的小工具技能。`NousResearch/hermes-agent`
 （271 MB 的 agent 运行时）没有作为输入引入，原因和取舍见 `INVENTORY.md` §2。
 
 ## 命令

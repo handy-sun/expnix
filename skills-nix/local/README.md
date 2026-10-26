@@ -1,6 +1,6 @@
 # local/
 
-The 45 skills that have no usable upstream, plus nine Hermes toolkit skills
+The 39 skills that have no usable upstream, plus seven Hermes toolkit skills
 copied out of its 271 MB runtime repository. Every skill is one directory with
 a `SKILL.md` at the top:
 
@@ -21,7 +21,7 @@ Two rules:
 - **Upstream first.** If the skill exists in a public repository, wire that
   repository up in `../catalog.nix` instead of copying the content here. The
   Hermes copies are the exception: its repository is 271 MB of agent runtime,
-  so nine small tool skills were copied instead of adding the input.
+  so seven small tool skills were copied instead of adding the input.
 
 ## What is in here
 
@@ -71,14 +71,6 @@ Two rules:
 | `github-release-management` | Manage GitHub releases triggered by tag pushes. |  |
 | `github-repo-management` | Clone/create/fork repos; manage remotes, releases. | 同上 |
 
-### MCP 与事件
-
-| 技能 | 作用 | 备注 |
-| --- | --- | --- |
-| `native-mcp` | MCP client: connect servers, register tools (stdio/HTTP). | Hermes 专用：讲的是 `~/.hermes/config.yaml` 的 mcp_servers |
-| `mcporter` | List, auth, and call MCP servers/tools from the terminal. | 从 Hermes 复制 |
-| `webhook-subscriptions` | Webhook subscriptions: event-driven agent runs. | Hermes 专用：`hermes webhook` 与 gateway |
-
 ### 调试与排查
 
 | 技能 | 作用 | 备注 |
@@ -113,15 +105,12 @@ Two rules:
 | 技能 | 作用 | 备注 |
 | --- | --- | --- |
 | `docker-compose-selfhost` | Deploy third-party Docker services to a local compose directory. |  |
-| `kanban-orchestrator` | Decomposition playbook + anti-temptation rules for an orchestrator profile routing work through Kanban. | Hermes 专用：Hermes Kanban dispatcher / profile |
-| `kanban-worker` | Pitfalls, examples, and edge cases for Hermes Kanban workers. | Hermes 专用：KANBAN_GUIDANCE / kanban_* 工具 |
 | `find-nearby` | Find nearby places (restaurants, cafes, bars, pharmacies, etc.) using OpenStreetMap. | 读 Telegram 位置；其余是 OpenStreetMap 查询 |
 
-### 工具使用
+### 工具
 
 | 技能 | 作用 | 备注 |
 | --- | --- | --- |
 | `obsidian` | Read, search, create, and edit notes in the Obsidian vault. | 从 Hermes 复制；vault 路径读 `OBSIDIAN_VAULT_PATH` |
-| `xurl` | X/Twitter via xurl CLI: raw post search, posting, DM, media. | 从 Hermes 复制；Docker/Hermes HOME 说明可忽略 |
-| `himalaya` | Himalaya CLI: IMAP/SMTP email from terminal. | 从 Hermes 复制；含少量 Hermes gateway 说明 |
+| `mcporter` | List, auth, and call MCP servers/tools from the terminal. | 从 Hermes 复制 |
 

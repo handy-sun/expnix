@@ -6,18 +6,18 @@
 
 ## 1. 现状
 
-部署面共 **74 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
+部署面共 **71 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
 
 | 来源 | 数量 | 说明 |
 | --- | --- | --- |
 | `addyosmani/agent-skills` | 20 | 上游布局就是 `skills/<name>` |
-| `MidAutumnMoon/TaysiTsuki` | 8 | `home/agents/skills`，本身就是单层 |
+| `MidAutumnMoon/TaysiTsuki` | 11 | `home/agents/skills`，本身就是单层 |
 | `browser-act/skills` | 1 | `filter.nameRegex` 只取 `browser-act` |
-| `local/` | 45 | 34 个从 SSOT 迁入、9 个从 Hermes toolkit 复制、2 个本仓库新写 |
-| 合计 | 74 | |
+| `local/` | 39 | 30 个从 SSOT 迁入、7 个从 Hermes toolkit 复制、2 个本仓库新写 |
+| 合计 | 71 | |
 
 目标目录共 5 个：`claude`、`codex`、`opencode`、`gemini`，以及
-`agents`（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 74 个）。
+`agents`（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 71 个）。
 
 为什么要扁平：dsh 的技能加载器（`@deepseek-ai/dsh-skill-filesystem` 的
 `discoverRoot`）只列 skills 根目录的一层；带 `idPrefix` 或分类目录的布局对它是
@@ -29,18 +29,19 @@
 | --- | --- | --- | --- | --- | --- |
 | `addyosmani` | `github:addyosmani/agent-skills` | `aeac41d` | `skills/<name>` | `enable` | 20 |
 | `browser-act` | `github:browser-act/skills` | `11c057b` | 仓库根下 `browser-act/` | `filter.nameRegex` | 1 |
-| `taysi` | `github:MidAutumnMoon/TaysiTsuki` | `9fa573c` | `home/agents/skills/<name>` | `enable` | 8 |
-| `local` | 本仓库 | – | `local/<name>` | `enable` | 45 |
+| `taysi` | `github:MidAutumnMoon/TaysiTsuki` | `9fa573c` | `home/agents/skills/<name>` | `enable` | 11 |
+| `local` | 本仓库 | – | `local/<name>` | `enable` | 39 |
 
 **Hermes 不是输入，也没有整套导入。** `NousResearch/hermes-agent` 是整个 agent
 运行时（271 MB），与这里相关的 12 个技能分三类处理：
 
-- 9 个与 agent 无关的工具/技术技能复制进 `local/`：`himalaya`、`obsidian`、
-  `xurl`、`mcporter`、`codebase-inspection`、`node-inspect-debugger`、
-  `python-debugpy`、`requesting-code-review`、`spike`；
-- 3 个依赖 Hermes 自身工具/运行时的技能直接去掉：`claude-code`、`opencode`
+- 7 个与 agent 无关的工具/技术技能复制进 `local/`：`obsidian`、`mcporter`、
+  `codebase-inspection`、`node-inspect-debugger`、`python-debugpy`、
+  `requesting-code-review`、`spike`；
+- 3 个依赖 Hermes 自身工具/运行时的技能去掉：`claude-code`、`opencode`
   （"让 Hermes 去驱动某个 CLI"）、`subagent-driven-development`（依赖
-  `delegate_task`）。
+  `delegate_task`）；
+- `himalaya`、`xurl` 曾经复制进来，后来按"用不上"删除了。
 
 ## 3. 判定方法
 
@@ -56,12 +57,12 @@
 | 去向 | 数量 |
 | --- | --- |
 | addyosmani/agent-skills | 20 |
-| local/（从 hermes-agent 复制） | 9 |
+| local/（从 hermes-agent 复制，现剩 7 个） | 7 |
 | TaysiTsuki | 8 |
 | browser-act/skills | 1 |
-| local/（沿用原副本） | 34 |
+| local/（沿用原副本） | 30 |
 | 已移出 SSOT（6 个 `.bak` + 重复的嵌套 TDD） | 7 |
-| 已删除（`singbox-config`、`codex`、`cc-switch-app-type-wiring`、`web-access`） | 4 |
+| 已删除（`singbox-config`、`codex`、`cc-switch-app-type-wiring`、`web-access`、`native-mcp`、`kanban-orchestrator`、`kanban-worker`、`webhook-subscriptions`、`xurl`、`himalaya`） | 10 |
 | 不迁移（Hermes 专用 3 + Hermes 运行时技能 3） | 6 |
 | 暂不迁移（macOS 专用 5、media 3、productivity 14） | 22 |
 | 合计 | 111 |
@@ -87,7 +88,7 @@
 | 技能目录 | 现在来自 |
 | --- | --- |
 | `autonomous-ai-agents/claude-code` | 不迁移（Hermes 运行时技能） |
-| `autonomous-ai-agents/codex` | 已删除（本轮） |
+| `autonomous-ai-agents/codex` | 已删除 |
 | `autonomous-ai-agents/codex.bak` | 已移出 SSOT |
 | `autonomous-ai-agents/hermes-agent` | 不迁移（Hermes 专用） |
 | `autonomous-ai-agents/opencode` | 不迁移（Hermes 运行时技能） |
@@ -150,11 +151,11 @@
 | --- | --- |
 | `devops/docker-compose-selfhost` | local/ |
 | `devops/hdd-pending-sector-repair` | local/ |
-| `devops/kanban-orchestrator` | local/ |
+| `devops/kanban-orchestrator` | 已删除 |
 | `devops/kanban-orchestrator.bak` | 已移出 SSOT |
-| `devops/kanban-worker` | local/ |
+| `devops/kanban-worker` | 已删除 |
 | `devops/kanban-worker.bak` | 已移出 SSOT |
-| `devops/webhook-subscriptions` | local/ |
+| `devops/webhook-subscriptions` | 已删除 |
 
 ### `documentation-and-adrs/`
 
@@ -172,7 +173,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `email/himalaya` | local/（从 hermes-agent 复制） |
+| `email/himalaya` | 已删除 |
 | `email/himalaya.bak` | 已移出 SSOT |
 
 ### `frontend-ui-engineering/`
@@ -223,7 +224,7 @@
 | 技能目录 | 现在来自 |
 | --- | --- |
 | `mcp/mcporter` | local/（从 hermes-agent 复制） |
-| `mcp/native-mcp` | local/ |
+| `mcp/native-mcp` | 已删除 |
 
 ### `media/`
 
@@ -311,13 +312,13 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `singbox-config` | 已删除（本轮） |
+| `singbox-config` | 已删除 |
 
 ### `social-media/`
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `social-media/xurl` | local/（从 hermes-agent 复制） |
+| `social-media/xurl` | 已删除 |
 
 ### `software-development/`
 
@@ -326,7 +327,7 @@
 | `software-development/adding-rust-enum-variant` | local/ |
 | `software-development/c-development` | local/ |
 | `software-development/cargo-dependency-update` | local/ |
-| `software-development/cc-switch-app-type-wiring` | 已删除（本轮） |
+| `software-development/cc-switch-app-type-wiring` | 已删除 |
 | `software-development/debugging-hermes-tui-commands` | 不迁移（Hermes 专用） |
 | `software-development/design-md-init` | local/ |
 | `software-development/hermes-agent-skill-authoring` | 不迁移（Hermes 专用） |
@@ -384,7 +385,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `web-access` | 已删除（本轮） |
+| `web-access` | 已删除 |
 
 ### `workflow-skill-architect/`
 
@@ -398,9 +399,5 @@
 1. `apple/*` 与 `macos-computer-use` 只在 handyMini 有意义，是否要在下一轮启用？
 2. `media/*` 与 `productivity/*` 的上游就是 hermes-agent；需要时从上游取一两个文件
    放进 `local/` 即可，不必为此引入 271 MB 的输入。
-3. `local/` 里还有几个 Hermes 运行时色彩很重的技能（`native-mcp`、
-   `kanban-orchestrator`、`kanban-worker`、`webhook-subscriptions`），它们描述的是
-   Hermes 自己的 config/CLI，是否要一并删掉？
-4. TaysiTsuki 里还有 7 个未启用的技能（`challenge-architecture`、`grill-me`、
-   `grilling`、`language-style-guide`、`naming-and-magic-literals`、
-   `post-impl-housekeep`、`wait-what`），要不要挑几个启用？
+3. TaysiTsuki 里还有 4 个未启用的技能（`grill-me`、`grilling`、
+   `language-style-guide`、`wait-what`），目前判断是重复或过薄，先留着不启用。

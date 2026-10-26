@@ -52,16 +52,19 @@ Skills 目录现状：
   `feat/skills-external-mode` 版本），不再 sync、import，也不打包
   `skills.zip`。
 - 阶段 4：111 个技能分类并执行（见 `INVENTORY.md`）：15 个废弃目录移出 SSOT
-  （SSOT 从 111 降到 96），其余按"上游优先 + 扁平布局"落地，当前部署面 74 个技能。
+  （SSOT 从 111 降到 96），其余按"上游优先 + 扁平布局"落地，当前部署面 71 个技能。
 - 阶段 4 的第二轮调整（2026-10-26，同一个分支）：
   - 取消所有 source 的 `idPrefix`，并把 `local/` 的分类目录展平：每个技能 ID
     就是一个目录名，目标目录统一是 `<dest>/<name>/SKILL.md`。
   - 上游有地址的改回引用上游：`addyosmani/agent-skills`（20）、
     `browser-act/skills`（1）、`TaysiTsuki`（8）。
   - `NousResearch/hermes-agent` 最终没有作为输入：它是 271 MB 的 agent 运行时，
-    只有 12 个技能相关，其中 9 个与 agent 无关的工具技能复制进 `local/`，3 个依赖
-    Hermes 自身工具的技能直接去掉（`claude-code`、`opencode`、
-    `subagent-driven-development`）。
+    只有 12 个技能相关。7 个与 agent 无关的工具技能复制进 `local/`，3 个依赖 Hermes
+    自身工具的技能去掉（`claude-code`、`opencode`、`subagent-driven-development`）；
+    `himalaya` 与 `xurl` 后按「用不上」删除。之后又删掉 4 个仍以 Hermes 自身
+    config/CLI 为主的技能（`native-mcp`、`kanban-orchestrator`、`kanban-worker`、
+    `webhook-subscriptions`），TaysiTsuki 追加启用 3 个代码质量类技能
+    （`challenge-architecture`、`naming-and-magic-literals`、`post-impl-housekeep`）。
   - 删除了明确不再需要的 4 个本地技能：`singbox-config`、`codex`、
     `cc-switch-app-type-wiring`、`web-access`。
   - 新增 `targets.agents`（`$HOME/.agents/skills`）：dsh 把它当作 user-agents
@@ -108,11 +111,11 @@ Skills 目录现状：
 | `.system` 保留 | 接管后再次 `skills-install` | `.system` 的 5 个技能与 marker 仍在 |
 | SSOT 清理 | `find ~/.config/cc-switch-tui/skills -name SKILL.md` | 111 → 96（移出 15 个） |
 | 激活环境模拟 | `env -i HOME=$HOME skills-install` | 只靠 `HOME` 就落到四个 XDG 目录，没有生成 `~/.claude/skills`、`~/.codex/skills` |
-| 扁平布局 | `find -L <bundle> -mindepth 2 -maxdepth 2 -name SKILL.md` | 74 个，深层 0 个 |
-| 单层扫描 | `ls -d <dest>/*/SKILL.md \| wc -l` | 五个目标各 74，与 bundle 一致 |
+| 扁平布局 | `find -L <bundle> -mindepth 2 -maxdepth 2 -name SKILL.md` | 71 个，深层 0 个 |
+| 单层扫描 | `ls -d <dest>/*/SKILL.md \| wc -l` | 五个目标各 71，与 bundle 一致 |
 | 上游内容一致 | `sha256sum` 对比 bundle 与 addyosmani / browser-act 源文件 | 一致 |
 | 扁平后重同步 | 旧 `local/`、`taysi/` 目录 | 被 `rsync --delete` 删除，只剩扁平目录 + Codex `.system` |
-| `agents` 目标 | `ls -d ~/.agents/skills/*/SKILL.md` | 74 个，marker 已写入；dsh 会话里能看到同一批技能 |
+| `agents` 目标 | `ls -d ~/.agents/skills/*/SKILL.md` | 71 个，marker 已写入；dsh 会话里能看到同一批技能 |
 | 清掉 dsh 旧副本 | `~/.dsh/skills` | 4 个手工副本移到 `~/backups/dsh-skills-*`，目录已空 |
 
 未执行：
