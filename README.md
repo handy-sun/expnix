@@ -189,7 +189,10 @@ just skills-check     # 构建 bundle 并做 flake check
 
 本地技能放在 `skills-nix/local/`，选择与目标目录在 `skills-nix/catalog.nix`。
 
-首次接管之前 `just switch-home` 会失败：现有 `claude` 与 `codex` 目录非空、
+只有 `skills-nix/catalog.nix` 中 `hosts` 列出的主机（`buking`、`handyMini`）会
+启用目标目录；其它 hosts 与 standalone Home Manager 不受影响。
+
+首次接管之前 `just s` 会失败：现有 `claude` 与 `codex` 目录非空、
 也没有 `agent-skills-nix` 的归属 marker，同步程序在校验阶段就拒绝执行，不会
 改动任何文件。接管顺序、备份和回滚步骤见 `skills-nix/MIGRATION.md`，设计依据
 见 `.github/docs/skills-nix-design.md`。

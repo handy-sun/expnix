@@ -26,8 +26,7 @@ Manager. `expnix` is the only deployment entry point.
 | Task | Command |
 | --- | --- |
 | enter dev shell | `./scripts/devshell-default.sh` (or `nix develop`) |
-| switch system | `just switch [host]`; `just sysmgr` for `debnsm` |
-| Home Manager only | `just switch-home` |
+| switch system | `just s [host]` (`nh os switch` / `nh darwin switch`); `just sysmgr` for `debnsm` |
 | evaluate host toplevel | `just evtop [host]`, `just ev-sysmgr [host]` |
 | format | `nix fmt -- <files>`, or `just nixfmt` for the whole tree |
 | install git hook | `just setup-hook` |

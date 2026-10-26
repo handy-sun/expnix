@@ -59,6 +59,10 @@ nix run ./skills-nix#skills-sources-lock -- \
 同步，并在目标目录写入 `.agent-skills-managed.json` 表示归属。目标目录非空且
 没有该 marker 时，同步会拒绝而不是覆盖。
 
+只有 `catalog.nix` 的 `hosts`（`buking`、`handyMini`）会启用这四个目标；
+其它 hosts 和 standalone Home Manager 求值出 `enable = false`，不会创建目录。
+`skills-install` 是手动入口，不受 `hosts` 限制。
+
 Hermes 不是 target。`$HERMES_HOME/skills` 混合了 bundled skills、
 `.bundled_manifest`、`.archive` 和 curator 状态，`rsync --delete` 会删掉
 本 flake 并不拥有的内容。

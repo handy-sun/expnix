@@ -23,6 +23,14 @@
     explicit = { };
   };
 
+  # Hosts that receive the global skill directories, matched against
+  # `hostName`. A standalone Home Manager activation carries no host name and
+  # is skipped, as are servers that have no agent to read these directories.
+  hosts = [
+    "buking"
+    "handyMini"
+  ];
+
   # OpenCode and OMP share one directory because omp resolves
   # ~/.config/opencode/skills. Hermes is intentionally absent: its skills root
   # mixes bundled skills, curator state and user edits.

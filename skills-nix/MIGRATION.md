@@ -46,6 +46,8 @@ Skills 目录现状：
   `codex` 保留默认的 `/.system` 排除。
 - 阶段 2.2：层级、`idPrefix` 共存、`agents` 限制、未选中技能不进入 bundle
   的行为已用一次性 flake 验证（见 §3）。
+- 生效范围收窄：只有 `catalog.nix` 的 `hosts` 列表（`buking`、`handyMini`）
+  启用；其它 hosts 与 standalone Home Manager 求值出 `enable = false`。
 
 未完成，按顺序阻塞：
 
@@ -56,7 +58,7 @@ Skills 目录现状：
 3. 阶段 4：从 cc-switch SSOT（111 个技能）逐项分类迁移。
 4. 阶段 5：Hermes，未开始，也没有配置 target。
 
-因此当前分支合入后**不要立刻执行 `just switch-home`**：`claude` 与
+因此当前分支合入后**不要立刻执行 `just s`**：`claude` 与
 `codex` 目录非空且没有归属 marker，同步程序会在改动任何目录前拒绝执行，
 本次激活会失败。同步程序先校验全部目标再写入（`scripts/sync.sh` 的
 `resolve_target_plan` 早于 `execute_target_plan`），所以失败不会留下半成品。
@@ -81,6 +83,7 @@ Skills 目录现状：
 | idPrefix 共存 | 一次性 flake：同一路径两个前缀 | `local/...` 与 `mirror/...` 并存 |
 | agents 限制 | 一次性 flake：`agents = [ "codex" ]` | 只出现在 codex 与完整 bundle |
 | 空 agents | 一次性 flake：`agents = [ ]` | 只在完整 bundle 中，不进入任何 target |
+| 主机范围 | `nix eval --json .#nixosConfigurations.<host>.config.home-manager.users.qi.programs.agent-skills.enable` | `buking`/`handyMini` 为 true；`nixwsl`/`reinsvps`/`debnsm`/standalone 为 false |
 
 未执行，需要在接管后补做：
 
@@ -117,8 +120,8 @@ du -sh "$dest"
 mv ~/.config/claude/skills ~/.config/claude/skills.pre-nix
 mv ~/.config/codex/skills  ~/.config/codex/skills.pre-nix
 
-# 5. 激活
-just switch-home
+# 5. 激活（NixOS / nix-darwin 用 just s；system-manager 主机用 just sysmgr）
+just s
 
 # 6. 把 Codex 的 .system 放回（同步程序按 /.system 排除，不会被删）
 mv ~/.config/codex/skills.pre-nix/.system ~/.config/codex/skills/.system
@@ -144,13 +147,13 @@ sudo nix-env -p /nix/var/nix/profiles/system --list-generations
 
 # 回滚 skills-nix 的提交与 lock 后重新激活
 git revert <skills-nix 相关提交>
-just switch-home
+just s
 ```
 
 回到 cc-switch-tui 管理（顺序不能反）：
 
-1. 把 `catalog.nix` 里的四个 target 关掉，`just switch-home`，确认 Nix 不再
-   写这些目录；
+1. 把 `catalog.nix` 里的四个 target 关掉（或把 `hosts` 清空），`just s`，
+   确认 Nix 不再写这些目录；
 2. 删除或改名当前的 Nix 目标目录；
 3. 从 §4 第 1 步的备份恢复 `~/.config/{claude,codex}/skills`；
 4. 把 cc-switch 的 `skills.mode` 改回 `managed`；
@@ -173,7 +176,7 @@ nix flake check .
 ```
 
 审查顺序：lock diff → catalog diff → bundle 求值 → 四个 agent 的实际加载 →
-提交 → `just switch-home`。不做无人审查的定时覆盖。
+提交 → `just s`。不做无人审查的定时覆盖。
 
 ## 7. 文档与实际的差异
 
@@ -183,9 +186,11 @@ nix flake check .
 2. `skills-sources-lock` 按当前工作目录解析 `registry/sources`，所以设计文档里的
    `nix run ./skills-nix#skills-sources-lock` 只有在 `skills-nix/` 目录内执行才指向
    本仓库的 manifest；在仓库根目录需要显式传 `--manifest-dir` 与 `--lock-file`。
-3. 未决问题：`home/default.nix` 被所有 hosts 共用，因此 `reinsvps`、`txsh011`、
-   `nixwsl`、`debnsm` 也会得到这四个技能目录。如果只想在工作站启用，需要按
-   `hostName` 给 module 增加开关，这一条尚未实现，也不在设计文档里。
+3. 生效范围：`home/default.nix` 被所有 hosts 共用，所以 module 用
+   `catalog.nix` 的 `hosts`（`buking`、`handyMini`）与 `hostName` 比对来决定是否
+   启用。`hostName` 不能声明成模块参数：standalone Home Manager 不传它，
+   声明后求值会直接失败，因此从 `args` 读取并回退到 `null`。设计文档没有写
+   这一层限制，属于按机器类型的补充决策。
 4. 设计文档 §2.2 说「`cc-switch-tui` 在 external 模式下不执行 Skills sync」，
    对应实现位于 cc-switch-tui 仓库的 `feat/skills-external-mode` 分支；本机运行的
    0.2.3 发布版仍是 managed 行为，接管前必须确认版本。

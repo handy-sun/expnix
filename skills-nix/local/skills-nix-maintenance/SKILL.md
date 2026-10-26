@@ -43,7 +43,8 @@ curator state and user edits.
    nix flake check ./skills-nix
    ```
 
-5. Deploy with `just switch-home`.
+5. Deploy on a host listed in `catalog.nix` (`just s`; `just sysmgr` on
+   system-manager hosts).
 
 To deploy a skill to some agents only, select it through `skills.explicit`
 instead of `skills.enable`:
