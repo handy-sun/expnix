@@ -6,14 +6,14 @@
 
 | 名称 | 类型 | 系统 | 说明 | 闭包大小 |
 | --- | --- | --- | --- | --- |
-| `orbvmnix` | NixOS | `aarch64-linux` | OrbStack / 虚拟化 Linux 环境，启用 `tuiOptional` | / |
+| `buking` | NixOS | `x86_64-linux` | 物理 Linux 桌面环境，启用完整 GUI profile | 38.5GiB |
 | `reinsvps` | NixOS | `x86_64-linux` | VPS / 服务器环境 | 10GiB |
-| `txsh011` | NixOS | `x86_64-linux` | VPS / 服务器环境，只启用 `tuiBase` | 7.5GiB |
-| `nixwsl` | NixOS-WSL | `x86_64-linux` | WSL2 环境，启用 `tuiOptional` | / |
-| `buking` | NixOS | `x86_64-linux` | 物理 Linux 桌面环境，启用完整 GUI profile | 39GiB |
-| `handyMini` | nix-darwin | `aarch64-darwin` | macOS 环境，启用 `tuiOptional` 和 `guiBase` | - |
-| `qi` | Home Manager | `x86_64-linux` | standalone Home Manager 配置 | - |
-| `debnsm` | system-manager | `x86_64-linux` | 非 NixOS Linux 主机配置，启用 system-manager 和 Home Manager | - |
+| `txsh011` | NixOS | `x86_64-linux` | VPS / 服务器环境，只启用 `tuiBase` | 8GiB |
+| `nixwsl` | NixOS-WSL | `x86_64-linux` | WSL2 环境，启用 `tuiOptional` | 11GiB |
+| `handyMini` | nix-darwin | `aarch64-darwin` | macOS 环境，启用 `tuiOptional` 和 `guiBase` | 13GiB |
+| `debnsm` | system-manager | `x86_64-linux` | 非 NixOS Linux 主机配置，启用 system-manager 和 Home Manager | / |
+| `qi(deprecated)` | Home Manager | `x86_64-linux` | standalone Home Manager 配置 | / |
+| `orbvmnix(not used)` | NixOS | `aarch64-linux` | OrbStack / 虚拟化 Linux 环境，启用 `tuiOptional` | / |
 
 ## 首次引导
 
