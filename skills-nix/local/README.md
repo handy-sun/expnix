@@ -20,4 +20,8 @@ description: When to use this skill and what it covers.
 ```
 
 Keep references and scripts beside `SKILL.md`; the whole directory is linked
-into the bundle.
+into the bundle. A skill directory must not contain another skill: the bundle
+materializes each skill as a symlink to its directory, so a parent skill and a
+child skill cannot share a path. Category directories are fine as long as they
+have no `SKILL.md` of their own (the two overview skills live in
+`<category>-overview/` for that reason).

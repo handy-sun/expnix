@@ -30,7 +30,11 @@ curator state and user edits.
 ## Add or change a skill
 
 1. Create `local/<category>/<skill>/SKILL.md` with `name` and `description`
-   front matter.
+   front matter. Do not put a skill inside another skill's directory: the
+   bundle links each skill as a symlink to its directory, so a parent with a
+   `SKILL.md` cannot also hold child skills. Category directories are fine
+   when they carry no `SKILL.md`; the two overview skills live in
+   `<category>-overview/`.
 2. Add its ID (`local/<category>/<skill>`) to `skills.enable` in
    `catalog.nix`. Unlisted directories are not deployed.
 3. `git add` the new files. Flake evaluation only sees tracked files, so an

@@ -48,6 +48,9 @@ Skills 目录现状：
   的行为已用一次性 flake 验证（见 §3）。
 - 生效范围收窄：只有 `catalog.nix` 的 `hosts` 列表（`buking`、`handyMini`）
   启用；其它 hosts 与 standalone Home Manager 求值出 `enable = false`。
+- 阶段 4：cc-switch SSOT 的 111 个技能已分类并执行迁移（见 `INVENTORY.md`）：
+  70 个复制进 `local/`、8 个改由 `TaysiTsuki` flake source 提供、7 个废弃目录
+  不再纳入（SSOT 物理清理留到接管），其余暂不迁移。部署面共 80 个技能。
 
 未完成，按顺序阻塞：
 
@@ -55,9 +58,9 @@ Skills 目录现状：
    `skills-nix/local/`，并把 cc-switch-tui 切到 `external`。
 2. 阶段 3 的运行时确认：`cc-switch-tui` 的 external 模式代码位于该仓库的
    `feat/skills-external-mode` 分支，本机运行的 0.2.3 仍是 managed 行为。
-3. 阶段 4：从 cc-switch SSOT 逐项分类并迁移。分类已完成，结果在
-   `INVENTORY.md`：57 个进 `local/`、13 个改走 `NousResearch/hermes-agent`
-   上游 pin、23 个暂不迁移、17 个不迁移、1 个待定，分四个批次执行。
+3. 阶段 4 的收尾：SSOT 里 `taysi/` 的 8 个副本（现在由 flake source 提供）
+   与 7 个废弃目录的物理删除，留到接管阶段一起做，避免 cc-switch 数据库提前
+   失配；命令见 `INVENTORY.md` §7。
 4. 阶段 5：Hermes，未开始，也没有配置 target。
 
 因此当前分支合入后**不要立刻执行 `just s`**：`claude` 与
@@ -115,8 +118,8 @@ du -sh "$dest"
 #    或直接改 settings.json 的 {"skills": {"mode": "external"}} 后重启
 #    确认它不再 sync、import，也不打包 skills.zip
 
-# 3. 把要长期维护的技能按 § 阶段 4 分类后搬进 skills-nix/local/，
-#    在 catalog.nix 的 skills.enable 里登记 ID，git add（flake 只读已跟踪文件）
+# 3. 技能内容已经在 skills-nix/local/ 与 taysi source 里，无需再搬；
+#    只需确认 catalog.nix 的 skills.enable 是最新集合（见 INVENTORY.md）
 
 # 4. 把旧目录整体移开（保留备份，不删除）
 mv ~/.config/claude/skills ~/.config/claude/skills.pre-nix

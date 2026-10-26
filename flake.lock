@@ -902,7 +902,8 @@
         "agent-skills": "agent-skills",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "taysi-tsuki": "taysi-tsuki"
       },
       "locked": {
         "path": "./skills-nix",
@@ -998,6 +999,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "taysi-tsuki": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792982286,
+        "narHash": "sha256-VpWA06KWHbA5pG8EEyvI+AQwh6f9Qo9+GjuSvwKDg+s=",
+        "owner": "MidAutumnMoon",
+        "repo": "TaysiTsuki",
+        "rev": "9fa573c8c58faa35e1e28925b2daf38e92b52f62",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MidAutumnMoon",
+        "repo": "TaysiTsuki",
         "type": "github"
       }
     },

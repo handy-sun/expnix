@@ -1,0 +1,5 @@
+interface:
+  display_name: "Nix Module Capability Detection"
+  short_description: "Detect Nix module backends safely"
+  default_prompt: "Use $nix-module-capability-detection to write a cross-platform Nix module branch safely."
+

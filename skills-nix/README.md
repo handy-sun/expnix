@@ -16,12 +16,18 @@ skills-nix/
 └── registry/        # 上游仓库的 manifest 与 lock（见其 README）
 ```
 
+`catalog.nix` 目前有两个 source：`local`（本仓库维护，72 个）和 `taysi`
+（`TaysiTsuki` 仓库的 `home/agents/skills`，以 `flake = false` 输入引入，启用 8
+个）。一个目录不能既是技能又包含技能：bundle 把技能物化成指向其目录的软链，
+父子共用路径会冲突，所以 `ci-cd-and-automation` 与 `code-review-and-quality`
+的概览内容拆在同级 `<name>-overview/` 目录里。
+
 ## 命令
 
 在仓库根目录：
 
 ```bash
-just skills-list                            # 输出 catalog JSON
+just skills-list                            # 输出已启用技能的 JSON（不是全量 catalog）
 nix build ./skills-nix && ls -R result/     # 查看渲染后的 bundle
 just skills-check                           # nix flake check ./skills-nix
 ```

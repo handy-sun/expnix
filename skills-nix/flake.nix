@@ -8,10 +8,18 @@
       url = "github:Kyure-A/agent-skills-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Skills maintained in the TaysiTsuki repository. Consumed as a plain
+    # source tree (`flake = false`): that repository owns the content, this
+    # catalog only selects which of its skills are deployed.
+    taysi-tsuki = {
+      url = "github:MidAutumnMoon/TaysiTsuki";
+      flake = false;
+    };
   };
 
   outputs =
-    { nixpkgs, agent-skills, ... }:
+    inputs@{ nixpkgs, agent-skills, ... }:
     let
       inherit (nixpkgs) lib;
 
@@ -24,7 +32,7 @@
 
       agentLib = agent-skills.lib.agent-skills;
 
-      catalog = import ./catalog.nix;
+      catalog = import ./catalog.nix { inherit inputs; };
       discovered = agentLib.discoverCatalog catalog.sources;
       allowlist = agentLib.allowlistFor {
         catalog = discovered;
@@ -56,15 +64,17 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          catalogJson = pkgs.writeText "expnix-agent-skills-catalog.json" (
-            builtins.toJSON (agentLib.catalogJson discovered)
+          # The selection, not the full catalog: the question this app answers
+          # is "what will be deployed".
+          selectionJson = pkgs.writeText "expnix-agent-skills-selection.json" (
+            builtins.toJSON (agentLib.catalogJson selection)
           );
         in
         pkgs.writeShellApplication {
           name = "skills-list";
           runtimeInputs = [ pkgs.jq ];
           text = ''
-            ${pkgs.jq}/bin/jq . ${catalogJson}
+            ${pkgs.jq}/bin/jq . ${selectionJson}
           '';
         };
     in
@@ -100,7 +110,7 @@
           skills-list = {
             type = "app";
             program = "${listProgramFor system}/bin/skills-list";
-            meta.description = "Print the selected expnix agent skills as JSON";
+            meta.description = "Print the enabled expnix agent skills as JSON";
           };
 
           skills-install = {
