@@ -12,7 +12,7 @@ description: Maintains the agent skill catalog in this expnix checkout. Use when
 | agents | `$HOME/.agents/skills` (the directory dsh reads as its user-agents root) |
 | claude | `$HOME/.config/claude/skills` |
 | codex | `$HOME/.config/codex/skills` |
-| opencode / omp | `$HOME/.config/opencode/skills` |
+| opencode | `$HOME/.config/opencode/skills` (omp and pi read `~/.agents/skills` instead) |
 
 Hermes is not managed: `$HERMES_HOME/skills` also holds bundled skills,
 curator state and user edits. The claude and codex destinations are literal

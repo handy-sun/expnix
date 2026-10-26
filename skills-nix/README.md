@@ -1,7 +1,7 @@
 # skills-nix
 
 管理 Agent Skills 的 child flake：来源、选择，以及 Claude、Codex、
-OpenCode/OMP 和共享 `~/.agents/skills` 的部署目标。部署入口仍然只有 `expnix`；
+opencode 和共享 `~/.agents/skills` 的部署目标（omp、pi、dsh 都读后者）。部署入口仍然只有 `expnix`；
 本 flake 只导出一个 Home Manager module，根 flake 用 `path:./skills-nix` 引入它。
 
 ## 结构
@@ -59,7 +59,7 @@ nix run .#skills-install # 手动同步已启用的 targets
 | `agents` | `$HOME/.agents/skills` | 共享目录；dsh 把它当作 user-agents root |
 | `claude` | `$HOME/.config/claude/skills` | 显式路径，等于 `home/default.nix` 里的 `CLAUDE_CONFIG_DIR` |
 | `codex` | `$HOME/.config/codex/skills` | 显式路径；排除 `/.system`，Codex 自己维护 bundled skills |
-| `opencode` | `$HOME/.config/opencode/skills` | 与 OMP 共用 |
+| `opencode` | `$HOME/.config/opencode/skills` | 只服务 opencode CLI；omp/pi 走 `agents` |
 
 `claude` 与 `codex` 没有用模块默认的 `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills`
 形式：Home Manager 的激活由 `home-manager-<user>.service` 执行，该 unit 的环境里

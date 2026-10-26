@@ -176,8 +176,8 @@ nix build .#homeConfigurations.qi.activationPackage --dry-run
 
 `skills-nix/` 是独立 lock 的 child flake，用
 [agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix) 声明、选择并
-同步 Agent Skills。它是 Claude、Codex、OpenCode/OMP 的全局 skills 目录和共享
-`~/.agents/skills` 的唯一写入者；`cc-switch-tui` 需要保持 `skills.mode = "external"`，只管理
+同步 Agent Skills。它是 Claude、Codex、opencode 的全局 skills 目录和共享
+`~/.agents/skills`（omp、pi、dsh 都读它）的唯一写入者；`cc-switch-tui` 需要保持 `skills.mode = "external"`，只管理
 provider、MCP 和其他非 Skills 配置。Hermes 的 `$HERMES_HOME/skills` 混合了
 bundled skills 与 curator 状态，第一阶段不接管。
 

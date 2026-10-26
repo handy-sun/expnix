@@ -51,7 +51,7 @@ Home Manager module。部署入口仍然只有 `expnix`，不会产生第二套 
 | `agents` | `$HOME/.agents/skills` | 共享目录；dsh 把这里当作 user-agents root |
 | `claude` | `$HOME/.config/claude/skills` | 等于 `home/default.nix` 里的 `CLAUDE_CONFIG_DIR` |
 | `codex` | `$HOME/.config/codex/skills` | 等于 `CODEX_HOME`；排除 `/.system` |
-| `opencode` | `$HOME/.config/opencode/skills` | OpenCode 与 OMP 共用 |
+| `opencode` | `$HOME/.config/opencode/skills` | 只服务 opencode CLI；omp/pi 走 `agents`（见 §2.4） |
 | Hermes 的 `skills` 根目录 | 不接管 | 保留 bundled skills、`.bundled_manifest` 与 curator 状态 |
 | `~/.dsh/skills` | 不接管 | dsh 自己的目录，已清空，改由 `agents` 目标提供 |
 
@@ -82,11 +82,24 @@ agent 都成立。
 目标目录非空且没有该 marker 时，同步会拒绝而不是覆盖；校验在写入前完成，
 失败不会留下半截状态。
 
-### 2.4 OMP 复用 OpenCode 目标
+### 2.4 omp 与 pi 走 `agents`，opencode 目标只服务 opencode CLI
 
-本机 `omp` 是 OpenCode 生态的 agent 二进制，运行时默认读取
-`~/.config/opencode/skills/` 和 `.opencode/skills/`，因此不新增 OMP 专用目录，
-OMP 与 OpenCode 共用 `$HOME/.config/opencode/skills`。
+早期版本把 `omp` 当成 OpenCode 生态的二进制，让它复用
+`~/.config/opencode/skills`。**这个假设是错的**，实测（omp 18.11.0）：
+
+| 事实 | 证据 |
+| --- | --- |
+| omp 是 pi 的分支，不是 opencode | 二进制里是 `pi_natives` 原生模块，家目录 `~/.omp`，agent 状态在 `~/.omp/agent` |
+| omp 读 `~/.agents/skills` 和 `~/.omp/agent/skills` | 二进制里的说明是 "Load skills from `.agent/skills` and `.agents/skills` (project walk-up + user home)"；往 `~/.omp/agent/skills` 放一个探针技能能被 `omp skill list` 列出 |
+| omp **不读** `~/.config/opencode/skills` | 把该目录移走后 `omp skill list` 仍是 68 条；把 `~/.agents/skills` 移走后变成 0 条 |
+| `~/.config/opencode` 只用于 opencode 的认证/模型集成 | 二进制里有 `https://opencode.ai/auth`、`auth/opencode-go.kdl` 之类，没有 skills 路径 |
+
+因此：
+
+- `agents` 目标（`$HOME/.agents/skills`）同时服务 omp、pi 和 dsh；
+- `opencode` 目标只对真正的 opencode CLI 有意义（本机未安装，保留为可选）；
+- pi 自己的技能目录是 `~/.pi/agent/skills`（可用 `PI_CODING_AGENT_DIR` 覆盖），
+  omp 对应 `~/.omp/agent/skills`，两者互不相通。
 
 ### 2.5 Hermes 不接管
 
