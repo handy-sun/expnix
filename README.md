@@ -81,6 +81,8 @@ just sysmgr
 | `just history` | 查看系统 profile 历史 |
 | `just list-generations` | 列出系统 profile generations |
 | `just gc` | 清理 4 天前的未使用 Nix store 条目 |
+| `just skills-list` | 列出 `skills-nix` 选中的 Agent Skills |
+| `just skills-check` | 检查 `skills-nix` child flake（会构建 bundle） |
 
 ## 更新流程
 
@@ -125,6 +127,7 @@ nixfmt --check <staged-nix-files>
 | `overlays/` | 自定义 package overlay |
 | `nixos/` | NixOS 通用配置和服务配置 |
 | `packages/` | 自定义 package 定义和 NixPak 应用 |
+| `skills-nix/` | Agent Skills catalog：来源、选择、目标目录，独立 flake 与 lock |
 | `scripts/` | 安装、开发 shell 和桌面辅助脚本 |
 | `.githooks/` | 本仓库使用的 git hooks |
 | `.github/workflows/` | CI、缓存构建和依赖更新 workflow |
@@ -168,3 +171,31 @@ nix build .#nixosConfigurations.buking.config.system.build.toplevel --dry-run
 nix build .#darwinConfigurations.handyMini.config.system.build.toplevel --dry-run
 nix build .#homeConfigurations.qi.activationPackage --dry-run
 ```
+
+## Agent Skills
+
+`skills-nix/` 是独立 lock 的 child flake，用
+[agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix) 声明、选择并
+同步 Agent Skills。它是 Claude、Codex、OpenCode/OMP 的全局 skills 目录和共享
+`~/.agents/skills` 的唯一写入者；`cc-switch-tui` 需要保持 `skills.mode = "external"`，只管理
+provider、MCP 和其他非 Skills 配置。Hermes 的 `$HERMES_HOME/skills` 混合了
+bundled skills 与 curator 状态，第一阶段不接管。
+
+技能来自上游仓库：`addyosmani/agent-skills`（21）、`browser-act/skills`（1）和
+`TaysiTsuki`（11）；`skills-nix/local/`（35）放没有上游的项目专用技能，以及 5 个
+从 Hermes toolkit 复制出来的小工具技能（`NousResearch/hermes-agent` 是 271 MB 的
+运行时，没有作为输入引入）。所有技能都部署成扁平的 `<dest>/<name>/SKILL.md`，
+因为 DSH 等 agent 只扫描 skills 根目录的一层；`agents` 目标
+（`$HOME/.agents/skills`）就是 DSH 读取的那个目录。
+
+```bash
+just skills-list      # 当前启用的 68 个技能
+just skills-check     # 构建 bundle 并做 flake check
+```
+
+选择、上游 source、目标目录在 `skills-nix/catalog.nix`；只有 `hosts` 列出的
+主机（`buking`、`handyMini`）会启用目标目录，其它 hosts 与 standalone Home
+Manager 不受影响。
+
+来源清单见 `skills-nix/INVENTORY.md`，接管与回滚说明见
+`skills-nix/README.md`，设计与偏差记录见 `.github/docs/skills-nix-design.md`。

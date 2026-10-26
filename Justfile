@@ -80,6 +80,16 @@ switch-home:
 nixfmt:
   fd -e nix -X nixfmt
 
+# List the agent skills selected by skills-nix
+[group('skills')]
+skills-list:
+  nix run ./skills-nix#skills-list
+
+# Check the skills-nix child flake (builds the bundle)
+[group('skills')]
+skills-check:
+  nix flake check ./skills-nix
+
 [group('nix')]
 nixinfo:
   nix-info -m

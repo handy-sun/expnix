@@ -79,6 +79,14 @@
       flake = false;
     };
 
+    ## Agent skills catalog: sources, selection and per-agent target
+    ## directories. It keeps its own flake and lock so skill pins evolve
+    ## separately from the system inputs; home/default.nix imports its module.
+    skills-catalog = {
+      url = "path:./skills-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ## ------ my applications, configs and scripts ------
     githand = {
       url = "github:handy-sun/githand";

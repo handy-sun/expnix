@@ -82,5 +82,7 @@ in
     ./gui
     inputs.my-dotzsh.homeManagerModules.default
     inputs.my-nvimdots.homeManagerModules.default
+    ## Agent Skills: sources, selection and targets live in skills-nix/.
+    inputs.skills-catalog.homeManagerModules.default
   ];
 }
