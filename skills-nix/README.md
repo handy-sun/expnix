@@ -26,15 +26,13 @@ skills-nix/
 | source | 上游 | 上游布局 | 取用方式 | 数量 |
 | --- | --- | --- | --- | --- |
 | `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 20 |
-| `hermes` | `github:NousResearch/hermes-agent` 的 `skills/` | `<category>/<name>` | `explicit` 改名压平 | 10 |
-| `hermes-optional` | 同仓库的 `optional-skills/` | 同上 | `explicit` 改名压平 | 2 |
 | `browser-act` | `github:browser-act/skills` | 单层（`filter.nameRegex`） | `enable` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 8 |
-| `local` | 本仓库 `local/` | 单层 | `enable` | 40 |
+| `local` | 本仓库 `local/` | 单层 | `enable` | 45 |
 
-上游技能不再复制进仓库：上游有就引用上游，`local/` 只放没有上游的项目专用技能。
-`hermes` 的两个 source 指向同一个约 271MB 的运行时仓库，只为 12 个技能，是这套
-配置里唯一体积明显的输入。
+上游技能不再复制进仓库：上游有就引用上游，`local/` 只放没有上游的项目专用技能，
+外加 10 个从 Hermes toolkit 复制出来的小工具技能。`NousResearch/hermes-agent`
+（271 MB 的 agent 运行时）没有作为输入引入，原因和取舍见 `INVENTORY.md` §2。
 
 ## 命令
 
@@ -70,6 +68,7 @@ nix run ./skills-nix#skills-sources-lock -- \
 
 | Target | 目录 | 说明 |
 | --- | --- | --- |
+| `agents` | `$HOME/.agents/skills` | 共享目录；dsh 把它当作 user-agents root |
 | `claude` | `$HOME/.config/claude/skills` | 显式路径，等于 `home/default.nix` 里的 `CLAUDE_CONFIG_DIR` |
 | `codex` | `$HOME/.config/codex/skills` | 显式路径；排除 `/.system`，Codex 自己维护 bundled skills |
 | `opencode` | `$HOME/.config/opencode/skills` | 与 OMP 共用 |
@@ -84,7 +83,7 @@ nix run ./skills-nix#skills-sources-lock -- \
 同步，并在目标目录写入 `.agent-skills-managed.json` 表示归属。目标目录非空且
 没有该 marker 时，同步会拒绝而不是覆盖。
 
-只有 `catalog.nix` 的 `hosts`（`buking`、`handyMini`）会启用这四个目标；
+只有 `catalog.nix` 的 `hosts`（`buking`、`handyMini`）会启用这五个目标；
 其它 hosts 和 standalone Home Manager 求值出 `enable = false`，不会创建目录。
 `skills-install` 是手动入口，不受 `hosts` 限制。
 

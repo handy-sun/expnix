@@ -52,22 +52,6 @@
         "type": "github"
       }
     },
-    "hermes-agent": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1792995562,
-        "narHash": "sha256-ptdQPHGtX3zOYWq0TswoeVwicWlAraN+gcIF4Q7sWtI=",
-        "owner": "NousResearch",
-        "repo": "hermes-agent",
-        "rev": "df5dbc2acca7a9d29050f9f37bacb4500d03eb92",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NousResearch",
-        "repo": "hermes-agent",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1792812153,
@@ -89,7 +73,6 @@
         "addyosmani-skills": "addyosmani-skills",
         "agent-skills": "agent-skills",
         "browser-act-skills": "browser-act-skills",
-        "hermes-agent": "hermes-agent",
         "nixpkgs": "nixpkgs",
         "taysi-tsuki": "taysi-tsuki"
       }

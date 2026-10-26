@@ -18,18 +18,6 @@
       subdir = "skills";
     };
 
-    # Hermes skills are nested by category in the upstream repository; they are
-    # selected through `skills.explicit` below so the deployed names stay flat.
-    hermes = {
-      path = inputs.hermes-agent;
-      subdir = "skills";
-    };
-
-    hermes-optional = {
-      path = inputs.hermes-agent;
-      subdir = "optional-skills";
-    };
-
     browser-act = {
       path = inputs.browser-act-skills;
       filter.nameRegex = "^browser-act$";
@@ -40,7 +28,8 @@
       subdir = "home/agents/skills";
     };
 
-    # Skills maintained in this repository.
+    # Skills maintained in this repository, including the Hermes toolkit skills
+    # that were copied out of its 271 MB runtime repository.
     local = {
       path = ./local;
     };
@@ -85,8 +74,7 @@
       "awesome-cv-customization"
       "c-development"
       "cargo-dependency-update"
-      "cc-switch-app-type-wiring"
-      "codex"
+      "codebase-inspection"
       "cpp-code-review"
       "design-md-init"
       "desktop-app-ci"
@@ -102,81 +90,35 @@
       "github-release-management"
       "github-repo-management"
       "hdd-pending-sector-repair"
+      "himalaya"
       "kanban-orchestrator"
       "kanban-worker"
+      "mcporter"
       "native-mcp"
       "nix-flake-ci"
       "nix-flake-development"
       "nix-module-capability-detection"
+      "node-inspect-debugger"
+      "obsidian"
       "project-docs"
+      "python-debugpy"
       "release-skills"
+      "requesting-code-review"
       "rust-pre-commit-hook"
       "rust-struct-field-propagation"
       "rust-test-isolation"
       "shell-scripting"
-      "singbox-config"
       "skills-nix-maintenance"
+      "spike"
       "systematic-debugging"
-      "web-access"
       "webhook-subscriptions"
       "workflow-skill-architect"
       "writing-plans"
+      "xurl"
     ];
 
     enableAll = false;
-
-    # Hermes keeps its skills under <category>/<name>; the declaration name is
-    # the deployed name, so these land at <dest>/<name> like everything else.
-    explicit = {
-      claude-code = {
-        from = "hermes";
-        path = "autonomous-ai-agents/claude-code";
-      };
-      codebase-inspection = {
-        from = "hermes";
-        path = "software-development/codebase-inspection";
-      };
-      himalaya = {
-        from = "hermes";
-        path = "email/himalaya";
-      };
-      mcporter = {
-        from = "hermes-optional";
-        path = "mcp/mcporter";
-      };
-      node-inspect-debugger = {
-        from = "hermes";
-        path = "software-development/node-inspect-debugger";
-      };
-      obsidian = {
-        from = "hermes";
-        path = "note-taking/obsidian";
-      };
-      opencode = {
-        from = "hermes";
-        path = "autonomous-ai-agents/opencode";
-      };
-      python-debugpy = {
-        from = "hermes";
-        path = "software-development/python-debugpy";
-      };
-      requesting-code-review = {
-        from = "hermes";
-        path = "software-development/requesting-code-review";
-      };
-      spike = {
-        from = "hermes";
-        path = "software-development/spike";
-      };
-      subagent-driven-development = {
-        from = "hermes-optional";
-        path = "software-development/subagent-driven-development";
-      };
-      xurl = {
-        from = "hermes";
-        path = "social-media/xurl";
-      };
-    };
+    explicit = { };
   };
 
   # Hosts that receive the global skill directories, matched against
@@ -196,7 +138,11 @@
   # from home-manager-<user>.service, whose environment does not carry those
   # variables, so the defaults would expand to ~/.claude and ~/.codex while the
   # agents read the XDG paths set in home/default.nix's sessionVariables.
+  #
+  # agents is the shared `$HOME/.agents/skills` directory. dsh reads it as its
+  # user-agents root, which is how these skills reach dsh at all.
   targets = {
+    agents.enable = true;
     claude = {
       dest = "$HOME/.config/claude/skills";
       enable = true;

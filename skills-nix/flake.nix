@@ -11,15 +11,11 @@
 
     # Upstream skill collections. All of them are consumed as plain source
     # trees (`flake = false`): the repositories own the content, this catalog
-    # only selects which skills are deployed. hermes-agent is a whole agent
-    # runtime (~271 MB), needed because twelve skills live only there.
+    # only selects which skills are deployed. The Hermes toolkit is not an
+    # input: it ships inside a 271 MB agent runtime, so the ten skills worth
+    # keeping were copied into local/ instead.
     addyosmani-skills = {
       url = "github:addyosmani/agent-skills";
-      flake = false;
-    };
-
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
       flake = false;
     };
 

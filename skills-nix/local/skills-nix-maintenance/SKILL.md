@@ -9,6 +9,7 @@ description: Maintains the agent skill catalog in this expnix checkout. Use when
 
 | Target | Directory |
 | --- | --- |
+| agents | `$HOME/.agents/skills` (the directory dsh reads as its user-agents root) |
 | claude | `$HOME/.config/claude/skills` |
 | codex | `$HOME/.config/codex/skills` |
 | opencode / omp | `$HOME/.config/opencode/skills` |
@@ -45,13 +46,13 @@ from `home-manager-<user>.service`, which has no `CLAUDE_CONFIG_DIR` or
 1. If it has an upstream, add the repository to `skills-nix/flake.nix` as a
    `flake = false` input and declare the source in `catalog.nix`
    (`subdir` / `filter.nameRegex` as needed).
-2. If the upstream layout is nested (Hermes keeps `skills/<category>/<name>`),
-   select the skill through `skills.explicit`; the declaration name becomes
-   the deployed name:
+2. If the upstream layout is nested, select the skill through
+   `skills.explicit`; the declaration name becomes the deployed name, which
+   keeps the target flat:
 
    ```nix
    explicit.python-debugpy = {
-     from = "hermes";
+     from = "some-nested-source";
      path = "software-development/python-debugpy";
    };
    ```
@@ -78,7 +79,7 @@ enabled target.
 
 ## Locks
 
-- `skills-nix/flake.lock` pins nixpkgs, agent-skills-nix and the four skill
+- `skills-nix/flake.lock` pins nixpkgs, agent-skills-nix and the three skill
   repositories: `cd skills-nix && nix flake update`.
 - Registry manifests are not used yet; when they are,
   `cd skills-nix && nix run .#skills-sources-lock` refreshes

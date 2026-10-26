@@ -52,14 +52,21 @@ Skills 目录现状：
   `feat/skills-external-mode` 版本），不再 sync、import，也不打包
   `skills.zip`。
 - 阶段 4：111 个技能分类并执行（见 `INVENTORY.md`）：15 个废弃目录移出 SSOT
-  （SSOT 从 111 降到 96），其余按"上游优先 + 扁平布局"落地，部署面 81 个技能。
+  （SSOT 从 111 降到 96），其余按"上游优先 + 扁平布局"落地，当前部署面 74 个技能。
 - 阶段 4 的第二轮调整（2026-10-26，同一个分支）：
   - 取消所有 source 的 `idPrefix`，并把 `local/` 的分类目录展平：每个技能 ID
     就是一个目录名，目标目录统一是 `<dest>/<name>/SKILL.md`。
   - 上游有地址的改回引用上游：`addyosmani/agent-skills`（20）、
-    `NousResearch/hermes-agent`（12，经 `skills.explicit` 改名压平）、
-    `browser-act/skills`（1）、`TaysiTsuki`（8）；`local/` 只剩 40 个没有
-    上游的项目专用技能。
+    `browser-act/skills`（1）、`TaysiTsuki`（8）。
+  - `NousResearch/hermes-agent` 最终没有作为输入：它是 271 MB 的 agent 运行时，
+    只有 12 个技能相关，其中 9 个与 agent 无关的工具技能复制进 `local/`，3 个依赖
+    Hermes 自身工具的技能直接去掉（`claude-code`、`opencode`、
+    `subagent-driven-development`）。
+  - 删除了明确不再需要的 4 个本地技能：`singbox-config`、`codex`、
+    `cc-switch-app-type-wiring`、`web-access`。
+  - 新增 `targets.agents`（`$HOME/.agents/skills`）：dsh 把它当作 user-agents
+    root，所以 dsh 也能看到全部技能；`~/.dsh/skills` 里原先手工拷的 4 个旧副本
+    已移到 `~/backups/dsh-skills-*`。
   - 原因：DSH 的技能加载器只扫一层（`~/.dsh/skills/<name>/SKILL.md`、
     `~/.agents/skills/<name>/SKILL.md`），带 `local/` 前缀或分类目录的布局对
     它完全不可见；Codex 虽然能递归，但扁平对全部 agent 都成立。
@@ -101,10 +108,12 @@ Skills 目录现状：
 | `.system` 保留 | 接管后再次 `skills-install` | `.system` 的 5 个技能与 marker 仍在 |
 | SSOT 清理 | `find ~/.config/cc-switch-tui/skills -name SKILL.md` | 111 → 96（移出 15 个） |
 | 激活环境模拟 | `env -i HOME=$HOME skills-install` | 只靠 `HOME` 就落到四个 XDG 目录，没有生成 `~/.claude/skills`、`~/.codex/skills` |
-| 扁平布局 | `find -L <bundle> -mindepth 2 -maxdepth 2 -name SKILL.md` | 81 个，深层 0 个 |
-| 单层扫描 | `ls -d <dest>/*/SKILL.md \| wc -l` | 四个目标各 81，与 bundle 一致 |
+| 扁平布局 | `find -L <bundle> -mindepth 2 -maxdepth 2 -name SKILL.md` | 74 个，深层 0 个 |
+| 单层扫描 | `ls -d <dest>/*/SKILL.md \| wc -l` | 五个目标各 74，与 bundle 一致 |
 | 上游内容一致 | `sha256sum` 对比 bundle 与 addyosmani / browser-act 源文件 | 一致 |
-| 扁平后重同步 | 旧 `local/`、`taysi/` 目录 | 被 `rsync --delete` 删除，只剩 81 个扁平目录 + Codex `.system` |
+| 扁平后重同步 | 旧 `local/`、`taysi/` 目录 | 被 `rsync --delete` 删除，只剩扁平目录 + Codex `.system` |
+| `agents` 目标 | `ls -d ~/.agents/skills/*/SKILL.md` | 74 个，marker 已写入；dsh 会话里能看到同一批技能 |
+| 清掉 dsh 旧副本 | `~/.dsh/skills` | 4 个手工副本移到 `~/backups/dsh-skills-*`，目录已空 |
 
 未执行：
 
@@ -211,8 +220,9 @@ nix flake check .
    一层，`skills/local/<name>/SKILL.md` 会被当成 `local/SKILL.md` 而找不到。
    因此取消 `idPrefix` 并把本地分类目录展平，部署形态统一为
    `<dest>/<name>/SKILL.md`；上游的嵌套布局用 `skills.explicit` 改名压平。
-5. `hermes-agent` 作为 `flake = false` 输入约 271MB（整个 agent 运行时），只为
-   12 个技能；如果体积不可接受，把这 12 个复制回 `local/` 即可去掉该输入。
+5. `hermes-agent` 没有作为输入：它是 271MB 的 agent 运行时，只为 12 个技能。
+   其中 9 个复制进 `local/`，3 个依赖 Hermes 自身工具的去掉；以后需要时按
+   `INVENTORY.md` §2 的做法取单个文件即可。
 6. 目标路径不再用 `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills` 这类带环境变量的
    默认值：Home Manager 激活跑在 `home-manager-qi.service` 里，unit 环境没有
    `CLAUDE_CONFIG_DIR` / `CODEX_HOME`，变量会回退到 `~/.claude`、`~/.codex`。

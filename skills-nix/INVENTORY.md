@@ -1,64 +1,68 @@
 # 技能来源与阶段 4 迁移记录
 
-记录 `skills-nix/` 当前每个技能的来源，以及 cc-switch SSOT（`~/.config/cc-switch-tui/skills`）
-里 111 个技能的去向。只读分析的结论已经在仓库里落地，本文是它的证据与决策记录。
+记录 `skills-nix/` 当前每个技能的来源，以及 cc-switch SSOT
+（`~/.config/cc-switch-tui/skills`）里 111 个技能的去向。分析的结论已经落地在仓库里，
+本文是证据与决策记录。
 
 ## 1. 现状
 
-部署面共 **81 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
+部署面共 **74 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
 
 | 来源 | 数量 | 说明 |
 | --- | --- | --- |
-| `addyosmani/agent-skills` | 20 | 上游布局就是 `skills/<name>`，直接 `enable` |
-| `NousResearch/hermes-agent` | 12 | 上游是 `skills/<category>/<name>`，用 `skills.explicit` 改名压平 |
+| `addyosmani/agent-skills` | 20 | 上游布局就是 `skills/<name>` |
 | `MidAutumnMoon/TaysiTsuki` | 8 | `home/agents/skills`，本身就是单层 |
-| `browser-act/skills` | 1 | 用 `filter.nameRegex` 只取 `browser-act` |
-| 本仓库 `local/` | 40 | 38 个从 SSOT 迁移 + 2 个本仓库新写（`skills-nix-maintenance`、`expnix-workflow`） |
-| 合计 | 81 | |
+| `browser-act/skills` | 1 | `filter.nameRegex` 只取 `browser-act` |
+| `local/` | 45 | 34 个从 SSOT 迁入、9 个从 Hermes toolkit 复制、2 个本仓库新写 |
+| 合计 | 74 | |
 
-为什么要扁平：DSH 的技能加载器（`@deepseek-ai/dsh-skill-filesystem` 的
-`discoverRoot`）只列 skills 根目录的一层，`<root>/<name>/SKILL.md` 之外的内容
-不会被发现；`~/.agents/skills` 也是同样的扫描方式。带 `idPrefix` 或分类目录的
-布局对这些 agent 完全不可见。
+目标目录共 5 个：`claude`、`codex`、`opencode`、`gemini`，以及
+`agents`（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 74 个）。
+
+为什么要扁平：dsh 的技能加载器（`@deepseek-ai/dsh-skill-filesystem` 的
+`discoverRoot`）只列 skills 根目录的一层；带 `idPrefix` 或分类目录的布局对它是
+不可见的。
 
 ## 2. 上游来源
 
-| source | 仓库 | 锁定版本 | 体积 | 布局 | 取用 |
+| source | 仓库 | 锁定版本 | 布局 | 取用 | 数量 |
 | --- | --- | --- | --- | --- | --- |
-| `addyosmani` | `github:addyosmani/agent-skills` | `aeac41d` | 1.6 MB | `skills/<name>` | `enable` |
-| `hermes` | `github:NousResearch/hermes-agent` | `df5dbc2` | 271 MB | `skills/<category>/<name>` | `explicit` 改名 |
-| `hermes-optional` | 同上 | `df5dbc2` | – | `optional-skills/<category>/<name>` | `explicit` 改名 |
-| `browser-act` | `github:browser-act/skills` | `11c057b` | 3.6 MB | 仓库根下 `browser-act/` | `filter.nameRegex` |
-| `taysi` | `github:MidAutumnMoon/TaysiTsuki` | `9fa573c` | 2.7 MB | `home/agents/skills/<name>` | `enable` |
-| `local` | 本仓库 | – | – | `local/<name>` | `enable` |
+| `addyosmani` | `github:addyosmani/agent-skills` | `aeac41d` | `skills/<name>` | `enable` | 20 |
+| `browser-act` | `github:browser-act/skills` | `11c057b` | 仓库根下 `browser-act/` | `filter.nameRegex` | 1 |
+| `taysi` | `github:MidAutumnMoon/TaysiTsuki` | `9fa573c` | `home/agents/skills/<name>` | `enable` | 8 |
+| `local` | 本仓库 | – | `local/<name>` | `enable` | 45 |
 
-`hermes-agent` 是整个 agent 运行时仓库，只为 12 个技能引入；如果体积不可接受，
-把这 12 个复制回 `local/` 就能去掉该输入。
+**Hermes 不是输入，也没有整套导入。** `NousResearch/hermes-agent` 是整个 agent
+运行时（271 MB），与这里相关的 12 个技能分三类处理：
+
+- 9 个与 agent 无关的工具/技术技能复制进 `local/`：`himalaya`、`obsidian`、
+  `xurl`、`mcporter`、`codebase-inspection`、`node-inspect-debugger`、
+  `python-debugpy`、`requesting-code-review`、`spike`；
+- 3 个依赖 Hermes 自身工具/运行时的技能直接去掉：`claude-code`、`opencode`
+  （"让 Hermes 去驱动某个 CLI"）、`subagent-driven-development`（依赖
+  `delegate_task`）。
 
 ## 3. 判定方法
 
 1. **枚举 SSOT**：递归查找含 `SKILL.md` 的目录，得到 111 个技能。
-2. **启用面**：cc-switch 数据库 `skills` 表的 `enabled_claude` / `enabled_codex`，
-   判断当时是否真的被那两个 agent 使用。
-3. **上游比对**：把每个 `SKILL.md` 的 sha256 与下列仓库逐文件比对，并用词集合
-   Dice 相似度找同名技能最近版本：hermes-agent、addyosmani/agent-skills、
-   obra/superpowers、anthropics/skills、browser-act/skills、TaysiTsuki、
-   JimLiu/baoyu-skills、cexll/myclaude、ComposioHQ/awesome-claude-skills。
-4. **口径**：上游有对应技能就引用上游（即使本地副本有轻微改动，以上游为准）；
-   没有上游的项目专用技能留在 `local/`；只有 Hermes 自己使用或仅 macOS 有意义的
-   保持不动。
+2. **启用面**：cc-switch 数据库 `skills` 表的 `enabled_claude` / `enabled_codex`。
+3. **上游比对**：sha256 逐文件比对 + 词集合 Dice 相似度，候选仓库包括
+   addyosmani/agent-skills、hermes-agent、obra/superpowers、anthropics/skills、
+   browser-act/skills、TaysiTsuki、baoyu-skills、myclaude、awesome-claude-skills。
+4. **口径**：先看上游；没有上游的看是否只对 Hermes 有意义；剩下的进 `local/`。
 
 ## 4. SSOT 111 项的处置
 
 | 去向 | 数量 |
 | --- | --- |
 | addyosmani/agent-skills | 20 |
-| hermes-agent | 12 |
+| local/（从 hermes-agent 复制） | 9 |
 | TaysiTsuki | 8 |
 | browser-act/skills | 1 |
-| local/ | 38 |
+| local/（沿用原副本） | 34 |
 | 已移出 SSOT（6 个 `.bak` + 重复的嵌套 TDD） | 7 |
-| 不迁移（Hermes 运行时专用） | 3 |
+| 已删除（`singbox-config`、`codex`、`cc-switch-app-type-wiring`、`web-access`） | 4 |
+| 不迁移（Hermes 专用 3 + Hermes 运行时技能 3） | 6 |
 | 暂不迁移（macOS 专用 5、media 3、productivity 14） | 22 |
 | 合计 | 111 |
 
@@ -82,11 +86,11 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `autonomous-ai-agents/claude-code` | hermes-agent |
-| `autonomous-ai-agents/codex` | local/ |
+| `autonomous-ai-agents/claude-code` | 不迁移（Hermes 运行时技能） |
+| `autonomous-ai-agents/codex` | 已删除（本轮） |
 | `autonomous-ai-agents/codex.bak` | 已移出 SSOT |
 | `autonomous-ai-agents/hermes-agent` | 不迁移（Hermes 专用） |
-| `autonomous-ai-agents/opencode` | hermes-agent |
+| `autonomous-ai-agents/opencode` | 不迁移（Hermes 运行时技能） |
 
 ### `awesome-cv-customization/`
 
@@ -168,7 +172,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `email/himalaya` | hermes-agent |
+| `email/himalaya` | local/（从 hermes-agent 复制） |
 | `email/himalaya.bak` | 已移出 SSOT |
 
 ### `frontend-ui-engineering/`
@@ -187,7 +191,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `github/codebase-inspection` | hermes-agent |
+| `github/codebase-inspection` | local/（从 hermes-agent 复制） |
 | `github/github-auth` | local/ |
 | `github/github-auth.bak` | 已移出 SSOT |
 | `github/github-code-review` | local/ |
@@ -218,7 +222,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `mcp/mcporter` | hermes-agent |
+| `mcp/mcporter` | local/（从 hermes-agent 复制） |
 | `mcp/native-mcp` | local/ |
 
 ### `media/`
@@ -245,7 +249,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `note-taking/obsidian` | hermes-agent |
+| `note-taking/obsidian` | local/（从 hermes-agent 复制） |
 | `note-taking/obsidian.bak` | 已移出 SSOT |
 
 ### `performance-optimization/`
@@ -307,13 +311,13 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `singbox-config` | local/ |
+| `singbox-config` | 已删除（本轮） |
 
 ### `social-media/`
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `social-media/xurl` | hermes-agent |
+| `social-media/xurl` | local/（从 hermes-agent 复制） |
 
 ### `software-development/`
 
@@ -322,19 +326,19 @@
 | `software-development/adding-rust-enum-variant` | local/ |
 | `software-development/c-development` | local/ |
 | `software-development/cargo-dependency-update` | local/ |
-| `software-development/cc-switch-app-type-wiring` | local/ |
+| `software-development/cc-switch-app-type-wiring` | 已删除（本轮） |
 | `software-development/debugging-hermes-tui-commands` | 不迁移（Hermes 专用） |
 | `software-development/design-md-init` | local/ |
 | `software-development/hermes-agent-skill-authoring` | 不迁移（Hermes 专用） |
-| `software-development/node-inspect-debugger` | hermes-agent |
+| `software-development/node-inspect-debugger` | local/（从 hermes-agent 复制） |
 | `software-development/project-docs` | local/ |
-| `software-development/python-debugpy` | hermes-agent |
-| `software-development/requesting-code-review` | hermes-agent |
+| `software-development/python-debugpy` | local/（从 hermes-agent 复制） |
+| `software-development/requesting-code-review` | local/（从 hermes-agent 复制） |
 | `software-development/rust-pre-commit-hook` | local/ |
 | `software-development/rust-struct-field-propagation` | local/ |
 | `software-development/rust-test-isolation` | local/ |
-| `software-development/spike` | hermes-agent |
-| `software-development/subagent-driven-development` | hermes-agent |
+| `software-development/spike` | local/（从 hermes-agent 复制） |
+| `software-development/subagent-driven-development` | 不迁移（Hermes 运行时技能） |
 | `software-development/systematic-debugging` | local/ |
 | `software-development/test-driven-development` | 已移出 SSOT |
 | `software-development/writing-plans` | local/ |
@@ -380,7 +384,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `web-access` | local/ |
+| `web-access` | 已删除（本轮） |
 
 ### `workflow-skill-architect/`
 
@@ -392,9 +396,11 @@
 ## 5. 待确认
 
 1. `apple/*` 与 `macos-computer-use` 只在 handyMini 有意义，是否要在下一轮启用？
-2. `media/*` 与 `productivity/*` 上游就是 hermes-agent；需要时加进
-   `skills.explicit` 即可，不必复制。
-3. `local/` 的 40 个里可能还有不再使用的（例如 `hdd-pending-sector-repair` 这类
-   一次性排障技能），是否需要再精简？
-4. `browser-act` 技能依赖 uv 安装的 `browser-act` 包；包升级后需要重新核对
-   SKILL.md 里的 CLI 用法。
+2. `media/*` 与 `productivity/*` 的上游就是 hermes-agent；需要时从上游取一两个文件
+   放进 `local/` 即可，不必为此引入 271 MB 的输入。
+3. `local/` 里还有几个 Hermes 运行时色彩很重的技能（`native-mcp`、
+   `kanban-orchestrator`、`kanban-worker`、`webhook-subscriptions`），它们描述的是
+   Hermes 自己的 config/CLI，是否要一并删掉？
+4. TaysiTsuki 里还有 7 个未启用的技能（`challenge-architecture`、`grill-me`、
+   `grilling`、`language-style-guide`、`naming-and-magic-literals`、
+   `post-impl-housekeep`、`wait-what`），要不要挑几个启用？
