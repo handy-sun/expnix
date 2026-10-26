@@ -76,5 +76,6 @@ Hermes 不是 target。`$HERMES_HOME/skills` 混合了 bundled skills、
   继续由 `cc-switch-tui` 或 agent 自身配置管理。
 - 上游 skills 只能通过审查过的 lock 变更进入。
 
-基线数据、首次接管步骤和回滚方式见 `MIGRATION.md`，设计依据见
+基线数据、首次接管步骤和回滚方式见 `MIGRATION.md`；cc-switch SSOT 里 111 个
+技能的逐项分类结论见 `INVENTORY.md`；设计依据见
 `.github/docs/skills-nix-design.md`。

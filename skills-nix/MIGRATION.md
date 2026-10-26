@@ -55,7 +55,9 @@ Skills 目录现状：
    `skills-nix/local/`，并把 cc-switch-tui 切到 `external`。
 2. 阶段 3 的运行时确认：`cc-switch-tui` 的 external 模式代码位于该仓库的
    `feat/skills-external-mode` 分支，本机运行的 0.2.3 仍是 managed 行为。
-3. 阶段 4：从 cc-switch SSOT（111 个技能）逐项分类迁移。
+3. 阶段 4：从 cc-switch SSOT 逐项分类并迁移。分类已完成，结果在
+   `INVENTORY.md`：57 个进 `local/`、13 个改走 `NousResearch/hermes-agent`
+   上游 pin、23 个暂不迁移、17 个不迁移、1 个待定，分四个批次执行。
 4. 阶段 5：Hermes，未开始，也没有配置 target。
 
 因此当前分支合入后**不要立刻执行 `just s`**：`claude` 与
