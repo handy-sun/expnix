@@ -121,9 +121,22 @@
   # OpenCode and OMP share one directory because omp resolves
   # ~/.config/opencode/skills. Hermes is intentionally absent: its skills root
   # mixes bundled skills, curator state and user edits.
+  #
+  # claude and codex get explicit destinations instead of the module defaults
+  # (${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills etc.): Home Manager activation
+  # runs from home-manager-<user>.service, whose environment does not carry
+  # CLAUDE_CONFIG_DIR or CODEX_HOME, so the defaults would expand to ~/.claude
+  # and ~/.codex while the agents read the XDG paths set in
+  # home/default.nix's sessionVariables.
   targets = {
-    claude.enable = true;
-    codex.enable = true;
+    claude = {
+      dest = "$HOME/.config/claude/skills";
+      enable = true;
+    };
+    codex = {
+      dest = "$HOME/.config/codex/skills";
+      enable = true;
+    };
     opencode.enable = true;
     gemini.enable = true;
   };

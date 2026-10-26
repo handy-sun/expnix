@@ -56,10 +56,15 @@ nix run ./skills-nix#skills-sources-lock -- \
 
 | Target | 目录 | 说明 |
 | --- | --- | --- |
-| `claude` | `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills` | |
-| `codex` | `${CODEX_HOME:-$HOME/.codex}/skills` | 排除 `/.system`，Codex 自己维护 bundled skills |
+| `claude` | `$HOME/.config/claude/skills` | 显式路径，等于 `home/default.nix` 里的 `CLAUDE_CONFIG_DIR` |
+| `codex` | `$HOME/.config/codex/skills` | 显式路径；排除 `/.system`，Codex 自己维护 bundled skills |
 | `opencode` | `$HOME/.config/opencode/skills` | 与 OMP 共用 |
 | `gemini` | `$HOME/.gemini/skills` | |
+
+`claude` 与 `codex` 没有用模块默认的 `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills`
+形式：Home Manager 的激活由 `home-manager-<user>.service` 执行，该 unit 的环境里
+没有 `CLAUDE_CONFIG_DIR` / `CODEX_HOME`，变量会回退到 `~/.claude`、`~/.codex`，
+而 agent 从登录 shell 读的是 XDG 路径。
 
 全局目标使用 `symlink-tree`：激活时用 `rsync -a --delete` 从 store bundle
 同步，并在目标目录写入 `.agent-skills-managed.json` 表示归属。目标目录非空且

@@ -91,6 +91,7 @@ Skills 目录现状：
 | Codex 真实 home | `CODEX_HOME=~/.config/codex codex debug prompt-input` | r0 发现 80 个（含 taysi 8 个、二级目录），r1 发现 4 个 `.system` 技能 |
 | `.system` 保留 | 接管后再次 `skills-install` | `.system` 的 5 个技能与 marker 仍在 |
 | SSOT 清理 | `find ~/.config/cc-switch-tui/skills -name SKILL.md` | 111 → 96（移出 15 个） |
+| 激活环境模拟 | `env -i HOME=$HOME skills-install` | 只靠 `HOME` 就落到四个 XDG 目录，没有生成 `~/.claude/skills`、`~/.codex/skills` |
 
 未执行：
 
@@ -192,6 +193,11 @@ nix flake check .
    启用。`hostName` 不能声明成模块参数：standalone Home Manager 不传它，
    声明后求值会直接失败，因此从 `args` 读取并回退到 `null`。设计文档没有写
    这一层限制，属于按机器类型的补充决策。
-4. 设计文档 §2.2 说「`cc-switch-tui` 在 external 模式下不执行 Skills sync」，
+4. 目标路径不再用 `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills` 这类带环境变量的
+   默认值：Home Manager 激活跑在 `home-manager-qi.service` 里，unit 环境没有
+   `CLAUDE_CONFIG_DIR` / `CODEX_HOME`，变量会回退到 `~/.claude`、`~/.codex`。
+   `catalog.nix` 因此给这两个 target 写了显式的 `$HOME/.config/...` 路径，并用
+   `env -i HOME=... skills-install` 验证只靠 `HOME` 也能落到正确目录。
+5. 设计文档 §2.2 说「`cc-switch-tui` 在 external 模式下不执行 Skills sync」，
    对应实现位于 cc-switch-tui 仓库的 `feat/skills-external-mode` 分支；本机运行的
    0.2.3 发布版仍是 managed 行为，接管前必须确认版本。
