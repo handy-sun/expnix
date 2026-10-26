@@ -13,7 +13,6 @@ description: Maintains the agent skill catalog in this expnix checkout. Use when
 | claude | `$HOME/.config/claude/skills` |
 | codex | `$HOME/.config/codex/skills` |
 | opencode / omp | `$HOME/.config/opencode/skills` |
-| gemini | `$HOME/.gemini/skills` |
 
 Hermes is not managed: `$HERMES_HOME/skills` also holds bundled skills,
 curator state and user edits. The claude and codex destinations are literal

@@ -25,13 +25,13 @@ skills-nix/
 
 | source | 上游 | 上游布局 | 取用方式 | 数量 |
 | --- | --- | --- | --- | --- |
-| `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 20 |
+| `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 21 |
 | `browser-act` | `github:browser-act/skills` | 单层（`filter.nameRegex`） | `enable` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 11 |
-| `local` | 本仓库 `local/` | 单层 | `enable` | 39 |
+| `local` | 本仓库 `local/` | 单层 | `enable` | 35 |
 
 上游技能不再复制进仓库：上游有就引用上游，`local/` 只放没有上游的项目专用技能，
-外加 7 个从 Hermes toolkit 复制出来的小工具技能。`NousResearch/hermes-agent`
+外加 5 个从 Hermes toolkit 复制出来的小工具技能。`NousResearch/hermes-agent`
 （271 MB 的 agent 运行时）没有作为输入引入，原因和取舍见 `INVENTORY.md` §2。
 
 ## 命令
@@ -72,7 +72,6 @@ nix run ./skills-nix#skills-sources-lock -- \
 | `claude` | `$HOME/.config/claude/skills` | 显式路径，等于 `home/default.nix` 里的 `CLAUDE_CONFIG_DIR` |
 | `codex` | `$HOME/.config/codex/skills` | 显式路径；排除 `/.system`，Codex 自己维护 bundled skills |
 | `opencode` | `$HOME/.config/opencode/skills` | 与 OMP 共用 |
-| `gemini` | `$HOME/.gemini/skills` | |
 
 `claude` 与 `codex` 没有用模块默认的 `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills`
 形式：Home Manager 的激活由 `home-manager-<user>.service` 执行，该 unit 的环境里
@@ -83,7 +82,7 @@ nix run ./skills-nix#skills-sources-lock -- \
 同步，并在目标目录写入 `.agent-skills-managed.json` 表示归属。目标目录非空且
 没有该 marker 时，同步会拒绝而不是覆盖。
 
-只有 `catalog.nix` 的 `hosts`（`buking`、`handyMini`）会启用这五个目标；
+只有 `catalog.nix` 的 `hosts`（`buking`、`handyMini`）会启用这四个目标；
 其它 hosts 和 standalone Home Manager 求值出 `enable = false`，不会创建目录。
 `skills-install` 是手动入口，不受 `hosts` 限制。
 

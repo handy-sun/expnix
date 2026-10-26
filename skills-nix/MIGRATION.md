@@ -52,7 +52,7 @@ Skills 目录现状：
   `feat/skills-external-mode` 版本），不再 sync、import，也不打包
   `skills.zip`。
 - 阶段 4：111 个技能分类并执行（见 `INVENTORY.md`）：15 个废弃目录移出 SSOT
-  （SSOT 从 111 降到 96），其余按"上游优先 + 扁平布局"落地，当前部署面 71 个技能。
+  （SSOT 从 111 降到 96），其余按"上游优先 + 扁平布局"落地，当前部署面 68 个技能。
 - 阶段 4 的第二轮调整（2026-10-26，同一个分支）：
   - 取消所有 source 的 `idPrefix`，并把 `local/` 的分类目录展平：每个技能 ID
     就是一个目录名，目标目录统一是 `<dest>/<name>/SKILL.md`。
@@ -67,6 +67,12 @@ Skills 目录现状：
     （`challenge-architecture`、`naming-and-magic-literals`、`post-impl-housekeep`）。
   - 删除了明确不再需要的 4 个本地技能：`singbox-config`、`codex`、
     `cc-switch-app-type-wiring`、`web-access`。
+  - 再删 4 个 Hermes 色彩过重的技能（`systematic-debugging`、
+    `hdd-pending-sector-repair`、`python-debugpy`、`node-inspect-debugger`），
+    并从 addyosmani 上游补上通用的 `debugging-and-error-recovery`。
+  - 移除 `gemini` target，`~/.gemini/skills` 移到备份。
+  - 清理 `~/.config/hermes/skills`：80 个与 SSOT 同名、由 cc-switch 写入的副本
+    移到 `~/backups/hermes-skills-*`，Hermes 只剩它自带的 35 个技能。
   - 新增 `targets.agents`（`$HOME/.agents/skills`）：dsh 把它当作 user-agents
     root，所以 dsh 也能看到全部技能；`~/.dsh/skills` 里原先手工拷的 4 个旧副本
     已移到 `~/backups/dsh-skills-*`。
@@ -111,11 +117,13 @@ Skills 目录现状：
 | `.system` 保留 | 接管后再次 `skills-install` | `.system` 的 5 个技能与 marker 仍在 |
 | SSOT 清理 | `find ~/.config/cc-switch-tui/skills -name SKILL.md` | 111 → 96（移出 15 个） |
 | 激活环境模拟 | `env -i HOME=$HOME skills-install` | 只靠 `HOME` 就落到四个 XDG 目录，没有生成 `~/.claude/skills`、`~/.codex/skills` |
-| 扁平布局 | `find -L <bundle> -mindepth 2 -maxdepth 2 -name SKILL.md` | 71 个，深层 0 个 |
-| 单层扫描 | `ls -d <dest>/*/SKILL.md \| wc -l` | 五个目标各 71，与 bundle 一致 |
+| 扁平布局 | `find -L <bundle> -mindepth 2 -maxdepth 2 -name SKILL.md` | 68 个，深层 0 个 |
+| 单层扫描 | `ls -d <dest>/*/SKILL.md \| wc -l` | 四个目标各 68，与 bundle 一致 |
 | 上游内容一致 | `sha256sum` 对比 bundle 与 addyosmani / browser-act 源文件 | 一致 |
 | 扁平后重同步 | 旧 `local/`、`taysi/` 目录 | 被 `rsync --delete` 删除，只剩扁平目录 + Codex `.system` |
-| `agents` 目标 | `ls -d ~/.agents/skills/*/SKILL.md` | 71 个，marker 已写入；dsh 会话里能看到同一批技能 |
+| `agents` 目标 | `ls -d ~/.agents/skills/*/SKILL.md` | 68 个，marker 已写入；dsh 会话里能看到同一批技能 |
+| `gemini` 目标移除 | `ls -d ~/.gemini/skills` | 目录已移到备份，`catalog.nix` 不再引用 |
+| Hermes 目录清理 | `find ~/.config/hermes/skills -name SKILL.md` | 80 个与 SSOT 同名的副本移到 `~/backups/hermes-skills-*`，剩 35 个 Hermes 自带技能 |
 | 清掉 dsh 旧副本 | `~/.dsh/skills` | 4 个手工副本移到 `~/backups/dsh-skills-*`，目录已空 |
 
 未执行：

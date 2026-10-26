@@ -44,6 +44,7 @@
       "code-review-and-quality"
       "code-simplification"
       "context-engineering"
+      "debugging-and-error-recovery"
       "deprecation-and-migration"
       "documentation-and-adrs"
       "frontend-ui-engineering"
@@ -92,15 +93,12 @@
       "github-pr-workflow"
       "github-release-management"
       "github-repo-management"
-      "hdd-pending-sector-repair"
       "mcporter"
       "nix-flake-ci"
       "nix-flake-development"
       "nix-module-capability-detection"
-      "node-inspect-debugger"
       "obsidian"
       "project-docs"
-      "python-debugpy"
       "release-skills"
       "requesting-code-review"
       "rust-pre-commit-hook"
@@ -109,7 +107,6 @@
       "shell-scripting"
       "skills-nix-maintenance"
       "spike"
-      "systematic-debugging"
       "workflow-skill-architect"
       "writing-plans"
     ];
@@ -149,6 +146,5 @@
       enable = true;
     };
     opencode.enable = true;
-    gemini.enable = true;
   };
 }

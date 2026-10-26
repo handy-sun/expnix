@@ -6,18 +6,19 @@
 
 ## 1. 现状
 
-部署面共 **71 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
+部署面共 **68 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
 
 | 来源 | 数量 | 说明 |
 | --- | --- | --- |
-| `addyosmani/agent-skills` | 20 | 上游布局就是 `skills/<name>` |
+| `addyosmani/agent-skills` | 21 | 上游布局就是 `skills/<name>`；20 个来自 SSOT，`debugging-and-error-recovery` 是额外启用的上游技能 |
 | `MidAutumnMoon/TaysiTsuki` | 11 | `home/agents/skills`，本身就是单层 |
 | `browser-act/skills` | 1 | `filter.nameRegex` 只取 `browser-act` |
-| `local/` | 39 | 30 个从 SSOT 迁入、7 个从 Hermes toolkit 复制、2 个本仓库新写 |
-| 合计 | 71 | |
+| `local/` | 35 | 28 个从 SSOT 迁入、5 个从 Hermes toolkit 复制、2 个本仓库新写 |
+| 合计 | 68 | |
 
-目标目录共 5 个：`claude`、`codex`、`opencode`、`gemini`，以及
-`agents`（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 71 个）。
+目标目录共 4 个：`claude`、`codex`、`opencode`、`agents`
+（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 68 个）。
+`gemini` 目标已移除。
 
 为什么要扁平：dsh 的技能加载器（`@deepseek-ai/dsh-skill-filesystem` 的
 `discoverRoot`）只列 skills 根目录的一层；带 `idPrefix` 或分类目录的布局对它是
@@ -27,21 +28,20 @@
 
 | source | 仓库 | 锁定版本 | 布局 | 取用 | 数量 |
 | --- | --- | --- | --- | --- | --- |
-| `addyosmani` | `github:addyosmani/agent-skills` | `aeac41d` | `skills/<name>` | `enable` | 20 |
+| `addyosmani` | `github:addyosmani/agent-skills` | `aeac41d` | `skills/<name>` | `enable` | 21 |
 | `browser-act` | `github:browser-act/skills` | `11c057b` | 仓库根下 `browser-act/` | `filter.nameRegex` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` | `9fa573c` | `home/agents/skills/<name>` | `enable` | 11 |
-| `local` | 本仓库 | – | `local/<name>` | `enable` | 39 |
+| `local` | 本仓库 | – | `local/<name>` | `enable` | 35 |
 
 **Hermes 不是输入，也没有整套导入。** `NousResearch/hermes-agent` 是整个 agent
 运行时（271 MB），与这里相关的 12 个技能分三类处理：
 
-- 7 个与 agent 无关的工具/技术技能复制进 `local/`：`obsidian`、`mcporter`、
-  `codebase-inspection`、`node-inspect-debugger`、`python-debugpy`、
-  `requesting-code-review`、`spike`；
-- 3 个依赖 Hermes 自身工具/运行时的技能去掉：`claude-code`、`opencode`
-  （"让 Hermes 去驱动某个 CLI"）、`subagent-driven-development`（依赖
-  `delegate_task`）；
-- `himalaya`、`xurl` 曾经复制进来，后来按"用不上"删除了。
+- 5 个与 agent 无关的工具/技术技能还留在 `local/`：`obsidian`、`mcporter`、
+  `codebase-inspection`、`requesting-code-review`、`spike`；
+- 3 个依赖 Hermes 自身工具/运行时的技能去掉：`claude-code`、`opencode`、
+  `subagent-driven-development`（`delegate_task`）；
+- `himalaya`、`xurl`、`python-debugpy`、`node-inspect-debugger` 曾复制进来，
+  后来陆续删掉（后两个的 Hermes 专属章节占比过高）。
 
 ## 3. 判定方法
 
@@ -57,12 +57,12 @@
 | 去向 | 数量 |
 | --- | --- |
 | addyosmani/agent-skills | 20 |
-| local/（从 hermes-agent 复制，现剩 7 个） | 7 |
 | TaysiTsuki | 8 |
 | browser-act/skills | 1 |
-| local/（沿用原副本） | 30 |
+| local/（沿用原副本） | 28 |
+| local/（从 hermes-agent 复制，现剩 5 个） | 5 |
 | 已移出 SSOT（6 个 `.bak` + 重复的嵌套 TDD） | 7 |
-| 已删除（`singbox-config`、`codex`、`cc-switch-app-type-wiring`、`web-access`、`native-mcp`、`kanban-orchestrator`、`kanban-worker`、`webhook-subscriptions`、`xurl`、`himalaya`） | 10 |
+| 已删除（`singbox-config`、`codex`、`cc-switch-app-type-wiring`、`web-access`、`native-mcp`、`kanban-orchestrator`、`kanban-worker`、`webhook-subscriptions`、`xurl`、`himalaya`、`systematic-debugging`、`hdd-pending-sector-repair`、`python-debugpy`、`node-inspect-debugger`） | 14 |
 | 不迁移（Hermes 专用 3 + Hermes 运行时技能 3） | 6 |
 | 暂不迁移（macOS 专用 5、media 3、productivity 14） | 22 |
 | 合计 | 111 |
@@ -150,7 +150,7 @@
 | 技能目录 | 现在来自 |
 | --- | --- |
 | `devops/docker-compose-selfhost` | local/ |
-| `devops/hdd-pending-sector-repair` | local/ |
+| `devops/hdd-pending-sector-repair` | 已删除 |
 | `devops/kanban-orchestrator` | 已删除 |
 | `devops/kanban-orchestrator.bak` | 已移出 SSOT |
 | `devops/kanban-worker` | 已删除 |
@@ -331,16 +331,16 @@
 | `software-development/debugging-hermes-tui-commands` | 不迁移（Hermes 专用） |
 | `software-development/design-md-init` | local/ |
 | `software-development/hermes-agent-skill-authoring` | 不迁移（Hermes 专用） |
-| `software-development/node-inspect-debugger` | local/（从 hermes-agent 复制） |
+| `software-development/node-inspect-debugger` | 已删除 |
 | `software-development/project-docs` | local/ |
-| `software-development/python-debugpy` | local/（从 hermes-agent 复制） |
+| `software-development/python-debugpy` | 已删除 |
 | `software-development/requesting-code-review` | local/（从 hermes-agent 复制） |
 | `software-development/rust-pre-commit-hook` | local/ |
 | `software-development/rust-struct-field-propagation` | local/ |
 | `software-development/rust-test-isolation` | local/ |
 | `software-development/spike` | local/（从 hermes-agent 复制） |
 | `software-development/subagent-driven-development` | 不迁移（Hermes 运行时技能） |
-| `software-development/systematic-debugging` | local/ |
+| `software-development/systematic-debugging` | 已删除 |
 | `software-development/test-driven-development` | 已移出 SSOT |
 | `software-development/writing-plans` | local/ |
 

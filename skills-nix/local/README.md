@@ -1,6 +1,6 @@
 # local/
 
-The 39 skills that have no usable upstream, plus seven Hermes toolkit skills
+The 35 skills that have no usable upstream, plus five Hermes toolkit skills
 copied out of its 271 MB runtime repository. Every skill is one directory with
 a `SKILL.md` at the top:
 
@@ -21,7 +21,7 @@ Two rules:
 - **Upstream first.** If the skill exists in a public repository, wire that
   repository up in `../catalog.nix` instead of copying the content here. The
   Hermes copies are the exception: its repository is 271 MB of agent runtime,
-  so seven small tool skills were copied instead of adding the input.
+  so five small tool skills were copied instead of adding the input.
 
 ## What is in here
 
@@ -70,15 +70,6 @@ Two rules:
 | `github-pr-workflow` | GitHub PR lifecycle: branch, commit, open, CI, merge. | 同上 |
 | `github-release-management` | Manage GitHub releases triggered by tag pushes. |  |
 | `github-repo-management` | Clone/create/fork repos; manage remotes, releases. | 同上 |
-
-### 调试与排查
-
-| 技能 | 作用 | 备注 |
-| --- | --- | --- |
-| `node-inspect-debugger` | Debug Node.js via --inspect + Chrome DevTools Protocol CLI. | 从 Hermes 复制；含 Hermes ui-tui 调试小节 |
-| `python-debugpy` | Debug Python: pdb REPL + debugpy remote (DAP). | 从 Hermes 复制；含 Hermes gateway 调试小节 |
-| `systematic-debugging` | 4-phase root cause debugging: understand bugs before fixing. |  |
-| `hdd-pending-sector-repair` | Diagnose and repair HDD Current_Pending_Sector issues: locate failing LBA via SMART self-test log, map it t… | 通用运维流程；提到 Hermes 的安全限制 |
 
 ### 开发工作流
 
