@@ -4,110 +4,179 @@
 # (the bundle check and the inspection apps), so the deployed set, the
 # inspectable set and the checked bundle cannot drift apart.
 #
-# Only skills listed in skills.enable are deployed: a directory under local/
-# stays inert until its ID is listed here.
+# No source sets `idPrefix`: every skill ID is a single directory name, so a
+# target ends up as <dest>/<name>/SKILL.md. Some agents only scan one level
+# below their skills root (dsh reads ~/.dsh/skills/<name>/SKILL.md and
+# ~/.agents/skills/<name>/SKILL.md), so anything deeper is invisible to them.
 { inputs }:
 {
   sources = {
-    local = {
-      path = ./local;
-      idPrefix = "local";
+    # Upstream collections, consumed as plain source trees. Their layout is
+    # untouched; the selection below decides what is deployed.
+    addyosmani = {
+      path = inputs.addyosmani-skills;
+      subdir = "skills";
     };
 
-    # Skills maintained in TaysiTsuki, consumed as a plain source tree so the
-    # canonical copy stays in that repository instead of being forked here.
+    # Hermes skills are nested by category in the upstream repository; they are
+    # selected through `skills.explicit` below so the deployed names stay flat.
+    hermes = {
+      path = inputs.hermes-agent;
+      subdir = "skills";
+    };
+
+    hermes-optional = {
+      path = inputs.hermes-agent;
+      subdir = "optional-skills";
+    };
+
+    browser-act = {
+      path = inputs.browser-act-skills;
+      filter.nameRegex = "^browser-act$";
+    };
+
     taysi = {
       path = inputs.taysi-tsuki;
       subdir = "home/agents/skills";
-      idPrefix = "taysi";
+    };
+
+    # Skills maintained in this repository.
+    local = {
+      path = ./local;
     };
   };
 
   skills = {
     enable = [
-      "local/api-and-interface-design"
-      "local/autonomous-ai-agents/claude-code"
-      "local/autonomous-ai-agents/codex"
-      "local/autonomous-ai-agents/opencode"
-      "local/awesome-cv-customization"
-      "local/browser-testing-with-devtools"
-      "local/ci-cd-and-automation-overview"
-      "local/ci-cd-and-automation/desktop-app-ci"
-      "local/ci-cd-and-automation/desktop-app-qt6-ci"
-      "local/ci-cd-and-automation/nix-flake-ci"
-      "local/code-review-and-quality-overview"
-      "local/code-review-and-quality/cpp-code-review"
-      "local/code-simplification"
-      "local/context-engineering"
-      "local/deprecation-and-migration"
-      "local/devops/docker-compose-selfhost"
-      "local/devops/hdd-pending-sector-repair"
-      "local/devops/kanban-orchestrator"
-      "local/devops/kanban-worker"
-      "local/devops/webhook-subscriptions"
-      "local/documentation-and-adrs"
-      "local/domain-name-brainstormer"
-      "local/email/himalaya"
-      "local/frontend-ui-engineering"
-      "local/git-workflow-and-versioning"
-      "local/github/codebase-inspection"
-      "local/github/github-auth"
-      "local/github/github-code-review"
-      "local/github/github-issues"
-      "local/github/github-pr-workflow"
-      "local/github/github-release-management"
-      "local/github/github-repo-management"
-      "local/idea-refine"
-      "local/incremental-implementation"
-      "local/leisure/find-nearby"
-      "local/mcp/mcporter"
-      "local/mcp/native-mcp"
-      "local/nix-flake-development"
-      "local/nix-module-capability-detection"
-      "local/note-taking/obsidian"
-      "local/performance-optimization"
-      "local/planning-and-task-breakdown"
-      "local/release-skills"
-      "local/security-and-hardening"
-      "local/shell-scripting"
-      "local/shipping-and-launch"
-      "local/singbox-config"
-      "local/skills-nix-maintenance"
-      "local/social-media/xurl"
-      "local/software-development/adding-rust-enum-variant"
-      "local/software-development/c-development"
-      "local/software-development/cargo-dependency-update"
-      "local/software-development/cc-switch-app-type-wiring"
-      "local/software-development/design-md-init"
-      "local/software-development/expnix-workflow"
-      "local/software-development/node-inspect-debugger"
-      "local/software-development/project-docs"
-      "local/software-development/python-debugpy"
-      "local/software-development/requesting-code-review"
-      "local/software-development/rust-pre-commit-hook"
-      "local/software-development/rust-struct-field-propagation"
-      "local/software-development/rust-test-isolation"
-      "local/software-development/spike"
-      "local/software-development/subagent-driven-development"
-      "local/software-development/systematic-debugging"
-      "local/software-development/writing-plans"
-      "local/source-driven-development"
-      "local/spec-driven-development"
-      "local/test-driven-development"
-      "local/using-agent-skills"
-      "local/web-access"
-      "local/workflow-skill-architect"
-      "taysi/chinese-prose-lint"
-      "taysi/code-cultivation"
-      "taysi/group-meeting"
-      "taysi/handoff"
-      "taysi/host-system-convention"
-      "taysi/humanizer"
-      "taysi/prune-comments-and-docs"
-      "taysi/sillytavern-card-backup"
+      # addyosmani/agent-skills
+      "api-and-interface-design"
+      "browser-testing-with-devtools"
+      "ci-cd-and-automation"
+      "code-review-and-quality"
+      "code-simplification"
+      "context-engineering"
+      "deprecation-and-migration"
+      "documentation-and-adrs"
+      "frontend-ui-engineering"
+      "git-workflow-and-versioning"
+      "idea-refine"
+      "incremental-implementation"
+      "performance-optimization"
+      "planning-and-task-breakdown"
+      "security-and-hardening"
+      "shipping-and-launch"
+      "source-driven-development"
+      "spec-driven-development"
+      "test-driven-development"
+      "using-agent-skills"
+      # browser-act/skills
+      "browser-act"
+      # TaysiTsuki (home/agents/skills)
+      "chinese-prose-lint"
+      "code-cultivation"
+      "group-meeting"
+      "handoff"
+      "host-system-convention"
+      "humanizer"
+      "prune-comments-and-docs"
+      "sillytavern-card-backup"
+      # local/
+      "adding-rust-enum-variant"
+      "awesome-cv-customization"
+      "c-development"
+      "cargo-dependency-update"
+      "cc-switch-app-type-wiring"
+      "codex"
+      "cpp-code-review"
+      "design-md-init"
+      "desktop-app-ci"
+      "desktop-app-qt6-ci"
+      "docker-compose-selfhost"
+      "domain-name-brainstormer"
+      "expnix-workflow"
+      "find-nearby"
+      "github-auth"
+      "github-code-review"
+      "github-issues"
+      "github-pr-workflow"
+      "github-release-management"
+      "github-repo-management"
+      "hdd-pending-sector-repair"
+      "kanban-orchestrator"
+      "kanban-worker"
+      "native-mcp"
+      "nix-flake-ci"
+      "nix-flake-development"
+      "nix-module-capability-detection"
+      "project-docs"
+      "release-skills"
+      "rust-pre-commit-hook"
+      "rust-struct-field-propagation"
+      "rust-test-isolation"
+      "shell-scripting"
+      "singbox-config"
+      "skills-nix-maintenance"
+      "systematic-debugging"
+      "web-access"
+      "webhook-subscriptions"
+      "workflow-skill-architect"
+      "writing-plans"
     ];
+
     enableAll = false;
-    explicit = { };
+
+    # Hermes keeps its skills under <category>/<name>; the declaration name is
+    # the deployed name, so these land at <dest>/<name> like everything else.
+    explicit = {
+      claude-code = {
+        from = "hermes";
+        path = "autonomous-ai-agents/claude-code";
+      };
+      codebase-inspection = {
+        from = "hermes";
+        path = "software-development/codebase-inspection";
+      };
+      himalaya = {
+        from = "hermes";
+        path = "email/himalaya";
+      };
+      mcporter = {
+        from = "hermes-optional";
+        path = "mcp/mcporter";
+      };
+      node-inspect-debugger = {
+        from = "hermes";
+        path = "software-development/node-inspect-debugger";
+      };
+      obsidian = {
+        from = "hermes";
+        path = "note-taking/obsidian";
+      };
+      opencode = {
+        from = "hermes";
+        path = "autonomous-ai-agents/opencode";
+      };
+      python-debugpy = {
+        from = "hermes";
+        path = "software-development/python-debugpy";
+      };
+      requesting-code-review = {
+        from = "hermes";
+        path = "software-development/requesting-code-review";
+      };
+      spike = {
+        from = "hermes";
+        path = "software-development/spike";
+      };
+      subagent-driven-development = {
+        from = "hermes-optional";
+        path = "software-development/subagent-driven-development";
+      };
+      xurl = {
+        from = "hermes";
+        path = "social-media/xurl";
+      };
+    };
   };
 
   # Hosts that receive the global skill directories, matched against
@@ -123,11 +192,10 @@
   # mixes bundled skills, curator state and user edits.
   #
   # claude and codex get explicit destinations instead of the module defaults
-  # (${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills etc.): Home Manager activation
-  # runs from home-manager-<user>.service, whose environment does not carry
-  # CLAUDE_CONFIG_DIR or CODEX_HOME, so the defaults would expand to ~/.claude
-  # and ~/.codex while the agents read the XDG paths set in
-  # home/default.nix's sessionVariables.
+  # (CLAUDE_CONFIG_DIR / CODEX_HOME fallbacks): Home Manager activation runs
+  # from home-manager-<user>.service, whose environment does not carry those
+  # variables, so the defaults would expand to ~/.claude and ~/.codex while the
+  # agents read the XDG paths set in home/default.nix's sessionVariables.
   targets = {
     claude = {
       dest = "$HOME/.config/claude/skills";

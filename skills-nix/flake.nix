@@ -9,9 +9,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Skills maintained in the TaysiTsuki repository. Consumed as a plain
-    # source tree (`flake = false`): that repository owns the content, this
-    # catalog only selects which of its skills are deployed.
+    # Upstream skill collections. All of them are consumed as plain source
+    # trees (`flake = false`): the repositories own the content, this catalog
+    # only selects which skills are deployed. hermes-agent is a whole agent
+    # runtime (~271 MB), needed because twelve skills live only there.
+    addyosmani-skills = {
+      url = "github:addyosmani/agent-skills";
+      flake = false;
+    };
+
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      flake = false;
+    };
+
+    browser-act-skills = {
+      url = "github:browser-act/skills";
+      flake = false;
+    };
+
     taysi-tsuki = {
       url = "github:MidAutumnMoon/TaysiTsuki";
       flake = false;

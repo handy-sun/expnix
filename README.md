@@ -182,17 +182,19 @@ nix build .#homeConfigurations.qi.activationPackage --dry-run
 provider、MCP 和其他非 Skills 配置。Hermes 的 `$HERMES_HOME/skills` 混合了
 bundled skills 与 curator 状态，第一阶段不接管。
 
+技能来自上游仓库：`addyosmani/agent-skills`（20）、`NousResearch/hermes-agent`
+（12）、`browser-act/skills`（1）和 `TaysiTsuki`（8）；只有没有上游的项目专用
+技能放在 `skills-nix/local/`（40）。所有技能都部署成扁平的
+`<dest>/<name>/SKILL.md`，因为 DSH 等 agent 只扫描 skills 根目录的一层。
+
 ```bash
-just skills-list      # 当前选中的技能
+just skills-list      # 当前启用的 81 个技能
 just skills-check     # 构建 bundle 并做 flake check
 ```
 
-本地技能放在 `skills-nix/local/`，选择与目标目录在 `skills-nix/catalog.nix`。
+选择、上游 source、目标目录在 `skills-nix/catalog.nix`；只有 `hosts` 列出的
+主机（`buking`、`handyMini`）会启用目标目录，其它 hosts 与 standalone Home
+Manager 不受影响。
 
-只有 `skills-nix/catalog.nix` 中 `hosts` 列出的主机（`buking`、`handyMini`）会
-启用目标目录；其它 hosts 与 standalone Home Manager 不受影响。
-
-首次接管之前 `just s` 会失败：现有 `claude` 与 `codex` 目录非空、
-也没有 `agent-skills-nix` 的归属 marker，同步程序在校验阶段就拒绝执行，不会
-改动任何文件。接管顺序、备份和回滚步骤见 `skills-nix/MIGRATION.md`，设计依据
-见 `.github/docs/skills-nix-design.md`。
+来源清单见 `skills-nix/INVENTORY.md`，接管与回滚记录见
+`skills-nix/MIGRATION.md`，设计依据见 `.github/docs/skills-nix-design.md`。

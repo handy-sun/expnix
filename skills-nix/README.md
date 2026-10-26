@@ -16,11 +16,25 @@ skills-nix/
 └── registry/        # 上游仓库的 manifest 与 lock（见其 README）
 ```
 
-`catalog.nix` 目前有两个 source：`local`（本仓库维护，72 个）和 `taysi`
-（`TaysiTsuki` 仓库的 `home/agents/skills`，以 `flake = false` 输入引入，启用 8
-个）。一个目录不能既是技能又包含技能：bundle 把技能物化成指向其目录的软链，
-父子共用路径会冲突，所以 `ci-cd-and-automation` 与 `code-review-and-quality`
-的概览内容拆在同级 `<name>-overview/` 目录里。
+## 来源
+
+`catalog.nix` 里没有任何 source 设置 `idPrefix`：**每个技能 ID 就是一个目录名**，
+目标目录永远是 `<dest>/<name>/SKILL.md`。这样单层扫描器（DSH 读
+`~/.dsh/skills/<name>/SKILL.md`、`~/.agents/skills/<name>/SKILL.md`）也能发现全部
+技能。
+
+| source | 上游 | 上游布局 | 取用方式 | 数量 |
+| --- | --- | --- | --- | --- |
+| `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 20 |
+| `hermes` | `github:NousResearch/hermes-agent` 的 `skills/` | `<category>/<name>` | `explicit` 改名压平 | 10 |
+| `hermes-optional` | 同仓库的 `optional-skills/` | 同上 | `explicit` 改名压平 | 2 |
+| `browser-act` | `github:browser-act/skills` | 单层（`filter.nameRegex`） | `enable` | 1 |
+| `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 8 |
+| `local` | 本仓库 `local/` | 单层 | `enable` | 40 |
+
+上游技能不再复制进仓库：上游有就引用上游，`local/` 只放没有上游的项目专用技能。
+`hermes` 的两个 source 指向同一个约 271MB 的运行时仓库，只为 12 个技能，是这套
+配置里唯一体积明显的输入。
 
 ## 命令
 

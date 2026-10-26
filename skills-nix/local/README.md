@@ -1,27 +1,34 @@
 # local/
 
-Skills maintained in this repository. Every directory containing a `SKILL.md`
-is a skill; nesting a directory adds a `/`-separated level to its ID, so
-`local/software-development/expnix-workflow/SKILL.md` becomes
-`local/software-development/expnix-workflow` because the source uses
-`idPrefix = "local"`.
+Skills maintained in this repository. Every skill is one directory with a
+`SKILL.md` at the top of `local/`:
 
-Adding a file here does not deploy it. List the ID in `../catalog.nix` under
-`skills.enable` (or `skills.explicit` when the skill is limited to some
-agents). Skills installed on every enabled target belong in `skills.enable`.
+```text
+local/
+├── nix-flake-development/SKILL.md
+├── rust-test-isolation/SKILL.md
+└── ...
+```
+
+Two rules:
+
+- **Flat only.** No category directories and no skill inside another skill.
+  The deployed tree mirrors the source layout, and several agents only scan one
+  level below their skills root, so a nested layout would be invisible to them.
+  Keep the category in the file name (`rust-test-isolation`) or in the front
+  matter instead.
+- **Upstream first.** If the skill exists in a public repository, wire that
+  repository up in `../catalog.nix` instead of copying the content here. Local
+  copies are for project-specific skills with no upstream.
 
 Front matter follows the Agent Skills convention:
 
 ```markdown
 ---
-name: expnix-workflow
+name: rust-test-isolation
 description: When to use this skill and what it covers.
 ---
 ```
 
 Keep references and scripts beside `SKILL.md`; the whole directory is linked
-into the bundle. A skill directory must not contain another skill: the bundle
-materializes each skill as a symlink to its directory, so a parent skill and a
-child skill cannot share a path. Category directories are fine as long as they
-have no `SKILL.md` of their own (the two overview skills live in
-`<category>-overview/` for that reason).
+into the bundle.

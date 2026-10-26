@@ -1,6 +1,6 @@
 ---
 name: skills-nix-maintenance
-description: Maintains the agent skill catalog in this expnix checkout. Use when adding, renaming, restricting or removing a skill under skills-nix/, when updating skills-nix/flake.lock or the source registry lock, or when an agent cannot see a skill that should be deployed.
+description: Maintains the agent skill catalog in this expnix checkout. Use when adding, renaming or removing a skill under skills-nix/, when wiring an upstream skill repository, when updating skills-nix/flake.lock, or when an agent cannot see a skill that should be deployed.
 ---
 
 # skills-nix maintenance
@@ -9,66 +9,80 @@ description: Maintains the agent skill catalog in this expnix checkout. Use when
 
 | Target | Directory |
 | --- | --- |
-| claude | `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills` |
-| codex | `${CODEX_HOME:-$HOME/.codex}/skills` |
+| claude | `$HOME/.config/claude/skills` |
+| codex | `$HOME/.config/codex/skills` |
 | opencode / omp | `$HOME/.config/opencode/skills` |
 | gemini | `$HOME/.gemini/skills` |
 
 Hermes is not managed: `$HERMES_HOME/skills` also holds bundled skills,
-curator state and user edits.
+curator state and user edits. The claude and codex destinations are literal
+paths rather than the module defaults because Home Manager activation runs
+from `home-manager-<user>.service`, which has no `CLAUDE_CONFIG_DIR` or
+`CODEX_HOME` in its environment.
 
 ## Files
 
 | File | Role |
 | --- | --- |
 | `catalog.nix` | sources, selected skill IDs, enabled targets |
-| `local/` | skills maintained in this repository |
+| `local/` | skills with no upstream, one flat directory each |
 | `home-manager.nix` | module body; enables `programs.agent-skills` from the catalog |
-| `registry/` | upstream repositories pinned by a generated lock instead of a flake input |
-| `flake.nix` | apps (`skills-list`, `skills-install`, `skills-sources-lock`), bundle package, check |
+| `registry/` | unused manifest/lock machinery for repository sources |
+| `flake.nix` | upstream inputs, apps (`skills-list`, `skills-install`, `skills-sources-lock`), bundle package, check |
+
+## Rules
+
+- **Flat layout.** No `idPrefix` and no category directories. Every deployed
+  skill is `<dest>/<name>/SKILL.md`. Some agents scan only one level below
+  their skills root, so a nested ID is invisible to them.
+- **Upstream first.** A skill that exists in a public repository is taken from
+  that repository as a flake input; `local/` holds only what has no upstream.
+- **Selection only.** Nothing is deployed unless it is listed in
+  `skills.enable` (or `skills.explicit`).
 
 ## Add or change a skill
 
-1. Create `local/<category>/<skill>/SKILL.md` with `name` and `description`
-   front matter. Do not put a skill inside another skill's directory: the
-   bundle links each skill as a symlink to its directory, so a parent with a
-   `SKILL.md` cannot also hold child skills. Category directories are fine
-   when they carry no `SKILL.md`; the two overview skills live in
-   `<category>-overview/`.
-2. Add its ID (`local/<category>/<skill>`) to `skills.enable` in
-   `catalog.nix`. Unlisted directories are not deployed.
-3. `git add` the new files. Flake evaluation only sees tracked files, so an
+1. If it has an upstream, add the repository to `skills-nix/flake.nix` as a
+   `flake = false` input and declare the source in `catalog.nix`
+   (`subdir` / `filter.nameRegex` as needed).
+2. If the upstream layout is nested (Hermes keeps `skills/<category>/<name>`),
+   select the skill through `skills.explicit`; the declaration name becomes
+   the deployed name:
+
+   ```nix
+   explicit.python-debugpy = {
+     from = "hermes";
+     path = "software-development/python-debugpy";
+   };
+   ```
+
+   Otherwise add the flat ID to `skills.enable`.
+3. Only project-specific skills go to `local/<name>/SKILL.md`; they still need
+   their ID in `skills.enable`.
+4. `git add` the new files. Flake evaluation only sees tracked files, so an
    untracked skill stays invisible.
-4. Inspect and check:
+5. Inspect and check:
 
    ```bash
    nix run ./skills-nix#skills-list | jq -r 'keys[]'
-   nix build ./skills-nix && ls -R result/
+   nix build ./skills-nix && find -L result -name SKILL.md | sort
    nix flake check ./skills-nix
    ```
 
-5. Deploy on a host listed in `catalog.nix` (`just s`; `just sysmgr` on
+6. Deploy on a host listed in `catalog.nix` (`just s`; `just sysmgr` on
    system-manager hosts).
 
-To deploy a skill to some agents only, select it through `skills.explicit`
-instead of `skills.enable`:
-
-```nix
-skills.explicit.omp-workflow = {
-  from = "local";
-  path = "agents/omp-workflow";
-  agents = [ "opencode" ];
-};
-```
+To deploy a skill to some agents only, add `agents = [ "codex" ];` to its
+explicit declaration. Skills selected through `skills.enable` go to every
+enabled target.
 
 ## Locks
 
-Two independent locks:
-
-- `skills-nix/flake.lock` pins flake sources and the agent-skills-nix
-  revision: `nix flake update --flake ./skills-nix`.
-- `skills-nix/registry/sources.lock.json` pins registry sources:
-  `cd skills-nix && nix run .#skills-sources-lock`.
+- `skills-nix/flake.lock` pins nixpkgs, agent-skills-nix and the four skill
+  repositories: `cd skills-nix && nix flake update`.
+- Registry manifests are not used yet; when they are,
+  `cd skills-nix && nix run .#skills-sources-lock` refreshes
+  `registry/sources.lock.json`.
 
 After either update, run `nix flake check ./skills-nix`, review the skill
 diff, then switch. Never sync an unreviewed lock.
