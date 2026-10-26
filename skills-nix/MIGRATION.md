@@ -37,37 +37,35 @@ Skills 目录现状：
 
 ## 2. 阶段状态
 
-已完成（本分支）：
+已完成：
 
 - 阶段 1：`skills-nix/` child flake、`home-manager.nix`、`catalog.nix`，
   根 flake 以 `path:./skills-nix` 引入，`home/default.nix` import 其 module。
-- 阶段 1.2：两个本地技能（一个一级、一个二级目录），`idPrefix = "local"`。
+- 阶段 1.2：本地技能与二级目录技能，`idPrefix = "local"`。
 - 阶段 2.1：`claude`、`codex`、`opencode`、`gemini` 四个 target 已启用，
   `codex` 保留默认的 `/.system` 排除。
 - 阶段 2.2：层级、`idPrefix` 共存、`agents` 限制、未选中技能不进入 bundle
   的行为已用一次性 flake 验证（见 §3）。
 - 生效范围收窄：只有 `catalog.nix` 的 `hosts` 列表（`buking`、`handyMini`）
   启用；其它 hosts 与 standalone Home Manager 求值出 `enable = false`。
-- 阶段 4：cc-switch SSOT 的 111 个技能已分类并执行迁移（见 `INVENTORY.md`）：
-  70 个复制进 `local/`、8 个改由 `TaysiTsuki` flake source 提供、7 个废弃目录
-  不再纳入（SSOT 物理清理留到接管），其余暂不迁移。部署面共 80 个技能。
+- 阶段 3：`cc-switch-tui` 已切到 `skills.mode = "external"`（0.2.3 的
+  `feat/skills-external-mode` 版本），不再 sync、import，也不打包
+  `skills.zip`。
+- 阶段 4：111 个技能分类并执行（见 `INVENTORY.md`）：70 个复制进 `local/`、
+  8 个改由 `TaysiTsuki` flake source 提供、15 个废弃目录移出 SSOT
+  （SSOT 从 111 降到 96），部署面共 80 个技能。
+- 阶段 2.3 首次接管（2026-10-26）：备份在
+  `~/backups/skills-nix-takeover-20261026-135340`，四个目标目录已同步 80 个
+  技能并写入归属 marker，Codex 的 `.system` 已放回。
 
-未完成，按顺序阻塞：
+未完成：
 
-1. 阶段 2.3 首次接管：需要先有备份、把要长期维护的 skills 搬进
-   `skills-nix/local/`，并把 cc-switch-tui 切到 `external`。
-2. 阶段 3 的运行时确认：`cc-switch-tui` 的 external 模式代码位于该仓库的
-   `feat/skills-external-mode` 分支，本机运行的 0.2.3 仍是 managed 行为。
-3. 阶段 4 的收尾：SSOT 里 `taysi/` 的 8 个副本（现在由 flake source 提供）
-   与 7 个废弃目录的物理删除，留到接管阶段一起做，避免 cc-switch 数据库提前
-   失配；命令见 `INVENTORY.md` §7。
-4. 阶段 5：Hermes，未开始，也没有配置 target。
-
-因此当前分支合入后**不要立刻执行 `just s`**：`claude` 与
-`codex` 目录非空且没有归属 marker，同步程序会在改动任何目录前拒绝执行，
-本次激活会失败。同步程序先校验全部目标再写入（`scripts/sync.sh` 的
-`resolve_target_plan` 早于 `execute_target_plan`），所以失败不会留下半成品。
-
+1. `just s`：首次同步已经用 `nix run ./skills-nix#skills-install` 跑过，
+   激活只是把 Home Manager generation 切到本分支，技能同步会再跑一次（bundle
+   路径换成 HM 的那一份），结果不变。
+2. Claude、OMP/OpenCode、Gemini 的运行时发现验证：本机只有 `codex` 能非交互
+   验证，其余记录为「未验证」，见 §3。
+3. Hermes（阶段 5）：未配置 target。
 ## 3. 验证记录
 
 已执行并通过：
@@ -89,57 +87,54 @@ Skills 目录现状：
 | agents 限制 | 一次性 flake：`agents = [ "codex" ]` | 只出现在 codex 与完整 bundle |
 | 空 agents | 一次性 flake：`agents = [ ]` | 只在完整 bundle 中，不进入任何 target |
 | 主机范围 | `nix eval --json .#nixosConfigurations.<host>.config.home-manager.users.qi.programs.agent-skills.enable` | `buking`/`handyMini` 为 true；`nixwsl`/`reinsvps`/`debnsm`/standalone 为 false |
+| 接管后目标 | `find -L <dest> -name SKILL.md` | `claude`、`codex`、`opencode`、`gemini` 各 80 个，marker 已写入 |
+| Codex 真实 home | `CODEX_HOME=~/.config/codex codex debug prompt-input` | r0 发现 80 个（含 taysi 8 个、二级目录），r1 发现 4 个 `.system` 技能 |
+| `.system` 保留 | 接管后再次 `skills-install` | `.system` 的 5 个技能与 marker 仍在 |
+| SSOT 清理 | `find ~/.config/cc-switch-tui/skills -name SKILL.md` | 111 → 96（移出 15 个） |
 
-未执行，需要在接管后补做：
+未执行：
 
-- `home-manager switch`（故意推迟，理由见 §2）。
+- `just s`（Home Manager 激活）由用户执行，见 §2。
 - Claude、OMP/OpenCode、Gemini 的运行时发现验证：本机只安装了 `codex` 与
   `omp`，`claude` 只有 npm 全局包且没有非交互式技能列表命令，`gemini`
   未安装。记录为「未验证」，不能当作通过。
 - `aarch64-darwin`（handyMini）与其它 hosts 的激活验证。
 
-## 4. 首次接管步骤
+## 4. 首次接管记录（2026-10-26）
 
-固定顺序，任何一步没有完成都不要继续下一步。
+实际执行顺序，保留下来作为回滚依据。
 
 ```bash
-# 1. 备份（放在仓库外，不进 git）
-stamp=$(date +%Y%m%d-%H%M%S)
-dest=~/backups/skills-nix-$stamp
-mkdir -p "$dest"
-rsync -a ~/.config/cc-switch-tui/skills/ "$dest/cc-switch-skills/"
-rsync -a ~/.config/codex/skills/         "$dest/codex-skills/"
-rsync -a ~/.config/claude/skills/        "$dest/claude-skills/"
-rsync -a ~/.config/hermes/skills/        "$dest/hermes-skills/"
-cp ~/.config/cc-switch-tui/cc-switch.db  ~/.config/cc-switch-tui/settings.json "$dest/"
-du -sh "$dest"
+base=~/backups/skills-nix-takeover-20261026-135340
+# base/cc-switch-skills/    SSOT 全量副本
+# base/cc-switch.db base/settings.json
+# base/pruned/              移出的 15 个目录：6 个 *.bak、
+#                           software-development/test-driven-development、taysi/
+# base/claude-skills.old    旧的 ~/.config/claude/skills（33 个技能）
+# base/codex-skills.old     旧的 ~/.config/codex/skills（90 个，含 .system）
 
-# 2. cc-switch-tui 切到 external（TUI: Settings → Skills → mode）
-#    或直接改 settings.json 的 {"skills": {"mode": "external"}} 后重启
-#    确认它不再 sync、import，也不打包 skills.zip
+# 1. 旧目标目录整体移走（cc-switch 已经切到 external）
+mv ~/.config/claude/skills "$base/claude-skills.old"
+mv ~/.config/codex/skills  "$base/codex-skills.old"
 
-# 3. 技能内容已经在 skills-nix/local/ 与 taysi source 里，无需再搬；
-#    只需确认 catalog.nix 的 skills.enable 是最新集合（见 INVENTORY.md）
+# 2. 首次同步：四个目标。必须显式给出配置目录，否则会落到 $HOME/.claude
+CLAUDE_CONFIG_DIR=~/.config/claude CODEX_HOME=~/.config/codex \
+  nix run ./skills-nix#skills-install
 
-# 4. 把旧目录整体移开（保留备份，不删除）
-mv ~/.config/claude/skills ~/.config/claude/skills.pre-nix
-mv ~/.config/codex/skills  ~/.config/codex/skills.pre-nix
+# 3. 把 Codex 的 .system 放回（同步按 /.system 排除，之后的重同步不会删）
+cp -a "$base/codex-skills.old/.system" ~/.config/codex/skills/.system
 
-# 5. 激活（NixOS / nix-darwin 用 just s；system-manager 主机用 just sysmgr）
-just s
-
-# 6. 把 Codex 的 .system 放回（同步程序按 /.system 排除，不会被删）
-mv ~/.config/codex/skills.pre-nix/.system ~/.config/codex/skills/.system
-
-# 7. 验证
-cat ~/.config/claude/skills/.agent-skills-managed.json
+# 4. 验证
 find -L ~/.config/claude/skills ~/.config/codex/skills \
-     ~/.config/opencode/skills ~/.gemini/skills -name SKILL.md | sort
-CODEX_HOME=~/.config/codex codex debug prompt-input | rg 'skills-nix-maintenance'
+     ~/.config/opencode/skills ~/.gemini/skills -name SKILL.md | wc -l   # 320
+CODEX_HOME=~/.config/codex codex debug prompt-input | grep -c 'file: r0/'  # 80
 ```
 
-不要设置 `AGENT_SKILLS_FORCE=1`：第 4 步之后目标目录是空的，
-同步程序自己会写归属 marker，不需要强制覆盖。
+没有使用 `AGENT_SKILLS_FORCE=1`：同步前目标目录是空的，同步程序自己写归属
+marker。`~/.config/hermes/skills` 未参与，仍是 cc-switch 与 curator 的状态。
+
+剩下的 `just s` 只负责把 Home Manager generation 切到本分支；它内部的
+`skills-install` 会用 HM 的 bundle 再同步一次，目标目录内容不变。
 
 ## 5. 回滚
 
@@ -160,7 +155,8 @@ just s
 1. 把 `catalog.nix` 里的四个 target 关掉（或把 `hosts` 清空），`just s`，
    确认 Nix 不再写这些目录；
 2. 删除或改名当前的 Nix 目标目录；
-3. 从 §4 第 1 步的备份恢复 `~/.config/{claude,codex}/skills`；
+3. 从 `~/backups/skills-nix-takeover-*` 恢复 `~/.config/{claude,codex}/skills`
+   （`claude-skills.old`、`codex-skills.old`）；
 4. 把 cc-switch 的 `skills.mode` 改回 `managed`；
 5. 在 cc-switch 里手动 sync 一次；
 6. 验证 provider 切换与 WebDAV restore 不会与 Nix 竞争。

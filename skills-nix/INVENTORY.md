@@ -392,42 +392,16 @@ agent-skills 只发现含 `SKILL.md` 的目录，以下内容不会被同步，�
    指向技能目录的软链，父级与子级不能共用同一个路径；
 3. `catalog.nix` 增加 `sources.taysi`（`TaysiTsuki` 的
    `home/agents/skills`）并启用 8 个 taysi 技能；
-4. 7 个已废弃目录不再纳入迁移：6 个 `.bak`，加上被顶层版本取代的
-   `software-development/test-driven-development`。它们在 SSOT 里的物理清理
-   需要写工作区外的路径，留给接管阶段执行（命令见 §8）；
-5. `taysi/` 的 8 个副本已由 flake source 取代，同样的清理留到接管阶段一并做，
-   避免 cc-switch 数据库里的行与目录提前失配。
+4. 接管时把 15 个目录移出 SSOT（备份在
+   `~/backups/skills-nix-takeover-20261026-135340/pruned`）：6 个 `.bak`、被
+   顶层版本取代的 `software-development/test-driven-development`、`taysi/` 的
+   8 个副本。SSOT 从 111 个技能降到 96 个。
 
 验证：`just skills-check`、`nix build ./skills-nix`（80 个技能）、
 `CODEX_HOME=/tmp/fakecodex-80 codex debug prompt-input`（发现 80 个技能，含
-二级目录与 taysi）。
+二级目录与 taysi）；接管后真实目录见 `MIGRATION.md` §3、§4。
 
-## 7. SSOT 清理命令
-
-仓库侧已经不再引用这些目录，物理删除属于接管流程（cc-switch 进入 external 之后
-一起做）。需要提前清理时：
-
-```bash
-src="$HOME/.config/cc-switch-tui/skills"
-dest="$HOME/backups/skills-nix-prune-$(date +%Y%m%d-%H%M%S)"
-mkdir -p "$dest"
-for rel in \
-  autonomous-ai-agents/codex.bak \
-  devops/kanban-orchestrator.bak \
-  devops/kanban-worker.bak \
-  email/himalaya.bak \
-  github/github-auth.bak \
-  note-taking/obsidian.bak \
-  software-development/test-driven-development; do
-  mkdir -p "$dest/$(dirname "$rel")"
-  mv "$src/$rel" "$dest/$rel"
-done
-```
-
-`taysi/` 的 8 个副本等接管时再删：cc-switch 数据库里还有对应的行，先删目录会让
-UI 与磁盘提前失配。
-
-## 8. 仍然待确认
+## 7. 仍然待确认
 
 1. `apple/*` 与 `macos-computer-use` 只在 handyMini 有意义，是否要在下一轮启用？
 2. `browser-act` 与 `productivity/{nano-pdf,petdex,session-librarian}` 上游不明，
