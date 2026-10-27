@@ -77,6 +77,11 @@ in
     }
   ];
 
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
+
   networking.firewall = {
     enable = true;
   };

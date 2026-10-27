@@ -122,6 +122,8 @@ in
     ];
     services.rustdesk-signal.serviceConfig = {
       Environment = [ "XDG_CONFIG_HOME=/var/lib/rustdesk/.config" ];
+      ## hbbs exits when its 1s loopback UDP self-test sees no reply for 12s, which is what memory pressure used to cause here.
+      OOMScoreAdjust = -500;
     };
     services.honk-core = {
       serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/install -Dm0600 ${config.sops.secrets.honk-subs.path} /etc/honk/honk-subs.dae";
