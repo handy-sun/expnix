@@ -85,15 +85,27 @@ gc:
 # Evaluate the system toplevel derivation for a host
 [group('nix')]
 evtop host=`hostname`:
-  nix eval "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')"
+  #!/usr/bin/env bash
+  set -uo pipefail
+  ev_path="$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')"
+  printf 'nix eval %s\n' "$ev_path"
+  nix eval "$ev_path"
 
 [group('nix')]
 ev-sysmgr host="debnsm":
-  nix eval "$(just --justfile '{{justfile()}}' sysmgr-top-attr '{{host}}')"
+  #!/usr/bin/env bash
+  set -uo pipefail
+  sysmgr_path="$(just --justfile '{{justfile()}}' sysmgr-top-attr '{{host}}')"
+  printf 'nix eval %s\n' "$sysmgr_path"
+  nix eval "$sysmgr_path"
 
 [group('nix')]
 query-depends pkgname host=`hostname`:
-  which {{pkgname}} | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation "$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')" 2>/dev/null
+  #!/usr/bin/env bash
+  set -uo pipefail
+  sys_path="$(just --justfile '{{justfile()}}' sys-top-attr '{{host}}')"
+  printf 'which %s | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation %s\n' "{{pkgname}}" "$sys_path"
+  which '{{pkgname}}' | xargs realpath | xargs nix-store -q --deriver | xargs nix why-depends --derivation "$sys_path" 2>/dev/null
 
 [private]
 [group('nix')]
