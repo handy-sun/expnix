@@ -118,7 +118,6 @@
       ouch
       age
       sops
-      ssh-to-age
       w3m-nographics
       enca
     ]

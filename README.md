@@ -35,7 +35,7 @@
 
 开发 shell 会通过 `NIX_CONFIG` 为 shell 内的命令启用 `nix-command` 和 `flakes`，并配置国内 substituter。若本机尚未允许 flake，首次运行时保留上面的 `--experimental-features` 参数即可。
 
-默认开发 shell 提供 `git`、`just`、`nh`、`nix-output-monitor`、`age`、`sops` 和 `ssh-to-age` 等工具。进入后建议先安装本仓库的 git hook：
+默认开发 shell 提供 `git`、`just`、`nh`、`nix-output-monitor`、`age` 和 `sops` 等工具。进入后建议先安装本仓库的 git hook：
 
 ```bash
 just setup-hook

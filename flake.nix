@@ -280,7 +280,6 @@
               tmux
               age
               sops
-              ssh-to-age
             ];
             name = "devsh";
             shellHook = ''
@@ -298,7 +297,6 @@
               tmux
               age
               sops
-              ssh-to-age
             ];
             name = "dev-sysmgr";
             shellHook = ''

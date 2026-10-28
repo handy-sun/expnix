@@ -58,6 +58,7 @@ in
         nftables
         traceroute
         conntrack-tools
+        ndisc6
       ]);
   };
 
