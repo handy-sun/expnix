@@ -265,22 +265,27 @@
           ## locale archive so user locales (zh_CN.UTF-8) resolve on foreign
           ## distros (NixOS already does this via /run/current-system fallback).
           localeArchive = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+          commonPackges = with pkgs; [
+            vim
+            git
+            curl
+            just
+            nix-output-monitor
+            tmux
+            age
+            sops
+          ];
         in
         {
           default = pkgs.mkShell {
             NIX_CONFIG = devNixConfig;
             LOCALE_ARCHIVE = localeArchive;
-            packages = with pkgs; [
-              vim
-              git
-              curl
-              just
-              nh
-              nix-output-monitor
-              tmux
-              age
-              sops
-            ];
+            packages =
+              with pkgs;
+              [
+                nh
+              ]
+              ++ commonPackges;
             name = "devsh";
             shellHook = ''
               echo "Welcome to handy-sun/expnix devshell"
@@ -289,15 +294,12 @@
           sysmgr = pkgs.mkShell {
             NIX_CONFIG = devNixConfig;
             LOCALE_ARCHIVE = localeArchive;
-            packages = with pkgs; [
-              git
-              just
-              nix-output-monitor
-              system-manager
-              tmux
-              age
-              sops
-            ];
+            packages =
+              with pkgs;
+              [
+                system-manager
+              ]
+              ++ commonPackges;
             name = "dev-sysmgr";
             shellHook = ''
               echo "Welcome to handy-sun/expnix sysmgr"
