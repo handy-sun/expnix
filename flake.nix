@@ -29,11 +29,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    helix-dev = {
-      url = "github:erasin/helix/local-dev";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -117,11 +112,6 @@
       ## `shallow=1` is rejected by newer Nix (GitHub Actions runners), so
       ## fetch the full tree. It is a tiny flake=false source anyway.
       url = "github:handy-sun/wezterm-config/nix-hm";
-      flake = false;
-    };
-
-    my-helix-config = {
-      url = "github:handy-sun/helix-config";
       flake = false;
     };
 

@@ -2,14 +2,12 @@
   lib,
   config,
   inputs,
-  profileLevel,
   ...
 }:
 
 let
   dotfiles = inputs.my-dotfiles;
   dotconfig = "${dotfiles}/.config";
-  helixConfig = inputs.my-helix-config;
 in
 {
   xdg.configFile = lib.mkMerge [
@@ -25,17 +23,5 @@ in
         cache=${config.xdg.cacheHome}/npm
       '';
     }
-    (lib.mkIf profileLevel.tuiOptional {
-      "helix/config.toml".source = "${helixConfig}/config.toml";
-      "helix/init.scm".source = "${helixConfig}/init.scm";
-      "helix/helix.scm".source = "${helixConfig}/helix.scm";
-      "helix/languages.toml".source = "${helixConfig}/languages.toml";
-      ## directories
-      "helix/actions".source = "${helixConfig}/actions";
-      "helix/runtime".source = "${helixConfig}/runtime";
-      "helix/snippets".source = "${helixConfig}/snippets";
-      "helix/themes".source = "${helixConfig}/themes";
-      "helix/tutors".source = "${helixConfig}/tutors";
-    })
   ];
 }

@@ -337,28 +337,6 @@
         "type": "github"
       }
     },
-    "helix-dev": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rust-overlay": "rust-overlay"
-      },
-      "locked": {
-        "lastModified": 1782703320,
-        "narHash": "sha256-ybNqUbW514kID8cHvulWuKZWYmUrimdp12Jq5BQZdS0=",
-        "owner": "erasin",
-        "repo": "helix",
-        "rev": "486afdd942cb3bffd2e62181ba9761687bac9a49",
-        "type": "github"
-      },
-      "original": {
-        "owner": "erasin",
-        "ref": "local-dev",
-        "repo": "helix",
-        "type": "github"
-      }
-    },
     "hercules-ci-effects": {
       "inputs": {
         "flake-parts": [
@@ -519,22 +497,6 @@
       "original": {
         "owner": "handy-sun",
         "repo": "dotzsh",
-        "type": "github"
-      }
-    },
-    "my-helix-config": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1779608779,
-        "narHash": "sha256-G6yvr65LhYs+w6iWGgqmzEEL1Bch+n9pL1w5oPQUaL8=",
-        "owner": "handy-sun",
-        "repo": "helix-config",
-        "rev": "d2b2b31b4fc3ad95b945a6ed9338f1e706ee86b2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "handy-sun",
-        "repo": "helix-config",
         "type": "github"
       }
     },
@@ -852,13 +814,11 @@
         "daeuniverse": "daeuniverse",
         "flyline": "flyline",
         "githand": "githand",
-        "helix-dev": "helix-dev",
         "home-manager": "home-manager",
         "mark-shot": "mark-shot",
         "my-dotfiles": "my-dotfiles",
         "my-dotvim": "my-dotvim",
         "my-dotzsh": "my-dotzsh",
-        "my-helix-config": "my-helix-config",
         "my-nvimdots": "my-nvimdots",
         "my-wezterm": "my-wezterm",
         "netcatty": "netcatty",
@@ -889,27 +849,6 @@
       "original": {
         "owner": "zeenix",
         "repo": "rust-analyzer-mcp",
-        "type": "github"
-      }
-    },
-    "rust-overlay": {
-      "inputs": {
-        "nixpkgs": [
-          "helix-dev",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1775358767,
-        "narHash": "sha256-f2eC+WIfhjevCPQILuV08i/kmKZzYZpUvkom/33VxCA=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "20fd44bc663daa53a2575e01293e24e681d62244",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
         "type": "github"
       }
     },
