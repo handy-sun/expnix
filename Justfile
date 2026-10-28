@@ -6,7 +6,6 @@ alias so := switch-offline
 alias e := evtop
 alias es := ev-sysmgr
 alias f := nixfmt
-alias sh := switch-home
 
 sys_conf_root := if os() == "macos" { "darwinConfigurations" } else { "nixosConfigurations" }
 
@@ -59,22 +58,6 @@ repl-flake:
 repl-pkgs:
   nix repl -f '<nixpkgs>'
 
-[group('nix')]
-history:
-  nix profile history --profile /nix/var/nix/profiles/system
-
-[group('nix')]
-list-generations:
-  sudo nix-env -p /nix/var/nix/profiles/system --list-generations
-
-[group('nix')]
-show-conf:
-  nix config show
-
-[group('nix')]
-switch-home:
-  nh home switch .
-
 # Format nix code using nixfmt
 [group('nix')]
 nixfmt:
@@ -89,14 +72,6 @@ skills-list:
 [group('skills')]
 skills-check:
   nix flake check ./skills-nix
-
-[group('nix')]
-nixinfo:
-  nix-info -m
-
-[group('nix')]
-current-sys:
-  readlink /run/current-system
 
 [group('nix')]
 query-all pkgname:
