@@ -15,6 +15,7 @@ let
   cache = config.xdg.cacheHome;
   CARGO_HOME = data + "/cargo";
   GOPATH = data + "/go";
+  GOPROXY = "https://goproxy.cn,direct";
   RUSTUP_HOME = data + "/rustup";
   cargo_bin = CARGO_HOME + "/bin";
   go_bin = GOPATH + "/bin";
@@ -37,6 +38,7 @@ in
 
     inherit
       GOPATH
+      GOPROXY
       CARGO_HOME
       RUSTUP_HOME
       PNPM_HOME
