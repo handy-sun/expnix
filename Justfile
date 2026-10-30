@@ -9,7 +9,7 @@ alias f := nixfmt
 
 sys_conf_root := if os() == "macos" { "darwinConfigurations" } else { "nixosConfigurations" }
 
-nix_inputs := "nixpkgs nix-darwin nixos-wsl home-manager system-manager sops-nix mark-shot flyline daeuniverse rust-analyzer-mcp-src qt-rules-mcp-src rayburst-src"
+nix_inputs := "nixpkgs nix-darwin nixos-wsl home-manager system-manager sops-nix mark-shot flyline daeuniverse rust-analyzer-mcp-src qt-rules-mcp-src"
 my_inputs := "githand my-dotzsh my-dotfiles my-dotvim my-nvimdots my-wezterm sbtpl"
 
 default:

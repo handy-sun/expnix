@@ -67,13 +67,6 @@
       flake = false;
     };
 
-    ## Rayburst (ex motrix-next): Tauri download manager. Vendored from
-    ## nixpkgs PR #566586 while it is unmerged; pin the tag, hashes inline.
-    rayburst-src = {
-      url = "github:AnInsomniacy/rayburst/v4.0.1";
-      flake = false;
-    };
-
     ## Agent skills catalog: sources, selection and per-agent target
     ## directories. It keeps its own flake and lock so skill pins evolve
     ## separately from the system inputs; home/default.nix imports its module.

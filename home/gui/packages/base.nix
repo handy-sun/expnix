@@ -59,6 +59,7 @@ lib.mkIf profileLevel.guiBase {
       appimage-run
       telegram-desktop
       rustdesk-flutter
+      rayburst
       markShot
       netcattyPkg
     ]
