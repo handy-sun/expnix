@@ -792,23 +792,6 @@
         "type": "github"
       }
     },
-    "rayburst-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1791361189,
-        "narHash": "sha256-ViMwZA3HsouYH7bV5BWPuNrOxT1ySfOruBRIyPrasgw=",
-        "owner": "AnInsomniacy",
-        "repo": "rayburst",
-        "rev": "ff30d295360a860da2b94056e81ceb50bf2f85dd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AnInsomniacy",
-        "ref": "v4.0.1",
-        "repo": "rayburst",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "daeuniverse": "daeuniverse",
@@ -827,7 +810,6 @@
         "nixpak": "nixpak",
         "nixpkgs": "nixpkgs_4",
         "qt-rules-mcp-src": "qt-rules-mcp-src",
-        "rayburst-src": "rayburst-src",
         "rust-analyzer-mcp-src": "rust-analyzer-mcp-src",
         "sbtpl": "sbtpl",
         "skills-catalog": "skills-catalog",
