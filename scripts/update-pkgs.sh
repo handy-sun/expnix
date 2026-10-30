@@ -17,10 +17,11 @@ Packages:
   honk-core              modules/honk/package.nix
   bibata-rainbow-modern  packages/bibata-rainbow-modern.nix
 
-  With no PACKAGE given, all of them are checked.
+  With no PACKAGE given, all of them are checked. Hashes are refreshed even
+  when the version is unchanged, repairing interrupted or manual updates.
 
 Options:
-  -n, --dry-run     Report available updates without touching any file
+  -n, --dry-run     Check versions only, without downloading or changing files
       --no-commit   Rewrite the files but do not create a commit
   -b, --build       Build each updated package before committing; on failure
                     nothing is committed
@@ -89,8 +90,8 @@ pkg_assets() {
       printf 'single\thttps://cdn-zcode.z.ai/zcode/electron/releases/%s/linux-x64/ZCode-%s-linux-x64.AppImage\n' "$v" "$v"
       ;;
     honk-core)
-      printf 'x86_64-linux\thttps://github.com/daeuniverse/honk/releases/download/v%s/honk-core-v%s-x86_64-unknown-linux-musl.tar.gz\n' "$v" "$v"
-      printf 'aarch64-linux\thttps://github.com/daeuniverse/honk/releases/download/v%s/honk-core-v%s-aarch64-unknown-linux-musl.tar.gz\n' "$v" "$v"
+      printf 'x86_64-linux\thttps://github.com/daeuniverse/honk/releases/download/v%s/honk-core-v%s-x86_64-unknown-linux-musl-full.tar.gz\n' "$v" "$v"
+      printf 'aarch64-linux\thttps://github.com/daeuniverse/honk/releases/download/v%s/honk-core-v%s-aarch64-unknown-linux-musl-full.tar.gz\n' "$v" "$v"
       ;;
     bibata-rainbow-modern)
       printf 'single\thttps://github.com/ful1e5/Bibata_Cursor_Rainbow/releases/download/v%s/Bibata-Rainbow-Modern.tar.gz\n' "$v"
@@ -161,7 +162,7 @@ current_version() {
 }
 
 set_version() {
-  sed_i "s|^\([[:space:]]*\)version = \"[^\"]*\";|\1version = \"$2\";|" "$(pkg_file "$1")"
+  sed_i "s|^\([[:space:]]*\)version = \"[^\"]*\";|\1version = \"$2\";|" "$1"
 }
 
 set_hash() {
@@ -192,16 +193,16 @@ build_expr() {
 }
 
 build_pkg() {
-  nix build --impure --no-link --print-out-paths --expr "$(build_expr "$(pkg_file "$1")")"
+  local file=${2:-$(pkg_file "$1")}
+  nix build --impure --no-link --print-out-paths --expr "$(build_expr "$file")"
 }
 
 # Poison the hash, build, and scrape the real one out of the mismatch report.
 hash_via_build() {
-  local name=$1 file out got
-  file=$(pkg_file "$name")
+  local name=$1 file=$2 out got
 
   set_hash "$file" single "$FAKE_HASH"
-  out=$(build_pkg "$name" 2>&1) || true
+  out=$(build_pkg "$name" "$file" 2>&1) || true
   got=$(printf '%s\n' "$out" \
     | sed -n 's/.*got:[[:space:]]*\(sha256-[A-Za-z0-9+/=]*\).*/\1/p' | head -n1)
 
@@ -212,29 +213,42 @@ hash_via_build() {
   printf '%s\n' "$got"
 }
 
-update_pkg() {
-  local name=$1 version=$2 file slot url hash
+update_pkg() (
+  local name=$1 version=$2 file work_file slot url hash assets
   file=$(pkg_file "$name")
+  work_file=$(mktemp "$file.XXXXXX")
+  trap 'rm -f "$work_file" "$work_file.tmp"' EXIT
+  trap 'exit 1' HUP INT TERM
+  cp -p "$file" "$work_file"
 
-  # The version has to land first: the fetchzip path builds the derivation to
-  # discover its hash, and that build must already point at the new URL.
-  set_version "$name" "$version"
+  ## Resolve every hash in a scratch file. Failed downloads or fetchzip builds
+  ## must not leave a new version paired with old or placeholder hashes.
+  set_version "$work_file" "$version"
 
   case $(pkg_hash_mode "$name") in
     flat)
+      assets=$(pkg_assets "$name" "$version")
       while IFS=$'\t' read -r slot url; do
         info "  prefetching $url"
         hash=$(prefetch_flat "$url")
-        set_hash "$file" "$slot" "$hash"
-      done < <(pkg_assets "$name" "$version")
+        set_hash "$work_file" "$slot" "$hash"
+      done <<< "$assets"
       ;;
     fetchzip)
       info "  resolving unpacked-tree hash via a throwaway build"
-      hash=$(hash_via_build "$name")
-      set_hash "$file" single "$hash"
+      hash=$(hash_via_build "$name" "$work_file")
+      set_hash "$work_file" single "$hash"
       ;;
   esac
-}
+
+  ## Format before publishing so failures preserve the original file too.
+  if command -v nixfmt > /dev/null 2>&1; then
+    nixfmt "$work_file"
+  fi
+  if ! cmp -s "$file" "$work_file"; then
+    mv "$work_file" "$file"
+  fi
+)
 
 # ------------------------------------------------------------------------ main
 
@@ -280,19 +294,29 @@ for name in "${selected[@]}"; do
   [[ -n $latest ]] || die "$name: upstream returned an empty version"
 
   if [[ $cur == "$latest" ]]; then
-    printf '%-22s %s (up to date)\n' "$name" "$cur"
+    if $dry_run; then
+      printf '%-22s %s (version up to date; hashes not checked)\n' "$name" "$cur"
+    else
+      printf '%-22s %s (checking hashes)\n' "$name" "$cur"
+    fi
+  else
+    printf '%-22s %s -> %s\n' "$name" "$cur" "$latest"
+  fi
+  $dry_run && continue
+
+  before=$(git hash-object -- "$file")
+  update_pkg "$name" "$latest"
+  if [[ $(git hash-object -- "$file") == "$before" ]]; then
+    info "  version and hashes are up to date"
     continue
   fi
 
-  printf '%-22s %s -> %s\n' "$name" "$cur" "$latest"
-  $dry_run && continue
-
-  update_pkg "$name" "$latest"
-  # The pre-commit hook rejects unformatted staged .nix files.
-  command -v nixfmt > /dev/null 2>&1 && nixfmt "$file"
-
   changed_files+=("$file")
-  changelog+=("- $name: $cur -> $latest")
+  if [[ $cur == "$latest" ]]; then
+    changelog+=("- $name: refresh hashes for $cur")
+  else
+    changelog+=("- $name: $cur -> $latest")
+  fi
 done
 
 if [[ ${#changed_files[@]} -eq 0 ]]; then
