@@ -4,16 +4,16 @@
   fetchurl,
 }:
 let
-  version = "0.0.1.beta.84";
-  # musl assets are fully static and embed the eBPF object; digests come from the GitHub release API.
+  version = "0.1.0-beta.3";
+  # musl-full assets are static and include both APIs, the UI and the eBPF object.
   assets = {
     x86_64-linux = {
       suffix = "x86_64-unknown-linux-musl";
-      hash = "sha256-HqDUr1hEypZx0mCC/lDm52Bst+DK0tAjL7OZP+VvY1U=";
+      hash = "sha256-EBsfm+2A7/CpKH+7em2bkz8w6Nm1EfrXONSMUBy45Vw=";
     };
     aarch64-linux = {
       suffix = "aarch64-unknown-linux-musl";
-      hash = "sha256-x3+xtf6WuhQC3kFGClA0BITA47fM4pLIB7rkOAE6XRM=";
+      hash = "sha256-m3gsb88llKeK6sMJNx7IAm3PPUYORXVZ6ZLWvZFDHFA=";
     };
   };
   asset =
@@ -25,7 +25,7 @@ stdenvNoCC.mkDerivation {
   inherit version;
 
   src = fetchurl {
-    url = "https://github.com/daeuniverse/honk/releases/download/v${version}/honk-core-v${version}-${asset.suffix}.tar.gz";
+    url = "https://github.com/daeuniverse/honk/releases/download/v${version}/honk-core-v${version}-${asset.suffix}-full.tar.gz";
     hash = asset.hash;
   };
 
