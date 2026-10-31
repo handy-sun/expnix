@@ -28,6 +28,13 @@
       url = "github:MidAutumnMoon/TaysiTsuki";
       flake = false;
     };
+
+    # Personal and project-specific skills, maintained in their own repository
+    # and consumed as a plain source tree.
+    handy-skills = {
+      url = "github:handy-sun/handy-skills";
+      flake = false;
+    };
   };
 
   outputs =

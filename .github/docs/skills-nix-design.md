@@ -34,9 +34,10 @@ expnix/
     ├── flake.nix         # module 输出、bundle package、check、apps
     ├── flake.lock        # nixpkgs、agent-skills-nix、三个上游技能仓库
     ├── catalog.nix       # sources、选中的 skills、hosts、targets
-    ├── home-manager.nix  # module 主体
-    └── local/            # 没有上游的技能
+    └── home-manager.nix  # module 主体
 ```
+
+本目录不保存任何技能内容：都在上游仓库里，这里只 pin 版本。
 
 根 flake 通过 `path:./skills-nix` 引入，`home/default.nix` import 它导出的
 Home Manager module。部署入口仍然只有 `expnix`，不会产生第二套 generation。
@@ -143,21 +144,22 @@ in
 | `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 21 |
 | `browser-act` | `github:browser-act/skills` | 仓库根下 `browser-act/` | `filter.nameRegex` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 11 |
-| `local` | 本仓库 `local/` | 单层 | `enable` | 33 |
+| `handy-skills` | `github:handy-sun/handy-skills` | 单层 | `enable` | 30 |
 
 上游仓库都是 `flake = false` 输入，只取源码树，不评估它们的 flake outputs。
 
 `NousResearch/hermes-agent` **不是输入**：它是 271 MB 的 agent 运行时，其中与
-这里相关的只有 12 个技能——5 个与 agent 无关的工具技能复制进 `local/`，其余
-依赖 Hermes 自身工具或运行时的技能（`claude-code`、`opencode`、
+这里相关的只有 12 个技能——4 个与 agent 无关的工具技能复制进了 `handy-skills`，
+其余依赖 Hermes 自身工具或运行时的技能（`claude-code`、`opencode`、
 `subagent-driven-development` 等）没有采用。
 
-### 3.2 本地技能
+### 3.2 个人技能（handy-skills）
 
-`skills-nix/local/` 只放没有上游的技能，每个技能一个目录：
+没有上游的个人/项目技能放在 `github:handy-sun/handy-skills`，本仓库只作为
+`flake = false` 输入引用它：
 
 ```text
-skills-nix/local/
+handy-skills/
 ├── nix-flake-development/SKILL.md
 ├── rust-test-isolation/SKILL.md
 └── ...
@@ -168,11 +170,11 @@ skills-nix/local/
 - **只允许单层。** 不放分类目录，也不放"技能里的技能"：bundle 把技能物化成
   指向其目录的软链，父级与子级不能共用路径，而且多一层目录对单层扫描器不可见。
   分类信息放进文件名或 front matter。
-- **上游优先。** 有上游就不要复制；例外是体积过大的 Hermes 运行时。
+- **上游优先。** 有上游就不要复制；只有没有上游的个人技能才进这个仓库。
 
-当前 33 个本地技能按用途分成 Nix/基础设施、CI 与桌面打包、Rust、C/Shell、
-GitHub、开发工作流、文档写作、运维自托管、工具几组，逐条说明见
-`skills-nix/local/README.md`。
+它现在有 30 个技能，按用途分成 Nix/基础设施、CI 与桌面打包、Rust、C/Shell、
+GitHub、开发工作流、文档写作、运维自托管、工具几组。`expnix-workflow`、
+`design-md-init`、`docker-compose-selfhost`、`codebase-inspection` 等不再维护。
 
 只对本仓库有意义的说明不放进技能，而是写在仓库根的 `AGENTS.md`（Claude Code
 读 `CLAUDE.md`，它是指向同一个文件的软链）。`expnix-workflow` 和
@@ -284,10 +286,10 @@ just s
 
 ## 8. 验收标准
 
-- `nix flake check ./skills-nix` 通过，bundle 里 66 个技能全部是单层；
+- `nix flake check ./skills-nix` 通过，bundle 里 63 个技能全部是单层；
 - expnix Home Manager evaluation 能找到 module，`buking` / `handyMini` 为
   `enable = true`，其它 hosts 为 `false`；
-- 四个目标只包含预期的 66 个技能，Codex `.system` 未被覆盖；
+- 四个目标只包含预期的 63 个技能，Codex `.system` 未被覆盖；
 - provider 切换、恢复、WebDAV 操作不改变外部 Skills；
 - cc-switch external 模式下所有 Skills 写操作都有明确提示；
 - Codex 与 dsh 已验证能加载全部技能；Claude、OMP 待运行时确认；
@@ -302,5 +304,5 @@ just s
 | Gemini 作为第四个 agent target | 只有 `agents`、`claude`、`codex`、`opencode` | 本机不用 gemini |
 | registry manifest + npins 锁 | 只用 flake input | 全部 source 都是 flake input，多一层锁无收益 |
 | 目标用 `${VAR:-$HOME/...}` 默认值 | claude/codex 显式 XDG 路径 | HM 激活的 systemd unit 里没有那两个变量 |
-| 接管前把长期技能复制进 `local/` | 上游优先，`local/` 只放无上游技能 | 减少重复维护 |
+| 接管前把长期技能复制进 `local/` | 上游优先；个人技能迁到 `handy-skills` 仓库，`skills-nix/` 不保存技能内容 | 减少重复维护，让 catalog 只负责选择 |
 | `nix flake update --flake ./skills-nix` | 进目录执行 `nix flake update` | 当前 Nix 没有该参数 |

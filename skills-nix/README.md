@@ -11,9 +11,12 @@ skills-nix/
 ├── flake.nix        # module 输出、bundle package、check、apps
 ├── flake.lock       # 锁定 nixpkgs、agent-skills-nix 与上游技能仓库
 ├── catalog.nix      # sources、选中的 skills、hosts、targets
-├── home-manager.nix # module 主体，读取 catalog.nix
-└── local/           # 没有上游的技能（每个技能一个目录）
+└── home-manager.nix # module 主体，读取 catalog.nix
 ```
+
+本目录不保存任何技能内容：个人与项目专用技能在
+[`github:handy-sun/handy-skills`](https://github.com/handy-sun/handy-skills)
+里维护，这里只选版本。
 
 ## 来源
 
@@ -26,11 +29,11 @@ skills-nix/
 | `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 21 |
 | `browser-act` | `github:browser-act/skills` | 单层（`filter.nameRegex`） | `enable` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 11 |
-| `local` | 本仓库 `local/` | 单层 | `enable` | 33 |
+| `handy-skills` | `github:handy-sun/handy-skills` | 单层 | `enable` | 30 |
 
-上游技能不复制进仓库：有上游就引用上游，`local/` 只放没有上游的项目专用技能，
-外加 5 个从 Hermes toolkit 复制出来的小工具技能。`NousResearch/hermes-agent`
-（271 MB 的 agent 运行时）没有作为输入引入，取舍见 `INVENTORY.md` §2。
+所有技能都来自上游仓库：个人与项目专用技能、以及从 Hermes toolkit 复制的小工具
+技能都在 `handy-skills` 里维护。`NousResearch/hermes-agent`（271 MB 的 agent
+运行时）没有作为输入引入，取舍见 `INVENTORY.md` §2。
 
 ## 命令
 

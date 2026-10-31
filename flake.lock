@@ -337,6 +337,22 @@
         "type": "github"
       }
     },
+    "handy-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793342289,
+        "narHash": "sha256-lm7XcOTRGQAzTHjRn8FQYlurf2VMsCYY812Ux20ujh0=",
+        "owner": "handy-sun",
+        "repo": "handy-skills",
+        "rev": "416bd2702a5ea40427651a635f88a074f1ab4daf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "handy-sun",
+        "repo": "handy-skills",
+        "type": "github"
+      }
+    },
     "hercules-ci-effects": {
       "inputs": {
         "flake-parts": [
@@ -855,6 +871,7 @@
         "addyosmani-skills": "addyosmani-skills",
         "agent-skills": "agent-skills",
         "browser-act-skills": "browser-act-skills",
+        "handy-skills": "handy-skills",
         "nixpkgs": [
           "nixpkgs"
         ],

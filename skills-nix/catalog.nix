@@ -28,10 +28,11 @@
       subdir = "home/agents/skills";
     };
 
-    # Skills maintained in this repository, including the Hermes toolkit skills
-    # that were copied out of its 271 MB runtime repository.
-    local = {
-      path = ./local;
+    # Personal and project-specific skills, including the Hermes toolkit skills
+    # that were copied out of its 271 MB runtime repository. They live in their
+    # own repository so this catalog only pins them.
+    handy-skills = {
+      path = inputs.handy-skills;
     };
   };
 
@@ -73,17 +74,14 @@
       "post-impl-housekeep"
       "prune-comments-and-docs"
       "sillytavern-card-backup"
-      # local/
+      # handy-skills
       "adding-rust-enum-variant"
       "awesome-cv-customization"
       "c-development"
       "cargo-dependency-update"
-      "codebase-inspection"
       "cpp-code-review"
-      "design-md-init"
       "desktop-app-ci"
       "desktop-app-qt6-ci"
-      "docker-compose-selfhost"
       "domain-name-brainstormer"
       "find-nearby"
       "github-auth"

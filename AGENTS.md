@@ -73,8 +73,9 @@ NixOS / darwin / Home Manager 输出的 `nix build --dry-run`。只改 Markdown�
 - **扁平只一层**：每个技能是 `<dest>/<name>/SKILL.md`，不要加分类目录，也不要
   把技能放进另一个技能目录（bundle 用软链物化技能，父子共用路径会冲突）。
   dsh 等 agent 只扫 skills 根目录一层。
-- **上游优先**：上游有就引用（`catalog.nix` 的 `sources`），`local/` 只放没有
-  上游的技能。
+- **上游优先**：能引用上游就引用（`catalog.nix` 的 `sources`）。个人和项目
+  专用技能在 `github:handy-sun/handy-skills` 仓库里维护，本仓库只 pin 版本，
+  没有本地技能目录。
 - **只部署 `skills.enable` 里列出的 ID**；按 agent 限制用 `skills.explicit` 的
   `agents`。
 - **新文件要 `git add`**：flake 只读已跟踪文件，未跟踪的技能对求值不可见。

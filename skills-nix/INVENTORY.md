@@ -6,18 +6,18 @@
 
 ## 1. 现状
 
-部署面共 **66 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
+部署面共 **63 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
 
 | 来源 | 数量 | 说明 |
 | --- | --- | --- |
 | `addyosmani/agent-skills` | 21 | 上游布局就是 `skills/<name>`；20 个来自 SSOT，`debugging-and-error-recovery` 是额外启用的上游技能 |
 | `MidAutumnMoon/TaysiTsuki` | 11 | `home/agents/skills`，本身就是单层 |
 | `browser-act/skills` | 1 | `filter.nameRegex` 只取 `browser-act` |
-| `local/` | 33 | 28 个从 SSOT 迁入、5 个从 Hermes toolkit 复制 |
-| 合计 | 66 | |
+| `handy-skills` | 30 | 26 个从 SSOT 迁入、4 个从 Hermes toolkit 复制 |
+| 合计 | 63 | |
 
 目标目录共 4 个：`claude`、`codex`、`opencode`、`agents`
-（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 66 个）。
+（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 63 个）。
 
 只对本仓库有意义的说明不占技能位：它们写在仓库根的 `AGENTS.md`
 （`CLAUDE.md` 是它的软链）。
@@ -34,13 +34,13 @@
 | `addyosmani` | `github:addyosmani/agent-skills` | `aeac41d` | `skills/<name>` | `enable` | 21 |
 | `browser-act` | `github:browser-act/skills` | `11c057b` | 仓库根下 `browser-act/` | `filter.nameRegex` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` | `9fa573c` | `home/agents/skills/<name>` | `enable` | 11 |
-| `local` | 本仓库 | – | `local/<name>` | `enable` | 33 |
+| `handy-skills` | `github:handy-sun/handy-skills` | `416bd27` | `<name>` | `enable` | 30 |
 
 **Hermes 不是输入，也没有整套导入。** `NousResearch/hermes-agent` 是整个 agent
 运行时（271 MB），与这里相关的 12 个技能分三类处理：
 
-- 5 个与 agent 无关的工具/技术技能还留在 `local/`：`obsidian`、`mcporter`、
-  `codebase-inspection`、`requesting-code-review`、`spike`；
+- 4 个与 agent 无关的工具/技术技能留在 `handy-skills`：`obsidian`、`mcporter`、
+  `requesting-code-review`、`spike`（`codebase-inspection` 后来按用不上删了）；
 - 3 个依赖 Hermes 自身工具/运行时的技能去掉：`claude-code`、`opencode`、
   `subagent-driven-development`（`delegate_task`）；
 - `himalaya`、`xurl`、`python-debugpy`、`node-inspect-debugger` 曾复制进来，
@@ -53,7 +53,8 @@
 3. **上游比对**：sha256 逐文件比对 + 词集合 Dice 相似度，候选仓库包括
    addyosmani/agent-skills、hermes-agent、obra/superpowers、anthropics/skills、
    browser-act/skills、TaysiTsuki、baoyu-skills、myclaude、awesome-claude-skills。
-4. **口径**：先看上游；没有上游的看是否只对 Hermes 有意义；剩下的进 `local/`。
+4. **口径**：先看上游；没有上游的看是否只对 Hermes 有意义；剩下的进
+   `handy-skills` 仓库。
 
 ## 4. SSOT 111 项的处置
 
@@ -62,10 +63,10 @@
 | addyosmani/agent-skills | 20 |
 | TaysiTsuki | 8 |
 | browser-act/skills | 1 |
-| local/（沿用原副本） | 28 |
-| local/（从 hermes-agent 复制，现剩 5 个） | 5 |
+| handy-skills（沿用原副本） | 26 |
+| handy-skills（从 hermes-agent 复制，现剩 4 个） | 4 |
 | 已移出 SSOT（6 个 `.bak` + 重复的嵌套 TDD） | 7 |
-| 已删除（`singbox-config`、`codex`、`cc-switch-app-type-wiring`、`web-access`、`native-mcp`、`kanban-orchestrator`、`kanban-worker`、`webhook-subscriptions`、`xurl`、`himalaya`、`systematic-debugging`、`hdd-pending-sector-repair`、`python-debugpy`、`node-inspect-debugger`） | 14 |
+| 已删除（`singbox-config`、`codex`、`cc-switch-app-type-wiring`、`web-access`、`native-mcp`、`kanban-orchestrator`、`kanban-worker`、`webhook-subscriptions`、`xurl`、`himalaya`、`systematic-debugging`、`hdd-pending-sector-repair`、`python-debugpy`、`node-inspect-debugger`、`design-md-init`、`docker-compose-selfhost`、`codebase-inspection`） | 17 |
 | 不迁移（Hermes 专用 3 + Hermes 运行时技能 3） | 6 |
 | 暂不迁移（macOS 专用 5、media 3、productivity 14） | 22 |
 | 合计 | 111 |
@@ -100,7 +101,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `awesome-cv-customization` | local/ |
+| `awesome-cv-customization` | handy-skills |
 
 ### `browser-act/`
 
@@ -119,16 +120,16 @@
 | 技能目录 | 现在来自 |
 | --- | --- |
 | `ci-cd-and-automation` | addyosmani/agent-skills |
-| `ci-cd-and-automation/desktop-app-ci` | local/ |
-| `ci-cd-and-automation/desktop-app-qt6-ci` | local/ |
-| `ci-cd-and-automation/nix-flake-ci` | local/ |
+| `ci-cd-and-automation/desktop-app-ci` | handy-skills |
+| `ci-cd-and-automation/desktop-app-qt6-ci` | handy-skills |
+| `ci-cd-and-automation/nix-flake-ci` | handy-skills |
 
 ### `code-review-and-quality/`
 
 | 技能目录 | 现在来自 |
 | --- | --- |
 | `code-review-and-quality` | addyosmani/agent-skills |
-| `code-review-and-quality/cpp-code-review` | local/ |
+| `code-review-and-quality/cpp-code-review` | handy-skills |
 
 ### `code-simplification/`
 
@@ -152,7 +153,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `devops/docker-compose-selfhost` | local/ |
+| `devops/docker-compose-selfhost` | 已删除（不在 handy-skills） |
 | `devops/hdd-pending-sector-repair` | 已删除 |
 | `devops/kanban-orchestrator` | 已删除 |
 | `devops/kanban-orchestrator.bak` | 已移出 SSOT |
@@ -170,7 +171,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `domain-name-brainstormer` | local/ |
+| `domain-name-brainstormer` | handy-skills |
 
 ### `email/`
 
@@ -195,14 +196,14 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `github/codebase-inspection` | local/（从 hermes-agent 复制） |
-| `github/github-auth` | local/ |
+| `github/codebase-inspection` | 已删除（不在 handy-skills） |
+| `github/github-auth` | handy-skills |
 | `github/github-auth.bak` | 已移出 SSOT |
-| `github/github-code-review` | local/ |
-| `github/github-issues` | local/ |
-| `github/github-pr-workflow` | local/ |
-| `github/github-release-management` | local/ |
-| `github/github-repo-management` | local/ |
+| `github/github-code-review` | handy-skills |
+| `github/github-issues` | handy-skills |
+| `github/github-pr-workflow` | handy-skills |
+| `github/github-release-management` | handy-skills |
+| `github/github-repo-management` | handy-skills |
 
 ### `idea-refine/`
 
@@ -220,13 +221,13 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `leisure/find-nearby` | local/ |
+| `leisure/find-nearby` | handy-skills |
 
 ### `mcp/`
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `mcp/mcporter` | local/（从 hermes-agent 复制） |
+| `mcp/mcporter` | handy-skills（从 hermes-agent 复制） |
 | `mcp/native-mcp` | 已删除 |
 
 ### `media/`
@@ -241,19 +242,19 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `nix-flake-development` | local/ |
+| `nix-flake-development` | handy-skills |
 
 ### `nix-module-capability-detection/`
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `nix-module-capability-detection` | local/ |
+| `nix-module-capability-detection` | handy-skills |
 
 ### `note-taking/`
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `note-taking/obsidian` | local/（从 hermes-agent 复制） |
+| `note-taking/obsidian` | handy-skills（从 hermes-agent 复制） |
 | `note-taking/obsidian.bak` | 已移出 SSOT |
 
 ### `performance-optimization/`
@@ -291,7 +292,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `release-skills` | local/ |
+| `release-skills` | handy-skills |
 
 ### `security-and-hardening/`
 
@@ -303,7 +304,7 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `shell-scripting` | local/ |
+| `shell-scripting` | handy-skills |
 
 ### `shipping-and-launch/`
 
@@ -327,25 +328,25 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `software-development/adding-rust-enum-variant` | local/ |
-| `software-development/c-development` | local/ |
-| `software-development/cargo-dependency-update` | local/ |
+| `software-development/adding-rust-enum-variant` | handy-skills |
+| `software-development/c-development` | handy-skills |
+| `software-development/cargo-dependency-update` | handy-skills |
 | `software-development/cc-switch-app-type-wiring` | 已删除 |
 | `software-development/debugging-hermes-tui-commands` | 不迁移（Hermes 专用） |
-| `software-development/design-md-init` | local/ |
+| `software-development/design-md-init` | 已删除（不在 handy-skills） |
 | `software-development/hermes-agent-skill-authoring` | 不迁移（Hermes 专用） |
 | `software-development/node-inspect-debugger` | 已删除 |
-| `software-development/project-docs` | local/ |
+| `software-development/project-docs` | handy-skills |
 | `software-development/python-debugpy` | 已删除 |
-| `software-development/requesting-code-review` | local/（从 hermes-agent 复制） |
-| `software-development/rust-pre-commit-hook` | local/ |
-| `software-development/rust-struct-field-propagation` | local/ |
-| `software-development/rust-test-isolation` | local/ |
-| `software-development/spike` | local/（从 hermes-agent 复制） |
+| `software-development/requesting-code-review` | handy-skills（从 hermes-agent 复制） |
+| `software-development/rust-pre-commit-hook` | handy-skills |
+| `software-development/rust-struct-field-propagation` | handy-skills |
+| `software-development/rust-test-isolation` | handy-skills |
+| `software-development/spike` | handy-skills（从 hermes-agent 复制） |
 | `software-development/subagent-driven-development` | 不迁移（Hermes 运行时技能） |
 | `software-development/systematic-debugging` | 已删除 |
 | `software-development/test-driven-development` | 已移出 SSOT |
-| `software-development/writing-plans` | local/ |
+| `software-development/writing-plans` | handy-skills |
 
 ### `source-driven-development/`
 
@@ -394,13 +395,13 @@
 
 | 技能目录 | 现在来自 |
 | --- | --- |
-| `workflow-skill-architect` | local/ |
+| `workflow-skill-architect` | handy-skills |
 
 
 ## 5. 待确认
 
 1. `apple/*` 与 `macos-computer-use` 只在 handyMini 有意义，是否要在下一轮启用？
 2. `media/*` 与 `productivity/*` 的上游就是 hermes-agent；需要时从上游取一两个文件
-   放进 `local/` 即可，不必为此引入 271 MB 的输入。
+   加进 `handy-skills` 仓库即可，不必为此引入 271 MB 的输入。
 3. TaysiTsuki 里还有 4 个未启用的技能（`grill-me`、`grilling`、
    `language-style-guide`、`wait-what`），目前判断是重复或过薄，先留着不启用。
