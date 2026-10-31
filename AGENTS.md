@@ -3,6 +3,12 @@
 给在本仓库里工作的 AI agent 看的说明。内容与 `README.md` 互补：README 面向人，
 这里只写"动手时要注意什么"。约定变化时请同步更新本文件。
 
+## 工作方式
+
+- **改完只提交，不要自作主张推送。** 不要执行 `git push`、不要开 PR、不要改远端
+  分支；推送、合并、开 PR 都等用户明确要求。提交本地 `git commit`、写清动机与
+  验证结果即可。
+
 ## 项目概览
 
 `expnix` 是个人 Nix flake 配置仓库，统一管理 NixOS、nix-darwin、system-manager
