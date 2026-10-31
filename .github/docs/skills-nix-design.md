@@ -91,7 +91,7 @@ agent 都成立。
 | --- | --- |
 | omp 是 pi 的分支，不是 opencode | 二进制里是 `pi_natives` 原生模块，家目录 `~/.omp`，agent 状态在 `~/.omp/agent` |
 | omp 读 `~/.agents/skills` 和 `~/.omp/agent/skills` | 二进制里的说明是 "Load skills from `.agent/skills` and `.agents/skills` (project walk-up + user home)"；往 `~/.omp/agent/skills` 放一个探针技能能被 `omp skill list` 列出 |
-| omp **不读** `~/.config/opencode/skills` | 把该目录移走后 `omp skill list` 仍是 68 条；把 `~/.agents/skills` 移走后变成 0 条 |
+| omp **不读** `~/.config/opencode/skills` | 把该目录移走后 `omp skill list` 条数不变（当时部署 68 个）；把 `~/.agents/skills` 移走后变成 0 条 |
 | `~/.config/opencode` 只用于 opencode 的认证/模型集成 | 二进制里有 `https://opencode.ai/auth`、`auth/opencode-go.kdl` 之类，没有 skills 路径 |
 
 因此：
@@ -143,7 +143,7 @@ in
 | `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 21 |
 | `browser-act` | `github:browser-act/skills` | 仓库根下 `browser-act/` | `filter.nameRegex` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 11 |
-| `local` | 本仓库 `local/` | 单层 | `enable` | 35 |
+| `local` | 本仓库 `local/` | 单层 | `enable` | 33 |
 
 上游仓库都是 `flake = false` 输入，只取源码树，不评估它们的 flake outputs。
 
@@ -170,9 +170,14 @@ skills-nix/local/
   分类信息放进文件名或 front matter。
 - **上游优先。** 有上游就不要复制；例外是体积过大的 Hermes 运行时。
 
-当前 35 个本地技能按用途分成 Nix/基础设施、CI 与桌面打包、Rust、C/Shell、
+当前 33 个本地技能按用途分成 Nix/基础设施、CI 与桌面打包、Rust、C/Shell、
 GitHub、开发工作流、文档写作、运维自托管、工具几组，逐条说明见
 `skills-nix/local/README.md`。
+
+只对本仓库有意义的说明不放进技能，而是写在仓库根的 `AGENTS.md`（Claude Code
+读 `CLAUDE.md`，它是指向同一个文件的软链）。`expnix-workflow` 和
+`skills-nix-maintenance` 原先就是两个全局技能，现在并入了那里：它们不该在别的
+仓库里占用全局技能列表和元数据预算。
 
 ### 3.3 命名与选择
 
@@ -279,10 +284,10 @@ just s
 
 ## 8. 验收标准
 
-- `nix flake check ./skills-nix` 通过，bundle 里 68 个技能全部是单层；
+- `nix flake check ./skills-nix` 通过，bundle 里 66 个技能全部是单层；
 - expnix Home Manager evaluation 能找到 module，`buking` / `handyMini` 为
   `enable = true`，其它 hosts 为 `false`；
-- 四个目标只包含预期的 68 个技能，Codex `.system` 未被覆盖；
+- 四个目标只包含预期的 66 个技能，Codex `.system` 未被覆盖；
 - provider 切换、恢复、WebDAV 操作不改变外部 Skills；
 - cc-switch external 模式下所有 Skills 写操作都有明确提示；
 - Codex 与 dsh 已验证能加载全部技能；Claude、OMP 待运行时确认；

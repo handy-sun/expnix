@@ -26,7 +26,7 @@ skills-nix/
 | `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 21 |
 | `browser-act` | `github:browser-act/skills` | 单层（`filter.nameRegex`） | `enable` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 11 |
-| `local` | 本仓库 `local/` | 单层 | `enable` | 35 |
+| `local` | 本仓库 `local/` | 单层 | `enable` | 33 |
 
 上游技能不复制进仓库：有上游就引用上游，`local/` 只放没有上游的项目专用技能，
 外加 5 个从 Hermes toolkit 复制出来的小工具技能。`NousResearch/hermes-agent`

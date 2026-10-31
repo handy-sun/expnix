@@ -1,6 +1,6 @@
 # local/
 
-The 35 skills that have no usable upstream, plus five Hermes toolkit skills
+The 33 skills that have no usable upstream, plus five Hermes toolkit skills
 copied out of its 271 MB runtime repository. Every skill is one directory with
 a `SKILL.md` at the top:
 
@@ -32,8 +32,9 @@ Two rules:
 | `nix-flake-development` | >- |  |
 | `nix-module-capability-detection` | Write or review cross-platform Nix modules that must work in NixOS, nix-darwin, Home Manager, or mixed modu… |  |
 | `nix-flake-ci` | Optimize CI and binary cache for NixOS/nix-darwin/home-manager flakes. |  |
-| `expnix-workflow` | Works in the expnix Nix flake repository. |  |
-| `skills-nix-maintenance` | Maintains the agent skill catalog in this expnix checkout. |  |
+
+仓库自己的工作流（`just` 用法、验证顺序、catalog 维护）放在根目录的
+`AGENTS.md`，不再作为全局技能分发。
 
 ### CI 与桌面打包
 

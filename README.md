@@ -128,6 +128,7 @@ nixfmt --check <staged-nix-files>
 | `nixos/` | NixOS 通用配置和服务配置 |
 | `packages/` | 自定义 package 定义和 NixPak 应用 |
 | `skills-nix/` | Agent Skills catalog：来源、选择、目标目录，独立 flake 与 lock |
+| `AGENTS.md` | 给 AI agent 的仓库说明（`CLAUDE.md` 是它的软链） |
 | `scripts/` | 安装、开发 shell 和桌面辅助脚本 |
 | `.githooks/` | 本仓库使用的 git hooks |
 | `.github/workflows/` | CI、缓存构建和依赖更新 workflow |
@@ -182,14 +183,14 @@ provider、MCP 和其他非 Skills 配置。Hermes 的 `$HERMES_HOME/skills` 混
 bundled skills 与 curator 状态，第一阶段不接管。
 
 技能来自上游仓库：`addyosmani/agent-skills`（21）、`browser-act/skills`（1）和
-`TaysiTsuki`（11）；`skills-nix/local/`（35）放没有上游的项目专用技能，以及 5 个
+`TaysiTsuki`（11）；`skills-nix/local/`（33）放没有上游的项目专用技能，以及 5 个
 从 Hermes toolkit 复制出来的小工具技能（`NousResearch/hermes-agent` 是 271 MB 的
 运行时，没有作为输入引入）。所有技能都部署成扁平的 `<dest>/<name>/SKILL.md`，
 因为 DSH 等 agent 只扫描 skills 根目录的一层；`agents` 目标
 （`$HOME/.agents/skills`）就是 DSH 读取的那个目录。
 
 ```bash
-just skills-list      # 当前启用的 68 个技能
+just skills-list      # 当前启用的 66 个技能
 just skills-check     # 构建 bundle 并做 flake check
 ```
 
