@@ -172,7 +172,7 @@ lib.mkIf profileLevel.guiBase {
       active_tab_foreground = qimocha.background;
       tab_title_template = "{index} {tab.active_exe} ~ {title}";
       confirm_os_window_close = 0;
-      hide_window_decorations = "yes";
+      hide_window_decorations = if isDarwin then "no" else "yes";
       background_opacity = "0.98";
       window_padding_width = 0;
 
