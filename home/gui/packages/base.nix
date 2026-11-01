@@ -9,14 +9,17 @@
 }:
 let
   inherit (myvars) archSystem;
-  markShotOcrPython = pkgs.python314.withPackages (pythonPackages: [ pythonPackages.rapidocr ]);
   markShot = inputs.mark-shot.packages.${archSystem}.default.overrideAttrs (old: {
     nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
+    ## 0.1.62 ships OCR as a native Qt plugin that is silently skipped unless
+    ## onnxruntime (headers/CMake config live in its dev output) is found.
+    buildInputs = (old.buildInputs or [ ]) ++ [
+      pkgs.onnxruntime
+      pkgs.onnxruntime.dev
+    ];
     postInstall = (old.postInstall or "") + ''
       wrapProgram $out/bin/mark-shot \
         --set QT_QPA_PLATFORMTHEME generic
-      wrapProgram $out/bin/mark-shot-ocr \
-        --set MARK_SHOT_OCR_PYTHON ${markShotOcrPython}/bin/python
     '';
   });
   ## buildFHSEnv builds via buildCommand, so postInstall is skipped: the wrapper
