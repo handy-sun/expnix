@@ -18,6 +18,10 @@ in
 
   programs.bash = {
     enable = true;
+    initExtra = lib.mkAfter ''
+      ## old nixpkgs' dev shell dlopen will failed, this local version requires GLIBC 2.15
+      enable flyline 2>/dev/null || enable -f "$HOME/.local/lib/libflyline.so" flyline
+    '';
   };
 
   programs.zsh = {
