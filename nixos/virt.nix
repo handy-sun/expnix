@@ -32,7 +32,6 @@ lib.mkIf profileLevel.guiHeavy {
   environment.systemPackages = with pkgs; [
     dnsmasq
     virt-viewer
-    virtio-win
     spice-gtk
   ];
 

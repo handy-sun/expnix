@@ -38,7 +38,6 @@ in
       commonSystemPackages
       ++ (with pkgs; [
         docker
-        zerotierone
         acme-sh
         gcc
         strace # a diagnostic, debugging and instructional userspace utility for Linux.
@@ -74,7 +73,7 @@ in
   programs.zsh.enable = true;
   programs.fish.enable = true;
   programs.bash.enable = true;
-  programs.flyline.enable = true;
+  programs.flyline.enable = false;
   services.envfs.enable = true;
 
   ## MobaXterm monitoring uses non-interactive SSH sessions; keep privileged wrappers first.
