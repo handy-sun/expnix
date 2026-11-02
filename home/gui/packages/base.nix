@@ -9,6 +9,9 @@
 }:
 let
   inherit (myvars) archSystem;
+  ## The OCR helper (libexec/mark-shot/mark-shot-ocr) is a python script that
+  ## needs rapidocr; without it every OCR action fails as "helper not found".
+  markShotOcrPython = pkgs.python314.withPackages (ps: [ ps.rapidocr ]);
   markShot = inputs.mark-shot.packages.${archSystem}.default.overrideAttrs (old: {
     nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
     ## 0.1.62 ships OCR as a native Qt plugin that is silently skipped unless
@@ -19,7 +22,9 @@ let
     ];
     postInstall = (old.postInstall or "") + ''
       wrapProgram $out/bin/mark-shot \
-        --set QT_QPA_PLATFORMTHEME generic
+        --set QT_QPA_PLATFORMTHEME generic \
+        --prefix PATH : ${markShotOcrPython}/bin \
+        --set MARK_SHOT_OCR_PYTHON ${markShotOcrPython}/bin/python
     '';
   });
   ## buildFHSEnv builds via buildCommand, so postInstall is skipped: the wrapper
