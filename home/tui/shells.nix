@@ -19,8 +19,11 @@ in
   programs.bash = {
     enable = true;
     initExtra = lib.mkAfter ''
-      ## old nixpkgs' dev shell dlopen will failed, this local version requires GLIBC 2.15
-      enable flyline 2>/dev/null || enable -f "$HOME/.local/lib/libflyline.so" flyline
+      ## old nixpkgs' dev shell dlopen fails; only fall back to the local build
+      ## when that shared object is actually present.
+      if ! enable flyline 2>/dev/null && [ -f "$HOME/.local/lib/libflyline.so" ]; then
+        enable -f "$HOME/.local/lib/libflyline.so" flyline
+      fi
     '';
   };
 
