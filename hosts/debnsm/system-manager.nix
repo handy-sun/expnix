@@ -7,7 +7,11 @@
   ...
 }:
 let
-  commonSystemPackages = myutils.resolveNames pkgs myvars.systemCommonPkgs;
+  ## Non-NixOS hosts keep their own OpenSSH client: a Nix-built ssh cannot parse
+  ## the distro crypto policy
+  commonSystemPackages = myutils.resolveNames pkgs (
+    builtins.filter (name: name != "openssh") myvars.systemCommonPkgs
+  );
   atticdPort = "8280";
   AbsoluteStateDir = "/var/lib/atticd";
 in
