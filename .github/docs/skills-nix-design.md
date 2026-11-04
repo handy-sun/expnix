@@ -144,7 +144,7 @@ in
 | `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 21 |
 | `browser-act` | `github:browser-act/skills` | 仓库根下 `browser-act/` | `filter.nameRegex` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 11 |
-| `handy-skills` | `github:handy-sun/handy-skills` | 单层 | `enable` | 30 |
+| `handy-skills` | `github:handy-sun/handy-skills` | 单层 | `enable` | 31 |
 
 上游仓库都是 `flake = false` 输入，只取源码树，不评估它们的 flake outputs。
 
@@ -172,7 +172,7 @@ handy-skills/
   分类信息放进文件名或 front matter。
 - **上游优先。** 有上游就不要复制；只有没有上游的个人技能才进这个仓库。
 
-它现在有 30 个技能，按用途分成 Nix/基础设施、CI 与桌面打包、Rust、C/Shell、
+它现在有 31 个技能，按用途分成 Nix/基础设施、CI 与桌面打包、Rust、C/Shell、
 GitHub、开发工作流、文档写作、运维自托管、工具几组。`expnix-workflow`、
 `design-md-init`、`docker-compose-selfhost`、`codebase-inspection` 等不再维护。
 
@@ -286,10 +286,10 @@ just s
 
 ## 8. 验收标准
 
-- `nix flake check ./skills-nix` 通过，bundle 里 63 个技能全部是单层；
+- `nix flake check ./skills-nix` 通过，bundle 里 64 个技能全部是单层；
 - expnix Home Manager evaluation 能找到 module，`buking` / `handyMini` 为
   `enable = true`，其它 hosts 为 `false`；
-- 四个目标只包含预期的 63 个技能，Codex `.system` 未被覆盖；
+- 四个目标只包含预期的 64 个技能，Codex `.system` 未被覆盖；
 - provider 切换、恢复、WebDAV 操作不改变外部 Skills；
 - cc-switch external 模式下所有 Skills 写操作都有明确提示；
 - Codex 与 dsh 已验证能加载全部技能；Claude、OMP 待运行时确认；

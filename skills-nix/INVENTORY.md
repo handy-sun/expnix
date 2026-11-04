@@ -6,18 +6,18 @@
 
 ## 1. 现状
 
-部署面共 **63 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
+部署面共 **64 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
 
 | 来源 | 数量 | 说明 |
 | --- | --- | --- |
 | `addyosmani/agent-skills` | 21 | 上游布局就是 `skills/<name>`；20 个来自 SSOT，`debugging-and-error-recovery` 是额外启用的上游技能 |
 | `MidAutumnMoon/TaysiTsuki` | 11 | `home/agents/skills`，本身就是单层 |
 | `browser-act/skills` | 1 | `filter.nameRegex` 只取 `browser-act` |
-| `handy-skills` | 30 | 26 个从 SSOT 迁入、4 个从 Hermes toolkit 复制 |
-| 合计 | 63 | |
+| `handy-skills` | 31 | 26 个从 SSOT 迁入、4 个从 Hermes toolkit 复制、1 个本仓库新写（`git-commit`） |
+| 合计 | 64 | |
 
 目标目录共 4 个：`claude`、`codex`、`opencode`、`agents`
-（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 63 个）。
+（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 64 个）。
 
 只对本仓库有意义的说明不占技能位：它们写在仓库根的 `AGENTS.md`
 （`CLAUDE.md` 是它的软链）。
@@ -34,7 +34,7 @@
 | `addyosmani` | `github:addyosmani/agent-skills` | `301b02b` | `skills/<name>` | `enable` | 21 |
 | `browser-act` | `github:browser-act/skills` | `2acf481` | 仓库根下 `browser-act/` | `filter.nameRegex` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` | `1c373c4` | `home/agents/skills/<name>` | `enable` | 11 |
-| `handy-skills` | `github:handy-sun/handy-skills` | `2da05b8` | `<name>` | `enable` | 30 |
+| `handy-skills` | `github:handy-sun/handy-skills` | `2da05b8` | `<name>` | `enable` | 31 |
 
 **Hermes 不是输入，也没有整套导入。** `NousResearch/hermes-agent` 是整个 agent
 运行时（271 MB），与这里相关的 12 个技能分三类处理：

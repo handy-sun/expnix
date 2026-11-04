@@ -103,6 +103,7 @@
       "desktop-app-qt6-ci"
       "domain-name-brainstormer"
       "find-nearby"
+      "git-commit"
       "github-auth"
       "github-code-review"
       "github-issues"

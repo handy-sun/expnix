@@ -29,7 +29,7 @@ skills-nix/
 | `addyosmani` | `github:addyosmani/agent-skills` 的 `skills/` | 单层 | `enable` | 21 |
 | `browser-act` | `github:browser-act/skills` | 单层（`filter.nameRegex`） | `enable` | 1 |
 | `taysi` | `github:MidAutumnMoon/TaysiTsuki` 的 `home/agents/skills` | 单层 | `enable` | 11 |
-| `handy-skills` | `github:handy-sun/handy-skills` | 单层 | `enable` | 30 |
+| `handy-skills` | `github:handy-sun/handy-skills` | 单层 | `enable` | 31 |
 
 所有技能都来自上游仓库：个人与项目专用技能、以及从 Hermes toolkit 复制的小工具
 技能都在 `handy-skills` 里维护。`NousResearch/hermes-agent`（271 MB 的 agent
