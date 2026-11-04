@@ -2,20 +2,9 @@
   lib,
   pkgs,
   config,
-  isHmSingle,
   ...
 }:
-let
-  enableGenericLinuxPath = isHmSingle;
-in
 {
-  home.sessionPath = lib.mkIf enableGenericLinuxPath [
-    "\${NIX_STATE_DIR:-/nix/var/nix}/profiles/default/bin"
-    "${config.home.profileDirectory}/bin"
-    "/run/current-system/sw/bin"
-    "/run/system-manager/sw/bin"
-  ];
-
   programs.bash = {
     enable = true;
     initExtra = lib.mkAfter ''
