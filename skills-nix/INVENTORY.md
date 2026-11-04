@@ -31,10 +31,10 @@
 
 | source | 仓库 | 锁定版本 | 布局 | 取用 | 数量 |
 | --- | --- | --- | --- | --- | --- |
-| `addyosmani` | `github:addyosmani/agent-skills` | `aeac41d` | `skills/<name>` | `enable` | 21 |
-| `browser-act` | `github:browser-act/skills` | `11c057b` | 仓库根下 `browser-act/` | `filter.nameRegex` | 1 |
-| `taysi` | `github:MidAutumnMoon/TaysiTsuki` | `9fa573c` | `home/agents/skills/<name>` | `enable` | 11 |
-| `handy-skills` | `github:handy-sun/handy-skills` | `416bd27` | `<name>` | `enable` | 30 |
+| `addyosmani` | `github:addyosmani/agent-skills` | `301b02b` | `skills/<name>` | `enable` | 21 |
+| `browser-act` | `github:browser-act/skills` | `2acf481` | 仓库根下 `browser-act/` | `filter.nameRegex` | 1 |
+| `taysi` | `github:MidAutumnMoon/TaysiTsuki` | `1c373c4` | `home/agents/skills/<name>` | `enable` | 11 |
+| `handy-skills` | `github:handy-sun/handy-skills` | `2da05b8` | `<name>` | `enable` | 30 |
 
 **Hermes 不是输入，也没有整套导入。** `NousResearch/hermes-agent` 是整个 agent
 运行时（271 MB），与这里相关的 12 个技能分三类处理：

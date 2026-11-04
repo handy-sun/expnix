@@ -66,7 +66,6 @@
       "challenge-architecture"
       "chinese-prose-lint"
       "code-cultivation"
-      "group-meeting"
       "handoff"
       "host-system-convention"
       "humanizer"
@@ -74,6 +73,7 @@
       "post-impl-housekeep"
       "prune-comments-and-docs"
       "sillytavern-card-backup"
+      "teamwork"
       # handy-skills
       "adding-rust-enum-variant"
       "awesome-cv-customization"
