@@ -73,6 +73,12 @@ skills-list:
 skills-check:
   nix flake check ./skills-nix
 
+# Update the skill inputs in both locks (root and skills-nix)
+[group('skills')]
+skills-update:
+  nix flake update skills-catalog/agent-skills skills-catalog/addyosmani-skills skills-catalog/browser-act-skills skills-catalog/taysi-tsuki skills-catalog/handy-skills
+  cd skills-nix && nix flake update
+
 [group('nix')]
 query-all pkgname:
   which {{pkgname}} | xargs realpath | xargs nix why-depends --all /run/current-system
