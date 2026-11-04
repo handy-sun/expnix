@@ -12,8 +12,6 @@
     # Upstream skill collections. All of them are consumed as plain source
     # trees (`flake = false`): the repositories own the content, this catalog
     # only selects which skills are deployed. The Hermes toolkit is not an
-    # input: it ships inside a 271 MB agent runtime, so the ten skills worth
-    # keeping were copied into local/ instead.
     addyosmani-skills = {
       url = "github:addyosmani/agent-skills";
       flake = false;
@@ -88,12 +86,34 @@
           selectionJson = pkgs.writeText "expnix-agent-skills-selection.json" (
             builtins.toJSON (agentLib.catalogJson selection)
           );
+          # relPath is relative to the source's subdir, so re-attach it to get
+          # the path inside the upstream repository.
+          sourceRows = lib.mapAttrs (
+            name: info: info // { prefix = catalog.sources.${name}.subdir or ""; }
+          ) catalog.sourceInfo;
+          sourceJson = pkgs.writeText "expnix-agent-skills-sources.json" (builtins.toJSON sourceRows);
         in
         pkgs.writeShellApplication {
           name = "skills-list";
           runtimeInputs = [ pkgs.jq ];
           text = ''
-            ${pkgs.jq}/bin/jq . ${selectionJson}
+            ${pkgs.jq}/bin/jq --slurpfile sources ${sourceJson} '
+              . as $skills
+              | ($sources[0]) as $info
+              | with_entries(
+                  .value |= {
+                    source: .source,
+                    url: ($info[.source].url // "unknown"),
+                    rev: ($info[.source].rev // "unknown"),
+                    path: (
+                      if ($info[.source].prefix // "") == ""
+                      then .relPath
+                      else $info[.source].prefix + "/" + .relPath
+                      end
+                    ),
+                  }
+                )
+            ' ${selectionJson}
           '';
         };
     in

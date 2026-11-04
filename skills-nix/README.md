@@ -40,10 +40,16 @@ skills-nix/
 在仓库根目录：
 
 ```bash
-just skills-list                            # 输出已启用技能的 JSON（不是全量 catalog）
+just skills-list                            # 已启用技能的 JSON（不是全量 catalog）
 nix build ./skills-nix && ls -R result/     # 查看渲染后的 bundle
 just skills-check                           # nix flake check ./skills-nix
+just skills-update                          # 同时更新根 lock 与 skills-nix lock 里的技能输入
 ```
+
+`skills-list` 的每个条目只有四个字段：`source`（哪个来源）、`url`（仓库地址）、
+`rev`（锁定的提交）、`path`（技能在该仓库里的路径，例如
+`skills/test-driven-development`）。不再输出 `/nix/store` 路径；需要时从
+`rev` 加 `path` 就能定位到上游文件。
 
 在 `skills-nix/` 目录：
 

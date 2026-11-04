@@ -28,17 +28,36 @@
       subdir = "home/agents/skills";
     };
 
-    # Personal and project-specific skills, including the Hermes toolkit skills
-    # that were copied out of its 271 MB runtime repository. They live in their
-    # own repository so this catalog only pins them.
     handy-skills = {
       path = inputs.handy-skills;
     };
   };
 
+  # Provenance for the inspection apps: the repository behind each source and
+  # the revision the lock pins. Kept out of `sources` so the upstream module
+  # only sees the fields it defines.
+  sourceInfo = {
+    addyosmani = {
+      url = "github:addyosmani/agent-skills";
+      rev = inputs.addyosmani-skills.rev or "";
+    };
+    browser-act = {
+      url = "github:browser-act/skills";
+      rev = inputs.browser-act-skills.rev or "";
+    };
+    taysi = {
+      url = "github:MidAutumnMoon/TaysiTsuki";
+      rev = inputs.taysi-tsuki.rev or "";
+    };
+    handy-skills = {
+      url = "github:handy-sun/handy-skills";
+      rev = inputs.handy-skills.rev or "";
+    };
+  };
+
   skills = {
     enable = [
-      # addyosmani/agent-skills
+      ## addyosmani/agent-skills
       "api-and-interface-design"
       "browser-testing-with-devtools"
       "ci-cd-and-automation"
@@ -60,9 +79,9 @@
       "spec-driven-development"
       "test-driven-development"
       "using-agent-skills"
-      # browser-act/skills
+      ## browser-act/skills
       "browser-act"
-      # TaysiTsuki (home/agents/skills)
+      ## TaysiTsuki (home/agents/skills)
       "challenge-architecture"
       "chinese-prose-lint"
       "code-cultivation"
@@ -74,7 +93,7 @@
       "prune-comments-and-docs"
       "sillytavern-card-backup"
       "teamwork"
-      # handy-skills
+      ## handy-skills
       "adding-rust-enum-variant"
       "awesome-cv-customization"
       "c-development"
@@ -119,18 +138,6 @@
     "handyMini"
   ];
 
-  # OpenCode and OMP share one directory because omp resolves
-  # ~/.config/opencode/skills. Hermes is intentionally absent: its skills root
-  # mixes bundled skills, curator state and user edits.
-  #
-  # claude and codex get explicit destinations instead of the module defaults
-  # (CLAUDE_CONFIG_DIR / CODEX_HOME fallbacks): Home Manager activation runs
-  # from home-manager-<user>.service, whose environment does not carry those
-  # variables, so the defaults would expand to ~/.claude and ~/.codex while the
-  # agents read the XDG paths set in home/default.nix's sessionVariables.
-  #
-  # agents is the shared `$HOME/.agents/skills` directory. dsh reads it as its
-  # user-agents root, which is how these skills reach dsh at all.
   targets = {
     agents.enable = true;
     claude = {
