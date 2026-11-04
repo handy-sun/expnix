@@ -56,7 +56,12 @@ inputs.system-manager.lib.makeSystemConfig {
     ./nix-common.nix
     inputs.home-manager.nixosModules.home-manager
     (
-      { pkgs, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
       {
         nixpkgs.hostPlatform = system;
 
@@ -93,6 +98,23 @@ inputs.system-manager.lib.makeSystemConfig {
         };
 
         environment.etc."ssh/ssh_known_hosts".text = networkingVars.ssh.knownHostsText;
+
+        ## pam_env (Linux-PAM >= 1.7) also reads /etc/environment.d, but unlike
+        ## systemd's environment-d generator it does not expand ${...}. Upstream
+        ## writes ${USER}/${PATH}/${XDG_DATA_DIRS} verbatim, so every PAM session
+        ## (sshd, sudo, su) keeps those literals inside PATH and loses the real
+        ## base PATH. Mirror upstream's file with everything expanded; the
+        ## variables block stays generated from environment.variables, so session
+        ## variables added elsewhere are still honoured.
+        environment.etc."environment.d/10-system-manager.conf" = lib.mkForce {
+          text = ''
+            ${lib.concatLines (lib.mapAttrsToList (k: v: ''${k}="${v}"'') config.environment.variables)}
+            PATH=/etc/profiles/per-user/${username}/bin:/run/system-manager/sw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+            XDG_DATA_DIRS=/etc/profiles/per-user/${username}/share:/run/system-manager/sw/share:/usr/local/share:/usr/share
+            NIX_USER_PROFILE_DIR=/nix/var/nix/profiles/per-user/${username}
+            NIX_PROFILES="/run/system-manager/sw /nix/var/nix/profiles/default /etc/profiles/per-user/${username} ${homeDir}/.local/state/nix/profile ${homeDir}/.nix-profile"
+          '';
+        };
 
         home-manager = {
           useGlobalPkgs = true;
