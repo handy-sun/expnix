@@ -4,7 +4,6 @@
   config,
   inputs,
   myutils,
-  homeDir,
   myvars,
   ...
 }:
@@ -108,36 +107,5 @@ in
     ## symlinks, which honk's include confinement rejects. Fresh on every
     ## (re)start, so restartUnits above keeps it in sync.
     serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/install -Dm0600 ${config.sops.secrets.honk-subs.path} /etc/honk/honk-subs.dae";
-  };
-
-  systemd.services.npm-global-update = {
-    description = "Update globally installed npm packages";
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      User = myvars.user;
-      WorkingDirectory = homeDir;
-      Environment = [
-        "HOME=${homeDir}"
-        "NPM_CONFIG_USERCONFIG=${homeDir}/.config/npmrc"
-      ];
-      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${homeDir}/.cache";
-      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.nodejs}/bin/npm update -g >> ${homeDir}/.cache/npm-updg.log 2>&1'";
-      TimeoutStartSec = "20min";
-    };
-  };
-
-  systemd.timers.npm-global-update = {
-    description = "Update globally installed npm packages twice a week";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = [
-        "Mon *-*-* 17:00:00"
-        "Fri *-*-* 17:00:00"
-      ];
-      Persistent = true;
-      Unit = "npm-global-update.service";
-    };
   };
 }
