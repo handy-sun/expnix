@@ -853,11 +853,11 @@
     "sbtpl": {
       "flake": false,
       "locked": {
-        "lastModified": 1789354533,
-        "narHash": "sha256-HjpUQajyottzpQ1F3gcPlX47yVbodoj4rJ1C+5Mt4YU=",
+        "lastModified": 1794040849,
+        "narHash": "sha256-fqn0Bu8ic6NugUiggma9tiKJld/YvVF6KWovLzFi5ng=",
         "owner": "handy-sun",
         "repo": "sbtpl",
-        "rev": "af2062abe3ff20e8c40a3aebb463f53a841ded5f",
+        "rev": "102aa1174a330da35320b72420ca975d80a49d76",
         "type": "github"
       },
       "original": {
