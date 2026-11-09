@@ -60,7 +60,7 @@ jobs:
             os: ubuntu-latest
             attr: nixosConfigurations.txsh011.config.system.build.toplevel
           - name: handyMini (aarch64-darwin)
-            os: macos-14
+            os: macos-latest
             attr: darwinConfigurations.handyMini.config.system.build.toplevel
           # - name: home (x86_64-linux)
           #   os: ubuntu-latest
