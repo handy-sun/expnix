@@ -1,6 +1,5 @@
 {
   config,
-  hostName,
   myvars,
   myutils,
   pkgs,
@@ -8,7 +7,7 @@
 }:
 
 let
-  inherit (myvars) domain;
+  inherit (myvars) domain email;
 in
 {
   ## We intentionally proxy the raw client Host header ($http_host) to some
@@ -136,7 +135,7 @@ in
     };
   };
 
-  sops.secrets."cloudflare-dns-token" = {
+  sops.secrets.cloudflare-dns-token = {
     sopsFile = myutils.relativeToRoot "secrets/cloudflare.yaml";
     key = "token";
   };
@@ -144,11 +143,10 @@ in
   security.acme.acceptTerms = true;
   security.acme.certs.${domain} = {
     group = "nginx";
-    email = "handy-sun@foxmail.com";
     dnsProvider = "cloudflare";
-    inherit domain;
+    inherit domain email;
     extraDomainNames = [ "*.${domain}" ];
-    credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets."cloudflare-dns-token".path;
+    credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets.cloudflare-dns-token.path;
     ## This host's outbound UDP/53 to Cloudflare's authoritative NS is blocked,
     ## so use lego's fixed wait mode instead of querying authoritative servers.
     ## This gives Cloudflare's API change time to become visible before the

@@ -11,6 +11,7 @@ let
   hostSecrets = myutils.relativeToRoot "secrets/hosts/${hostName}";
   singBoxSopsFile = hostSecrets + "/sing-box.yaml";
   mtgSopsFile = hostSecrets + "/mtg.yaml";
+  inherit (myvars) domain email;
 in
 {
   imports = [
@@ -21,10 +22,10 @@ in
 
   environment.systemPackages = [ pkgs.mtg ];
 
-  security.acme.certs.${myvars.domain}.reloadServices = [ "tailscale-derper.service" ];
+  security.acme.certs.${domain}.reloadServices = [ "tailscale-derper.service" ];
   systemd.services.tailscale-derper = {
-    after = [ "acme-${myvars.domain}.service" ];
-    wants = [ "acme-${myvars.domain}.service" ];
+    after = [ "acme-${domain}.service" ];
+    wants = [ "acme-${domain}.service" ];
   };
 
   sops = {
@@ -40,6 +41,12 @@ in
       sing-box-vmess-uuid = {
         sopsFile = singBoxSopsFile;
         key = "vmess_uuid";
+        restartUnits = [ "sing-box.service" ];
+      };
+
+      sing-box-trojan-password = {
+        sopsFile = singBoxSopsFile;
+        key = "trojan_password";
         restartUnits = [ "sing-box.service" ];
       };
 
@@ -86,13 +93,18 @@ in
     };
   };
 
+  users.users.sing-box.extraGroups = [
+    "nginx"
+    "acme"
+  ];
+
   services = {
     tailscale = {
       derperCustom = {
         enable = true;
         openFirewall = true;
-        hostname = "hkderp.${myvars.domain}";
-        certificateDirectory = "/var/lib/acme/${myvars.domain}";
+        hostname = "hkderp.${domain}";
+        certificateDirectory = "/var/lib/acme/${domain}";
         port = 19443;
         stunPort = 3479;
       };
@@ -110,14 +122,12 @@ in
       settings = {
         log = {
           level = "info";
-          timestamp = true;
-          output = "/tmp/box-access.log";
+          timestamp = false;
         };
-
         inbounds = [
           {
             type = "shadowsocks";
-            tag = "ss-in";
+            tag = "ss_29960";
             listen = "::";
             listen_port = 29960;
             method = "2022-blake3-aes-256-gcm";
@@ -125,7 +135,7 @@ in
           }
           {
             type = "vmess";
-            tag = "vmess-in";
+            tag = "vmess_29961-kooya";
             listen = "::";
             listen_port = 29961;
             users = [
@@ -134,12 +144,44 @@ in
               }
             ];
           }
+          {
+            type = "trojan";
+            tag = "trojan_29962";
+            listen = "::";
+            listen_port = 29962;
+            users = [
+              {
+                password._secret = config.sops.secrets.sing-box-trojan-password.path;
+              }
+            ];
+            tls = {
+              enabled = true;
+              server_name = "tr.${domain}";
+              certificate_provider = "trojan-29962-acme";
+            };
+          }
         ];
-
         outbounds = [
           {
             type = "direct";
             tag = "direct";
+          }
+        ];
+        certificate_providers = [
+          {
+            type = "acme";
+            tag = "trojan-29962-acme";
+            domain = [
+              "*.${domain}"
+              "${domain}"
+            ];
+            inherit email;
+            dns01_challenge = {
+              provider = "cloudflare";
+              api_token = {
+                _secret = config.sops.secrets.cloudflare-dns-token.path;
+              };
+            };
           }
         ];
       };

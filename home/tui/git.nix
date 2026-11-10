@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  myvars,
   ...
 }:
 let
@@ -42,7 +43,7 @@ in
 
     settings = {
       user.name = "sooncheer";
-      user.email = "handy-sun@foxmail.com";
+      user.email = myvars.email;
 
       core.autocrlf = false;
       core.safecrlf = true;

@@ -9,7 +9,7 @@
   ...
 }:
 let
-  inherit (myvars) domain;
+  inherit (myvars) domain email;
   derpHostname = "txshderp.${domain}";
   rustdeskHostname = "rsdesk.${domain}";
   honkSubsSopsFile = myutils.relativeToRoot "secrets/honk-subs.dae";
@@ -44,7 +44,7 @@ in
   ## Dedicated cert for the derp hostname only — no wildcard copy on this host.
   security.acme.acceptTerms = true;
   security.acme.certs.${derpHostname} = {
-    email = "handy-sun@foxmail.com";
+    inherit email;
     dnsProvider = "cloudflare";
     domain = derpHostname;
     credentialFiles.CF_DNS_API_TOKEN_FILE = config.sops.secrets.cloudflare-dns-token.path;

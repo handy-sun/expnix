@@ -7,7 +7,7 @@
 let
   sshdPort = 23512;
   frpClientPorts = builtins.genList (x: x + 17580) 31;
-  customPorts = builtins.genList (x: x + 20120) 31;
+  commonProxyPorts = builtins.genList (x: x + 29960) 11;
 in
 {
   imports =
@@ -38,13 +38,9 @@ in
       11443
       17531
       25465
-      29960
-      29961
-      29962
-      29970
     ]
     ++ frpClientPorts
-    ++ customPorts;
+    ++ commonProxyPorts;
 
     allowedUDPPorts = [
       53
@@ -56,8 +52,7 @@ in
       19302
       40000
     ]
-    ++ customPorts;
-
+    ++ commonProxyPorts;
   };
 
   ############### Add by reinstall.sh ###############

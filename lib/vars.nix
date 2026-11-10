@@ -4,6 +4,7 @@ rec {
   ## myvars to the modules.
   user = "qi";
   group = "users";
+  email = "handy-sun@foxmail.com";
   langEnv = "zh_CN.UTF-8";
   sopsAgeKeyFile = "/var/lib/sops-nix/key.txt";
 
