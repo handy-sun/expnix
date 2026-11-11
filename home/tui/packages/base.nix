@@ -97,6 +97,7 @@
 
       ## nix
       nil # language server for Nix
+      nixd # zed's Nix extension (0.1.5) looks for nixd, not nil
       nixfmt-rs
       nix-output-monitor
       system-manager
