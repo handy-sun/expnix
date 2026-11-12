@@ -24,7 +24,8 @@ let
     overlays =
       (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays
       ++ (import ../overlays/netwatch.nix { }).nixpkgs.overlays
-      ++ (import ../overlays/rustdesk.nix { }).nixpkgs.overlays;
+      ++ (import ../overlays/rustdesk.nix { }).nixpkgs.overlays
+      ++ (import ../overlays/beszel.nix { }).nixpkgs.overlays;
   };
   profileLevel = myvars.profileLevel // profileLevelOver;
   ## Derived from the target platform instead of being passed in by callers.

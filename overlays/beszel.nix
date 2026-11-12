@@ -5,44 +5,18 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
-      beszel = prev.beszel.overrideAttrs (
-        finalAttrs: prevAttrs: {
-          ## "testing" tag is necessary, api_test.go depends internal/tests
-          tags = [ "testing" ];
-
-          checkFlags =
-            let
-              skippedTests = [
-                ## GPU test: build sangbox without GPU tools (macOS/Linux donnot contain nvidia-smi etc.)
-                "TestCollectorStartHelpers/nvidia-smi_collector"
-                "TestCollectorStartHelpers/rocm-smi_collector"
-                "TestCollectorStartHelpers/tegrastats_collector"
-                "TestCollectorStartHelpers/nvtop_collector"
-                "TestNewGPUManagerPriorityNvtopFallback"
-                "TestNewGPUManagerPriorityMixedCollectors"
-                "TestNewGPUManagerPriorityNvmlFallbackToNvidiaSmi"
-                "TestNewGPUManagerConfiguredCollectorsMustStart"
-                "TestNewGPUManagerConfiguredNvmlBypassesCapabilityGate"
-                "TestNewGPUManagerJetsonIgnoresCollectorConfig"
-                ## Disable environment variable: CHECK_UPDATES
-                "TestApiRoutesAuthentication/GET_/update_-_shouldn't_exist_without_CHECK_UPDATES_env_var"
-                ## Docker test: httptest server panics in darwin sandbox
-                "TestCheckDockerVersion"
-                ## About hub tests
-                "TestConfigSyncWithTokens"
-                ## CPU percentage: CI runners are multi-core, calculated % can exceed 100
-                "TestServiceUpdateCPUPercent"
-              ];
-            in
-            [ "-skip=^${builtins.concatStringsSep "$|^" skippedTests}$" ];
-
-          postPatch = prevAttrs.postPatch or "" + ''
-            substituteInPlace internal/hub/systems/system.go \
-              --replace-fail "func (sys *System) StartUpdater() {" \
-                "func (sys *System) StartUpdater() { defer func() { recover() }();"
-          '';
-        }
-      );
+      beszel =
+        if prev.stdenv.hostPlatform.isDarwin then
+          prev.beszel.overrideAttrs (old: {
+            ## The legacy hub payload subtests wait on a 5 s deadline the macOS
+            ## runner misses; extend nixpkgs' own skip regex instead of
+            ## replacing the whole list (it also carries darwin-only skips).
+            checkFlags = map (
+              flag: if prev.lib.hasPrefix "-skip=" flag then flag + "|^TestLegacyHubGetsSinglePayload$" else flag
+            ) (old.checkFlags or [ ]);
+          })
+        else
+          prev.beszel;
     })
   ];
 }

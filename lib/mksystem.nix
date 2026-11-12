@@ -86,6 +86,7 @@ systemFunc rec {
     ../overlays/rldd.nix
     ../overlays/netwatch.nix
     ../overlays/rustdesk.nix
+    ../overlays/beszel.nix
     ../hosts/${hostName}
     sopsModule
     home-manager.home-manager
