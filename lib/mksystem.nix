@@ -84,6 +84,7 @@ systemFunc rec {
     )
     ../machines/nix-core.nix
     ../overlays/rldd.nix
+    ../overlays/netwatch.nix
     ../hosts/${hostName}
     sopsModule
     home-manager.home-manager

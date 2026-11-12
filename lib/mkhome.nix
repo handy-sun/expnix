@@ -21,7 +21,9 @@ let
       allowUnfree = true;
       allowUnsupportedSystem = true;
     };
-    overlays = (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays;
+    overlays =
+      (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays
+      ++ (import ../overlays/netwatch.nix { }).nixpkgs.overlays;
   };
   profileLevel = myvars.profileLevel // profileLevelOver;
   ## Derived from the target platform instead of being passed in by callers.
