@@ -28,12 +28,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      ## Key the marker on everything that can change a derivation: the lock, the
+      ## flake modules, and the encrypted secrets (sops files are hashed into the
+      ## system closure). Documentation-only pushes keep the old key and skip.
       - name: Restore successful build marker
         id: cache
         uses: actions/cache/restore@v4
         with:
-          path: /tmp/flake-lock-hash
-          key: build-cache-flake-lock-${{ hashFiles('flake.lock') }}
+          path: /tmp/build-cache-stamp
+          key: build-cache-${{ hashFiles('flake.lock', '**/*.nix', 'secrets/**', '.sops.yaml') }}
           lookup-only: true
 
       - name: Check cache status
@@ -41,15 +44,16 @@ jobs:
         run: |
           if [ "${{ steps.cache.outputs.cache-hit }}" = "true" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "flake.lock already has a successful cache build, skipping build"
+            echo "this tree already has a successful cache build, skipping build"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "flake.lock has no successful cache build marker, will rebuild"
+            echo "no successful cache build for this tree, will rebuild"
           fi
 
   build:
     needs: check-changes
-    if: needs.check-changes.outputs.should_build == 'true'
+    ## workflow_dispatch always builds so the cache can be forced from the UI.
+    if: needs.check-changes.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch'
     timeout-minutes: 360
     strategy:
       fail-fast: false
@@ -81,8 +85,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sha256sum flake.lock > /tmp/flake-lock-hash
+      - run: touch /tmp/build-cache-stamp
       - uses: actions/cache/save@v4
         with:
-          path: /tmp/flake-lock-hash
-          key: build-cache-flake-lock-${{ hashFiles('flake.lock') }}
+          path: /tmp/build-cache-stamp
+          key: build-cache-${{ hashFiles('flake.lock', '**/*.nix', 'secrets/**', '.sops.yaml') }}
