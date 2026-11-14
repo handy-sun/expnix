@@ -6,18 +6,18 @@
 
 ## 1. 现状
 
-部署面共 **64 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
+部署面共 **65 个技能**，全部是扁平的 `<dest>/<name>/SKILL.md`：
 
 | 来源 | 数量 | 说明 |
 | --- | --- | --- |
 | `addyosmani/agent-skills` | 21 | 上游布局就是 `skills/<name>`；20 个来自 SSOT，`debugging-and-error-recovery` 是额外启用的上游技能 |
 | `MidAutumnMoon/TaysiTsuki` | 11 | `home/agents/skills`，本身就是单层 |
 | `browser-act/skills` | 1 | `filter.nameRegex` 只取 `browser-act` |
-| `handy-skills` | 31 | 26 个从 SSOT 迁入、4 个从 Hermes toolkit 复制、1 个本仓库新写（`git-commit`） |
-| 合计 | 64 | |
+| `handy-skills` | 32 | 27 个从 SSOT 迁入、4 个从 Hermes toolkit 复制、1 个本仓库新写（`git-commit`） |
+| 合计 | 65 | |
 
 目标目录共 4 个：`claude`、`codex`、`opencode`、`agents`
-（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 64 个）。
+（`$HOME/.agents/skills`，dsh 的 user-agents root，所以 dsh 能看到全部 65 个）。
 
 只对本仓库有意义的说明不占技能位：它们写在仓库根的 `AGENTS.md`
 （`CLAUDE.md` 是它的软链）。
@@ -63,10 +63,10 @@
 | addyosmani/agent-skills | 20 |
 | TaysiTsuki | 8 |
 | browser-act/skills | 1 |
-| handy-skills（沿用原副本） | 26 |
+| handy-skills（沿用原副本） | 27 |
 | handy-skills（从 hermes-agent 复制，现剩 4 个） | 4 |
 | 已移出 SSOT（6 个 `.bak` + 重复的嵌套 TDD） | 7 |
-| 已删除（`singbox-config`、`codex`、`cc-switch-app-type-wiring`、`web-access`、`native-mcp`、`kanban-orchestrator`、`kanban-worker`、`webhook-subscriptions`、`xurl`、`himalaya`、`systematic-debugging`、`hdd-pending-sector-repair`、`python-debugpy`、`node-inspect-debugger`、`design-md-init`、`docker-compose-selfhost`、`codebase-inspection`） | 17 |
+| 已删除（`singbox-config`、`codex`、`cc-switch-app-type-wiring`、`web-access`、`native-mcp`、`kanban-orchestrator`、`kanban-worker`、`webhook-subscriptions`、`xurl`、`himalaya`、`systematic-debugging`、`python-debugpy`、`node-inspect-debugger`、`design-md-init`、`docker-compose-selfhost`、`codebase-inspection`） | 16 |
 | 不迁移（Hermes 专用 3 + Hermes 运行时技能 3） | 6 |
 | 暂不迁移（macOS 专用 5、media 3、productivity 14） | 22 |
 | 合计 | 111 |
@@ -154,7 +154,7 @@
 | 技能目录 | 现在来自 |
 | --- | --- |
 | `devops/docker-compose-selfhost` | 已删除（不在 handy-skills） |
-| `devops/hdd-pending-sector-repair` | 已删除 |
+| `devops/hdd-pending-sector-repair` | handy-skills（沿用原副本） |
 | `devops/kanban-orchestrator` | 已删除 |
 | `devops/kanban-orchestrator.bak` | 已移出 SSOT |
 | `devops/kanban-worker` | 已删除 |

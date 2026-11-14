@@ -183,14 +183,14 @@ provider、MCP 和其他非 Skills 配置。Hermes 的 `$HERMES_HOME/skills` 混
 bundled skills 与 curator 状态，第一阶段不接管。
 
 技能全部来自上游仓库：`addyosmani/agent-skills`（21）、`browser-act/skills`（1）、
-`TaysiTsuki`（11）和 `handy-skills`（31，个人与项目专用技能，含从 Hermes toolkit
+`TaysiTsuki`（11）和 `handy-skills`（32，个人与项目专用技能，含从 Hermes toolkit
 复制的小工具技能）。`NousResearch/hermes-agent` 是 271 MB 的运行时，没有作为输入
 引入。本仓库不再保存任何技能内容，只 pin 版本。所有技能都部署成扁平的 `<dest>/<name>/SKILL.md`，
 因为 DSH 等 agent 只扫描 skills 根目录的一层；`agents` 目标
 （`$HOME/.agents/skills`）就是 DSH 读取的那个目录。
 
 ```bash
-just skills-list      # 当前启用的 64 个技能
+just skills-list      # 当前启用的 65 个技能
 just skills-check     # 构建 bundle 并做 flake check
 ```
 
