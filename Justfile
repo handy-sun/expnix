@@ -78,6 +78,7 @@ skills-check:
 skills-update:
   nix flake update skills-catalog/agent-skills skills-catalog/addyosmani-skills skills-catalog/browser-act-skills skills-catalog/taysi-tsuki skills-catalog/handy-skills
   cd skills-nix && nix flake update
+  nix flake check ./skills-nix
 
 [group('nix')]
 query-all pkgname:
