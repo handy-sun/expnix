@@ -3,11 +3,11 @@
     "addyosmani-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1793561089,
-        "narHash": "sha256-ewVxgb5GqtUeWcGydFz3GbzUkM0p+cuRfP+tlPAg4PY=",
+        "lastModified": 1794630835,
+        "narHash": "sha256-SZchINcyIB46aT5JYLAv2fW2DoChCHQsckq51kUNoEw=",
         "owner": "addyosmani",
         "repo": "agent-skills",
-        "rev": "301b02b12bff98e4688e6984af6556802322bbde",
+        "rev": "39b723ceebf81474d0557c1fecd01eddab585563",
         "type": "github"
       },
       "original": {
@@ -24,11 +24,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792594212,
-        "narHash": "sha256-XWx3R/AIeYdyZ3guuZVNqirEUPPpehICrIRV3VabR+U=",
+        "lastModified": 1794456227,
+        "narHash": "sha256-qu7S1arVl+Q6H/yZhJ2VdeDY/kBxY8mK8m6U49M0alk=",
         "owner": "Kyure-A",
         "repo": "agent-skills-nix",
-        "rev": "f48aa227f3d157ae3abda12cd9c4ab867f400419",
+        "rev": "93a02cb60eda167de8c5baa085e4a2bcfc71b885",
         "type": "github"
       },
       "original": {
@@ -40,11 +40,11 @@
     "browser-act-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1793758034,
-        "narHash": "sha256-c2vV4yWLqnJRry67YM+mb0Fe7Vrh8Yq0B1VWVVAg6Ak=",
+        "lastModified": 1793788030,
+        "narHash": "sha256-I3wijjkljE/Gm7KV8re1TBvCrluVCRUd1NBx67Zfs0Q=",
         "owner": "browser-act",
         "repo": "skills",
-        "rev": "2acf48111654f1f14046cb1cb915c61f0d769d02",
+        "rev": "593316aa0f8ccd88bdf745c92b24a50641701973",
         "type": "github"
       },
       "original": {
@@ -357,11 +357,11 @@
     "handy-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1793717285,
-        "narHash": "sha256-1/8oOOEuv1u+2S/Od6l05ExtxlDF8mtl6LU6MUZBIEw=",
+        "lastModified": 1794535806,
+        "narHash": "sha256-KLjcC/itsfiX2cbHyYWgbgxQSUb4tliGcTPf+CJQeK8=",
         "owner": "handy-sun",
         "repo": "handy-skills",
-        "rev": "2da05b8d93b991e3c892ca5cd7d132b972dee62d",
+        "rev": "df179075a6661bdeddaba4cd489fb10105ea4aca",
         "type": "github"
       },
       "original": {
@@ -1015,11 +1015,11 @@
     "taysi-tsuki": {
       "flake": false,
       "locked": {
-        "lastModified": 1793655437,
-        "narHash": "sha256-WQM+qIx4K5e5lahC7U81OWfbOR25WXpccctcCeuob7E=",
+        "lastModified": 1794597128,
+        "narHash": "sha256-2bESpkwSia7UKAcoCNAKQ6Gbnfz2cxfVFhTIr3cTkl8=",
         "owner": "MidAutumnMoon",
         "repo": "TaysiTsuki",
-        "rev": "1c373c40d5fce5d38016710e36225fd658561a48",
+        "rev": "7d34eefb48ebe323ef0836e64f16cdb1a24fd7fe",
         "type": "github"
       },
       "original": {
