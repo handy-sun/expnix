@@ -268,6 +268,7 @@ let
         };
       };
       resolveCanonicalNameWithDns = true;
+      useCanonicalName = true;
     };
   };
 
