@@ -54,7 +54,8 @@ inputs.system-manager.lib.makeSystemConfig {
     (import ../overlays/rldd.nix { inherit (nixpkgs) lib; }).nixpkgs.overlays
     ++ (import ../overlays/netwatch.nix { }).nixpkgs.overlays
     ++ (import ../overlays/rustdesk.nix { }).nixpkgs.overlays
-    ++ (import ../overlays/beszel.nix { }).nixpkgs.overlays;
+    ++ (import ../overlays/beszel.nix { }).nixpkgs.overlays
+    ++ (import ../overlays/nginx.nix { }).nixpkgs.overlays;
 
   modules = [
     ./nix-common.nix
