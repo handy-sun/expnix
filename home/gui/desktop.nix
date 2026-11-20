@@ -73,4 +73,17 @@ lib.mkIf (profileLevel.guiBase && isLinux) {
     "niri/config.kdl".source = niriUserConfig;
     "niri/extra.kdl".source = niriCfgDir + "/extra.kdl";
   };
+
+  ## Reachable from LAN and tailnet; wayvnc does no auth or encryption here,
+  ## so anyone who can route to 5900 drives the session. Add enable_auth
+  ## (certificate + key + password) before exposing it beyond trusted nets.
+  services.wayvnc = {
+    enable = true;
+    autoStart = true;
+    systemdTarget = "niri.service";
+    settings = {
+      address = "0.0.0.0";
+      port = 5900;
+    };
+  };
 }
