@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   inputs,
@@ -74,9 +75,9 @@ lib.mkIf (profileLevel.guiBase && isLinux) {
     "niri/extra.kdl".source = niriCfgDir + "/extra.kdl";
   };
 
-  ## Reachable from LAN and tailnet; wayvnc does no auth or encryption here,
-  ## so anyone who can route to 5900 drives the session. Add enable_auth
-  ## (certificate + key + password) before exposing it beyond trusted nets.
+  ## VNC for the niri session. Clients authenticate through PAM with the
+  ## system password; TLS uses a self-signed pair generated on first activation.
+  ## relax_encryption keeps Apple/legacy clients usable on trusted networks.
   services.wayvnc = {
     enable = true;
     autoStart = true;
@@ -84,6 +85,21 @@ lib.mkIf (profileLevel.guiBase && isLinux) {
     settings = {
       address = "0.0.0.0";
       port = 5900;
+      enable_auth = true;
+      enable_pam = true;
+      relax_encryption = true;
+      certificate_file = "${config.home.homeDirectory}/.config/wayvnc/cert.pem";
+      private_key_file = "${config.home.homeDirectory}/.config/wayvnc/key.pem";
     };
   };
+
+  home.activation.wayvncTls = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    dir="$HOME/.config/wayvnc"
+    ${pkgs.coreutils}/bin/mkdir -p "$dir"
+    if [ ! -s "$dir/key.pem" ] || [ ! -s "$dir/cert.pem" ]; then
+      ${pkgs.openssl}/bin/openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 \
+        -nodes -keyout "$dir/key.pem" -out "$dir/cert.pem" -subj "/CN=wayvnc" 2>/dev/null
+    fi
+    chmod 600 "$dir/key.pem"
+  '';
 }
