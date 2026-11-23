@@ -26,10 +26,6 @@ in
     };
   };
 
-  ## wayvnc authenticates VNC clients through PAM, so the service file has to
-  ## exist; an empty attrset gives the default rules (pam_unix).
-  security.pam.services.wayvnc = { };
-
   environment.etc = {
     "niri/config.kdl".source = baseConfig;
     "xdg/menus/applications.menu".text = ''

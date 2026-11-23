@@ -1,6 +1,4 @@
-{
-  ...
-}:
+_:
 
 {
   ## Replaces zellij. Keeps the muscle memory: h/j/k/l focus, x close, z zoom,
