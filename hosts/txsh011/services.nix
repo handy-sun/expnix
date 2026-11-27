@@ -17,7 +17,7 @@ in
 {
   imports = [
     (myutils.relativeToRoot "modules/tailscale-derper")
-    (myutils.relativeToRoot "modules/honk")
+    inputs.daeuniverse.nixosModules.honk
   ];
 
   sops = {
@@ -36,7 +36,7 @@ in
       honk-subs = {
         sopsFile = honkSubsSopsFile;
         format = "binary";
-        restartUnits = [ "honk-core.service" ];
+        restartUnits = [ "honk.service" ];
       };
     };
   };
@@ -85,7 +85,7 @@ in
       };
     };
 
-    honk-core = {
+    honk-proxy = {
       enable = true;
       configFile = "/etc/honk/honk-config.dae";
     };
@@ -125,8 +125,18 @@ in
       ## hbbs exits when its 1s loopback UDP self-test sees no reply for 12s, which is what memory pressure used to cause here.
       OOMScoreAdjust = -500;
     };
-    services.honk-core = {
-      serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/install -Dm0600 ${config.sops.secrets.honk-subs.path} /etc/honk/honk-subs.dae";
+    services.honk = {
+      ## dae and honk attach eBPF to the same TC/dae0 datapath; never run both.
+      conflicts = [ "dae.service" ];
+      serviceConfig = {
+        ExecStartPre = "${pkgs.coreutils}/bin/install -Dm0600 ${config.sops.secrets.honk-subs.path} /etc/honk/honk-subs.dae";
+        LimitNOFILE = 1048576;
+        UMask = "0077";
+        ExecStart = lib.mkForce [
+          ""
+          "${lib.getExe config.services.honk-proxy.package} --disable-timestamp -c /etc/honk/honk-config.dae"
+        ];
+      };
     };
   };
 }
