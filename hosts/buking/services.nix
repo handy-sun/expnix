@@ -23,7 +23,7 @@ in
   imports = [
     (myutils.relativeToRoot "modules/mihomo")
     (myutils.relativeToRoot "modules/sing-box")
-    (myutils.relativeToRoot "modules/honk")
+    inputs.daeuniverse.nixosModules.honk
   ];
 
   sops.secrets = {
@@ -44,7 +44,7 @@ in
     honk-subs = {
       sopsFile = honkSubsSopsFile;
       format = "binary";
-      restartUnits = [ "honk-core.service" ];
+      restartUnits = [ "honk.service" ];
     };
   };
 
@@ -74,7 +74,7 @@ in
       configFile = "/etc/dae/config.dae";
     };
 
-    honk-core = {
+    honk-proxy = {
       enable = true;
       configFile = "/etc/honk/honk-config.dae";
     };
@@ -102,10 +102,21 @@ in
 
   systemd.services.libvirt-guests.wantedBy = lib.mkForce [ ];
 
-  systemd.services.honk-core = {
-    ## Materialize the sops secret as a real file: sops-nix only deploys
-    ## symlinks, which honk's include confinement rejects. Fresh on every
-    ## (re)start, so restartUnits above keeps it in sync.
-    serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/install -Dm0600 ${config.sops.secrets.honk-subs.path} /etc/honk/honk-subs.dae";
+  systemd.services.honk = {
+    ## dae and honk attach eBPF to the same TC/dae0 datapath; never run both.
+    conflicts = [ "dae.service" ];
+    serviceConfig = {
+      ## Materialize the sops secret as a real file: sops-nix only deploys
+      ## symlinks, which honk's include confinement rejects. Fresh on every
+      ## (re)start, so restartUnits above keeps it in sync.
+      ExecStartPre = "${pkgs.coreutils}/bin/install -Dm0600 ${config.sops.secrets.honk-subs.path} /etc/honk/honk-subs.dae";
+      ## Upstream's unit is minimal; keep the limits our old unit had.
+      LimitNOFILE = 1048576;
+      UMask = "0077";
+      ExecStart = lib.mkForce [
+        ""
+        "${lib.getExe config.services.honk-proxy.package} --disable-timestamp -c /etc/honk/honk-config.dae"
+      ];
+    };
   };
 }
